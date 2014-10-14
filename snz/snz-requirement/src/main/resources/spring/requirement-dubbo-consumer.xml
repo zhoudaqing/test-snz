@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:consumer timeout="#{app.dubboTimeout}"/>
+
+    <!-- user services -->
+    <dubbo:reference interface="io.terminus.snz.user.service.AccountService" id="accountService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.CompanyService" id="companyService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.AddressService" id="addressService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.SupplierCreditQualifyService" id="supplierCreditQualifyService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.PurchaserAuthorityService" id="purchaserAuthorityService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.TagService" id="tagService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.SupplierResourceMaterialService" id="supplierResourceMaterialService"/>
+
+
+
+    <!-- category services -->
+    <dubbo:reference interface="io.terminus.snz.category.service.BackendCategoryService" id="backendCategoryService"/>
+    <dubbo:reference interface="io.terminus.snz.category.service.FrontendCategoryService" id="frontendCategoryService"/>
+    <dubbo:reference interface="io.terminus.snz.category.service.CategoryBindingService" id="categoryBindingService"/>
+
+    <!-- message services -->
+    <dubbo:reference interface="io.terminus.snz.message.services.MessageService" id="messageService"/>
+    <dubbo:reference interface="io.terminus.snz.message.services.MailService" id="mailService"/>
+
+    <!-- statistic services -->
+    <dubbo:reference interface="io.terminus.snz.statistic.service.RequirementCountService" id="requirementCountService"/>
+    <dubbo:reference interface="io.terminus.snz.statistic.service.SolutionCountService" id="solutionCountService"/>
+
+    <!-- eai services -->
+    <dubbo:reference interface="io.terminus.snz.eai.service.MdmConfigureService" id="mDMConfigureService"/>
+    <dubbo:reference interface="io.terminus.snz.eai.service.MdmVendorCodeService" id="mDMVendorCodeService"/>
+    <dubbo:reference interface="io.terminus.snz.eai.service.HGVSService" id="hgvsService"/>
+
+    <dubbo:reference interface="io.terminus.snz.related.services.DeliveryService" id="deliveryService"/>
+</beans>

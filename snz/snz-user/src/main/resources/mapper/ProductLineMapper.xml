@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ProductLine" >
+  <resultMap id="ProductLineMap" type="ProductLine" >
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+  </resultMap>
+
+  <sql id="columns" >
+    name
+  </sql>
+
+  <select id="findById" resultMap="ProductLineMap" parameterType="long" >
+    select id,<include refid="columns" />
+    from snz_product_lines
+    where id = #{id}
+  </select>
+
+   <select id="findByIds" resultMap="ProductLineMap" parameterType="long" >
+     select id,<include refid="columns" />
+     from snz_product_lines
+     where id in
+     <foreach collection="list" open="(" separator="," close=")" item="id">
+         #{id}
+     </foreach>
+   </select>
+
+  <select id="findAll" resultMap="ProductLineMap" parameterType="long" >
+    select id,<include refid="columns" />
+    from snz_product_lines
+  </select>
+
+   <insert id="insert" parameterType="ProductLine" useGeneratedKeys="true" keyProperty="id" >
+    insert into snz_product_lines (<include refid="columns" />)
+    values (#{name})
+  </insert>
+
+
+</mapper>

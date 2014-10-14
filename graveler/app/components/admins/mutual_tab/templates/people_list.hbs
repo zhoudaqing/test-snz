@@ -1,0 +1,27 @@
+<div class="menu menu-dropdown up {{#equals size "big"}}second-label{{else}}third-label{{/equals}}">
+  <p style="margin-top:0;"><a href="javascript:void(0);" data-target="supplier-select-ul" class="ul-show-a"><i class="icon-arrowright-small hide"></i><i class="icon-arrowdown-small"></i> 供应商</a></p>
+  <ul id="supplier-select-ul">
+    {{#each data}}
+      {{#equals userType "2"}}
+      <li>
+        <label for="people-{{userId}}">
+          <input id="people-{{userId}}" class="joiner" type="checkbox" value="{{userId}}"> {{userName}}
+        </label>
+      </li>
+      {{/equals}}
+    {{/each}}
+  </ul>
+  <p><a data-target="purchaser-select-ul" class="ul-show-a" href="javascript:void(0);"><i class="icon-arrowright-small"></i><i class="icon-arrowdown-small hide"></i> 海尔团队成员</a></p>
+  <ul id="purchaser-select-ul" class="hide">
+    {{#each data}}
+    {{#equals userType "3"}}
+    <li>
+      <label for="people-{{userId}}">
+        <input id="people-{{userId}}" class="joiner" type="checkbox" value="{{userId}}"> {{userName}}
+      </label>
+    </li>
+    {{/equals}}
+    {{/each}}
+  </ul>
+</div>
+

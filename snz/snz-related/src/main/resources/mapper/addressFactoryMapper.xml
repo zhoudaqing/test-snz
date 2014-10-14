@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 查询工厂信息 -->
+<mapper namespace="AddressFactory">
+    <resultMap id="addressFactoryMap" type="AddressFactory">
+        <id property="id" column="id"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        factory_num, factory_name, created_at, updated_at
+    </sql>
+
+    <!-- 根据工厂编号返回工厂详细信息 -->
+    <select id="findByFactoryIds" resultMap="addressFactoryMap">
+        select id, <include refid="columns"/> from snz_address_factory
+        where id in
+        <foreach collection="list" separator="," open="(" close=")" item="id"> #{id} </foreach>
+    </select>
+
+    <select id="findAllFactory" resultMap="addressFactoryMap">
+        select id, <include refid="columns"/> from snz_address_factory;
+    </select>
+</mapper>

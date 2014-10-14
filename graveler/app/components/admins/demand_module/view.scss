@@ -1,0 +1,97 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+
+.demand-module {
+  .table-container {
+    overflow: auto;
+    margin-bottom: 20px;
+    min-height: 300px;
+  }
+  table {
+    overflow: auto;
+  }
+  .one-row {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid $default-border-color;
+  }
+  .multi-row {
+    white-space: nowrap;
+    span {
+      @include inline-block(middle);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100px;
+      text-align: center;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .post-submit{
+    margin:70px auto 100px auto;
+    text-align: center;
+  }
+
+}
+.module-form {
+  .control-content {
+    @include inline-block(top);
+    p {
+      margin: 0 0 10px 0;
+      &.last {
+        margin: 0;
+      }
+    }
+  }
+  .form-left,.form-right {
+    @include inline-block(top);
+    width:480px;
+  }
+  .form-right {
+    width: 400px;
+  }
+
+  .select-menu {
+    left: 0;
+    margin-top: 10px;
+    position: absolute;
+    width: 164px;
+    background-color: $default-background-color;
+    border-radius: 5px;
+    ul {
+      padding: 0 5px;
+      height: auto;
+      max-height: 300px !important;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    li {
+      line-height: 20px !important;
+      @include inline-block(middle);
+      label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 120px !important;
+        margin: 5px 10px 5px 5px !important;
+      }
+    }
+    .product-operate-p {
+      text-align: right;
+      border-top: 1px solid $default-border-color;
+      margin: 0;
+      padding: 5px 10px;
+    }
+    .scope-category-label {
+      text-align: left !important;
+    }
+  }
+
+  .attestation-show{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+}

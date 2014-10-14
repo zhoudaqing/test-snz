@@ -1,0 +1,50 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+<form class="content ui form">
+  <div class="two fields">
+    <div class="field">
+      <label>Key</label>
+      <div class="ui labeled input">
+        <input name="key" type="text" placeholder="App Key" value="{{app.key}}" {{#if app}}readonly{{/if}}>
+        <div class="ui corner label">
+          {{#if app}}
+          <i class="lock icon"></i>
+          {{else}}
+          <i class="asterisk icon"></i>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Domain</label>
+      <div class="ui labeled input">
+        <input name="domain" type="text" placeholder="Domain" value="{{app.domain}}">
+        <div class="ui corner label">
+          <i class="asterisk icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Proxy Root</label>
+    <input name="proxyRoot" type="text" placeholder="default: http://{{#if app}}{{app.domain}}{{else}}{Domain}{{/if}}/" value="{{app.proxyRoot}}">
+  </div>
+  <div class="field">
+    <label>Assets Home</label>
+    <input name="assetsHome" type="text" placeholder="default: {{rootPath}}{{#if app}}{{app.key}}{{else}}{App Key}{{/if}}" value="{{app.assetsHome}}">
+  </div>
+  <div class="field">
+    <label>Config Path</label>
+    <input name="configPath" type="text" placeholder="default: {{rootPath}}{{#if app}}{{app.key}}{{else}}{App Key}{{/if}}/back_config.yaml" value="{{app.configPath}}">
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <label>Config Js File</label>
+      <input name="configJsFile" type="text" placeholder="default: assets/scripts/config.js" value="{{app.configJsFile}}">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      {{!-- <input name="desc" type="text" placeholder="Description" value="{{desc}}"> --}}
+      <textarea class="desc" name="desc">{{app.desc}}</textarea>
+    </div>
+  </div>
+</form>

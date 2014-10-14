@@ -1,0 +1,96 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{#if title}}{{title}}{{else}}Eevee Editor{{/if}}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/eevee/vendor.css">
+    <link rel="stylesheet" href="/assets/eevee/eevee.css">
+  </head>
+  <body data-editor-context="{{json editorContext}}" data-group="{{group}}" data-app="{{app}}">
+    {{#with editorContext}}
+    <div class="editor">
+      {{#unless noPage}}
+      <div class="page-list-container">
+        <div class="page-list-title">页面列表{{#equals mode "OFFICIAL"}}<a class="js-page-new" href="#"><i class="fa fa-plus"></i>&nbsp;新建</a>{{/equals}}</div>
+        <ul class="page-list">
+          {{#each pages}}
+          <li class="{{#equals path ../indexPage.path}}page-index{{/equals}} {{#equals path ../currentPage.path}}page-current{{/equals}}" data-page-id="{{id}}" data-page-path="{{path}}">
+            <div class="name">{{name}}</div>
+            <div class="path">路径: {{path}}</div>
+            {{#equals ../mode "OFFICIAL"}}
+            <div class="settings">
+              <a href="#" class="js-page-set-index"><i class="fa fa-fw fa-sign-in"></i></a>
+              <a href="#" class="js-page-setting"><i class="fa fa-fw fa-gear"></i></a>
+              <a href="#" class="js-page-delete"><i class="fa fa-fw fa-times"></i></a>
+            </div>
+            {{/equals}}
+            {{#equals ../mode "SHOP"}}
+            <div class="settings">
+              <a href="#" class="js-page-setting"><i class="fa fa-fw fa-gear"></i></a>
+            </div>
+            {{/equals}}
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/unless}}
+      <div class="editor-main">
+        <div class="editor-menu">
+          <div class="editor-menu-container">
+            <ul class="editor-menu-crumbs"></ul>
+            <ul class="editor-menu-control">
+              <li>
+                <span class="editor-show-key-shortcut">&nbsp;<i class="fa fa-keyboard-o"></i>&nbsp;</span>
+              </li>
+              <li>
+                <button class="js-page-save"><i class="fa fa-save"></i>&nbsp;保存</button>
+              </li>
+              <li>
+                <label class="switch">
+                  <input class="js-page-overview" type="checkbox" name="overview">
+                  <span class="switch-toggle" data-on="正常" data-off="概览"></span>
+                </label>
+              </li>
+              <li>
+                <label class="switch">
+                  <input class="js-page-preview" type="checkbox" name="preview">
+                  <span class="switch-toggle" data-on="编辑" data-off="预览"></span>
+                </label>
+              </li>
+              {{#unless noPage}}
+              <li>
+                <label class="switch">
+                  <input class="js-page-list" type="checkbox" name="list">
+                  <span class="switch-toggle" data-on="页面" data-off="页面"></span>
+                </label>
+              </li>
+              {{/unless}}
+            </ul>
+          </div>
+        </div>
+        <iframe class="editor-area" frameborder="0" scrolling="auto"></iframe>
+      </div>
+      <div class="editor-config-panel hide">
+        <h1>选项</h1>
+        <div class="editor-config-panel-container">
+          <div class="editor-config-toolbar"></div>
+          <ul class="editor-config-parts">
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/eevee/vendor.js"></script>
+    <script src="/assets/eevee/eevee.js"></script>
+    <script src="{{configJs}}"></script>
+    {{/with}}
+    <script>
+      Pokeball = require("pokeball");
+      require("eevee");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+{{#component "js-comp supplier-performance operation-platform"}}
+	{{#with _DATA_}}
+       <p class="components-title"><strong>供应商详情</strong> - {{supplierTQRDCInfo.supplierName}}
+         <a href="/suppliers/material-detail?supplierCode={{supplierTQRDCInfo.supplierCode}}" class="btn btn-primary">查看物料号明细</a>
+
+       </p>
+
+       <div class="overall-plots">
+           <div class="overall-performance">
+               <table class="table table-striped">
+                   <thead>
+                   <tr>
+                       <th colspan="3">供应商绩效</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr>
+                       <td>当月绩效: <span id="compositeScore" class="currency">{{supplierTQRDCInfo.compositeScore}}</span>分</td>
+                       <td class="showScope"><!--短板: <span class="currency">{{supplierTQRDCInfo.shortComing}}--></td>
+                       <td>短板:<span class="currency">{{supplierTQRDCInfo.shortComing}}</span></td>
+                   </tr>
+                   <tr>
+                       <td colspan="3">
+                           <div class="plot" data-points="[{{supplierTQRDCInfo.techScore}}, {{supplierTQRDCInfo.qualityScore}}, {{supplierTQRDCInfo.respScore}}, {{supplierTQRDCInfo.deliverScore}}, {{supplierTQRDCInfo.costScore}}]"></div>
+                       </td>
+                   </tr>
+                   </tbody>
+               </table>
+           </div>
+           <div class="overall-tendency">
+               <table class="table table-striped">
+                   <thead>
+                   <tr>
+                       <th colspan="2">绩效走势</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr>
+                       <td>模块名称: <span class="currency">{{supplierTQRDCInfo.module}}</span></td>
+                       <td>模块供应商总数: <span class="currency">{{#if moduleCount}}{{moduleCount.supplierCount}}{{else}}0{{/if}}</span></td>
+                   </tr>
+                   <tr>
+                       <td colspan="2" >
+                           <div class="plot" data-points="{{modules}}"></div>
+                       </td>
+                   </tr>
+                   </tbody>
+               </table>
+           </div>
+           <div class="overall-order last">
+               <table class="table table-striped">
+                   <thead>
+                   <tr>
+                       <th colspan="2">模块排序</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                   <tr>
+                       <td>当月排名: 第<span class="currency">{{supplierTQRDCInfo.rank}}</span>名</td>
+                       <td>红区属于淘汰区,年内红区<span class="currency">{{redLocations}}</span>次</td>
+                   </tr>
+                   <tr>
+                       <td colspan="2">
+                           <div class="plot" data-points="{{locations}}"></div>
+                       </td>
+                   </tr>
+                   </tbody>
+               </table>
+           </div>
+       </div>
+
+       <h3>用户评价</h3>
+
+       <table class="table table-striped">
+           <thead>
+           <tr>
+               <th width="210">技术</th>
+               <th width="210">质量</th>
+               <th width="210">响应</th>
+               <th width="210">交付</th>
+               <th width="210">成本</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr>
+               <td class="left-text">拖期天数: <span class="currency">{{supplierTQRDCInfo.delayDays}}</span><br>新品合格率: <span class="currency">{{supplierTQRDCInfo.newProductPass}}</span></td>
+               <td class="left-text">现场不良率: <span class="currency">{{supplierTQRDCInfo.liveBad}}</span><br> 市场不良率: <span class="currency">{{supplierTQRDCInfo.marketBad}}</span></td>
+               <td class="left-text">需求响应度: <span class="currency">{{supplierTQRDCInfo.requirementResp}}</span></td>
+               <td class="left-text">交付差异: <span class="currency">{{supplierTQRDCInfo.deliverDiff}}</span></td>
+               <td class="left-text">增值: <span class="currency">{{supplierTQRDCInfo.increment}}</span></td>
+           </tr>
+           <tr class="tendency-detail-plots">
+               <td class="left-text">技术得分: 得分{{supplierTQRDCInfo.techScore}}分<br style="display:none;"><!--趋势:{{tTrend}}--></br><div class="plot" data-points="{{t}}"></div></td>
+               <td class="left-text">质量得分: 得分{{supplierTQRDCInfo.qualityScore}}分<br style="display:none;"><!--趋势:{{qTrend}}--></br><div class="plot" data-points="{{q}}"></div></td>
+               <td class="left-text">响应得分: 得分{{supplierTQRDCInfo.respScore}}分<br style="display:none;"><!--趋势:{{rTrend}}--></br><div class="plot" data-points="{{r}}"></div></td>
+               <td class="left-text">交付得分: 得分{{supplierTQRDCInfo.deliverScore}}分<br style="display:none;"><!--趋势:{{dTrend}}--></br><div class="plot" data-points="{{d}}"></div></td>
+               <td class="left-text">成本得分: 本月{{supplierTQRDCInfo.costScore}}分<br style="display:none;"><!--趋势:{{cTrend}}--></br><div class="plot" data-points="{{c}}"></div></td>
+           </tr>
+           <tr class="order-detail-plots">
+               <td class="left-text">技术排名: 本月排名{{supplierTQRDCInfo.techScoreRank}}<br style="display:none;"><!--趋势:{{tRanksTrend}}--></br><div class="plot" data-points="{{tranks}}"></div></td>
+               <td class="left-text">质量排名: 本月排名{{supplierTQRDCInfo.qualityScoreRank}}<br style="display:none;"><!--趋势:{{qRanksTrend}}--></br><div class="plot" data-points="{{qranks}}"></div></td>
+               <td class="left-text">响应排名: 本月排名{{supplierTQRDCInfo.respScoreRank}}<br style="display:none;"><!--趋势:{{rRanksTrend}}--></br><div class="plot" data-points="{{rranks}}"></div></td>
+               <td class="left-text">交付排名: 本月排名{{supplierTQRDCInfo.deliveryScoreRank}}<br style="display:none;"><!--趋势:{{dRanksTrend}}--></br><div class="plot" data-points="{{dranks}}"></div></td>
+               <td class="left-text">成本排名: 本月排名{{supplierTQRDCInfo.costScoreRank}}<br style="display:none;"><!--趋势:{{cRanksTrend}}--></br><div class="plot" data-points="{{cranks}}"></div></td>
+           </tr>
+           </tbody>
+       </table>
+       <h3><button class="btn btn-primary js-show-strategy">查看策略</button>&nbsp;&nbsp;<a href="/suppliers/resume-detail?userId={{supplierTQRDCInfo.userId}}" class="btn btn-primary">查看履历<a/></h3>
+	{{/with}}
+{{/component}}

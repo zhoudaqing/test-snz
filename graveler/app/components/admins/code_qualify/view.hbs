@@ -1,0 +1,55 @@
+{{#component "supplier-audit operation-platform"}}
+<p class="components-title"><strong>供应商编码校验</strong></p>
+
+<div id="block" class="block">
+  <form id="js-supplier-audit-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="email">供应商名称:</label>
+        <input type="text" name="supplierName" value="{{supplierName}}">
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a>
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="170">供应商名称</th>
+      <th width="140">主营业务</th>
+      <th width="92">用户名</th>
+      <th width="80">公司规模</th>
+      <th width="90">注册资本</th>
+      <th width="90">所属行业</th>
+      <th width="90">法人代表</th>
+      <th width="120">联系电话</th>
+      <th width="168">操作</th>
+    </tr>
+  </thead>
+  <tbody name="{{json this}}">
+    {{#each _DATA_.data}}
+    <tr>
+      <td>{{corporation}}</td>
+      <td>{{#each mainBusinessNames}}{{this}} {{/each}}</td>
+      <td>{{nick}}</td>
+      <td>{{#if personScale}}{{personScale}}人{{/if}}</td>
+      <td>{{regCapital}}万元</td>
+      <td></td>
+      <td>{{initAgent}}</td>
+      <td>{{officePhone}}</td>
+      <td>
+        <a class="btn" href="/suppliers/code-detail?supplierId={{userId}}">编码验证详情</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div id="js-pagination" class="right-text"></div>
+{{/component}}

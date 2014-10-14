@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+
+        <!-- user related entities -->
+        <typeAlias alias="User" type="io.terminus.snz.user.model.User"/>
+        <typeAlias alias="Company" type="io.terminus.snz.user.model.Company"/>
+        <typeAlias alias="UserComplaint" type="io.terminus.snz.user.model.UserComplaint"/>
+        <typeAlias alias="ComplaintChat" type="io.terminus.snz.user.model.ComplaintChat"/>
+        <typeAlias alias="Finance" type="io.terminus.snz.user.model.Finance"/>
+        <typeAlias alias="ContactInfo" type="io.terminus.snz.user.model.ContactInfo"/>
+        <typeAlias alias="CompanyRank" type="io.terminus.snz.user.model.CompanyRank"/>
+        <typeAlias alias="AdditionalDoc" type="io.terminus.snz.user.model.AdditionalDoc"/>
+        <typeAlias alias="CompanyMainBusiness" type="io.terminus.snz.user.model.CompanyMainBusiness"/>
+        <typeAlias alias="CompanyMainBusinessTmp" type="io.terminus.snz.user.model.CompanyMainBusinessTmp"/>
+        <typeAlias alias="Address" type="io.terminus.snz.user.model.Address"/>
+        <typeAlias alias="PurchaserExtra" type="io.terminus.snz.user.model.PurchaserExtra"/>
+        <typeAlias alias="PurchaserAuthority" type="io.terminus.snz.user.model.PurchaserAuthority"/>
+        <typeAlias alias="SupplierTQRDCInfo" type="io.terminus.snz.user.model.SupplierTQRDCInfo"/>
+        <typeAlias alias="BlackList" type="io.terminus.snz.user.model.BlackList"/>
+        <typeAlias alias="CompanyExtraRD" type="io.terminus.snz.user.model.CompanyExtraRD"/>
+        <typeAlias alias="CompanyExtraQuality" type="io.terminus.snz.user.model.CompanyExtraQuality"/>
+        <typeAlias alias="CompanyExtraResponse" type="io.terminus.snz.user.model.CompanyExtraResponse"/>
+        <typeAlias alias="CompanyExtraDelivery" type="io.terminus.snz.user.model.CompanyExtraDelivery"/>
+        <typeAlias alias="CompanyExtraScaleAndCost" type="io.terminus.snz.user.model.CompanyExtraScaleAndCost"/>
+        <typeAlias alias="ProductLine" type="io.terminus.snz.user.model.ProductLine"/>
+        <typeAlias alias="CompanySupplyPark" type="io.terminus.snz.user.model.CompanySupplyPark"/>
+        <typeAlias alias="SupplierLocationInfo" type="io.terminus.snz.user.model.SupplierLocationInfo"/>
+        <typeAlias alias="SupplierApproveLog" type="io.terminus.snz.user.model.SupplierApproveLog"/>
+        <typeAlias alias="SupplierCountBySupplyPark" type="io.terminus.snz.user.model.SupplierCountBySupplyPark"/>
+        <typeAlias alias="SupplierCountByStatus" type="io.terminus.snz.user.model.SupplierCountByStatus"/>
+        <typeAlias alias="SupplierQualification" type="io.terminus.snz.requirement.model.SupplierQualification"/>
+        <typeAlias alias="SupplierCountByLevel" type="io.terminus.snz.user.model.SupplierCountByLevel"/>
+        <typeAlias alias="SupplierModuleDetail" type="io.terminus.snz.user.model.SupplierModuleDetail"/>
+        <typeAlias alias="DetailQuota" type="io.terminus.snz.requirement.model.DetailQuota"/>
+        <typeAlias alias="SupplierCountByIndustry" type="io.terminus.snz.user.model.SupplierCountByIndustry"/>
+        <typeAlias alias="SupplierCreditQualify" type="io.terminus.snz.user.model.SupplierCreditQualify"/>
+        <typeAlias alias="MainBusinessApprover" type="io.terminus.snz.user.model.MainBusinessApprover"/>
+        <typeAlias alias="ProductOwner" type="io.terminus.snz.user.model.ProductOwner"/>
+        <typeAlias alias="SupplierModuleCount" type="io.terminus.snz.user.model.SupplierModuleCount"/>
+        <typeAlias alias="SupplierResourceMaterialInfo" type="io.terminus.snz.user.model.SupplierResourceMaterialInfo"/>
+        <typeAlias alias="SupplierResourceMaterialLog" type="io.terminus.snz.user.model.SupplierResourceMaterialLog"/>
+        <typeAlias alias="SupplierResourceMaterialSubject" type="io.terminus.snz.user.model.SupplierResourceMaterialSubject"/>
+        <typeAlias alias="TQRDCManagerContact" type="io.terminus.snz.user.model.TQRDCManagerContact"/>
+        <typeAlias alias="SupplierContact" type="io.terminus.snz.user.model.SupplierContact"/>
+        <typeAlias alias="YzlCreditQualify" type="io.terminus.snz.user.model.YzlCreditQualify"/>
+        <!-- supplier group related -->
+        <typeAlias alias="SupplierGroupRelation" type="io.terminus.snz.user.model.SupplierGroupRelation"/>
+
+        <!-- requirement related entities -->
+        <typeAlias alias="Requirement" type="io.terminus.snz.requirement.model.Requirement"/>
+        <typeAlias alias="Module" type="io.terminus.snz.requirement.model.Module"/>
+        <typeAlias alias="ModuleFactory" type="io.terminus.snz.requirement.model.ModuleFactory"/>
+        <typeAlias alias="RequirementTime" type="io.terminus.snz.requirement.model.RequirementTime"/>
+        <typeAlias alias="ReqPredictTime" type="io.terminus.snz.requirement.model.ReqPredictTime"/>
+        <typeAlias alias="RequirementTeam" type="io.terminus.snz.requirement.model.RequirementTeam"/>
+        <typeAlias alias="RequirementSolution" type="io.terminus.snz.requirement.model.RequirementSolution"/>
+        <typeAlias alias="ModuleSolution" type="io.terminus.snz.requirement.model.ModuleSolution"/>
+        <typeAlias alias="RequirementRank" type="io.terminus.snz.requirement.model.RequirementRank"/>
+        <typeAlias alias="RequirementSend" type="io.terminus.snz.requirement.model.RequirementSend"/>
+        <typeAlias alias="ModuleQuota" type="io.terminus.snz.requirement.model.ModuleQuota"/>
+        <typeAlias alias="ModuleQuotation" type="io.terminus.snz.requirement.model.ModuleQuotation"/>
+        <typeAlias alias="BackendCategory" type="io.terminus.snz.category.model.BackendCategory"/>
+        <typeAlias alias="FrontendCategory" type="io.terminus.snz.category.model.FrontendCategory"/>
+        <typeAlias alias="BackendCategoryProperty" type="io.terminus.snz.category.model.BackendCategoryProperty"/>
+        <typeAlias alias="CategoryBinding" type="io.terminus.snz.category.model.CategoryBinding"/>
+        <typeAlias alias="Deposit" type="io.terminus.snz.requirement.model.Deposit"/>
+        <typeAlias alias="AddressPark" type="io.terminus.snz.related.models.AddressPark"/>
+        <typeAlias alias="AddressFactory" type="io.terminus.snz.related.models.AddressFactory"/>
+        <typeAlias alias="CategoryFactory" type="io.terminus.snz.related.models.CategoryFactory"/>
+        <typeAlias alias="OldModule" type="io.terminus.snz.requirement.model.OldModule"/>
+        <typeAlias alias="DerivativeDiff" type="io.terminus.snz.requirement.model.DerivativeDiff"/>
+        <typeAlias alias="ImportGood" type="io.terminus.snz.requirement.model.ImportGood"/>
+        <typeAlias alias="ImportGoodRow" type="io.terminus.snz.requirement.model.ImportGoodRow"/>
+        <typeAlias alias="ImportGoodList" type="io.terminus.snz.requirement.model.ImportGoodList"/>
+        <typeAlias alias="IdentifyName" type="io.terminus.snz.requirement.model.IdentifyName"/>
+        <typeAlias alias="RiskMortgagePayment" type="io.terminus.snz.requirement.model.RiskMortgagePayment"/>
+        <typeAlias type="io.terminus.snz.eai.model.MDMConfigure" alias="mdmConfigure"/>
+        <typeAlias alias="NewProductImport" type="io.terminus.snz.requirement.model.NewProductImport"/>
+        <typeAlias alias="NewProductStep" type="io.terminus.snz.requirement.model.NewProductStep"/>
+        <typeAlias alias="SupplierTQRDCInfoTmp" type="io.terminus.snz.user.model.SupplierTQRDCInfoTmp"/>
+        <typeAlias alias="mwOldModuleInfo" type="io.terminus.snz.requirement.model.MWOldModuleInfo"/>
+        <typeAlias alias="marketBadRecord" type="io.terminus.snz.requirement.model.MarketBadRecord"/>
+        <typeAlias alias="sceneBadRecord" type="io.terminus.snz.requirement.model.SceneBadRecord"/>
+        <typeAlias alias="mwSceneBadRecord" type="io.terminus.snz.requirement.model.MWSceneBadRecord"/>
+        <typeAlias alias="mdmOldModuleInfo" type="io.terminus.snz.eai.model.MDMOldModuleInfo"/>
+        <typeAlias alias="mwMarketBadRecord" type="io.terminus.snz.requirement.model.MWMarketBadRecord"/>
+        <typeAlias alias="RequirementQuestionnaire" type="io.terminus.snz.requirement.model.RequirementQuestionnaire"/>
+        <typeAlias alias="TmoneBadRecord" type="io.terminus.snz.requirement.model.TmoneBadRecord"/>
+
+        <!-- sns related entities -->
+        <typeAlias alias="Topic" type="io.terminus.snz.sns.models.Topic"/>
+        <typeAlias alias="TopicUser" type="io.terminus.snz.sns.models.TopicUser"/>
+        <typeAlias alias="Reply" type="io.terminus.snz.sns.models.Reply"/>
+
+        <!-- message related entities-->
+        <typeAlias alias="Message" type="io.terminus.snz.message.models.Message"/>
+
+        <!-- other related -->
+        <typeAlias alias="Compensation" type="io.terminus.snz.related.models.Compensation"/>
+        <typeAlias alias="CompensationDetail" type="io.terminus.snz.related.models.CompensationDetail"/>
+        <typeAlias alias="CompensationReply" type="io.terminus.snz.related.models.CompensationReply"/>
+        <typeAlias alias="FactoryOrgan" type="io.terminus.snz.related.models.FactoryOrgan"/>
+        <typeAlias alias="FactoryProductionDirector" type="io.terminus.snz.related.models.FactoryProductionDirector"/>
+
+        <typeAlias alias="mdmBankView" type="io.terminus.snz.eai.model.MDMBankView"/>
+        <typeAlias alias="mwSceneBadRecord" type="io.terminus.snz.requirement.model.MWSceneBadRecord"/>
+        <typeAlias type="io.terminus.snz.eai.model.OutQuotaInfo" alias="outQuotaInfo"/>
+        <typeAlias type="io.terminus.snz.eai.model.OutPriceInfo" alias="outPriceInfo"/>
+        <typeAlias alias="SupplierResource" type="io.terminus.snz.user.model.SupplierResource"/>
+        <typeAlias alias="SupplierReparationSumaries" type="io.terminus.snz.user.model.SupplierReparationSumaries"/>
+        <typeAlias alias="SupplierAppointed" type="io.terminus.snz.user.model.SupplierAppointed"/>
+    </typeAliases>
+</configuration>

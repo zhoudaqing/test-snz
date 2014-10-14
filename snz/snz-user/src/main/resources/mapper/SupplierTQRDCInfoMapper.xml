@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SupplierTQRDCInfo">
+    <resultMap id="SupplierTQRDCInfoMap" type="SupplierTQRDCInfo">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="company_id" property="companyId"/>
+        <result column="special_number" property="specialNumber"/>
+        <result column="supplier_code" property="supplierCode"/>
+        <result column="supplier_name" property="supplierName"/>
+        <result column="module" property="module"/>
+        <result column="product_line_id" property="productLineId"/>
+        <result column="product_line" property="productLine"/>
+        <result column="rank" property="rank"/>
+        <result column="location" property="location"/>
+        <result column="month" property="month"/>
+        <result column="date" property="date"/>
+        <result column="composite_score" property="compositeScore"/>
+        <result column="supplier_status" property="supplierStatus"/>
+        <result column="tech_score" property="techScore"/>
+        <result column="delay_days" property="delayDays"/>
+        <result column="new_product_pass" property="newProductPass"/>
+        <result column="quality_score" property="qualityScore"/>
+        <result column="live_bad" property="liveBad"/>
+        <result column="market_bad" property="marketBad"/>
+        <result column="resp_score" property="respScore"/>
+        <result column="program_promised_rate" property="programPromisedRate"/>
+        <result column="program_selected_rate" property="programSelectedRate"/>
+        <result column="program_adopted_rate" property="programAdoptedRate"/>
+        <result column="requirement_resp" property="requirementResp"/>
+        <result column="deliver_score" property="deliverScore"/>
+        <result column="deliver_diff" property="deliverDiff"/>
+        <result column="cost_score" property="costScore"/>
+        <result column="increment" property="increment"/>
+        <result column="tech_score_rank" property="techScoreRank"/>
+        <result column="tech_location" property="techLocation"/>
+        <result column="quality_score_rank" property="qualityScoreRank"/>
+        <result column="quality_ocation" property="qualityLocation"/>
+        <result column="resp_score_rank" property="respScoreRank"/>
+        <result column="resp_ocation" property="respLocation"/>
+        <result column="delivery_score_rank" property="deliveryScoreRank"/>
+        <result column="delivery_location" property="deliveryLocation"/>
+        <result column="affect_delivery_count" property="affectDeliveryCount"/>
+        <result column="cost_score_rank" property="costScoreRank"/>
+        <result column="cost_location" property="costLocation"/>
+        <result column="price_reduction_amount" property="priceReductionAmount"/>
+        <result column="price_reduction_range" property="priceReductionRange"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <resultMap id="SupplierLocationInfoMap" type="SupplierLocationInfo">
+        <result column="month" property="month"/>
+        <result column="location" property="location"/>
+        <result column="count" property="count"/>
+    </resultMap>
+
+    <!-- 供应商综合得分情况 -->
+    <resultMap id="supplierCompositeScoreInfoMap" type="SupplierTQRDCInfo">
+        <id property="id" column="id"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="productLineId" column="product_line_id"/>
+        <result property="productLine" column="product_line"/>
+        <result property="compositeScore" column="composite_score"/>
+        <result property="supplierStatus" column="supplier_status"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_supplier_tqrdc_infos
+    </sql>
+
+    <sql id="columns">
+      user_id,company_id,special_number,supplier_code,supplier_name,module,
+      product_line_id,product_line,rank,location,`month`,`date`,composite_score,
+      supplier_status,tech_score,delay_days,new_product_pass,quality_score,
+      live_bad,market_bad,resp_score,program_promised_rate,program_selected_rate,
+      program_adopted_rate,requirement_resp,deliver_score,deliver_diff,
+      cost_score,increment,tech_score_rank,tech_location,quality_score_rank,quality_location,
+      resp_score_rank,resp_location,delivery_score_rank,delivery_location,affect_delivery_count,
+      cost_score_rank,cost_location,price_reduction_amount,
+      price_reduction_range,created_at,updated_at
+    </sql>
+
+    <select id="findBySupplierName" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos
+        <where>
+            supplier_name = #{supplierName}
+            <if test="monthStart!=null">and month &gt;=#{monthStart}</if>
+            <if test="monthEnd!=null">and month &lt;=#{monthEnd}</if>
+        </where>
+        order by month asc
+    </select>
+
+    <select id="findBySupplierCode" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos
+        <where>
+            supplier_code = #{supplierCode}
+            <if test="monthStart!=null">and month &gt;=#{monthStart}</if>
+            <if test="monthEnd!=null">and month &lt;=#{monthEnd}</if>
+        </where>
+        order by month asc
+    </select>
+
+    <select id="findByUserId" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos
+        <where>
+            user_id = #{userId}
+            <if test="monthStart!=null">and month &gt;=#{monthStart}</if>
+            <if test="monthEnd!=null">and month &lt;=#{monthEnd}</if>
+        </where>
+        order by month asc
+    </select>
+
+    <!-- 按月查询供应商的综合得分绩效 -->
+    <select id="findCompositeScoreOfMonth" parameterType="string" resultMap="supplierCompositeScoreInfoMap">
+        SELECT id, supplier_code, supplier_name, product_line_id,
+               product_line, composite_score, supplier_status
+          FROM snz_supplier_tqrdc_infos
+        WHERE month = #{month}
+        ORDER BY composite_score desc
+    </select>
+
+    <select id="findById" resultMap="SupplierTQRDCInfoMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_supplier_tqrdc_infos where id = #{id}
+    </select>
+
+    <select id="findMaxMonth" resultType="string">
+       select max(month) from snz_supplier_tqrdc_infos
+    </select>
+
+    <insert id="insert" parameterType="SupplierTQRDCInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_supplier_tqrdc_infos(<include refid="columns"/>)
+        values (
+         #{userId},#{companyId},#{specialNumber},#{supplierCode},#{supplierName},
+         #{module},#{productLineId},#{productLine},#{rank},#{location},#{month},#{date},
+         #{compositeScore},#{supplierStatus},#{techScore},#{delayDays},#{newProductPass},
+         #{qualityScore},#{liveBad},#{marketBad},#{respScore},#{programPromisedRate},
+         #{programSelectedRate},#{programAdoptedRate},#{requirementResp},#{deliverScore},
+         #{deliverDiff},#{costScore},#{increment},#{techScoreRank},#{techLocation},
+         #{qualityScoreRank},#{qualityLocation},#{respScoreRank},#{respLocation},
+         #{deliveryScoreRank},#{deliveryLocation},#{affectDeliveryCount},#{costScoreRank},#{costLocation},
+         #{priceReductionAmount},#{priceReductionRange},now(),now()
+        )
+    </insert>
+
+
+    <insert id="batchInsert" parameterType="list">
+        insert into snz_supplier_tqrdc_infos(<include refid="columns"/>)
+        values
+        <foreach collection="list" item="spl" separator=",">
+           (#{spl.userId},#{spl.companyId},#{spl.specialNumber},#{spl.supplierCode},#{spl.supplierName},
+            #{spl.module},#{spl.productLineId},#{spl.productLine},#{spl.rank},#{spl.location},#{spl.month},#{spl.date},
+            #{spl.compositeScore},#{spl.supplierStatus},#{spl.techScore},#{spl.delayDays},#{spl.newProductPass},
+            #{spl.qualityScore},#{spl.liveBad},#{spl.marketBad},#{spl.respScore},#{spl.programPromisedRate},
+            #{spl.programSelectedRate},#{spl.programAdoptedRate},#{spl.requirementResp},#{spl.deliverScore},
+            #{spl.deliverDiff},#{spl.costScore},#{spl.increment},#{spl.techScoreRank},#{spl.techLocation},
+            #{spl.qualityScoreRank},#{spl.qualityLocation},#{spl.respScoreRank},#{spl.respLocation},
+            #{spl.deliveryScoreRank},#{spl.deliveryLocation},#{spl.affectDeliveryCount},#{spl.costScoreRank},#{spl.costLocation},
+            #{spl.priceReductionAmount},#{spl.priceReductionRange},now(),now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="SupplierTQRDCInfo">
+        update snz_supplier_tqrdc_infos
+        <set>
+          <if test="techScoreRank!=null">tech_score_rank=#{techScoreRank},</if>
+          <if test="qualityScoreRank!=null">quality_score_rank=#{qualityScoreRank},</if>
+          <if test="respScoreRank!=null">resp_score_rank=#{respScoreRank},</if>
+          <if test="deliveryScoreRank!=null">delivery_score_rank=#{deliveryScoreRank},</if>
+          <if test="costScoreRank!=null">cost_score_rank=#{costScoreRank},</if>
+          <if test="supplierStatus!=null">supplier_status = #{supplierStatus},</if>
+          updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="countBy" resultType="long">
+        select count(id) from snz_supplier_tqrdc_infos
+        <where>
+            <if test="month!=null">month=#{month}</if>
+            <if test="compositeScoreStart!=null">and composite_score &gt;=#{compositeScoreStart}</if>
+            <if test="compositeScoreEnd!=null">and composite_score &lt;=#{compositeScoreEnd}</if>
+            <if test="supplierName!=null">and supplier_name like CONCAT('%',CONCAT(#{supplierName}, '%'))</if>
+            <if test="supplierCode!=null">and supplier_code=#{supplierCode}</if>
+            <if test="module!=null">and module=#{module}</if>
+        </where>
+    </select>
+
+    <select id="findBy" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos
+        <where>
+            <if test="month!=null">month=#{month}</if>
+            <if test="compositeScoreStart!=null">and composite_score &gt;=#{compositeScoreStart}</if>
+            <if test="compositeScoreEnd!=null">and composite_score &lt;=#{compositeScoreEnd}</if>
+            <if test="supplierName!=null">and supplier_name like CONCAT('%',CONCAT(#{supplierName}, '%'))</if>
+            <if test="supplierCode!=null">and supplier_code=#{supplierCode}</if>
+            <if test="module!=null">and module=#{module}</if>
+        </where>
+        <if test="orderBy=='compositeScore'">order by composite_score</if>
+        <if test="orderBy=='techScore'">order by tech_score</if>
+        <if test="orderBy=='costScore'">order by cost_score</if>
+        <if test="orderBy=='deliverScore'">order by deliver_score</if>
+        <if test="orderBy=='respScore'">order by resp_score</if>
+        <if test="orderBy=='qualityScore'">order by quality_score</if>
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="findByMonth" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos where month=#{month}
+    </select>
+
+    <select id="findLastByUserId" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/>
+        from snz_supplier_tqrdc_infos
+        where user_id=#{userId} order by month desc limit 1
+    </select>
+
+    <select id="groupByMonthAndLocation" resultMap="SupplierLocationInfoMap">
+       SELECT month, location, COUNT(1) as count FROM
+       <include refid="tb_name"/>
+       GROUP BY month, location ORDER BY null
+    </select>
+
+    <update id="updateSupplierStatusSmall" parameterType="string">
+        UPDATE snz_supplier_tqrdc_infos
+        <set>
+            supplier_status = 3,
+            updated_time = now()
+        </set>
+        <where>
+            <if test="month!=null">and month=#{month}</if>
+            AND <![CDATA[composite_score < 70]]>
+        </where>
+    </update>
+
+    <update id="updateSupplierStatusBig" parameterType="string">
+        UPDATE snz_supplier_tqrdc_infos
+        <set>
+            supplier_status = 0,
+            updated_time = now()
+        </set>
+        <where>
+            <if test="month!=null">and month=#{month}</if>
+            AND <![CDATA[composite_score > 80]]>
+        </where>
+    </update>
+
+    <select id="findByMonthOne" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos where month=#{month}
+    </select>
+
+    <select id="findByMonthAndUserIds" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos
+        where month=#{month} and user_id in
+        <foreach collection="list" separator="," open="(" close=")" item="userId">
+            #{userId}
+        </foreach>
+    </select>
+
+    <!--  加载供应商 userId、companyId、module 信息  -->
+    <select id="loadSupplierBaseInfos" resultType="io.terminus.snz.user.model.SupplierBaseInfo">
+       SELECT A.supplier_code supplierCode,
+                   A.supplier_name supplierName,
+                   B.`user_id` userId,
+                   B.`company_id` companyId,
+              CASE WHEN (A.`module` is NULL or A.`module` ='') then B.module else A.`module` end module
+       FROM `snz_supplier_tqrdc_infos` A left join
+               (SELECT B.`supplier_code`, B.`corporation` supplier_name, A.`user_id`, A.`company_id`, A.module
+                     FROM(
+                         SELECT b.name module, a.`user_id`, a.`company_id`
+                           FROM(SELECT * FROM `snz_company_main_businesses` GROUP BY user_id) a
+                                 LEFT JOIN `snz_frontend_categorys` b on a.`first_level_id` = b.id
+                             ) A
+                     LEFT JOIN `snz_companies` B on A.`company_id` = B.`id`
+                    WHERE B.`corporation` is not null and B.`corporation` != ''
+                ) B
+       ON A.`supplier_name` = B.`supplier_name`
+       WHERE A.`month` = '2014-04' and A.supplier_name is not null
+         GROUP BY A.supplier_name
+    </select>
+
+
+    <delete id="deleteByMonth" parameterType="string">
+      DELETE FROM snz_supplier_tqrdc_infos where month = #{month}
+    </delete>
+
+
+    <select id="findByMonthAndModule" resultMap="SupplierTQRDCInfoMap">
+        select id,<include refid="columns"/> from snz_supplier_tqrdc_infos
+        where month=#{month} and module=#{module}
+    </select>
+
+    <select id="findUserIdsByMonthAndStrategy" resultType="long">
+        select user_id from snz_supplier_tqrdc_infos
+        <where>
+            month=#{month}
+            <if test="strategy==1">and composite_score &lt;70</if>
+            <if test="strategy==2">and composite_score &gt;=70 and composite_score &lt;=79</if>
+            <if test="strategy==3">and composite_score &gt;=80 and composite_score &lt;=89</if>
+            <if test="strategy==4">and composite_score &gt;=90</if>
+            <if test="list!=null">
+                and user_id in
+                <foreach collection="list" separator="," open="(" close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>

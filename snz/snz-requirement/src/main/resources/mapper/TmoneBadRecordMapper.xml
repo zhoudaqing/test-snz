@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TmoneBadRecord">
+    <resultMap id="TmoneBadRecordMap" type="TmoneBadRecord">
+        <id property="id"                   column="id"/>
+        <result property="listId"           column="list_id"/>
+        <result property="listNum"          column="list_num"/>
+        <result property="factory"          column="factory"/>
+        <result property="numOfProof"       column="num_of_proof"/>
+        <result property="numOfParam"       column="num_of_param"/>
+        <result property="supplierAccount"  column="supplier_account"/>
+        <result property="materielNo"       column="materiel_no"/>
+        <result property="timeOfDelivery"   column="time_of_delivery"/>
+        <result property="rTimeOfDelivery"  column="r_time_of_delivery"/>
+        <result property="yTimeOfDelivery"  column="y_time_of_delivery"/>
+        <result property="numOfList"        column="num_of_list"/>
+        <result property="numOfDelivery"    column="num_of_delivery"/>
+        <result property="numOfDifference"  column="num_of_difference"/>
+        <result property="descOfDifference" column="desc_of_difference"/>
+        <result property="currentDay"       column="current_day"/>
+        <result property="currentTime"      column="current_time"/>
+        <result property="createdAt"        column="created_at"/>
+        <result property="updatedAt"        column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+      list_id, list_num, factory, num_of_proof, num_of_param, supplier_account, materiel_no, time_of_delivery,
+      r_time_of_delivery, y_time_of_delivery, num_of_list, num_of_delivery, num_of_difference, desc_of_difference,
+      current_day, current_time, created_at, updated_at
+    </sql>
+
+    <select id="findBetween" resultMap="TmoneBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from snz_compensation_details
+        <where>
+            <if test="vCode!=null"> and supplier_account=#{vCode} </if>
+            <if test="startAt!=null"> and current_day >= #{startAt} </if>
+            <if test="endAt!=null"> and current_day &lt; #{endAt} </if>
+        </where>
+    </select>
+
+    <select id="findMoneyList" parameterType="map" resultType="map">
+        select supplier_account, sum(money) money, current
+        from snz_compensations
+        <where>
+            <if test="vCode!=null"> and supplier_account=#{vCode} </if>
+            <if test="startAt!=null"> and current >= #{startAt} </if>
+            <if test="endAt!=null"> and current &lt; #{endAt} </if>
+        </where>
+        GROUP BY supplier_account,current
+        ORDER BY supplier_account
+    </select>
+
+    <select id="maxIdIn" resultType="long">
+        select max(id)
+        from snz_compensation_details
+        <where>
+            <if test="startAt!=null"> and current_day >= #{startAt} </if>
+            <if test="endAt!=null"> and current_day &lt; #{endAt} </if>
+        </where>
+    </select>
+
+    <select id="forDumpIn" resultMap="TmoneBadRecordMap">
+        select id, <include refid="columns"/>
+        from snz_compensation_details
+        <where>
+            <if test="maxId!=null"> id &lt; #{maxId} </if>
+            <if test="vCode!=null"> and supplier_account = #{vCode} </if>
+            <if test="startAt!=null"> and current_day >= #{startAt} </if>
+            <if test="endAt!=null"> and current_day &lt; #{endAt} </if>
+        </where>
+        order by id desc
+        limit #{offset}, #{limit}
+    </select>
+</mapper>

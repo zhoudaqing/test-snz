@@ -1,0 +1,87 @@
+{{#component "supplier-code js-comp operation-platform"}}
+  <p class="components-title"><strong>供应商编码校验详情</strong></p>
+  <form class="form form-aligned" id="code-detail-form">
+    <legend>基本信息</legend>
+    <hr> 
+    <br>
+    <div class="control-group">
+      <label>供应商名称：</label>
+      <input type="hidden" name="userId" class="{{userId}}">
+      <span>章磊海尔供应商</span>
+    </div>
+    <div class="control-group">
+      <label>纳税人登记号：</label>
+      <span>123456</span>
+    </div>
+    <div class="control-group">
+      <label>街道/房号：</label>
+      <span>浙江省杭州市浦沿街道</span>
+    </div>
+    <div class="control-group">
+      <label>邮政编码：</label>
+      <span>310016</span>
+    </div>
+    <div class="control-group">
+      <label>国家：</label>
+      <span>ZN</span>
+    </div>
+    <div class="control-group">
+      <label>地区：</label>
+      <span>zj</span>
+    </div>
+    <div class="control-group">
+      <label>电话：</label>
+      <span>18782998557</span>
+    </div>
+    <br>
+    <div class="control-group">
+      <label><span class="required">*</span>供应商账户组：</label>
+      <select name="supplier-group" id=""></select>
+    </div>
+    <br><br><br>
+    <legend>公司信息</legend>
+    <hr>
+    <br>
+    <div class="control-group">
+      <label><span class="required">*</span>公司代码：</label>
+      <select name="" id=""></select>
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>统驭科目：</label>
+      <select name="" id=""></select>
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>排序码：</label>
+      <select name="" id=""></select>
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>付款条件：</label>
+      <select name="" id=""></select>
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>付款方式：</label>
+      <select name="" id=""></select>
+    </div>
+    <legend>财务信息</legend>
+    <hr>
+    <br>
+    <div class="control-group">
+      <label><span class="required">*</span>采购组织：</label>
+      <select name="" id=""></select>
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>订单货币：</label>
+      <select name="coinType" required id="coin-type-select">
+        <option value="1">人民币</option>
+        <option value="2">英镑</option>
+        <option value="3">美元</option>
+        <option value="4">欧元</option>
+        <option value="5">日元</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <button id="user-{{id}}" class="btn btn-primary btn-medium js-submit-form" data-toggle="confirm" data-title="您确定修改吗?" type="button" data-event="confirm:changeForm" style="display: none;">确认修改</button>
+      <button type="submit" class="btn btn-primary btn-medium">确认修改</button>    
+    </div>
+  </form>
+{{/component}}

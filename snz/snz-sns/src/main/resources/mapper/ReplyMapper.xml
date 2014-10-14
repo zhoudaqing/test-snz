@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Reply">
+
+    <!-- 结果集映射 -->
+    <resultMap id="replyMap" type="Reply">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="receiverId" column="receiver_id"/>
+        <result property="receiverName" column="receiver_name"/>
+        <result property="reqId" column="req_id"/>
+        <result property="topicId" column="topic_id"/>
+        <result property="tid" column="tid"/>
+        <result property="pid" column="pid"/>
+        <result property="content" column="content"/>
+        <result property="companyName" column="company_name"/>
+        <result property="files" column="files"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_replies
+    </sql>
+
+    <sql id="cols_all">
+        id, <include refid="cols_execlue_id"/>
+    </sql>
+
+    <sql id="cols_execlue_id">
+        user_id, receiver_id, receiver_name, req_id, topic_id, tid, pid, company_name,
+        content, files, created_at, updated_at
+    </sql>
+
+    <sql id="cols_simple">
+        id, user_id, req_id, topid_id, company_name, content, files, created_at, updated_at
+    </sql>
+
+    <sql id="vals_all">
+        #{userId}, #{receiverId}, #{receiverName}, #{reqId}, #{topicId}, #{tid}, #{pid}, #{companyName},
+        #{content}, #{files}, now(), now()
+    </sql>
+
+    <!-- 根据单个id查找 -->
+    <select id="findById" parameterType="long" resultMap="replyMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据多个id查找 -->
+    <select id="findByIds" parameterType="list" resultMap="replyMap">
+        SELECT id,
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="Reply" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        (<include refid="vals_all"/>)
+    </insert>
+
+    <!-- 根据id删除 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tb_name"/> WHERE id=#{id}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deletes" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 根据topic_id删除 -->
+    <delete id="deleteByTopicId" parameterType="long">
+        DELETE FROM <include refid="tb_name"/> WHERE topic_id=#{topicId}
+    </delete>
+
+    <!-- 根据topic_ids批量删除 -->
+    <delete id="deleteByTopicIds" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE topic_id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 根据topic_id计数, 顶级回复 -->
+    <select id="countTopByTopicId" resultType="long" parameterType="map">
+        SELECT COUNT(1) FROM <include refid="tb_name"/>
+        WHERE topic_id=#{topicId} AND pid=0
+    </select>
+
+    <!-- 根据topic_id分页查询, 顶级回复 -->
+    <select id="paginationTopByTopicId" resultMap="replyMap" parameterType="map">
+        SELECT
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE topic_id=#{topicId} AND pid=0
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 计数发起者与回复者的回复 -->
+    <select id="countForPrivate" resultType="long" parameterType="map">
+        SELECT COUNT(1) FROM <include refid="tb_name"/>
+        WHERE topic_id=#{topicId} AND
+              user_id IN(#{topicCreatorId}, #{userId}) AND
+              pid = 0
+    </select>
+
+    <!-- 分页发起者与回复者的回复,圈子话题(私密话题) -->
+    <select id="paginationForPrivate" resultMap="replyMap" parameterType="map">
+        SELECT
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE topic_id=#{topicId} AND
+              user_id IN(#{topicCreatorId}, #{userId}) AND
+              pid = 0
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 获取顶级回复列表下所有的子回复列表 -->
+    <select id="listAllByTopId" parameterType="long" resultMap="replyMap">
+        SELECT
+        <include refid="cols_all" />
+        FROM <include refid="tb_name" />
+        WHERE tid=#{topId}
+        ORDER BY id ASC
+    </select>
+
+    <select id="countForAll" resultType="long" parameterType="map">
+        SELECT COUNT(1) FROM <include refid="tb_name"/>
+        WHERE topic_id=#{topicId} AND
+              pid = 0
+    </select>
+    <select id="paginationForAll" resultMap="replyMap" parameterType="map">
+        SELECT
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE topic_id=#{topicId} AND
+              pid = 0
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 查询出所有回复过某话题的供应商列表, 咱不分页 -->
+    <select id="listTopicSuppliers" parameterType="long" resultType="User">
+        SELECT DISTINCT u.*
+        FROM snz_replies r, snz_users u
+        WHERE r.topic_id= #{topicId}
+        AND u.type = 2
+        AND r.user_id = u.id
+    </select>
+
+    <!-- 查询出所有回复过某话题的供应商列表, 咱不分页 -->
+    <select id="listTopicPurchasers" parameterType="long" resultType="User">
+        SELECT DISTINCT u.*
+          FROM snz_replies r, snz_users u
+        WHERE r.topic_id= #{topicId}
+          AND u.type = 3
+          AND r.user_id = u.id
+    </select>
+
+    <!-- 根据用户id列表统计用户回复数, 非排序-->
+    <select id="usersReplyCounts" parameterType="map" resultType="Long">
+        SELECT COUNT(1)
+        FROM  <include refid="tb_name"/>
+        WHERE user_id IN
+        <foreach collection="userIds" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+        AND topic_id = #{topicId}
+        GROUP BY user_id
+        ORDER BY INSTR(#{userIdsStr}, CONCAT(',', user_id, ','))
+    </select>
+    
+
+    <!--  对于圈内私密话题，当前用户只能看到话题创建者  -->
+    <select id="findByPid" parameterType="map" resultMap="replyMap">
+        SELECT id, <include refid="cols_all"/>
+          FROM <include refid="tb_name"/>
+        WHERE pid = #{pid}
+            <if test="scope==3">
+              AND user_id IN (#{topicCreatorId}, #{firstReplyerId}, #{currUserId})
+            </if>
+          ORDER BY created_at ASC
+    </select>
+
+
+    <!--  根据回复创建者查询回复信息  -->
+    <select id="findOneByCreatorId" parameterType="long" resultMap="replyMap">
+        SELECT *
+          FROM snz_replies
+        WHERE user_id = #{userId}
+          LIMIT 1
+    </select>
+
+</mapper>

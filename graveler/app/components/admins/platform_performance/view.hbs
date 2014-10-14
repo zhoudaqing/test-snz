@@ -1,0 +1,112 @@
+{{#component "js-comp platform-performance operation-platform"}}
+  <form class="form performance-form" novalidate="true">
+    <fieldset>
+      <span>
+        <label for="">请选择维度：</label>
+        <select name="" id="dimension-select">
+          <option value="1">供应商</option>
+          <option value="2">状态</option>
+          <option value="3">层次</option>
+        </select>
+      </span>
+      &nbsp;&nbsp;&nbsp;
+      <span>
+        <label for="">对比条件：</label>
+        <select class="select">
+          <option value="0" selected="">选择指标</option>
+          <option value="1">绩效</option>
+          <option value="2">需求</option>
+        </select>
+        对比
+        <select class="select">
+          <option value="0" selected="">选择指标</option>
+          <option value="1">绩效</option>
+          <option value="2">需求</option>
+        </select>
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="button" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="#">取消</a>
+      </span>
+    </fieldset>
+  </form>
+
+  <div id="js-performance-plot" class="main-plot" data-points="[[null, null, null, null, null, 6, 11, 32, 110, 235,
+    369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468],[null, null, null, null, null, null, null, null, null,
+    null, 5, 25, 50, 120, 150, 200, 426, 660, 869, 10600]]"></div>
+
+  <h3>市场竞争力</h3>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="80"></th>
+        <th width="80">供应链成本率</th>
+        <th width="80">人均效率</th>
+        <th width="90">模块化采购竞争力</th>
+        <th width="165">模块化用人</th>
+        <th width="95">零缺陷</th>
+        <th width="95">收入</th>
+        <th width="45">利润</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          目标
+        </td>
+        <td>技术领先</td>
+        <td>质量可靠</td>
+        <td>10000 件</td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+        <td>2000 件以上</td>
+        <td>2012-9-19</td>
+        <td>
+          <a href="#">修改</a><br>
+          <a href="#">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          同期或底线
+        </td>
+        <td>技术领先</td>
+        <td>质量可靠</td>
+        <td>10000 件</td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+        <td>2000 件以上</td>
+        <td>2012-9-19</td>
+        <td>
+          <a href="#">修改</a><br>
+          <a href="#">删除</a>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          实际
+        </td>
+        <td>技术领先</td>
+        <td>质量可靠</td>
+        <td>10000 件</td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+        <td>2000 件以上</td>
+        <td>2012-9-19</td>
+        <td>
+          <a href="#">修改</a><br>
+          <a href="#">删除</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{{/component}}

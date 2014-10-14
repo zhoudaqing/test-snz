@@ -1,0 +1,27 @@
+{{#if data}}
+  {{#each data}}
+    <tr class="device-group-tr">
+      <td class="control-group">
+      {{device}}
+      </td>
+      <td class="control-group">
+      {{parameter}}
+      </td>
+      <td>
+      {{number}}
+      </td>
+      <td>
+        <span class="file-name">
+         <a href="{{deviceFile}}">附件</a>
+       </span>
+      </td>
+    </tr>
+  {{/each}}
+{{else}}
+  <tr class="device-group-tr">
+    <td class="control-group"></td>
+    <td class="control-group"></td>
+    <td class="control-group"></td>
+    <td></td>
+  </tr>
+{{/if}}

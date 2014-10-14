@@ -1,0 +1,93 @@
+{{#component "js-comp supplier-resume-contact-info"}}
+  <p class="components-title"><strong class="tab-name">联系信息</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-list">
+    <div class="compare-title">
+      <div class="new-value">
+        <label>当前值&nbsp;&nbsp;&nbsp;</label>
+      </div>
+      <div class="old-value">
+        修改前
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>联系人：</label>
+        <div>
+          {{supplierInfo.name}}
+        </div>
+      </div>
+      {{#if oldValues.contact-info-name}}
+      <div class="old-value">
+        {{oldValues.contact-info-name}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>联系人部门：</label>
+        <div>
+          {{supplierInfo.department}}
+        </div>
+      </div>
+      {{#if oldValues.contact-info-department}}
+      <div class="old-value">
+        {{oldValues.contact-info-department}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>联系人职务：</label>
+        <div>
+          {{supplierInfo.duty}}
+        </div>
+      </div>
+      {{#if oldValues.contact-info-duty}}
+      <div class="old-value">
+        {{oldValues.contact-info-duty}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>联系人手机：</label>
+        <div>
+          {{supplierInfo.mobile}}
+        </div>
+      </div>
+      {{#if oldValues.contact-info-mobile}}
+      <div class="old-value">
+        {{oldValues.contact-info-mobile}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>联系人办公电话：</label>
+        <div>
+          {{supplierInfo.officePhone}}
+        </div>
+      </div>
+      {{#if oldValues.contact-info-phone}}
+      <div class="old-value">
+        {{oldValue.contact-info-phone}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>联系人邮箱：</label>
+        <div>
+          {{supplierInfo.email}}
+        </div>
+      </div>
+      {{#if oldValues.contact-info-email}}
+      <div class="old-value">
+        {{oldValues.contact-info-email}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

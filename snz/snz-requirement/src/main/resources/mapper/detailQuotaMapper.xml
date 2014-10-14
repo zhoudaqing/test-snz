@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 详细的配额信息（抛送到sap的数据）-->
+<mapper namespace="DetailQuota">
+    <resultMap id="detailQuotaMap" type="DetailQuota">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="requirementName" column="requirement_name"/>
+        <result property="solutionId" column="solution_id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="purchaseOrg" column="purchase_org"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="supplierVCode" column="supplierV_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="purchaseType" column="purchase_type"/>
+        <result property="quantity" column="quantity"/>
+        <result property="scale" column="scale"/>
+        <result property="originalCost" column="original_cost"/>
+        <result property="actualCost" column="actual_cost"/>
+        <result property="agencyFee" column="agency_fee"/>
+        <result property="duty" column="duty"/>
+        <result property="otherFee" column="other_fee"/>
+        <result property="feeUnit" column="fee_unit"/>
+        <result property="purchaseUnit" column="purchase_unit"/>
+        <result property="coinType" column="coin_type"/>
+        <result property="purchaseDay" column="purchase_day"/>
+        <result property="purchaseTeam" column="purchase_team"/>
+        <result property="basicUnit" column="basic_unit"/>
+        <result property="taxCode" column="tax_code"/>
+        <result property="dataType" column="data_type"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id, requirement_name, solution_id, module_id, module_num, module_name, purchase_org, factory_num, supplier_id, supplierV_code, supplier_name, purchase_type, quantity, scale, original_cost,
+        actual_cost, agency_fee, duty, other_fee, fee_unit, purchase_unit, coin_type, purchase_day, purchase_team, basic_unit, data_type, tax_code, status, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="detailQuota" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_detail_quotas (<include refid="columns"/>) values (#{requirementId}, #{requirementName}, #{solutionId}, #{moduleId},
+        #{moduleNum}, #{moduleName}, #{purchaseOrg}, #{factoryNum}, #{supplierId}, #{supplierVCode}, #{supplierName}, #{purchaseType}, #{quantity}, #{scale},
+        #{originalCost}, #{actualCost}, #{agencyFee}, #{duty}, #{otherFee}, #{feeUnit}, #{purchaseUnit}, #{coinType}, #{purchaseDay}, #{purchaseTeam},
+        #{basicUnit}, #{taxCode}, #{dataType}, #{status}, now(), now())
+    </insert>
+
+    <!-- 优化性能批量插入 -->
+    <insert id="createBatch" parameterType="detailQuota" useGeneratedKeys="true">
+        insert into snz_detail_quotas (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="quota" index="index" separator="," >
+            (#{quota.requirementId}, #{quota.requirementName}, #{quota.solutionId}, #{quota.moduleId},#{quota.moduleNum}, #{quota.moduleName}, #{quota.purchaseOrg},  #{quota.factoryNum},
+            #{quota.supplierId}, #{quota.supplierVCode}, #{quota.supplierName}, #{quota.purchaseType}, #{quota.quantity}, #{quota.scale}, #{quota.originalCost}, #{quota.actualCost}, #{quota.agencyFee},
+            #{quota.duty}, #{quota.otherFee}, #{quota.feeUnit}, #{quota.purchaseUnit}, #{quota.coinType}, #{quota.purchaseDay}, #{quota.purchaseTeam}, #{quota.basicUnit},
+            #{quota.taxCode}, #{quota.dataType}, #{quota.status}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="detailQuota">
+        update snz_detail_quotas
+        <set>
+            <if test="agencyFee!=null">agency_fee=#{agencyFee},</if>
+            <if test="duty!=null">duty=#{duty},</if>
+            <if test="otherFee!=null">other_fee=#{otherFee},</if>
+            <if test="purchaseType!=null">purchase_type=#{purchaseType},</if>
+            <if test="taxCode!=null">tax_code=#{taxCode},</if>
+            <if test="dataType!=null">data_type=#{dataType},</if>
+            <if test="status!=null">status=#{status},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="detailQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_detail_quotas where id=#{id}
+    </select>
+
+    <!-- 显示详细的配额进sap的信息 -->
+    <select id="findAllCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_detail_quotas
+        <where>
+            requirement_id = #{requirementId}
+            <if test="purchaserId!=null"> and purchaser_id=#{purchaserId} </if>
+            <if test="status!=null">status=#{status}</if>
+        </where>
+    </select>
+
+    <select id="findByParams" parameterType="map" resultMap="detailQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_detail_quotas
+        <where>
+            requirement_id = #{requirementId}
+            <if test="purchaserId!=null"> and purchaser_id=#{purchaserId} </if>
+            <if test="status!=null">status=#{status}</if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+</mapper>

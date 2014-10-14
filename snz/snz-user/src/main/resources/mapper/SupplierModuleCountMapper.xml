@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SupplierModuleCount" >
+  <resultMap id="SupplierModuleCountMap" type="SupplierModuleCount" >
+    <id column="id" property="id" />
+    <result column="module_id" property="moduleId"  />
+    <result column="module_name" property="moduleName"  />
+    <result column="supplier_count" property="supplierCount"  />
+    <result column="best_count" property="bestCount"  />
+    <result column="bad_count" property="badCount"  />
+    <result column="limited_count" property="limitedCount"  />
+    <result column="standard_count" property="standardCount"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+   `module_id`, `module_name`,supplier_count,best_count,bad_count,limited_count,standard_count,created_at, updated_at
+  </sql>
+
+  <select id="findByModuleId" resultMap="SupplierModuleCountMap" parameterType="int" >
+     select id,<include refid="columns" />
+     from snz_supplier_module_count
+     where module_id = #{moduleId}
+  </select>
+
+    <select id="findByModuleName" resultMap="SupplierModuleCountMap" parameterType="string" >
+        select id,<include refid="columns" />
+        from snz_supplier_module_count
+        where module_name = #{moduleName}
+    </select>
+
+
+    <select id="findAll" resultMap="SupplierModuleCountMap" >
+        select id,<include refid="columns" /> from snz_supplier_module_count
+    </select>
+
+  <insert id="insert" parameterType="SupplierModuleCount" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_supplier_module_count (<include refid="columns" />)
+    values (#{moduleId},#{moduleName},#{supplierCount},#{bestCount},#{badCount},#{limitedCount},#{standardCount},now(), now())
+  </insert>
+
+   <update id="update" parameterType="SupplierModuleCount">
+       update snz_supplier_module_count
+       set supplier_count=#{supplierCount},
+       best_count=#{bestCount},
+       bad_count=#{badCount},
+       limited_count=#{limitedCount},
+       standard_count=#{standardCount},
+       updated_at=now()
+       where module_id=#{moduleId}
+   </update>
+
+</mapper>

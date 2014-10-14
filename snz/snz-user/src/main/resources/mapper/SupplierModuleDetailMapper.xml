@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SupplierModuleDetail">
+
+    <!--  行结果列映射到实例属性名称  -->
+    <resultMap id="supplierModuleDetailResultMap" type="SupplierModuleDetail">
+        <id property="id" column="id"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="purchOrg" column="purch_org"/>
+        <result property="purchGroup" column="purch_group"/>
+        <result property="moduleGroup" column="module_group"/>
+        <result property="moduleGroupDesc" column="module_group_desc"/>
+        <result property="taxCode" column="tax_code"/>
+        <result property="validityStart" column="validity_start"/>
+        <result property="validityEnd" column="validity_end"/>
+    </resultMap>
+
+    <!--  行结果列名  -->
+    <sql id="columns">
+    module_num,module_name,supplier_code,supplier_name,purch_org,purch_group,module_group,module_group_desc,tax_code,validity_start,validity_end
+    </sql>
+
+    <!--  新增 供应商物料明细  -->
+    <insert id="create" parameterType="SupplierModuleDetail" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO snz_supplier_module_details (<include refid="columns"/>)
+        VALUES(
+        #{moduleNum},#{moduleName},#{supplierCode},#{supplierName},#{purchOrg},#{purchGroup},#{moduleGroup},#{moduleGroupDesc},#{taxCode},#{validityStart},#{validityEnd}
+        )
+    </insert>
+
+    <!--  根据自增ID查找 供应商物料明细  -->
+    <select id="findById" parameterType="long" resultMap="supplierModuleDetailResultMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM snz_supplier_module_details
+        WHERE
+        `id` = #{id}
+    </select>
+
+
+    <select id="findBySupplierCode" parameterType="java.lang.String" resultMap="supplierModuleDetailResultMap">
+        SELECT id,
+        <include refid="columns"/>
+        FROM snz_supplier_module_details
+        WHERE supplier_code=#{supplierCode}
+    </select>
+
+    <select id="countBySupplierCode" parameterType="java.lang.String" resultType="int">
+        SELECT COUNT(1)
+        FROM snz_supplier_module_details
+        WHERE supplier_code=#{supplierCode}
+    </select>
+
+
+    <update id="update" parameterType="SupplierModuleDetail">
+        UPDATE snz_supplier_module_details
+        <set>
+            <if test="moduleNum!=null">module_num = #{moduleNum},</if>
+            <if test="moduleName!=null">module_name = #{moduleName},</if>
+            <if test="supplierCode!=null">supplier_code = #{supplierCode},</if>
+            <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+            <if test="purchOrg!=null">purch_org = #{purchOrg},</if>
+            <if test="purchGroup!=null">purch_group = #{purchGroup},</if>
+            <if test="moduleGroup!=null">module_group = #{moduleGroup},</if>
+            <if test="moduleGroupDesc!=null">module_group_desc = #{moduleGroupDesc},</if>
+            <if test="taxCode!=null">tax_code = #{taxCode},</if>
+            <if test="validityStart!=null">validity_start = #{validityStart},</if>
+            <if test="validityEnd!=null">validity_end = #{validityEnd},</if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+        DELETE
+        FROM snz_supplier_module_details
+        WHERE
+        id IN
+        <foreach collection="list" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

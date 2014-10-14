@@ -1,0 +1,40 @@
+{{#component "login js-comp"}}
+<div class="login-site">
+  <div class="login offset1 js-comp" data-comp-path="/login/view">
+    <div class="platform-info">
+      <div class="company-logo">
+        <i class="icon-logo"></i>
+      </div>
+      <div class="platform-name">
+        <i class="icon-yylogo"></i>
+      </div>
+    </div>
+    <div class="login-screen">
+      <form class="form-user-login form form-aligned" id="login" method="POST">
+        <div class="login-form">
+          <div class="control-group">
+            <input type="hidden" name="target" value="{{target}}">
+            <label for="loginId">用户名:</label>
+            <input type="hidden" name="type" value="3" id="login-type">
+            <span id="login-name">
+                <input id="loginId" type="text" name="nick" placeholder="请输入用户名" style="width:180px;">
+            </span>
+          </div>
+          <div class="control-group">
+            <label for="password">密码:</label>
+            <span id="login-password">
+                <input id="password" type="password" name="passwd" placeholder="密码" style="width:180px;">
+            </span>
+          </div>
+          <div class="control-group">
+            <label for=""></label>
+            <input class="btn btn-success btn-medium" type="submit" value="登录"></input>
+            <a href="{{_HREF_.main}}/forget-password" class="login-link" style="margin-left:20px;"><span>忘记密码？</span></a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div style="clear:both;"></div>
+</div>
+{{/component}}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:consumer timeout="#{app.dubboTimeout}"/>
+
+    <!-- message service -->
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.message.services.MessageService" id="messageService"/>
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.message.services.MailService" id="mailService"/>
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.message.services.SmsService" id="smsService"/>
+
+    <!-- category service -->
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.category.service.BackendCategoryService" id="backendCategoryService"/>
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.category.service.FrontendCategoryService" id="frontendCategoryService"/>
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.category.service.CategoryBindingService" id="categoryBindingService"/>
+
+    <!-- statistic service -->
+    <dubbo:reference registry="haierRegistry" interface="io.terminus.snz.statistic.service.SolutionCountService" id="solutionCountService"/>
+
+</beans>

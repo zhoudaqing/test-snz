@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<!-- 与海尔数据库对接的配置(这里的不使用MyBatis，直接使用JDBC操作) -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 数据源配置,eai系统获取配额的其余信息  -->
+    <bean id="eaiSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{app.haier_jdbcDriver}"/>
+        <property name="url" value="#{app.haier_jdbcUrl}"/>
+        <property name="username" value="#{app.eai_Username}"/>
+        <property name="password" value="#{app.eai_jdbcPassword}"/>
+
+        <!-- Connection Pooling Info -->
+        <property name="maxActive" value="#{app.dbcpMaxActive}"/>
+        <property name="maxIdle" value="#{app.dbcpMaxIdle}"/>
+
+        <property name="defaultAutoCommit" value="true"/>
+        <property name="initialSize" value="3"/>
+        <property name="timeBetweenEvictionRunsMillis" value="600000"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+    </bean>
+
+    <!-- 数据源配置,PLM模块信息中间表对接 -->
+    <bean id="plmSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="#{app.haier_jdbcDriver}"/>
+        <property name="url" value="#{app.haier_jdbcUrl}"/>
+        <property name="username" value="#{app.plm_Username}"/>
+        <property name="password" value="#{app.plm_jdbcPassword}"/>
+
+        <!-- Connection Pooling Info -->
+        <property name="maxActive" value="#{app.dbcpMaxActive}"/>
+        <property name="maxIdle" value="#{app.dbcpMaxIdle}"/>
+
+        <property name="defaultAutoCommit" value="true"/>
+        <property name="initialSize" value="3"/>
+        <property name="timeBetweenEvictionRunsMillis" value="600000"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+    </bean>
+</beans>

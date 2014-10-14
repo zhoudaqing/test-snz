@@ -1,0 +1,21 @@
+<tbody class="topics-body">
+  {{#each topics}}
+    <tr>
+      <td class="topic-req-status"></td>
+      <td><a href="/topic_detail?id={{id}}" target="_blank" title="{{title}}">{{title}}</a></td>
+      <td><span class="currency">{{totalViews}}</span></td>
+      <td><span class="currency">{{totalReplies}}</span></td>
+      <td>{{userName}}</td>
+      <td>
+        <span>
+          {{#equals scope "1"}}
+            公开
+          {{else}}
+            圈子({{joiners}}人)
+          {{/equals}}
+        </span>
+      </td>
+      <td>{{formatDate createdAt}}</td>
+    </tr>
+  {{/each}}
+</tbody>

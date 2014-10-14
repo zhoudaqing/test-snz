@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NewProductImport">
+
+    <resultMap id="newProductImportResultMap" type="NewProductImport">
+        <id property="id" column="id"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="documentName" column="document_name"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="originalCreationDate" column="original_creation_date"/>
+        <result property="prototypeSendDate" column="prototype_send_date"/>
+        <result property="purchaseConfirmer" column="purchase_confirmer"/>
+        <result property="purchaseConfirmDate" column="purchase_confirm_date"/>
+        <result property="sampleFinishDate" column="sample_finish_date"/>
+        <result property="assemblyFinishDate" column="assembly_finish_date"/>
+        <result property="assemblyConclusion" column="assembly_conclusion"/>
+        <result property="outTester" column="out_tester"/>
+        <result property="sampleReceiveDate" column="sample_receive_date"/>
+        <result property="testSampleReceiveTime" column="test_sample_receive_time"/>
+        <result property="testSampleReceiver" column="test_sample_receiver"/>
+        <result property="testStartDate" column="test_start_date"/>
+        <result property="testPlanedDate" column="test_planed_date"/>
+        <result property="testEndDate" column="test_end_date"/>
+        <result property="testConclusion" column="test_conclusion"/>
+        <result property="finalConclusion" column="final_conclusion"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+
+    <sql id="columns">
+      supplier_code,supplier_name,document_name,module_num,original_creation_date,prototype_send_date,
+      purchase_confirmer,purchase_confirm_date,sample_finish_date,assembly_finish_date,
+      assembly_conclusion,out_tester,sample_receive_date,test_sample_receive_time,test_sample_receiver,
+      test_start_date,test_planed_date,test_end_date,test_conclusion,final_conclusion,created_at,updated_at
+    </sql>
+
+
+    <sql id="query_conditions">
+        <if test="supplierCode!=null">AND supplier_code = #{supplierCode}</if>
+        <if test="supplierName!=null">AND supplier_name = #{supplierName}</if>
+        <if test="documentName!=null">AND document_name = #{documentName}</if>
+        <if test="moduleNum!=null">AND module_num = #{moduleNum}</if>
+        <if test="originalCreationDate!=null">AND original_creation_date = #{originalCreationDate}</if>
+        <if test="prototypeSendDate!=null">AND prototype_send_date = #{prototypeSendDate}</if>
+        <if test="purchaseConfirmer!=null">AND purchase_confirmer = #{purchaseConfirmer}</if>
+        <if test="purchaseConfirmDate!=null">AND purchase_confirm_date = #{purchaseConfirmDate}</if>
+        <if test="sampleFinishDate!=null">AND sample_finish_date = #{sampleFinishDate}</if>
+        <if test="assemblyFinishDate!=null">AND assembly_finish_date = #{assemblyFinishDate}</if>
+        <if test="outTester!=null">AND out_tester = #{outTester}</if>
+        <if test="sampleReceiveDate!=null">AND sample_receive_date = #{sampleReceiveDate}</if>
+        <if test="testSampleReceiveTime!=null">AND test_sample_receive_time = #{testSampleReceiveTime}</if>
+        <if test="testSampleReceiver!=null">AND test_sample_receiver = #{testSampleReceiver}</if>
+        <if test="testStartDate!=null">AND test_start_date = #{testStartDate}</if>
+        <if test="testPlanedDate!=null">AND test_planed_date = #{testPlanedDate}</if>
+        <if test="testEndDate!=null">AND test_end_date = #{testEndDate}</if>
+    </sql>
+
+
+    <insert id="create" parameterType="NewProductImport" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_new_product_imports ( <include refid="columns"/>)
+      VALUES(
+        #{supplierCode},#{supplierName},#{documentName},#{moduleNum},#{originalCreationDate},#{prototypeSendDate},
+        #{purchaseConfirmer},#{purchaseConfirmDate}, #{sampleFinishDate},#{assemblyFinishDate},
+        #{assemblyConclusion},#{outTester},#{sampleReceiveDate},#{testSampleReceiveTime},#{testSampleReceiver},
+        #{testStartDate},#{testPlanedDate},#{testEndDate},#{testConclusion},#{finalConclusion},now(),now()
+      )
+    </insert>
+
+
+    <select id="findById" parameterType="long" resultMap="newProductImportResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_new_product_imports
+      WHERE
+       `id` = #{id}
+    </select>
+
+
+    <select id="findByIds" parameterType="list" resultMap="newProductImportResultMap">
+        SELECT id,<include refid="columns"/>
+            FROM snz_new_product_imports
+        WHERE
+            id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+    </select>
+
+
+    <select id="findByModuleNum" parameterType="string" resultMap="newProductImportResultMap">
+        SELECT id,<include refid="columns"/>
+        FROM  snz_new_product_imports
+        WHERE module_num=#{moduleNum}
+        ORDER BY id DESC
+    </select>
+
+    <!-- 根据 ${模块号}、${供应商名称} 查询唯一NPI 导入实例 -->
+    <select id="findByModuleNumAndSupplierName" parameterType="java.util.Map" resultMap="newProductImportResultMap">
+        SELECT id,<include refid="columns"/>
+          FROM  snz_new_product_imports
+        WHERE supplier_name=#{supplierName} AND module_num=#{moduleNum}
+          ORDER BY id DESC
+        LIMIT 1
+    </select>
+
+    <update id="update" parameterType="NewProductImport">
+      UPDATE snz_new_product_imports
+      <set>
+          <if test="supplierCode!=null">supplier_code = #{supplierCode},</if>
+          <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+          <if test="documentName!=null">document_name = #{documentName},</if>
+          <if test="moduleNum!=null">module_num = #{moduleNum},</if>
+          <if test="originalCreationDate!=null">original_creation_date = #{originalCreationDate},</if>
+          <if test="prototypeSendDate!=null">prototype_send_date = #{prototypeSendDate},</if>
+          <if test="purchaseConfirmer!=null">purchase_confirmer = #{purchaseConfirmer},</if>
+          <if test="purchaseConfirmDate!=null">purchase_confirm_date = #{purchaseConfirmDate},</if>
+          <if test="sampleFinishDate!=null">sample_finish_date = #{sampleFinishDate},</if>
+          <if test="assemblyFinishDate!=null">assembly_finish_date = #{assemblyFinishDate},</if>
+          <if test="assemblyConclusion!=null">assembly_conclusion = #{assemblyConclusion},</if>
+          <if test="outTester!=null">out_tester = #{outTester},</if>
+          <if test="sampleReceiveDate!=null">sample_receive_date = #{sampleReceiveDate},</if>
+          <if test="testSampleReceiveTime!=null">test_sample_receive_time = #{testSampleReceiveTime},</if>
+          <if test="testSampleReceiver!=null">test_sample_receiver = #{testSampleReceiver},</if>
+          <if test="testStartDate!=null">test_start_date = #{testStartDate},</if>
+          <if test="testPlanedDate!=null">test_planed_date = #{testPlanedDate},</if>
+          <if test="testEndDate!=null">test_end_date = #{testEndDate},</if>
+          <if test="testConclusion!=null">test_conclusion = #{testConclusion},</if>
+          <if test="finalConclusion!=null">final_conclusion = #{finalConclusion},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_new_product_imports
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

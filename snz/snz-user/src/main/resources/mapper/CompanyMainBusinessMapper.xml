@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanyMainBusiness" >
+  <resultMap id="CompanyMainBusinessMap" type="CompanyMainBusiness" >
+    <id column="id" property="id" />
+    <result column="first_level_id" property="firstLevelId"  />
+    <result column="main_business_id" property="mainBusinessId"  />
+    <result column="name" property="name"  />
+    <result column="company_id" property="companyId"  />
+    <result column="user_id" property="userId"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+   first_level_id, main_business_id,name,company_id,user_id, created_at, updated_at
+  </sql>
+
+  <select id="findByUserId" resultMap="CompanyMainBusinessMap" parameterType="long" >
+    select id,<include refid="columns" /> from snz_company_main_businesses where user_id = #{userId}
+  </select>
+
+  <select id="findByUserIds" resultMap="CompanyMainBusinessMap" parameterType="long" >
+     select id,<include refid="columns" /> from snz_company_main_businesses where user_id
+     in
+     <foreach collection="list" separator="," open="("
+               close=")" item="id">
+         #{id}
+     </foreach>
+  </select>
+
+  <select id="findByMainBusinessId" resultMap="CompanyMainBusinessMap" parameterType="long" >
+    select id,<include refid="columns" /> from snz_company_main_businesses where main_business_id = #{mainBusinessId}
+  </select>
+
+  <select id="findCompanyIdsByMainBusinessIds" parameterType="list" resultMap="CompanyMainBusinessMap">
+     SELECT id, <include refid="columns"/> FROM snz_company_main_businesses
+     WHERE main_business_id IN
+     <foreach collection="list" separator="," open="("
+               close=")" item="id">
+          #{id}
+     </foreach>
+  </select>
+
+  <select id="findByCompanyId" resultMap="CompanyMainBusinessMap" parameterType="long" >
+     select id,<include refid="columns" /> from snz_company_main_businesses where company_id = #{companyId}
+  </select>
+
+  <delete id="deleteByUserId" parameterType="long" >
+    delete from snz_company_main_businesses where user_id = #{userId}
+  </delete>
+
+  <insert id="insert" parameterType="CompanyMainBusiness" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_company_main_businesses (<include refid="columns" />)
+    values (#{firstLevelId},#{mainBusinessId},#{name},#{companyId},#{userId},now(), now())
+  </insert>
+
+  <select id="findUserIdsByFirstLevelId" resultType="long" parameterType="long">
+    select distinct user_id from snz_company_main_businesses where first_level_id = #{firstLevelId}
+  </select>
+
+  <select id="countSupplierByFirstLevelId" resultType="long" parameterType="long">
+      select count(distinct user_id) from snz_company_main_businesses where first_level_id = #{firstLevelId}
+  </select>
+
+  <select id="findUserIdsByMainBusinessIds" resultType="long" parameterType="list">
+    select distinct(user_id) from snz_company_main_businesses where main_business_id in
+    <foreach collection="list" open="(" separator="," close=")" item="mainBusinessId">
+        #{mainBusinessId}
+    </foreach>
+  </select>
+
+    <select id="findUserIdsByFcIds" resultType="long" parameterType="list">
+        select distinct(user_id) from snz_company_main_businesses
+        <where>
+            <if test="firstLevelId!=null">
+                first_level_id=#{firstLevelId}
+            </if>
+            <if test="mainBusinessId!=null">
+               and main_business_id=#{mainBusinessId}
+            </if>
+            <if test="list!=null">
+                and main_business_id in
+                <foreach collection="list" open="(" separator="," close=")" item="mainBusinessId">
+                    #{mainBusinessId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>

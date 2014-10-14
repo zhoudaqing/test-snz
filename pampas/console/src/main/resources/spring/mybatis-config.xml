@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias type="io.terminus.pampas.console.model.User" alias="User"/>
+        <typeAlias type="io.terminus.pampas.console.model.UserPermission" alias="UserPermission"/>
+    </typeAliases>
+</configuration>

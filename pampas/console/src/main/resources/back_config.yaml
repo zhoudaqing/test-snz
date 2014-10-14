@@ -1,0 +1,95 @@
+app: console
+
+services:
+  listAllGroups:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.CellService:listGroups
+  listCellsByGroup:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.CellService:listCellsByGroup
+  countAllCells:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.CellService:countAll
+  listAppsByCell:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.ConfigAgentService:listAppWithConfigInfoByCell
+  getFrontConfig:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.ConfigAgentService:getFrontConfig
+  getBackConfig:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.ConfigAgentService:getBackConfig
+  getDesignMetaInfo:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.DesignMetaAgentService:getMetaInfo
+  listSites:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.SiteAgentService:listSitesWithApp
+  createSite:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.SiteAgentService:createSite
+  updateSite:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.SiteAgentService:updateSite
+  deleteSite:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.SiteAgentService:deleteSite
+  publishSite:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.SiteAgentService:publishSite
+  createApp:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:createApp
+  updateApp:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:updateApp
+  updateExtraDomains:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:updateExtraDomains
+  getExtraDomains:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:getExtraDomains
+  deleteApp:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:deleteApp
+  getApp:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:getApp
+  listAllAppsWithSetting:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.AppAgentService:listAllAppsWithSetting
+
+  createUser:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:create
+  updateUser:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:update
+  updateCurrentUser:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:updateProfile
+  deleteUser:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:delete
+  updateUserPassword:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:updatePassword
+  pagingUser:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:paging
+  login:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:login
+  logout:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:logout
+
+  findUserAndPermissions:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:findUserAndPermissions
+  getCurrentUserPermissions:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:getCurrentUserPermissions
+  userAuthorize:
+    type: SPRING
+    uri: io.terminus.pampas.console.service.UserService:authorize

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MDMConfigure">
+    <resultMap id="MDMConfigureMap" type="MDMConfigure">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+    </resultMap>
+
+    <sql id="columns">
+        code, `name`, `type`
+    </sql>
+
+    <insert id="create" parameterType="MDMConfigure" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mdm_configures`
+        (<include refid="columns"/>)
+        VALUES
+        (#{code}, #{name}, #{type})
+    </insert>
+
+    <update id="update" parameterType="MDMConfigure">
+        update `mdm_configures`
+        <set>
+            <if test="code">code=#{code},</if>
+            <if test="name">name=#{name},</if>
+            <if test="type">type=#{type}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="MDMConfigureMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_configures` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="MDMConfigureMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_configures`
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="code"> and code=#{code} </if>
+            <if test="name"> and name=#{name} </if>
+            <if test="type"> and type=#{type} </if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="findListBy" resultMap="MDMConfigureMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_configures`
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="code"> and code=#{code} </if>
+            <if test="name"> and name=#{name} </if>
+            <if test="type"> and type=#{type} </if>
+        </where>
+    </select>
+
+    <select id="findListByTypes" resultMap="MDMConfigureMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_configures`
+        where `type` in
+        <foreach collection="list" item="type" open="(" separator="," close=")">
+            #{type}
+        </foreach>
+    </select>
+</mapper>

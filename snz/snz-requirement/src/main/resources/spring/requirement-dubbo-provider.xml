@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:duboo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:properties id="app" location="classpath:app.properties"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- dubbo settings -->
+    <dubbo:application name="#{app.appName}" logger="slf4j"/>
+    <dubbo:registry address="#{app.dubboRegistry}" protocol="zookeeper"/>
+    <dubbo:protocol serialization="nativejava" name="dubbo" port="#{app.dubboPort}"
+               threads="#{app.dubboThreads}" heartbeat="#{app.dubboHeartBeats}"/>
+
+    <!-- requirement service -->
+    <dubbo:service interface="io.terminus.snz.requirement.service.ModuleService" ref="moduleServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.ModuleSolutionService" ref="moduleSolutionServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementQuotaService" ref="requirementQuotaServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementSolutionService" ref="requirementSolutionServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementService" ref="requirementServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementTransactService" ref="requirementTransactService" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementTimeService" ref="requirementTimeServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.ImportGoodListService" ref="importGoodListServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.ImportGoodService" ref="importGoodServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.DerivativeService" ref="derivativeServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.OldModuleService" ref="oldModuleServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.QuotaSapService" ref="quotaSapServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementOutService" ref="requirementOutServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementExcelService" ref="requirementExcelServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.MWOldModuleInfoService" ref="mWOldModuleInfoServiceImpl" retries="1" />
+
+    <!-- requirement search related -->
+    <duboo:service interface="io.terminus.snz.requirement.service.RequirementIndexService" ref="requirementIndexServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementSearchService" ref="requirementSearchServiceImpl" retries="1"/>
+
+    <!-- deposit related -->
+    <dubbo:service interface="io.terminus.snz.requirement.service.DepositService" ref="depositServiceImpl" retries="1"/>
+    <dubbo:service interface="io.terminus.snz.requirement.service.RiskMortgagePaymentService" ref="riskMortgagePaymentServiceImpl" retries="1"/>
+
+    <!-- mDM supplier service -->
+    <dubbo:service interface="io.terminus.snz.requirement.service.MDMSupplierService" ref="mdmSupplierServiceImpl" retries="1"/>
+
+    <!-- new product -->
+    <dubbo:service interface="io.terminus.snz.requirement.service.NewProductImportService" ref="newProductImportServiceImpl" retries="1" />
+    <dubbo:service interface="io.terminus.snz.requirement.service.NewProductStepService" ref="newProductStepServiceImpl" retries="1"/>
+
+    <!-- service agent -->
+    <bean id="agentImpl" class="io.terminus.pampas.client.AgentImpl"/>
+    <dubbo:service interface="io.terminus.pampas.client.Agent" ref="agentImpl" version="#{app.appName}"/>
+
+    <!-- supplier reparation service -->
+    <dubbo:service interface="io.terminus.snz.requirement.service.ReparationService" ref="reparationServiceImpl" retries="1"/>
+
+    <!-- requirement questionnaire service -->
+    <dubbo:service interface="io.terminus.snz.requirement.service.RequirementQuestionnaireService" ref="requirementQuestionnaireServiceImpl" retries="1"/>
+
+    <import resource="requirement-service-context.xml"/>
+    <import resource="persistence-context.xml"/>
+
+</beans>

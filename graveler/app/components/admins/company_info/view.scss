@@ -1,0 +1,37 @@
+@import "compass/css3/inline-block";
+
+.supplier-resume-company-info {
+
+  .coin-type {
+    vertical-align: bottom;
+  }
+  #factories-table{
+    width: 600px;
+    select{
+      white-space:nowrap;
+    }
+  }
+  #customer-group-table{
+    width: 700px;
+  }
+  .product-line{
+    width: 460px;
+    @include inline-block(top);
+    span{
+      @include inline-block(top);
+      line-height: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+  }
+  .control-bussiness{
+  width:600px;
+  @include inline-block(top);
+  }
+  .control-bussiness-old{
+  width:200px;
+  @include inline-block(top);
+  }
+  clear:both;
+}
+

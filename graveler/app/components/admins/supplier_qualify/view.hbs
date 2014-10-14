@@ -1,0 +1,73 @@
+{{#component "js-comp supplier-qualify operation-platform"}}
+<p class="components-title"><strong>供应商资质交互</strong></p>
+
+<div id="block" class="block">
+  <form id="js-supplier-audit-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="email">供应商名称:</label>
+        <input type="text" name="supplierName" value="{{supplierName}}">
+      </span>
+      <span class="span3">
+        <label for="email">状态:</label>
+        <select name="status" id="">
+          <option value="1" {{#equals status 1}}selected{{/equals}}>待审核</option>
+          <option value="2" {{#equals status 2}}selected{{/equals}}>审核通过</option>
+          {{#contain _USER_.roles "micro_master"}}<option value="-4" {{#equals status "-4"}}selected{{/equals}}>二级等待驳回</option>{{/contain}}
+        </select>
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a>
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="70">供应商ID</th>
+      <th width="160">供应商名称</th>
+      <th width="180">已通过资质交互类目</th>
+      <th width="168">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.data}}
+    <tr class="supplier-tr" name="{{json this}}">
+      <td>{{info.supplierId}}</td>
+      <td><a href="/suppliers/resume-detail?userId={{this.userId}}">{{info.supplierName}}</a></td>
+      <td class="qualify-td" data-category="{{approvingBcs}}"></td>
+      <td>
+        {{#equals info.status 1}}
+          {{#if inviteable}}
+            {{#contain _USER_.roles "resource"}}
+              <a href="javascript:void(0);" class="btn btn-info js-invite" data-supplier-id="{{info.supplierId}}">重新指定</a>
+            {{/contain}}
+          {{/if}}
+          {{#if checkable}}
+          <a class="btn btn-info" href="/suppliers/qualify_detail?supplierId={{info.supplierId}}">资质交互</a>
+          {{/if}}
+          <a class="btn btn-info" href="/suppliers/qualify-info?supplierId={{info.supplierId}}">查看资质交互</a>
+        {{/equals}}
+        {{#equals info.status 2}}
+          {{#if checkable}}
+            <button id="{{info.supplierId}}" class="btn btn-info js-submit" data-toggle="confirm" data-title="您确定申请上级驳回吗?" type="button" data-event="confirm:applyForReject">申请上级驳回</button>
+          {{/if}}
+        {{/equals}}
+        {{#equals info.status "-4"}}
+          {{#if checkable}}
+            <button id="{{info.supplierId}}" class="btn btn-info js-submit" data-toggle="confirm" data-title="您确定该供应商吗?" type="button" data-event="confirm:reject">驳回</button>
+          {{/if}}
+        {{/equals}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div id="js-pagination" class="right-text"></div>
+{{/component}}

@@ -1,0 +1,122 @@
+@import "compass/css3/inline-block";
+.supplier-resume-tab {
+  .tab {
+    position: relative;
+  }
+
+  .supplier-resource-type {
+    position: absolute;
+    top: 5px;
+    right: 0;
+  }
+  .compare-list {
+    margin: 10px 0;
+
+    .compare-title {
+      border-bottom: 1px dashed #ccc;
+
+      > .new-value {
+        font-weight: bold;
+        border-right: none;
+      }
+      > .old-value {
+        font-weight: bold;
+      }
+    }
+
+    .new-value {
+      @include inline-block(top);
+      width: 500px;
+      padding: 10px 0;
+      border-right: 1px dashed #ccc;
+
+      > label {
+        @include inline-block(top);
+        text-align: right;
+        width: 150px;
+      }
+      > div {
+        @include inline-block(top);
+        width: 330px;
+      }
+    }
+
+    .old-value {
+      @include inline-block(top);
+      width: 500px;
+      padding: 10px 0 10px 10px;
+
+      color: #C33;
+    }
+
+    &.only-new {
+      .new-value {
+        width: 100%;
+        border-right: 0;
+      }
+    }
+  } 
+  .compare-tab {
+    margin: 10px 0;
+
+    .compare-title {
+      position: relative;
+      padding: 10px 0;
+
+      > .compare-title-text {
+        @include inline-block(top);
+        width: 150px;
+        font-size: 14px;
+      }
+
+      > .new-value, > .old-value {
+        position: absolute;
+        top: 10px;
+
+        > span {
+          padding: 10px;
+          border: 1px dashed #ccc;
+          cursor: pointer;
+          font-weight: bold;
+        }
+
+        &.active {
+          > span {
+            border-style: solid;
+          }
+        }
+      }
+
+      > .new-value {
+        left: 0;
+        width: 500px;
+        text-align: right;
+      }
+
+      > .old-value {
+        left: 500px;
+
+        > span {
+          color: #C33;
+        }
+      }
+    }
+
+    .compare-content {
+      border: 1px solid #ccc;
+      padding: 20px;
+
+      > .old-value {
+        display: none;
+      }
+
+      .table {
+        width: 100%;
+      }
+
+      .diff-value {
+        color: #C33;
+      }
+    }
+  }
+}

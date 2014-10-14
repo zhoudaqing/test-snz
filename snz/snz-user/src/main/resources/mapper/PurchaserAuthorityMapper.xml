@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="PurchaserAuthority">
+    <resultMap id="PurchaserAuthorityMap" type="PurchaserAuthority">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="type" property="type"/>
+        <result column="content" property="content"/>
+        <result column="rich_content" property="richContent"/>
+        <result column="position" property="position"/>
+        <result column="role" property="role"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">user_id, `type`, `content`, rich_content, `position`, `role`, created_at, updated_at</sql>
+
+    <sql id="table_name">snz_purchaser_authorities</sql>
+
+    <insert id="create" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="table_name"/>
+        ( <include refid="columns"/> )
+        VALUES
+        (#{userId}, #{type}, #{content}, #{richContent}, #{position}, #{role}, now(), now())
+    </insert>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="table_name"/>
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="map">
+        UPDATE <include refid="table_name"/>
+        <set>
+            <if test="userId!=null">user_id = #{userId},</if>
+            <if test="type!=null">`type` = #{type},</if>
+            <if test="content!=null">`content` = #{content},</if>
+            <if test="richContent!=null">rich_content = #{richContent},</if>
+            <if test="position!=null">`position` = #{position},</if>
+            <if test="role!=null">`role` = #{role},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="PurchaserAuthorityMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        WHERE id = #{id}
+        limit 1
+    </select>
+
+    <select id="findBy" parameterType="map" resultMap="PurchaserAuthorityMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        <where>
+            <if test="userId!=null">AND user_id = #{userId}</if>
+            <if test="type!=null">AND `type` = #{type}</if>
+            <if test="content!=null">AND `content` = #{content}</if>
+            <if test="richContent!=null">AND rich_content = #{richContent}</if>
+            <if test="position!=null">AND `position` = #{position}</if>
+            <if test="role!=null">AND `role` = #{role}</if>
+        </where>
+    </select>
+</mapper>

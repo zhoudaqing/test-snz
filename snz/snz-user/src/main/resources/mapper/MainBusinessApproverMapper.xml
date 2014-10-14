@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="MainBusinessApprover" >
+  <resultMap id="MainBusinessApproverMap" type="MainBusinessApprover" >
+    <id column="id" property="id" />
+    <result column="member_id" property="memberId"  />
+    <result column="member_name" property="memberName"  />
+    <result column="leader_id" property="leaderId"  />
+    <result column="leader_name" property="leaderName"  />
+    <result column="main_business_id" property="mainBusinessId"  />
+    <result column="main_business_name" property="mainBusinessName"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+   member_id,member_name,leader_id,leader_name,main_business_id,main_business_name, created_at, updated_at
+  </sql>
+
+  <select id="findByMemberId" resultMap="MainBusinessApproverMap" parameterType="string" >
+    select id,<include refid="columns" /> from snz_main_business_approvers where member_id = #{memberId}
+  </select>
+
+  <select id="findMainBusinessIdsByLeaderId" resultType="long" parameterType="string" >
+    select main_business_id from snz_main_business_approvers where leader_id=#{leaderId}
+  </select>
+
+    <select id="findMainBusinessIdsByMemberIdOrLeaderId" resultType="long" parameterType="string" >
+    select main_business_id from snz_main_business_approvers where member_id = #{memberOrLeaderId} or leader_id=#{memberOrLeaderId}
+  </select>
+
+  <insert id="insert" parameterType="MainBusinessApprover" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_main_business_approvers (<include refid="columns" />)
+    values (#{memberId},#{memberName},#{leaderId},#{leaderName},#{mainBusinessId},#{mainBusinessName},now(), now())
+  </insert>
+
+   <select id="findByMainBusinessIds" resultMap="MainBusinessApproverMap" >
+     select id,<include refid="columns" /> from snz_main_business_approvers
+     where main_business_id in
+     <foreach collection="list" open="(" separator="," close=")" item="businessId">
+         #{businessId}
+     </foreach>
+   </select>
+
+</mapper>

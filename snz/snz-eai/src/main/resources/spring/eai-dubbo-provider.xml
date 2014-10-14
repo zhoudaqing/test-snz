@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:properties id="app" location="classpath:app.properties"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- Application name -->
+    <dubbo:application name="#{app.appName}" logger="slf4j"/>
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry address="#{app.dubboRegistry}" protocol="zookeeper"/>
+    <!-- expose this service through dubbo protocol, through port 20880 -->
+    <dubbo:protocol serialization="nativejava" name="dubbo" port="#{app.dubboPort}" threads="#{app.dubboThreads}"
+                    heartbeat="#{app.dubboHeartBeats}"/>
+
+    <import resource="eai-service-context.xml"/>
+    <import resource="persistence-context.xml"/>
+
+    <dubbo:service interface="io.terminus.snz.eai.service.MdmConfigureService" ref="mdmConfigureServiceImpl"/>
+    <dubbo:service interface="io.terminus.snz.eai.service.HGVSService" ref="hgvsServiceImpl"/>
+    <dubbo:service interface="io.terminus.snz.eai.service.MdmVendorCodeService" ref="mdmVendorCodeServiceImpl"/>
+    <dubbo:service interface="io.terminus.snz.eai.service.ClaimInfoService" ref="claimInfoServiceImpl"/>
+    <dubbo:service interface="io.terminus.snz.eai.service.ClaimInfoDetailService" ref="claimInfoDetailServiceImpl"/>
+    <dubbo:service interface="io.terminus.snz.eai.service.MdmOldModuleInfoService" ref="mdmMOldModuleInfoServiceImpl"/>
+
+    <!-- service agent -->
+    <bean id="agentImpl" class="io.terminus.pampas.client.AgentImpl"/>
+    <dubbo:service interface="io.terminus.pampas.client.Agent" ref="agentImpl" version="#{app.appName}"/>
+</beans>

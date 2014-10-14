@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 需求模块方案信息 -->
+<mapper namespace="ModuleSolution">
+    <resultMap id="moduleSolutionMap" type="ModuleSolution">
+        <id property="id" column="id"/>
+        <result property="solutionId" column="solution_id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="technology" column="technology"/>
+        <result property="quality" column="quality"/>
+        <result property="reaction" column="reaction"/>
+        <result property="delivery" column="delivery"/>
+        <result property="cost" column="cost"/>
+        <result property="units" column="units"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        solution_id, module_id, module_name, technology,quality, reaction, delivery, cost, units, created_at, updated_at
+    </sql>
+
+    <sql id="queryColumns">
+        snz_module_solutions.id, snz_module_solutions.solution_id, snz_modules.id as module_id, snz_modules.module_name,
+        snz_module_solutions.technology, snz_module_solutions.quality, snz_module_solutions.reaction, snz_module_solutions.delivery, snz_module_solutions.cost,
+        snz_module_solutions.units, snz_module_solutions.created_at, snz_module_solutions.updated_at
+    </sql>
+
+    <insert id="create" parameterType="moduleSolution" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_module_solutions (<include refid="columns"/>) values (#{solutionId},#{moduleId},#{moduleName}, #{technology},
+        #{quality}, #{reaction}, #{delivery}, #{cost}, #{units}, now(), now())
+    </insert>
+
+    <!-- 批量插入模块的方案信息 -->
+    <insert id="createBatch" parameterType="moduleSolution" useGeneratedKeys="true">
+        insert into snz_module_solutions (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="solution" index="index" separator="," >
+            (#{solution.solutionId},#{solution.moduleId},#{solution.moduleName}, #{solution.technology},
+            #{solution.quality}, #{solution.reaction}, #{solution.delivery}, #{solution.cost}, #{solution.units}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="moduleSolution">
+        update snz_module_solutions
+        <set>
+            <if test="solutionId!=null">solution_id=#{solutionId},</if>
+            <if test="moduleId!=null">module_id=#{moduleId},</if>
+            <if test="moduleName!=null">module_name=#{moduleName},</if>
+            <if test="technology!=null">technology=#{technology},</if>
+            <if test="quality!=null">quality=#{quality},</if>
+            <if test="reaction!=null">reaction=#{reaction},</if>
+            <if test="delivery!=null">delivery=#{delivery},</if>
+            <if test="cost!=null">cost=#{cost},</if>
+            <if test="units!=null">units=#{units},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteBySolutionId" parameterType="long">
+        delete from snz_module_solutions where solution_id=#{solutionId}
+    </delete>
+
+    <select id="findById" parameterType="long" resultMap="moduleSolutionMap">
+        select id, <include refid="columns"/>
+        from snz_module_solutions where id=#{id}
+    </select>
+
+    <select id="countBySolutionId" parameterType="long" resultType="int">
+        select count(id)
+        from snz_module_solutions where solution_id=#{solutionId}
+    </select>
+
+    <select id="findExist" parameterType="long" resultMap="moduleSolutionMap">
+        select id, <include refid="columns"/>
+        from snz_module_solutions where solution_id=#{solutionId} and module_id=#{moduleId}
+    </select>
+
+    <select id="findAllSolutions" parameterType="long" resultMap="moduleSolutionMap">
+        select id, <include refid="columns"/>
+        from snz_module_solutions where solution_id=#{solutionId}
+    </select>
+
+    <!-- 采购商查看供应商的模块需求信息 -->
+    <select id="findByPurchaserCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_module_solutions
+        <where>
+            solution_id = #{solutionId}
+        </where>
+    </select>
+
+    <select id="findByPurchaser" parameterType="map" resultMap="moduleSolutionMap">
+        select id, <include refid="columns"/>
+        from snz_module_solutions
+        <where>
+            solution_id = #{solutionId}
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+</mapper>

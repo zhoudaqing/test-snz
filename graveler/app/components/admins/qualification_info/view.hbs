@@ -1,0 +1,139 @@
+{{#component "js-comp supplier-resume-qualification-info"}}
+  <p class="components-title"><strong class="tab-name">财务信息</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-list">
+    <div class="compare-title">
+      <div class="new-value">
+        <label>当前值&nbsp;&nbsp;&nbsp;</label>
+      </div>
+      <div class="old-value">
+        修改前
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>国家：</label>
+        <div data-country="{{supplierInfo.finance.country}}">
+        </div>
+      </div>
+      {{#if oldValues.finance-country}}
+      <div class="old-value">
+        <div data-country="{{supplierInfo.finance-country}}">
+        </div>
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>收款行：</label>
+        <div>
+          {{supplierInfo.finance.openingBank}}
+        </div>
+      </div>
+      {{#if oldValues.finance-opening-bank}}
+      <div class="old-value">
+        {{oldValues.finance-opening-bank}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>收款行银行码：</label>
+        <div>
+          {{supplierInfo.finance.bankCode}}
+        </div>
+      </div>
+      {{#if oldValues.finance-bank-code}}
+      <div class="old-value">
+        {{oldValues.finance-bank-code}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>收款银行账号：</label>
+        <div>
+          {{supplierInfo.finance.bankAccount}}
+        </div>
+      </div>
+      {{#if oldValues.finance-bank-account}}
+      <div class="old-value">
+        {{oldValues.finance-bank-account}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>结算币种：</label>
+        <div>
+          {{#equals supplierInfo.finance.coinType 1}}人民币{{/equals}}
+          {{#equals supplierInfo.finance.coinType 2}}英镑{{/equals}}
+          {{#equals supplierInfo.finance.coinType 3}}美元{{/equals}}
+          {{#equals supplierInfo.finance.coinType 4}}欧元{{/equals}}
+          {{#equals supplierInfo.finance.coinType 5}}日元{{/equals}}
+        </div>
+      </div>
+      {{#if oldValues.finance-coin-type}}
+      <div class="old-value">
+        {{#equals oldValues.finance-coin-type 1}}人民币{{/equals}}
+        {{#equals oldValues.finance-coin-type 2}}英镑{{/equals}}
+        {{#equals oldValues.finance-coin-type 3}}美元{{/equals}}
+        {{#equals oldValues.finance-coin-type 4}}欧元{{/equals}}
+        {{#equals oldValues.finance-coin-type 5}}日元{{/equals}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">近三年财务信息：</div>
+      <div class="new-value active" data-role="nav"><span>当前值</span></div>
+      {{#if oldValues.finance-recent-finance}}
+      <div class="old-value" data-role="nav"><span>修改前</span></div>
+      {{/if}}
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>年份</th>
+              <th>销售额(万元)</th>
+              <th>净利润(万元)</th>
+              <th>主营业务毛利</th>
+              <th>管理费用</th>
+              <th>息税前利润</th>
+              <th>税前利润</th>
+              <th>附件</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody data-recent-sold="{{supplierInfo.finance.recentFinance}}" data-url="{{_HREF_.photohref}}">
+          </tbody>
+        </table>
+      </div>
+      {{#if oldValues.finance-recent-finance}}
+      <div data-role="content" class="old-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>年份</th>
+              <th>销售额(万元)</th>
+              <th>净利润(万元)</th>
+              <th>主营业务毛利</th>
+              <th>管理费用</th>
+              <th>息税前利润</th>
+              <th>税前利润</th>
+              <th>附件</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody data-recent-sold="{{oldValues.finance-recent-finance}}" data-url="{{_HREF_.photohref}}">
+          </tbody>
+        </table>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

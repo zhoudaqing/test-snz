@@ -1,0 +1,114 @@
+{{#component "js-comp platform-supplier operation-platform"}}
+  <form class="form performance-form" novalidate="true">
+    <fieldset>
+      <span>
+        <select class="select">
+          <option value="0" selected="">选择指标</option>
+          <option value="1">绩效</option>
+          <option value="2">需求</option>
+        </select>
+        对比
+        <select class="select">
+          <option value="0" selected="">选择指标</option>
+          <option value="1">绩效</option>
+          <option value="2">需求</option>
+        </select>
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="#">取消</a>
+      </span>
+    </fieldset>
+  </form>
+
+  <div id="js-performance-plot" class="main-plot" data-points="[[null, null, null, null, null, 6, 11, 32, 110, 235,
+    369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468],[null, null, null, null, null, null, null, null, null,
+    null, 5, 25, 50, 120, 150, 200, 426, 660, 869, 10600]]"></div>
+
+  <h3>各指标图例</h3>
+
+  <div class="indicator-plots clearfix">
+    <div class="indicator-plot">
+      <div class="indicator-plot-content">
+        <span>采购商总数</span>
+        <br>
+        <span class="currency">4,634,747</span>
+        <br>
+        <div class="plot" data-points="[3, 5, 9, 12]"></div>
+      </div>
+    </div>
+    <div class="indicator-plot">
+      <div class="indicator-plot-content">
+        <span>活跃采购商数量</span>
+        <br>
+        <span class="currency">4,634,747</span>
+        <br>
+        <div class="plot" data-points="[3, 15, 1, 12]"></div>
+      </div>
+    </div>
+    <div class="indicator-plot">
+      <div class="indicator-plot-content">
+        <span>人均发起需求数</span>
+        <br>
+        <span class="currency">4,634,747</span>
+        <br>
+        <div class="plot" data-points="[13, 5, 9, 2]"></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>各指标明细</h3>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="80">利共体</th>
+        <th width="300">活跃采购商数量</th>
+        <th width="300">采购商总量</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          钣金
+        </td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+      </tr>
+      <tr>
+        <td>
+          注塑
+        </td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+      </tr>
+      <tr>
+        <td>
+          五金
+        </td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+        <td>
+          质量: <span class="required">需要质量人员填写</span><br>
+          成本: 控制在 3 元 1 件
+        </td>
+      </tr>
+    </tbody>
+  </table>
+{{/component}}

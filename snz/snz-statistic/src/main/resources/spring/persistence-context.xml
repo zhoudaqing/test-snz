@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 提供Spring Aop的支持 -->
+    <aop:aspectj-autoproxy/>
+    <!-- 分布式环境下的redis锁 -->
+    <bean id="redisLockOperation" class="io.terminus.common.annotation.RedisLockOperation"/>
+
+    <!--redis 配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="#{app.redisMaxTotal}"/>
+        <property name="maxIdle" value="#{app.redisMaxIdle}"/>
+        <property name="maxWaitMillis" value="#{app.redisMaxWaitMillis}"/>
+        <property name="testOnBorrow" value="#{app.redisTestOnBorrow}"/>
+    </bean>
+
+    <bean id="jedisTemplate" class="io.terminus.common.redis.utils.JedisTemplate">
+        <constructor-arg index="0" ref="jedisPool"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="#{app.redisHost}"/>
+        <constructor-arg index="2" value="#{app.redisPort}" type="int"/>
+    </bean>
+</beans>

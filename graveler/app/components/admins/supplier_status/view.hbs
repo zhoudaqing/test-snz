@@ -1,0 +1,81 @@
+{{#component "js-comp supplier-status status"}}
+{{!--
+  <div class="supplier-progress" data-status="{{json _DATA_}}" data-user-id="{{_USER_.id}}">
+    <div {{#gt _DATA_.step 4}} {{else}} class="block" {{/gt}}>
+      <div class="progress-container">
+        <div class="progress">
+          <ol>
+          {{#gt _DATA_.step 4}}
+            <li>
+            <div style="width:720px;height:183px;background: url(/assets/images/step-{{_DATA_.step}}.jpg);"></div>
+            </li>
+            {{else}}
+            <li class="progress-step {{#gt _DATA_.step 0}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 1}}&#8730;{{else}}1{{/gt}}</span><br>
+              <span class="progress-step-into">注册信息</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 1}}active{{/gt}}"></li>
+            <li class="progress-step {{#gt _DATA_.step 1}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 2}}&#8730;{{else}}2{{/gt}}</span><br>
+              <span class="progress-step-into">上传三证</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 2}}active{{/gt}}"></li>
+            <li class="progress-step {{#gt _DATA_.step 2}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 3}}&#8730;{{else}}3{{/gt}}</span><br>
+              <span class="progress-step-into">等待激活</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 3}}active{{/gt}}"></li>
+            <li class="progress-step {{#gt _DATA_.step 3}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 4}}&#8730;{{else}}4{{/gt}}</span><br>
+              <span class="progress-step-into">注册成功</span>
+            </li>
+          {{/gt}}
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br><br>
+  --}}
+  <div class="progress">
+          <ol>
+            <li class="progress-step {{#gt _DATA_.step 0}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 0}}✓{{else}}1{{/gt}}</span><br>
+              <span class="progress-step-into">注册</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 1}}active{{/gt}}" ></li>
+            <li class="progress-step {{#gt _DATA_.step 1}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 1}}✓{{else}}2{{/gt}}</span><br>
+              <span class="progress-step-into">上传三证</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 2}}active{{/gt}}" ></li>
+            <li class="progress-step {{#gt _DATA_.step 2}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 2}}✓{{else}}3{{/gt}}</span><br>
+              <span class="progress-step-into">等待公议</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 3}}active{{/gt}}" ></li>
+            <li class="progress-step {{#gt _DATA_.step 3}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 3}}✓{{else}}4{{/gt}}</span><br>
+              <span class="progress-step-into">入驻成功</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 4}}active{{/gt}}" ></li>
+            <li class="progress-step {{#gt _DATA_.step 4}}active{{/gt}}">
+              <span class="progress-step-number ">{{#gt _DATA_.step 4}}✓{{else}}5{{/gt}}</span><br>
+              <span class="progress-step-into">完善信息</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 5}}active{{/gt}}"></li>
+            <li class="progress-step {{#gt _DATA_.step 5}}active{{/gt}} js-progress-step" data-step="{{_DATA_.step}}" data-id="{{_USER_.id}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 5}}✓{{else}}6{{/gt}}</span><br>
+              <span class="progress-step-into">资质交互/</span><br />
+              <span class="progress-step-into">等级验证</span>
+            </li>
+            <li class="progress-bar {{#gt _DATA_.step 6}}active{{/gt}}" ></li>
+            <li class="progress-step {{#gt _DATA_.step 6}}active{{/gt}}">
+              <span class="progress-step-number">{{#gt _DATA_.step 6}}✓{{else}}7{{/gt}}</span><br>
+              <span class="progress-step-into">入围供应商</span>
+            </li>
+
+          </ol>
+        </div>
+{{/component}}

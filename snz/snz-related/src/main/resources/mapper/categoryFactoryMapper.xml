@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 查询工厂信息 -->
+<mapper namespace="CategoryFactory">
+    <resultMap id="categoryFactoryMap" type="CategoryFactory">
+        <id property="id" column="id"/>
+        <result property="productId" column="product_id"/>
+        <result property="parkId" column="park_id"/>
+        <result property="factoryId" column="factory_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        product_id, park_id, factory_id, created_at, updated_at
+    </sql>
+
+    <select id="findByProductId" parameterType="map" resultMap="categoryFactoryMap">
+        select id, <include refid="columns"/> from snz_category_factory where product_id=#{productId} and park_id=#{parkId};
+    </select>
+
+    <select id="findByParams" parameterType="map" resultMap="categoryFactoryMap">
+        select id, <include refid="columns"/>
+        from snz_category_factory where product_id=#{productId} and factory_id in
+        <foreach collection="factoryIds" open="(" separator="," close=")" item="factoryId">
+            #{factoryId}
+        </foreach>
+    </select>
+</mapper>

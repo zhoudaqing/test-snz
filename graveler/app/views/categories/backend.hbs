@@ -1,0 +1,26 @@
+{{#partial "realTitle"}}后台运营类目{{/partial}}
+{{#partial "realBody"}}
+<div class="category-title">
+  <p class="component-title">
+    <strong>后台类目管理</strong>
+    &nbsp;&nbsp;&nbsp;
+    <span class="category-id-desc">当前类目id：&nbsp;<span class="category-id-show"></span></span>
+    <a class="category-sync js-sync-back" href="javascript:void(0);">
+      <i class="icon-tongbu"></i>
+      同步后台类目
+    </a>
+  </p>
+</div>
+<div class="category-list">
+  {{#inject "admins/back_category"}}
+  {
+    "type": 2,
+    "id": 0
+  }
+  {{/inject}}
+</div>
+<div class="edit-area">
+  {{inject "admins/category_manage"}}
+</div>
+{{/partial}}
+{{> categories/layout}}

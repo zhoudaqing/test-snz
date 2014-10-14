@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NewProductStep">
+
+    <resultMap id="newProductStepResultMap" type="NewProductStep">
+        <id property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="step" column="step"/>
+        <result property="datetime" column="datetime"/>
+        <result property="duration" column="duration"/>
+        <result property="realDatetime" column="real_datetime"/>
+        <result property="status" column="status"/>
+        <result property="inCharge" column="in_charge"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+
+    <sql id="columns">
+     parent_id,module_num,supplier_code,supplier_name,step,datetime,duration,
+     real_datetime,status,in_charge,created_at,updated_at
+    </sql>
+
+
+    <sql id="query_conditions">
+      <if test="parentId!=null">AND parent_id = #{parentId}</if>
+      <if test="moduleNu!=null">AND module_num = #{moduleNum}</if>
+      <if test="supplierCode!=null">AND supplier_code = #{supplierCode}</if>
+      <if test="supplierName!=null">AND supplier_name = #{supplierName}</if>
+      <if test="step!=null">AND step = #{step}</if>
+      <if test="datetime!=null">AND datetime = #{datetime}</if>
+      <if test="duration!=null">AND duration = #{duration}</if>
+      <if test="realDatetime!=null">AND real_datetime = #{realDatetime}</if>
+      <if test="inCharge!=null">AND in_charge = #{inCharge}</if>
+      <if test="status!=null">AND status = #{status}</if>
+    </sql>
+
+
+    <insert id="create" parameterType="NewProductStep" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_new_product_steps ( <include refid="columns"/>)
+      VALUES(
+       #{parentId},#{moduleNum},#{supplierCode},#{supplierName},#{step},
+        #{datetime},#{duration},#{realDatetime},#{status},#{inCharge},now(),now()
+      )
+    </insert>
+
+
+    <select id="findById" parameterType="long" resultMap="newProductStepResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_new_product_steps
+      WHERE
+       `id` = #{id}
+    </select>
+
+
+    <select id="findByIds" parameterType="list" resultMap="newProductStepResultMap">
+        SELECT id,<include refid="columns"/>
+            FROM snz_new_product_steps
+        WHERE
+            id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+    </select>
+
+
+    <select id="findByModuleNum" parameterType="string" resultMap="newProductStepResultMap">
+        SELECT id,<include refid="columns"/>
+        FROM  snz_new_product_steps
+          WHERE module_num=#{moduleNum}
+        ORDER BY real_datetime DESC
+    </select>
+
+
+    <select id="findByModuleNumAndSupplierName" parameterType="java.util.Map" resultMap="newProductStepResultMap">
+      SELECT id,<include refid="columns"/>
+        FROM  snz_new_product_steps
+      WHERE module_num=#{moduleNum} AND supplier_name=#{supplierName}
+        ORDER BY real_datetime DESC
+    </select>
+
+    <select id="findByModuleNumAndSupplierNameAndStep" parameterType="java.util.Map" resultMap="newProductStepResultMap">
+        SELECT id,<include refid="columns"/>
+        FROM  snz_new_product_steps
+        WHERE module_num=#{moduleNum} AND supplier_code=#{supplierCode} AND step=#{step}
+        ORDER BY real_datetime DESC
+    </select>
+
+
+    <select id="findByParentIdAndStep" parameterType="map" resultMap="newProductStepResultMap">
+        SELECT id, <include refid="columns"/>
+          FROM snz_new_product_steps
+        WHERE parent_id = #{parentId} AND step = #{step}
+          ORDER BY updated_at DESC
+          LIMIT 1
+    </select>
+
+
+    <update id="update" parameterType="NewProductStep">
+      UPDATE snz_new_product_steps
+      <set>
+          <if test="parentId!=null">parent_id = #{parentId},</if>
+          <if test="moduleNum!=null">module_num = #{moduleNum},</if>
+          <if test="supplierCode!=null">supplier_code = #{supplierCode},</if>
+          <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+          <if test="step!=null">step = #{step},</if>
+          <if test="datetime!=null">datetime = #{datetime},</if>
+          <if test="duration!=null">duration = #{duration},</if>
+          <if test="realDatetime!=null">real_datetime = #{realDatetime},</if>
+          <if test="status!=null">status = #{status},</if>
+          <if test="inCharge!=null">in_charge = #{inCharge},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <update id="updateByParams" parameterType="NewProductStep">
+      UPDATE snz_new_product_steps
+      <set>
+          <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+          <if test="datetime!=null">datetime = #{datetime},</if>
+          <if test="duration!=null">duration = #{duration},</if>
+          <if test="realDatetime!=null">real_datetime = #{realDatetime},</if>
+          <if test="status!=null">status = #{status},</if>
+          <if test="inCharge!=null">in_charge = #{inCharge},</if>
+        updated_at = now()
+      </set>
+        WHERE
+          parent_id = #{parentId} AND
+          step = #{step}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_new_product_steps
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

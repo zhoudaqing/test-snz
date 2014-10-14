@@ -1,0 +1,28 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "main-menu"}}
+<div class="ui teal inverted menu">
+  <div class="container">
+    <div class="right menu">
+      {{#if _USER_}}
+      {{#hasPermission "admin"}}
+      <div class="ui dropdown item">
+        <i class="setting icon"></i> Admin <i class="dropdown icon"></i>
+        <div class="menu">
+          <a href="/settings/users" class="item">Users</a>
+        </div>
+      </div>
+      {{/hasPermission}}
+      <a href="/profile" class="item">
+        <i class="user icon"></i> {{_USER_.name}}
+      </a>
+      <a href="#" class="item js-link-logout">注销</a>
+      {{else}}
+      <div class="item">Welcome</div>
+      {{/if}}
+    </div>
+    <div class="logo">
+      <a href="/index"><i class="large bug icon"></i>Pampas Console</a>
+    </div>
+  </div>
+</div>
+{{/component}}

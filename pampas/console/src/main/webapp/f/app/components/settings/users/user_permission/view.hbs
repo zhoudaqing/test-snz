@@ -1,0 +1,102 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "settings-users-user-permission"}}
+<h2 class="ui header">
+  <i class="user icon"></i>
+  {{_DATA_.user.name}} ({{_DATA_.user.realName}})
+</h2>
+<div class="ui two column relaxed divided grid basic segment">
+  <div class="column">
+    {{#with _DATA_.user}}
+    <div class="ui list">
+      <div class="item">
+        <i class="mail icon"></i>
+        <div class="content">
+          <div class="header">Email</div>
+          <div class="description">{{email}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="sign in icon"></i>
+        <div class="content">
+          <div class="header">Login At</div>
+          <div class="description">{{#if loginAt}}{{formatDate loginAt}}{{else}}Never login{{/if}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="add icon"></i>
+        <div class="content">
+          <div class="header">Created At</div>
+          <div class="description">{{formatDate createdAt}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="refresh icon"></i>
+        <div class="content">
+          <div class="header">Updated At</div>
+          <div class="description">{{formatDate updatedAt}}</div>
+        </div>
+      </div>
+    </div>
+    {{/with}}
+  </div>
+  <div class="ui dimmable column">
+    {{#hasPermission "admin"}}
+    <h4 class="ui header">Role</h4>
+    <div class="ui checkbox">
+      <input type="checkbox" class="js-checkbox-role-admin" name="isAdmin" {{#if _DATA_.isAdmin}}checked{{/if}}>
+      <label>Admin</label>
+    </div>
+    <h4 class="ui header">Permission</h4>
+    <div class="ui tiny green button js-btn-new-permission"><i class="add icon"></i>NEW</div>
+    <div class="ui selection divided list js-list-permission">
+      {{#each _DATA_.permissions}}
+      <div class="item" data-permission="{{this}}">
+        <div class="right floated">
+          <a href="#" class="js-link-del-permission"><i class="trash icon"></i></a>
+        </div>
+        {{this}}
+      </div>
+      {{/each}}
+    </div>
+    <div class="ui inverted dimmer js-dimmer-permission">
+      <div class="content">
+        <div class="center">
+          <h4 class="ui icon header">
+            <i class="loading icon"></i>
+            Saving...
+          </h4>
+        </div>
+      </div>
+    </div>
+    {{else}}
+    {{inject "no_auth"}}
+    {{/hasPermission}}
+  </div>
+</div>
+<div class="ui small modal settings-users-user-permission-modal new-permission">
+  <i class="close icon"></i>
+  <div class="header">
+    New Permission
+  </div>
+  <div class="content">
+    <div class="ui info message">
+      <div class="header">Permission Rule</div>
+      <ul class="list">
+        <li>权限结构为 group:{group name}:app:{app name}:site:{site name} ，例如 group:showcase:app:showcase1:site:main</li>
+        <li>app name 和 site name 这两级是可选的，也就是可以如下这么写：group:showcase 或者 group:showcase:app:showcase1 ，在省略下一级的时候则意味这拥有所有上一级所属下级的权限</li>
+        <li>＊ 代表 all ，即匹配这一级的所有实例，例如 group:* 或者 group:showcase:app:*</li>
+      </ul>
+    </div>
+    <form class="content ui form">
+      <div class="field">
+        <label>Permission</label>
+        <input name="permission" type="text" placeholder="group:{group name}:app:{app name}:site:{site name}">
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui positive right labeled icon button">Submit<i class="checkmark icon"></i></div>
+  </div>
+</div>
+{{/component}}

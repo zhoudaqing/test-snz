@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Requirement" type="io.terminus.snz.requirement.model.Requirement"/>
+        <typeAlias alias="Module" type="io.terminus.snz.requirement.model.Module"/>
+        <typeAlias alias="ModuleFactory" type="io.terminus.snz.requirement.model.ModuleFactory"/>
+        <typeAlias alias="RequirementTime" type="io.terminus.snz.requirement.model.RequirementTime"/>
+        <typeAlias alias="ReqPredictTime" type="io.terminus.snz.requirement.model.ReqPredictTime"/>
+        <typeAlias alias="RequirementTeam" type="io.terminus.snz.requirement.model.RequirementTeam"/>
+        <typeAlias alias="RequirementSolution" type="io.terminus.snz.requirement.model.RequirementSolution"/>
+        <typeAlias alias="ModuleSolution" type="io.terminus.snz.requirement.model.ModuleSolution"/>
+        <typeAlias alias="RequirementRank" type="io.terminus.snz.requirement.model.RequirementRank"/>
+        <typeAlias alias="RequirementSend" type="io.terminus.snz.requirement.model.RequirementSend"/>
+        <typeAlias alias="ModuleQuota" type="io.terminus.snz.requirement.model.ModuleQuota"/>
+        <typeAlias alias="ModuleQuotation" type="io.terminus.snz.requirement.model.ModuleQuotation"/>
+        <typeAlias alias="BackendCategory" type="io.terminus.snz.category.model.BackendCategory"/>
+        <typeAlias alias="FrontendCategory" type="io.terminus.snz.category.model.FrontendCategory"/>
+        <typeAlias alias="BackendCategoryProperty" type="io.terminus.snz.category.model.BackendCategoryProperty"/>
+        <typeAlias alias="CategoryBinding" type="io.terminus.snz.category.model.CategoryBinding"/>
+        <typeAlias alias="Deposit" type="io.terminus.snz.requirement.model.Deposit"/>
+        <typeAlias alias="OldModule" type="io.terminus.snz.requirement.model.OldModule"/>
+        <typeAlias alias="DerivativeDiff" type="io.terminus.snz.requirement.model.DerivativeDiff"/>
+        <typeAlias alias="ImportGood" type="io.terminus.snz.requirement.model.ImportGood"/>
+        <typeAlias alias="ImportGoodRow" type="io.terminus.snz.requirement.model.ImportGoodRow"/>
+        <typeAlias alias="ImportGoodList" type="io.terminus.snz.requirement.model.ImportGoodList"/>
+        <typeAlias alias="IdentifyName" type="io.terminus.snz.requirement.model.IdentifyName"/>
+        <typeAlias alias="RiskMortgagePayment" type="io.terminus.snz.requirement.model.RiskMortgagePayment"/>
+        <typeAlias alias="SupplierQualification" type="io.terminus.snz.requirement.model.SupplierQualification"/>
+        <typeAlias alias="DetailQuota" type="io.terminus.snz.requirement.model.DetailQuota"/>
+        <typeAlias alias="mdmConfigure" type="io.terminus.snz.eai.model.MDMConfigure"/>
+        <typeAlias alias="NewProductImport" type="io.terminus.snz.requirement.model.NewProductImport"/>
+        <typeAlias alias="NewProductStep" type="io.terminus.snz.requirement.model.NewProductStep"/>
+        <typeAlias alias="SupplierTQRDCInfoTmp" type="io.terminus.snz.user.model.SupplierTQRDCInfoTmp"/>
+
+        <typeAlias alias="mwOldModuleInfo" type="io.terminus.snz.requirement.model.MWOldModuleInfo"/>
+        <typeAlias alias="marketBadRecord" type="io.terminus.snz.requirement.model.MarketBadRecord"/>
+        <typeAlias alias="sceneBadRecord" type="io.terminus.snz.requirement.model.SceneBadRecord"/>
+        <typeAlias alias="mwSceneBadRecord" type="io.terminus.snz.requirement.model.MWSceneBadRecord"/>
+        <typeAlias alias="mwMarketBadRecord" type="io.terminus.snz.requirement.model.MWMarketBadRecord"/>
+        <typeAlias alias="RequirementQuestionnaire" type="io.terminus.snz.requirement.model.RequirementQuestionnaire"/>
+        <typeAlias alias="TmoneBadRecord" type="io.terminus.snz.requirement.model.TmoneBadRecord"/>
+    </typeAliases>
+</configuration>

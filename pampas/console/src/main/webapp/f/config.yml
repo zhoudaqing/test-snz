@@ -1,0 +1,102 @@
+paths:
+  public: "public"
+groups:
+  scripts:
+    paths:
+      - app/scripts
+    concat:
+      "/assets/scripts/app.js": "{app/scripts/**/*.{js,coffee},app/components/**/view.{js,coffee}}"
+      "/assets/scripts/vendor.js": "vendor/**/*.{js,coffee}"
+    order:
+      - vendor/jquery.js
+      - ...
+      - app/scripts/app.coffee
+  styles:
+    paths:
+      - app/styles
+    concat:
+      "/assets/styles/app.css": "{app/styles/[a-z]*.{css,scss,sass},app/components/**/view.{css,scss,sass}}"
+      "/assets/styles/vendor.css": "vendor/**/*.css"
+  views:
+    paths:
+      - app/views
+      - app/components
+    copy:
+      "/views": "app/views/**/*.{hbs,html}"
+      "/components/": "app/components/**/view.hbs"
+  templates:
+    paths:
+      - app/components
+    precompile:
+      "../vendor/templates.js": "app/components/**/templates/*.hbs"
+  files:
+    paths:
+      - vendor/fonts
+      - app/files
+    copy:
+      "/": "app/files/**/*.*"
+      "/assets/fonts": "vendor/fonts/*.*"
+modules:
+  wrapper: cmd
+  ignored: "{vendor/**/*,app/files/**/*}"
+  definition: /assets/scripts/app.js
+revision:
+  files:
+    - views/layout.hbs
+    - views/design/editor.hbs
+notification: true
+bundles:
+  jquery.js:
+    version: 1.10.2
+    url: http://code.jquery.com/jquery-1.10.2.js
+  jquery/jquery.query.js:
+    version: 2.1.7
+    url: https://raw.github.com/TerminusHQ/query.js/2.1.7/query.js
+  jquery/jquery.serialize-object.js:
+    version: 2.0.3
+    url: https://raw.github.com/hongymagic/jQuery.serializeObject/v2.0.3/jquery.serializeObject.js
+  jquery/jquery.pagination.js:
+    version: 2.2.1
+    url: https://raw.github.com/gbirke/jquery_pagination/3a614db5fa1e02a5f568b2ac798224efb963a843/src/jquery.pagination.js
+  handlebars.js:
+    version: 1.0.0
+    url: https://raw.github.com/wycats/handlebars.js/1.0.0/dist/handlebars.runtime.js
+  semantic.css:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/css/semantic.css
+  semantic.js:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/javascript/semantic.js
+  fonts/icons.eot:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/fonts/icons.eot
+  fonts/icons.otf:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/fonts/icons.otf
+  fonts/icons.svg:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/fonts/icons.svg
+  fonts/icons.ttf:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/fonts/icons.ttf
+  fonts/icons.woff:
+    version: 0.16.1
+    url: http://cdn.bootcss.com/semantic-ui/0.16.1/fonts/icons.woff
+  essage.js:
+    version: "0.1.0"
+    url: "https://raw.github.com/sofish/essage/master/src/essage.js"
+  essage.css:
+    version: "0.1.0"
+    url: "https://raw.github.com/sofish/essage/master/src/essage.css"
+  "../app/files/assets/eevee/eevee.js":
+    version: master
+    url: http://git.aixforce.com/terminus/eevee/raw/master/public/scripts/eevee.js
+  "../app/files/assets/eevee/eevee.css":
+    version: master
+    url: http://git.aixforce.com/terminus/eevee/raw/master/public/styles/eevee.css
+  "../app/files/assets/eevee/vendor.js":
+    version: master
+    url: http://git.aixforce.com/terminus/eevee/raw/master/public/scripts/vendor.js
+  "../app/files/assets/eevee/vendor.css":
+    version: master
+    url: http://git.aixforce.com/terminus/eevee/raw/master/public/styles/vendor.css

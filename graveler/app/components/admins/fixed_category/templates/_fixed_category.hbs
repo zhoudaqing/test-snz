@@ -1,0 +1,31 @@
+<div class="category category-{{extras.level}} js-comp" id="{{extras.level}}">
+  <div class="category-header">
+    <p class="item-name-p"><strong class="item-name">
+      {{#equals extras.level 1}}一级类目{{/equals}}
+      {{#equals extras.level 2}}二级类目{{/equals}}
+      {{#equals extras.level 3}}三级类目{{/equals}}
+      {{#equals extras.level 4}}四级类目{{/equals}}</strong></p>
+    <div class="sharp">
+      <span class="up"></span>
+      <span class="low"></span>
+    </div>
+  </div>
+  <div class="form category-body">
+    <div class="search-item">
+      <div class=" search-item-group">
+        <i class="icon-fdj12"></i>
+        <input type="text" class="search-item-input js-search-item" placeholder="搜索关键字" >
+      </div>
+    </div>
+    <ul class="divide-ul">
+      {{#each data}}
+        <li class="divide-li" data-category="{{pp this}}">
+          <span class="normal-status">
+            <a href="javascript:void(0);" class="item-pop"><span>{{name}}</span></a>
+            {{#equals hasChild "true"}}<i class="icon-littlearrow next"></i>{{/equals}}
+          </span>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>

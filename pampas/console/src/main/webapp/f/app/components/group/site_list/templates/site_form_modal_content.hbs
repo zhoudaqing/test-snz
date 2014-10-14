@@ -1,0 +1,33 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+<form class="content ui form">
+  <input type="hidden" name="id" value="{{id}}">
+  <input type="hidden" name="app" value="{{app}}">
+  <div class="field">
+    <label>Name</label>
+    <div class="ui labeled input">
+      <input name="name" type="text" placeholder="Name" value="{{name}}">
+      <div class="ui corner label">
+        <i class="asterisk icon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Sub Domain</label>
+    <div class="ui labeled input">
+      <input name="subdomain" type="text" placeholder="Sub Domain" value="{{subdomain}}">
+      <div class="ui corner label">
+        <i class="asterisk icon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="ui icon info message" style="display:block;">
+    <i class="info icon"></i>
+    <div class="content">
+      <p>
+        sub domain 可选填 <span class="ui label">/</span> 或者 <span class="ui label">字母数字下划线横线组成的字串</span>
+        <br/>
+        当填写 <span class="ui label">/</span> 时代表是该 app 的主站
+      </p>
+    </div>
+  </div>
+</form>

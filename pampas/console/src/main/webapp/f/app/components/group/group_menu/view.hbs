@@ -1,0 +1,17 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-group-menu"}}
+<h1 class="ui header">
+  Group: {{group}}
+</h1>
+<div class="ui secondary pointing menu">
+  <a href="/group/config?group={{group}}" class="{{#equals active "config"}}active{{/equals}} item">
+    <i class="text file icon"></i> Cells &amp; Config
+  </a>
+  <a href="/group/design?group={{group}}" class="{{#equals active "design"}}active{{/equals}} item">
+    <i class="leaf icon"></i> Sites &amp; Design
+  </a>
+  <a href="/group/apps?group={{group}}" class="{{#equals active "app"}}active{{/equals}} item">
+    <i class="grid layout icon"></i> Apps
+  </a>
+</div>
+{{/component}}

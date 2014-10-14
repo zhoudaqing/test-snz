@@ -1,0 +1,78 @@
+{{#component "js-comp supplier-order-list operation-platform"}}
+<p class="components-title"><strong>供应商索赔</strong></p>
+<div id="block" class="block">
+  <form id="js-supplier-audit-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="product">模块:</label>
+        <select class="select" name="product">
+          <option value="">请选择</option>
+          <option {{#equals product "1"}}selected{{/equals}} value="1">冰箱</option>
+          <option {{#equals product "2"}}selected{{/equals}} value="2">厨电</option>
+          <option {{#equals product "3"}}selected{{/equals}} value="3">空调</option>
+          <option {{#equals product "4"}}selected{{/equals}} value="4">冷柜</option>
+          <option {{#equals product "5"}}selected{{/equals}} value="5">洗衣机</option>
+          <option {{#equals product "6"}}selected{{/equals}} value="6">电热</option>
+          <option {{#equals product "7"}}selected{{/equals}} value="7">商用空调</option>
+        </select>
+      </span>
+      <span class="span3">
+        <label for="email">供应商名称:</label>
+        <input type="text" name="supplinerName" value="{{supplinerName}}">
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a>
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="40" rowspan="3">模块</th>
+      <th width="70" rowspan="3">供应商代码</th>
+      <th width="152"  rowspan="3">供应商名称</th>
+      <th width="80" rowspan="3">责任人</th>
+      <th width="488" colspan="6">用户抱怨</th>
+      <th width="80" rowspan="3">操作</th>
+    </tr>
+    <tr>
+      <th colspan="3">不良量</th>
+      <th colspan="3">损失（元）</th>
+    </tr>
+    <tr>
+      <th>前7天</th>
+      <th>当月</th>
+      <th>当年</th>
+      <th>前7天</th>
+      <th>当月</th>
+      <th>当年</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.data}}
+    <tr>
+      <td>{{supplierResource.product}}</td>
+      <td>{{supplierResource.vcode}}</td>
+      <td>{{supplierResource.supplierName}}</td>
+      <td>{{supplierResource.userName}}</td>
+      <td>{{formatDecimal supplierReparationSumaries.dailyCount}}</td>
+      <td>{{formatDecimal supplierReparationSumaries.monthlyCount}}</td>
+      <td>{{formatDecimal supplierReparationSumaries.yearlyCount}}</td>
+      <td>{{formatPrice supplierReparationSumaries.dailyAmount      "Y" 0 "Z"}}</td>
+      <td>{{formatPrice supplierReparationSumaries.monthlyAmount    "Y" 0 "Z"}}</td>
+      <td>{{formatPrice supplierReparationSumaries.yearlyAmount     "Y" 0 "Z"}}</td>
+      <td>
+        <a class="btn" href="/suppliers/order-detail?userId={{supplierResource.supplierUid}}">查看详情</a>&nbsp;&nbsp;
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div id="js-pagination" class="right-text"></div>
+{{/component}}

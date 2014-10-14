@@ -1,0 +1,26 @@
+@import "pokeball/variables";
+
+.indicator-plots {
+
+  .indicator-plot {
+    width: 25%;
+    float: left;
+    min-height: 50px;
+    margin: 20px 0;
+
+    .indicator-plot-content {
+      padding: 20px;
+
+      .currency {
+        color: $default-panel-color;
+        font-size: 32px;
+        font-weight: inherit;
+        line-height: 48px;
+      }
+
+      .plot {
+        height: 80px;
+      }
+    }
+  }
+}

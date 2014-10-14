@@ -1,0 +1,48 @@
+{{#component "js-comp demand-module demand-step"}}
+  <p class="components-title"><strong class="tab-name">模块列表</strong>&nbsp;&nbsp;&nbsp;<span>共 {{_DATA_.modulePaging.total}} 个模块</span></p>
+  <h4 class="fill-title"><span>添加新品</span><span class="line"></span></h4>
+  {{#of _DATA_.requirementFactoryDto.requirement.status "0,1,2"}}<p><button class="btn btn-primary btn-medium js-add-new-module" data-id="{{requirementId}}" data-series="{{_DATA_.requirementFactoryDto.requirement.seriesIds}}">添加模块</button></p>{{/of}}
+  {{#of _DATA_.requirementFactoryDto.requirement.checkResult "0,1,-1"}}<p><button class="btn btn-primary btn-medium js-add-new-module" data-id="{{requirementId}}" data-series="{{_DATA_.requirementFactoryDto.requirement.seriesIds}}">添加模块</button>
+  <span class="btn btn-upload ">
+    <span>批量导入</span>
+    <input type="file" name="file" data-id="{{requirementId}}">
+  </span>
+  <a href="/api/template/modulestemplate/{{requirementId}}">下载模板</a>
+  </p>{{/of}}
+
+  <div class="table-container">
+    <table class="table table-striped" id="module-table">
+      <thead>
+        <tr>
+          <th width="100">流水码</th>
+          <th width="100">模块专用号</th>
+          <th width="100">模块描述</th>
+          <th width="100">模块属性</th>
+          <th colspan="{{size _DATA_.requirementFactoryDto.factoryList}}">
+            <div class="one-row">资源量</div>
+            <div class="multi-row" data-factory="{{json _DATA_.requirementFactoryDto.factoryList}}">
+            {{#each _DATA_.requirementFactoryDto.factoryList}}
+              <span data-id="{{id}}" data-name="{{factoryName}}" data-num="{{factoryNum}}" title="{{factoryName}}">{{factoryName}}</span>
+            {{/each}}
+            </div>
+          </th>
+          <th width="100">认证</th>
+          <th width="120">质量目标</th>
+          <th width="100">成本目标</th>
+          <th width="100">高峰月产能</th>
+          <th width="100">要求供货时间</th>
+          <th width="100">操作</th>
+        </tr>
+      </thead>
+      <tbody data-status="{{_DATA_.requirementFactoryDto.requirement.status}}" data-check="{{_DATA_.requirementFactoryDto.requirement.checkResult}}">
+        {{#each _DATA_.modulePaging.data}}
+        <tr class="module-tr" data-module="{{json this}}" data-series="{{_DATA_.requirementFactoryDto.requirement.seriesIds}}"></tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class="demand-pagination" data-total="{{_DATA_.modulePaging.total}}"></div>
+  <div class="post-submit">
+    <a class="btn btn-primary btn-large" href="/purchaser/demand-list">保存</a>{{#equals _DATA_.requirementFactoryDto.requirement.status "2"}}&nbsp;&nbsp;&nbsp;<button class="btn btn-medium js-lock-requirement" data-id="{{requirementId}}" data-toggle="confirm" data-title="您确定锁定需求吗?" data-content="锁定需求后不可更改需求" data-event="confirm:lock-requirement"  type="button">锁定需求</button>{{/equals}}
+  </div>
+{{/component}}

@@ -1,0 +1,20 @@
+{{#each data}}
+  <tr>
+    <td>
+      <span data-country="{{country}}"></span>
+      &nbsp;
+      <span data-province="{{province}}"></span>
+      &nbsp;
+      <span data-parent="{{province}}" data-city="{{city}}"></span>
+    </td>
+    <td>
+      {{size}}
+    </td>
+    <td>
+      {{employee}}
+    </td>
+    <td>
+      {{factoryFixedAssets}}
+    </td>
+  </tr>
+{{/each}}

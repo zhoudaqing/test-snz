@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SupplierReparationSumaries" >
+  <resultMap id="SupplierReparationSumariesMap" type="SupplierReparationSumaries" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="supplier_uid" property="supplierUid" jdbcType="BIGINT" />
+    <result column="daily_count" property="dailyCount" jdbcType="INTEGER" />
+    <result column="weekly_count" property="weeklyCount" jdbcType="INTEGER" />
+    <result column="monthly_count" property="monthlyCount" jdbcType="INTEGER" />
+    <result column="yearly_count" property="yearlyCount" jdbcType="INTEGER" />
+    <result column="daily_amount" property="dailyAmount" jdbcType="BIGINT" />
+    <result column="weekly_amount" property="weeklyAmount" jdbcType="BIGINT" />
+    <result column="monthly_amount" property="monthlyAmount" jdbcType="BIGINT" />
+    <result column="yearly_amount" property="yearlyAmount" jdbcType="BIGINT" />
+    <result column="start_at" property="startAt" jdbcType="TIMESTAMP" />
+    <result column="end_at" property="endAt" jdbcType="TIMESTAMP" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, supplier_uid, daily_count, weekly_count, monthly_count, yearly_count, daily_amount, 
+    weekly_amount, monthly_amount, yearly_amount, start_at, end_at, created_at, updated_at
+  </sql>
+
+  <select id="selectBySupplierUid" resultMap="SupplierReparationSumariesMap" parameterType="long" >
+        select
+        <include refid="Base_Column_List" />
+        from snz_supplier_reparation_sumaries
+        where supplier_uid = #{supplierUid,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="SupplierReparationSumariesMap" parameterType="long" >
+    select 
+    <include refid="Base_Column_List" />
+    from snz_supplier_reparation_sumaries
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="long" >
+    delete from snz_supplier_reparation_sumaries
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="SupplierReparationSumaries" >
+    insert into snz_supplier_reparation_sumaries (supplier_uid, daily_count,
+      weekly_count, monthly_count, yearly_count, 
+      daily_amount, weekly_amount, monthly_amount, 
+      yearly_amount, start_at, end_at, 
+      created_at, updated_at)
+    values (#{supplierUid,jdbcType=BIGINT}, #{dailyCount,jdbcType=INTEGER},
+      #{weeklyCount,jdbcType=INTEGER}, #{monthlyCount,jdbcType=INTEGER}, #{yearlyCount,jdbcType=INTEGER}, 
+      #{dailyAmount,jdbcType=BIGINT}, #{weeklyAmount,jdbcType=BIGINT}, #{monthlyAmount,jdbcType=BIGINT}, 
+      #{yearlyAmount,jdbcType=BIGINT}, #{startAt,jdbcType=TIMESTAMP}, #{endAt,jdbcType=TIMESTAMP}, 
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="SupplierReparationSumaries" >
+    insert into snz_supplier_reparation_sumaries
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="supplierUid != null" >
+        supplier_uid,
+      </if>
+      <if test="dailyCount != null" >
+        daily_count,
+      </if>
+      <if test="weeklyCount != null" >
+        weekly_count,
+      </if>
+      <if test="monthlyCount != null" >
+        monthly_count,
+      </if>
+      <if test="yearlyCount != null" >
+        yearly_count,
+      </if>
+      <if test="dailyAmount != null" >
+        daily_amount,
+      </if>
+      <if test="weeklyAmount != null" >
+        weekly_amount,
+      </if>
+      <if test="monthlyAmount != null" >
+        monthly_amount,
+      </if>
+      <if test="yearlyAmount != null" >
+        yearly_amount,
+      </if>
+      <if test="startAt != null" >
+        start_at,
+      </if>
+      <if test="endAt != null" >
+        end_at,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="supplierUid != null" >
+        #{supplierUid,jdbcType=BIGINT},
+      </if>
+      <if test="dailyCount != null" >
+        #{dailyCount,jdbcType=INTEGER},
+      </if>
+      <if test="weeklyCount != null" >
+        #{weeklyCount,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyCount != null" >
+        #{monthlyCount,jdbcType=INTEGER},
+      </if>
+      <if test="yearlyCount != null" >
+        #{yearlyCount,jdbcType=INTEGER},
+      </if>
+      <if test="dailyAmount != null" >
+        #{dailyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="weeklyAmount != null" >
+        #{weeklyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="monthlyAmount != null" >
+        #{monthlyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="yearlyAmount != null" >
+        #{yearlyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="startAt != null" >
+        #{startAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endAt != null" >
+        #{endAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="SupplierReparationSumaries" >
+    update snz_supplier_reparation_sumaries
+    <set >
+      <if test="supplierUid != null" >
+        supplier_uid = #{supplierUid,jdbcType=BIGINT},
+      </if>
+      <if test="dailyCount != null" >
+        daily_count = #{dailyCount,jdbcType=INTEGER},
+      </if>
+      <if test="weeklyCount != null" >
+        weekly_count = #{weeklyCount,jdbcType=INTEGER},
+      </if>
+      <if test="monthlyCount != null" >
+        monthly_count = #{monthlyCount,jdbcType=INTEGER},
+      </if>
+      <if test="yearlyCount != null" >
+        yearly_count = #{yearlyCount,jdbcType=INTEGER},
+      </if>
+      <if test="dailyAmount != null" >
+        daily_amount = #{dailyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="weeklyAmount != null" >
+        weekly_amount = #{weeklyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="monthlyAmount != null" >
+        monthly_amount = #{monthlyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="yearlyAmount != null" >
+        yearly_amount = #{yearlyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="startAt != null" >
+        start_at = #{startAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endAt != null" >
+        end_at = #{endAt,jdbcType=TIMESTAMP},
+      </if>
+        updated_at = now()
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="SupplierReparationSumaries" >
+    update snz_supplier_reparation_sumaries
+    set supplier_uid = #{supplierUid,jdbcType=BIGINT},
+      daily_count = #{dailyCount,jdbcType=INTEGER},
+      weekly_count = #{weeklyCount,jdbcType=INTEGER},
+      monthly_count = #{monthlyCount,jdbcType=INTEGER},
+      yearly_count = #{yearlyCount,jdbcType=INTEGER},
+      daily_amount = #{dailyAmount,jdbcType=BIGINT},
+      weekly_amount = #{weeklyAmount,jdbcType=BIGINT},
+      monthly_amount = #{monthlyAmount,jdbcType=BIGINT},
+      yearly_amount = #{yearlyAmount,jdbcType=BIGINT},
+      start_at = #{startAt,jdbcType=TIMESTAMP},
+      end_at = #{endAt,jdbcType=TIMESTAMP},
+      updated_at = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

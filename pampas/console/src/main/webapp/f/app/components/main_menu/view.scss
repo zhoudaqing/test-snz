@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) 2014 杭州端点网络科技有限公司
+ */
+
+@import "color";
+
+.main-menu {
+  margin-top: 50px;
+  .container {
+    margin-left: 100px;
+    margin-right: 100px;
+    position: relative;
+  }
+  .logo {
+    font-size: 2.5rem;
+    position: absolute;
+    display: block;
+    left: 0;
+    top: -38px;
+    color: $primary-color;
+    text-shadow: 1px 1px $background-color, 1px -1px $background-color, -1px -1px $background-color, -1px 1px $background-color;
+
+    i.icon {
+      opacity: 1;
+    }
+  }
+}

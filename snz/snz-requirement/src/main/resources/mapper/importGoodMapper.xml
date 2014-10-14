@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ImportGood">
+    <resultMap id="importGoodMap" type="ImportGood">
+        <id property="id" column="id" />
+        <result property="requirementId" column="requirement_id"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="companyId" column="company_id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="estimateContract" column="estimate_contract"/>
+        <result property="estimateDesign" column="estimate_design"/>
+        <result property="estimateModuling" column="estimate_moduling"/>
+        <result property="estimateDetection" column="estimate_detection"/>
+        <result property="estimateSample" column="estimate_sample"/>
+        <result property="estimateSelfTest" column="estimateSelf_test"/>
+        <result property="estimateIcq" column="estimate_icq"/>
+        <result property="estimateFormTest" column="estimate_form_test"/>
+        <result property="estimateTestConclusion" column="estimate_test_conclusion"/>
+        <result property="estimateFinalConclusion" column="estimate_final_conclusion"/>
+        <result property="inCharge" column="in_charge"/>
+        <result property="stage" column="stage"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id, supplier_id, company_id, module_id, company_name, estimate_contract, estimate_design, estimate_moduling,
+        estimate_detection, estimate_self_test, estimate_sample, estimate_icq, estimate_form_test, estimate_test_conclusion,
+        estimate_final_conclusion, in_charge, stage, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="importGood" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `snz_income_goods`
+        (<include refid="columns"/>)
+        VALUES
+	    (#{requirementId}, #{supplierId}, #{companyId}, #{moduleId}, #{companyName}, #{estimateContract},
+        #{estimateDesign}, #{estimateModuling},
+        #{estimateDetection}, #{estimateSelfTest}, #{estimateSample}, #{estimateIcq}, #{estimateFormTest},
+        #{estimateTestConclusion},#{estimateFinalConclusion}, #{inCharge}, #{stage}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <update id="update" parameterType="importGood">
+        update snz_income_goods
+        <set>
+            <if test="requirementId!=null"> requirement_id=#{requirementId}, </if>
+            <if test="supplierId!=null"> supplier_id=#{supplierId}, </if>
+            <if test="companyId!=null"> company_id=#{companyId}, </if>
+            <if test="moduleId!=null"> module_id=#{moduleId}, </if>
+            <if test="companyName!=null"> company_name=#{companyName}, </if>
+            <if test="estimateContract!=null"> estimate_contract=#{estimateContract}, </if>
+            <if test="estimateDesign!=null"> estimate_design=#{estimateDesign}, </if>
+            <if test="estimateModuling!=null"> estimate_moduling=#{estimateModuling}, </if>
+            <if test="estimateDetection!=null"> estimate_detection=#{estimateDetection}, </if>
+            <if test="estimateSelfTest!=null"> estimate_selftest=#{estimateSelfTest}, </if>
+            <if test="estimateSample!=null"> estimate_sample=#{estimateSample}, </if>
+            <if test="estimateIcq!=null"> estimate_icq=#{estimateIcq}, </if>
+            <if test="estimateFormTest!=null"> estimate_formtest=#{estimateFormTest}, </if>
+            <if test="estimateTestConclusion!=null"> estimate_test_conclusion=#{estimateTestConclusion}, </if>
+            <if test="estimateFinalConclusion!=null"> estimate_final_conclusion=#{estimateFinalConclusion}, </if>
+            <if test="stage!=null"> stage=#{stage}, </if>
+            <if test="inCharge!=null"> in_charge=#{in_charge}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from snz_income_goods where id=#{id}
+    </delete>
+    
+    <select id="findById" resultMap="importGoodMap">
+        select id, <include refid="columns"/>
+        from snz_income_goods where id=#{id}
+        limit 1
+    </select>
+    
+    <select id="findOneBy" resultMap="importGoodMap">
+        select id, <include refid="columns"/>
+        from snz_income_goods
+        <where>
+            <if test="id!=null">and id=#{id} </if>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId} </if>
+            <if test="stage!=null"> and stage=#{stage} </if>
+            <if test="supplierId!=null"> and supplier_id=#{supplierId} </if>
+            <if test="companyId!=null"> and company_id=#{companyId} </if>
+            <if test="moduleId!=null"> and module_id=#{moduleId} </if>
+            <if test="companyName!=null"> and company_name=#{companyName} </if>
+            <if test="inCharge"> and in_charge=#{inCharge} </if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="importGoodMap">
+        select id, <include refid="columns"/>
+        from snz_income_goods
+        <where>
+            <if test="id!=null">and id=#{id} </if>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId} </if>
+            <if test="stage!=null"> and stage=#{stage} </if>
+            <if test="supplierId!=null"> and supplier_id=#{supplierId} </if>
+            <if test="companyId!=null"> and company_id=#{companyId} </if>
+            <if test="moduleId!=null"> and module_id=#{moduleId} </if>
+            <if test="companyName!=null"> and company_name=#{companyName} </if>
+            <if test="inCharge"> and in_charge=#{inCharge} </if>
+        </where>
+    </select>
+</mapper>

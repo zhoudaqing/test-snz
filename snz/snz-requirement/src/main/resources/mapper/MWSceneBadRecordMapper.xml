@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MWSceneBadRecord">
+    <resultMap id="MWSceneBadRecordMap" type="MWSceneBadRecord">
+        <id property="id" column="id"/>
+        <result property="wasterid" column="wasterid"/>
+        <result property="specialtiesno" column="specialtiesno"/>
+        <result property="supplycode" column="supplycode"/>
+        <result property="wastercount" column="wastercount"/>
+        <result property="sendday" column="sendday"/>
+        <result property="careerdepart" column="careerdepart"/>
+        <result property="created_date" column="created_date"/>
+        <result property="last_modified_date" column="last_modified_date"/>
+        <result property="load_batch" column="load_batch"/>
+        <result property="penalty" column="penalty"/>
+    </resultMap>
+
+    <sql id="columns">
+      wasterid, specialtiesno, supplycode, wastercount, sendday, careerdepart, created_date, last_modified_date,
+      load_batch, penalty
+    </sql>
+
+    <select id="findById" resultMap="MWSceneBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_supplier_scene_bad_records` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="MWSceneBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_supplier_scene_bad_records`
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="wasterid!=null"> and wasterid=#{wasterid} </if>
+            <if test="specialtiesno!=null"> and specialtiesno=#{specialtiesno} </if>
+            <if test="supplycode!=null"> and supplycode=#{supplycode} </if>
+            <if test="wastercount!=null"> and wastercount=#{wastercount} </if>
+            <if test="sendday!=null"> and sendday=#{sendday} </if>
+            <if test="careerdepart!=null"> and careerdepart=#{careerdepart} </if>
+            <if test="created_date!=null"> and created_date=#{created_date} </if>
+            <if test="last_modified_date!=null"> and last_modified_date=#{last_modified_date} </if>
+            <if test="load_batch!=null"> and load_batch=#{load_batch} </if>
+            <if test="penalty!=null"> and penalty=#{penalty} </if>
+            updated_at
+        </where>
+        limit 1
+    </select>
+
+    <delete id="deleteByIds" parameterType="list">
+        delete from `mw_supplier_scene_bad_records`
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="maxId" resultType="long">
+        select max(id) from mw_supplier_scene_bad_records
+    </select>
+
+    <select id="forDump" resultMap="MWSceneBadRecordMap">
+        select id, <include refid="columns"/>
+        from mw_supplier_scene_bad_records
+        where id &lt; #{id}
+        <if test="startAt"> and created_date >= #{startAt} </if>
+        <if test="endAt"> and created_date &lt; #{endAt} </if>
+        order by id desc
+        limit #{offset}, #{limit}
+    </select>
+</mapper>

@@ -1,0 +1,182 @@
+{{#component "js-comp supplier-resume-research-info"}}
+  <p class="components-title"><strong class="tab-name">研发能力</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-list only-new">
+    <div class="compare-row">
+      <div class="new-value">
+        <label>中级工程师人数：</label>
+        <div>
+          {{supplierInfo.numberOfIntermediateEngineer}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>高级工程师人数：</label>
+        <div>
+          {{supplierInfo.numberOfSeniorEngineer}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>其他职称：</label>
+        <div>
+          {{supplierInfo.otherNames}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>合计：</label>
+        <div>
+          {{supplierInfo.sumNumberOfEngineer}}人
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>本年研发投入(万)：</label>
+        <div>
+          {{formatPrice supplierInfo.investmentThisYear "w" 1}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>试验室面积(㎡)：</label>
+        <div>
+          {{supplierInfo.labArea}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>试验室面积(㎡)：</label>
+        <div>
+          {{supplierInfo.labArea}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>研发资产(万)：</label>
+        <div>
+          {{formatPrice supplierInfo.assets "w" 1}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>研发设备(台)：</label>
+        <div>
+          {{supplierInfo.numberOfEquipments}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>试验室级别：</label>
+        <div>
+          {{#equals supplierInfo.labLevel "0"}}未选择{{/equals}}
+          {{#equals supplierInfo.labLevel "1"}}国家级{{/equals}}
+          {{#equals supplierInfo.labLevel "2"}}省级{{/equals}}
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="new-value">
+        <label>研发实验室附件：</label>
+        <div>
+          {{#if supplierInfo.labAttachUrl}}
+          <a href="{{supplierInfo.labAttachUrl}}">附件</a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="new-value">
+        <label>专利数量：</label>
+        <div>
+          {{supplierInfo.numberOfEquipments}}
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="new-value">
+        <label>研发设备(台)：</label>
+        <div>
+          {{supplierInfo.numberOfEquipments}}
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="new-value">
+        <label>发明数量：</label>
+        <div>
+          {{supplierInfo.numberOfPatentsForInventions}}
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="new-value">
+        <label>国家级技术奖项：</label>
+        <div>
+          {{supplierInfo.nationalTechnologyAwards}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>省级技术奖项：</label>
+        <div>
+          {{supplierInfo.provincialTechnologyAwards}}
+        </div>
+      </div>
+    </div>
+
+    <div class="compare-row">
+      <div class="new-value">
+        <label>成功案例：</label>
+        <div>
+          {{supplierInfo.successStories}}
+          {{#if supplierInfo.successStoriesAttachUrl}}
+          <span class="file-name">
+            <a href="{{supplierInfo.successStoriesAttachUrl}}">附件</a>
+          </span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>近三年专利数量(台)：</label>
+        <div>
+          {{supplierInfo.numberOfPatentsLastThreeYears}}
+          {{#if supplierInfo.patentsAttachUrl}}
+          <span class="file-name">
+            <a href="{{supplierInfo.patentsAttachUrl}}">附件</a>
+          </span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>技术排名自评(台)：</label>
+        <div>
+          {{#equals supplierInfo.otherAbilityDescription 0}}请选择{{/equals}}
+          {{#equals supplierInfo.otherAbilityDescription 1}}高{{/equals}}
+          {{#equals supplierInfo.otherAbilityDescription 2}}中{{/equals}}
+          {{#equals supplierInfo.otherAbilityDescription 3}}低{{/equals}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

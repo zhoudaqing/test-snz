@@ -1,0 +1,13 @@
+<div class="menu menu-dropdown up select-menu" id="identifies-select-menu">
+  <ul id="identifies-select-ul">
+    {{#each data}}
+      <li>
+        <label for="category-scope-{{id}}" class="scope-category-label" title="{{name}}">
+          <input id="category-scope-{{id}}" type="checkbox" name="joinerId" data-name="{{name}}" value="{{id}}">{{name}}</label>
+      </li>
+    {{/each}}
+  </ul>
+  <p class="product-operate-p">
+    <button type="button" class="btn btn-small btn-primary btn-info js-save-identifies-scope">确定</button>&nbsp;&nbsp;<button type="button" class="btn btn-small btn-info close">取消</button>
+  </p>
+</div>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:component-scan base-package="io.terminus.pampas.console">
+        <context:exclude-filter type="regex" expression="io\.terminus\.pampas\.console\.controller.*"/>
+    </context:component-scan>
+
+    <util:properties id="pampasConfig" location="file:${user.home}/pampas-console.properties"/>
+
+    <dubbo:application name="console"/>
+    <dubbo:registry protocol="zookeeper" address="#{pampasConfig.zk}"/>
+
+    <bean id="setting" class="io.terminus.pampas.engine.Setting">
+        <property name="mode" value="IMPLANT"/>
+        <property name="implantApp">
+            <bean class="io.terminus.pampas.engine.model.App">
+                <property name="key" value="console"/>
+                <property name="domain" value="console.com"/>
+                <property name="assetsHome" value="${assetsHome}"/>
+                <property name="configPath" value="classpath:back_config.yaml"/>
+            </bean>
+        </property>
+        <property name="devMode" value="${devMode}"/>
+    </bean>
+
+    <import resource="classpath*:/pampas/engine-context.xml"/>
+
+    <import resource="persistence-context.xml"/>
+
+    <import resource="classpath*:/spring/terminus-auth-context.xml"/>
+</beans>

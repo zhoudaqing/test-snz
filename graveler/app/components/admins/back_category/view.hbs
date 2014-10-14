@@ -1,0 +1,54 @@
+<div class="category category-{{#if extras.level}}{{extras.level}}{{else}}1{{/if}} js-comp operation-platform" data-level="{{#if extras.level}}{{extras.level}}{{else}}1{{/if}}" data-comp-path="admins/back_category" data-type="{{#equals type "1"}}frontCategory{{else}}backCategory{{/equals}}">
+  <div class="category-header">
+    <p class="item-name-p"><strong class="item-name">
+      一级类目
+    </strong></p>
+    <div class="sharp">
+      <span class="up"></span>
+      <span class="low"></span>
+    </div>
+  </div>
+  <div class="category-body">
+    <div class="search-item">
+      <div class="search-item-group">
+        <i class="icon-fdj12"></i>
+        <input type="text" class="search-item-input js-search-item" placeholder="搜索关键字" >
+      </div>
+    </div>
+    <ul class="divide-ul">
+      {{#each _DATA_}}
+        <li class="divide-li" data-category="{{json this}}" id="{{id}}">
+          <div class="normal-status">
+            <div class="operate-span">
+              <i class="operate-status js-edit-category icon-edit20"></i>
+              {{#equals hasChildren "false"}}<i class="operate-status js-delete-category icon-del20"></i>{{/equals}}
+            </div>
+            {{#equals hasChildren "true"}}<i class="icon-littlearrow next"></i><i class="icon-whitearrow next hide"></i>{{/equals}}
+            <a href="javascript:void(0);" class="item-pop" title="{{name}}"><span>{{name}}</span></a>
+
+          </div>
+          <form class="form category-edit-form update-category-group" style="display: none;" onkeydown="if(event.keyCode==13){return false;}">
+              <div class="input-group input-group-append">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="text" class="update-category-input" name="name"><span class="input-group-btn">
+                  <button class="btn btn-success js-update-category" type="button">修改</button>
+                </span>
+              </div>
+          </form>
+        </li>
+      {{/each}}
+    </ul>
+    <div class="bottom-li"></div>
+    <div class="bottom-add-category">
+      <form class="category-form form" onkeydown="if(event.keyCode==13){return false;}">
+        <div class="input-group input-group-append add-category-group">
+          <input id="category-id" type="hidden" name="parentId" value="0"/>
+          <input type="text" class="js-new-category group-input" name="name" ><span class="input-group-btn">
+            <button class="btn btn-success js-add-category" type="button">添加</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

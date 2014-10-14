@@ -1,0 +1,13 @@
+/index                    :get
+/login                    :post,get
+/api/user/login           :post
+/api/user/dirty_login     :post
+/api/supplier             :post
+/api/kjtpay/notify/pay    :post,get
+/api/kjtpay/notify/trans  :post,get
+/api/biz/signup           :post
+/api/user/signup          :post
+/api/user/forgot-password :post
+/api/user/sms             :get
+/api/user/verify          :get
+/demand/demand_list       :get

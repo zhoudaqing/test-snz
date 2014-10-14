@@ -1,0 +1,17 @@
+.associated-company{
+  .company-list-a, .company-list-b, .company-list-con{
+    display: none;
+    margin-top: 20px;
+  }
+  .div-table{
+    max-height: 400px;
+    overflow: auto;
+  }
+  .supplier-a-id, .supplier-b-id{
+    display: none
+  }
+  .get-company-a, .get-company-b, .get-company, .get-company-over{
+    width: 100px;
+    margin-right: 10px;
+  }
+}

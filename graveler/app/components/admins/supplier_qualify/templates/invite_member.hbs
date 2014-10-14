@@ -1,0 +1,52 @@
+<div class="modal">
+    <div class="modal-header">
+        <h2>选择新成员</h2>
+    </div>
+    <div class="modal-body" style="min-height:100px !important;padding-right:100px;">
+        <form class="form form-aligned" id="query-member-form" data-supplier-id="{{supplierId}}">
+            <div class="control-group">
+                <label for="">权限：</label>
+                <select name="role" id="">
+                    <option value="resource">资源小微</option>
+                    <option value="big_data">供应商大数据</option>
+                    <option value="competitive">模块竞争力</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for=""></label>
+                <button class="btn js-select-categories" style="width:145px;" type="button">请选择模块类别 &nbsp;<span class="caret" style="margin-top:4px;"></span></button>
+            </div>
+            <div class="menu menu-dropdown up select-menu" id="categories-select-menu">
+                <ul id="categories-select-menu-select-ul">
+						 {{#each categories}}
+                   <li>
+                       <label for="category-scope-{{id}}" class="scope-category-label" title="{{name}}">
+                          <input id="category-scope-{{id}}" type="checkbox" name="category" data-name="{{name}}"
+                                 value="{{id}}">{{name}}
+                       </label>
+                   </li>
+						 {{/each}}
+	             </ul>
+                <p class="category-operate-p" align="center">
+                    <button type="button" class="btn btn-small btn-primary btn-info category-close-btn">确定</button>&nbsp;&nbsp;
+                </p>
+            </div>
+
+            <div class="control-group">
+                <label for="">成员工号：</label>
+                <input type="text" name="workNo" placeholder="请输入成员工号">
+            </div>
+            <div class="control-group">
+                <label for="">成员姓名：</label>
+                <input type="text" name="name" placeholder="请输入成员姓名">
+                <input type="submit" class="btn" value="搜索" style="margin-top:-4px;display:none;">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-medium js-render-new-members" type="button">查询</button>
+        &nbsp;
+        <button class="btn btn-info btn-medium close" type="button">取消</button>
+    </div>
+</div>

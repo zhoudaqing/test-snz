@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="FactoryProductionDirector">
+    <resultMap id="FactoryProductionDirectorMap" type="FactoryProductionDirector">
+        <id property="id" column="id"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="description" column="description"/>
+        <result property="productLineId" column="product_line_id"/>
+        <result property="productLineName" column="product_line_name"/>
+        <result property="directorId" column="director_id"/>
+        <result property="directorName" column="director_name"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="table_name">
+        snz_factory_production_directors
+    </sql>
+
+    <sql id="columns">
+        factory_num, description, product_line_id, product_line_name, director_id, director_name, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="FactoryProductionDirector" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="table_name"/>
+        ( <include refid="columns"/> )
+        VALUES (#{factoryNum}, #{description}, #{productLineId}, #{productLineName}, #{directorId}, #{directorName}, now(), now())
+    </insert>
+
+    <select id="findBy" parameterType="FactoryProductionDirector" resultMap="FactoryProductionDirectorMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        <where>
+            <if test="factoryNum!=null">AND factory_num = #{factoryNum}</if>
+            <if test="description!=null">AND description = #{description}</if>
+            <if test="productLineId!=null">AND product_line_id = #{productLineId}</if>
+            <if test="productLineName!=null">AND product_line_name = #{productLineName}</if>
+            <if test="directorId!=null">AND director_id = #{directorId}</if>
+            <if test="directorName!=null">AND director_name = #{directorName}</if>
+        </where>
+    </select>
+</mapper>

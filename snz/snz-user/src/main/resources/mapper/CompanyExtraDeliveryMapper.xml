@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanyExtraDelivery" >
+    <resultMap id="CompanyExtraDeliveryMap" type="CompanyExtraDelivery">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="list_of_equipments" property="listOfEquipments"/>
+        <result column="module_production_capacity" property="moduleProductionCapacity"/>
+        <result column="module_production_capacity_attach_url" property="moduleProductionCapacityAttachUrl"/>
+        <result column="list_of_automation_equipment" property="listOfAutomationEquipment"/>
+        <result column="delivery_area" property="deliveryArea"/>
+        <result column="delivery_cycle" property="deliveryCycle"/>
+        <result column="open_rate" property="openRate"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="tb_name">snz_company_extra_delivery</sql>
+
+    <sql id="columns">user_id, list_of_equipments, module_production_capacity, module_production_capacity_attach_url, list_of_automation_equipment, delivery_area, delivery_cycle, open_rate, created_at, updated_at</sql>
+
+    <sql id="values">#{userId}, #{listOfEquipments}, #{moduleProductionCapacity}, #{moduleProductionCapacityAttachUrl}, #{listOfAutomationEquipment}, #{deliveryArea}, #{deliveryCycle}, #{openRate}, now(), now()</sql>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="CompanyExtraDelivery" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/> (<include refid="columns"/>)
+        VALUES (<include refid="values"/>)
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="CompanyExtraDelivery">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            <if test="listOfEquipments!=null">list_of_equipments=#{listOfEquipments},</if>
+            <if test="moduleProductionCapacity!=null">module_production_capacity=#{moduleProductionCapacity},</if>
+            <if test="moduleProductionCapacityAttachUrl!=null">module_production_capacity_attach_url=#{moduleProductionCapacityAttachUrl},</if>
+            <if test="listOfAutomationEquipment!=null">list_of_automation_equipment=#{listOfAutomationEquipment},</if>
+            <if test="deliveryArea!=null">delivery_area=#{deliveryArea},</if>
+            <if test="deliveryCycle!=null">delivery_cycle=#{deliveryCycle},</if>
+            <if test="openRate!=null">open_rate=#{openRate},</if>
+            updated_at=now()
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+
+    <!-- 查找 -->
+    <select id="findByUserId" resultMap="CompanyExtraDeliveryMap" parameterType="long">
+        SELECT id, <include refid="columns"/> FROM <include refid="tb_name"/>
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

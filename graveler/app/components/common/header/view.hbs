@@ -1,0 +1,23 @@
+{{#component "header"}}
+<div class="navbar navbar-primary">
+{{!--   <div class="navbar-ceiling navbar-collapse">
+
+  </div> --}}
+  <div class="navbar-collapse">
+    <div class="navbar-header">
+      <div class="icon-logo company"></div>
+      <div class="icon-logo-platform company-platform"></div>
+    </div>
+    <div class="ceiling-header">
+      <span>{{#if _USER_}}{{_USER_.name}}，{{/if}}欢迎来到海尔模块商资源网!</span>
+      &nbsp;&nbsp;
+      {{#if _USER_}}
+      <a href="/api/user/logout">退出</a>
+      {{else}}
+      <a href="/login">登录</a>
+      {{/if}}
+    </div>
+  </div>
+</div>
+
+{{/component}}

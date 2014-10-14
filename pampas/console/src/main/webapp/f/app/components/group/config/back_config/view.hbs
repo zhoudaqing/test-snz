@@ -1,0 +1,79 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-config-back-config"}}
+<h2 class="ui header">
+  <i class="text file icon"></i>
+  <div class="content">
+    Back Config
+    <div class="sub header">{{cell}}@{{group}}[{{app}}]: {{_DATA_.location}}</div>
+  </div>
+</h2>
+<div class="ui icon info message">
+  <i class="info letter icon"></i>
+  <div class="content">
+    <div class="header">Info</div>
+    <div class="ui horizontal bulleted list">
+      <div class="item">
+        <div class="ui teal label">
+          Services
+          <div class="detail">{{size _DATA_.services}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- <div class="ui icon warning message">
+  <i class="exclamation icon"></i>
+  <div class="content">
+    <div class="header">Warning</div>
+    <ul class="list">
+      <li>Service duplicated: service1</li>
+    </ul>
+  </div>
+</div>
+<div class="ui icon error message">
+  <i class="frown icon"></i>
+  <div class="content">
+    <div class="header">Error</div>
+    <ul class="list">
+      <li>Last refresh failed: 404 Not Found</li>
+    </ul>
+  </div>
+</div> --}}
+<div class="ui divider"></div>
+<div class="ui attached top message">
+  <div class="header">
+    Services
+  </div>
+</div>
+<div class="ui stacked attached bottom segment">
+  {{#if _DATA_.services}}
+  <table class="ui table segment">
+    <thead>
+      <tr>
+        <th>KEY</th>
+        <th>APP</th>
+        <th>TYPE</th>
+        <th>URI</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each _DATA_.services}}
+      <tr>
+        <td>
+          {{@key}}
+          {{#if desc}}
+          <i class="info icon js-desc-popup" data-content="{{desc}}" data-variation="large" data-position="right center"></i>
+          {{/if}}
+        </td>
+        <td>{{app}}</td>
+        <td>{{type}}</td>
+        <td>{{uri}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <i class="ban circle icon"></i>
+  {{/if}}
+</div>
+{{/component}}

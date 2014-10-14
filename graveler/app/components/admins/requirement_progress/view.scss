@@ -1,0 +1,78 @@
+.purchaser-post-step{
+
+  h3{
+    margin-top:20px;
+    font-family: "宋体";
+  }
+
+  .post-step{
+    margin:20px 0 0 0;
+    .step{
+      height:24px;
+      background-color: #cccccc;
+      color:#fff;
+
+      ul{
+        padding:0;
+        margin:0;
+        li{
+          float:left;
+          list-style-type: none;
+          line-height: 24px;
+          font-size:14px;
+          text-align: center;
+          margin-right:27px;
+        }
+        li.last{
+          margin-right:0;
+        }
+        .step-title-1{
+          width:249px;
+        }
+        .step-title-2{
+          width:240px;
+        }
+        .step-title-3{
+          width:240px;
+        }
+        .step-title-4{
+          width:250px;
+        }
+
+      }
+    }
+    .progress{
+      margin:0;
+      padding:15px 0 0 0;
+      text-align: center;
+      background-color: #f4f4f4;
+      height:80px;
+
+      ol{
+        margin:0;
+        .progress-bar{
+          width:170px;
+          &.small-size {
+            width: 130px;
+          }
+        }
+        .progress-step-into{
+          color:#717171;
+          &.last {
+            left: -65px;
+          }
+        }
+        .progress-bar.active{
+          background-color:#5fa7e8;
+        }
+        .progress-step.active{
+          background-color: #5fa7e8;
+
+          .progress-step-into{
+            color:#717171;
+          }
+        }
+      }
+    }
+  }
+}

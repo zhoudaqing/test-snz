@@ -1,0 +1,23 @@
+{{#with moduleInfo}}
+<tr class="module-tr" data-series="{{module.series}}">
+  <td>{{module.id}}</td>
+  <td>{{module.moduleNum}}</td>
+  <td>{{module.moduleName}}</td>
+  <td>{{module.seriesName}}</td>
+  {{#each factoryList}}
+  <td width="80">{{resourceNum}}{{salesName}}</td>
+  {{/each}}
+  <td>{{module.attestationsName}}</td>
+  {{#of module.status "3,4,5,6"}}
+    <td name={{module.members}}>{{module.quality}}PPM</td>
+    <td>{{formatPrice module.cost}}元/{{module.units.cost.quantityName}}{{module.units.cost.salesName}}</td>
+    <td>{{module.delivery}}{{module.units.delivery.salesName}}</td>
+  {{/of}}
+  <td>{{formatDate module.supplyAt "day"}}</td>
+  {{#each factoryList}}
+  <td width="80">{{#if selectNum}}{{selectNum}}{{else}}暂无{{/if}}</td>
+  {{/each}}
+  {{#of module.status "0,1,2"}}{{#equals module.user "3"}}<td><a href="javascript:void(0);" class="js-edit-module" data-module="{{pp this}}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-id="{{module.id}}" data-toggle="confirm" data-title="您确定删除吗?" data-content="删除之后需要无法恢复，只能重新添加" data-event="confirm:delete-module" class="js-delete-module">删除</a>{{#each factoryList}}{{#if @first}}{{#if selectNum}}&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-id="{{id}}" class="js-edit-select-num">修改配额</a>{{/if}}{{/if}}{{/each}}</td>{{/equals}}{{/of}}
+</tr>
+{{/with}}
+

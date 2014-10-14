@@ -1,0 +1,49 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+<form class="content ui form">
+  <div class="two fields">
+    <div class="field">
+      <label>Name</label>
+      <div class="ui labeled input">
+        <input name="name" type="text" placeholder="username for login" value="{{user.name}}" {{#if user}}readonly{{/if}}>
+        <div class="ui corner label">
+          {{#if user}}
+          <i class="lock icon"></i>
+          {{else}}
+          <i class="asterisk icon"></i>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Real Name</label>
+      <div class="ui labeled input">
+        <input name="realName" type="text" placeholder="real name" value="{{user.realName}}">
+        <div class="ui corner label">
+          <i class="asterisk icon"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Email</label>
+    <div class="ui labeled input">
+      <input name="email" type="text" placeholder="email for notification" value="{{user.email}}">
+      <div class="ui corner label">
+        <i class="asterisk icon"></i>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <label>Password</label>
+    {{#if user}}
+    <input name="password" type="password" placeholder="password for login">
+    {{else}}
+    <div class="ui labeled input">
+      <input name="password" type="password" placeholder="password for login">
+      <div class="ui corner label">
+        <i class="asterisk icon"></i>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</form>

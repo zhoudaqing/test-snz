@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SupplierCountByStatus" >
+  <resultMap id="SupplierCountByStatusMap" type="SupplierCountByStatus" >
+    <id column="id" property="id" />
+    <result column="date" property="date"  />
+    <result column="status" property="status"  />
+    <result column="supplier_count" property="supplierCount"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+   `date`, `status`,supplier_count,created_at, updated_at
+  </sql>
+
+  <select id="findLastBy" resultMap="SupplierCountByStatusMap" parameterType="int" >
+     select id,<include refid="columns" />
+     from snz_supplier_count_by_status
+     where status = #{status} order by date desc limit #{limit}
+  </select>
+
+  <insert id="insert" parameterType="SupplierCountByStatus" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_supplier_count_by_status (<include refid="columns" />)
+    values (#{date},#{status},#{supplierCount},now(), now())
+  </insert>
+
+</mapper>

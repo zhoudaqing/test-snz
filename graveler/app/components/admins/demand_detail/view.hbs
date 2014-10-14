@@ -1,0 +1,77 @@
+{{#component "demand-detail js-comp"}}
+  {{assign "admins/requirement_progress" _DATA_}}
+  {{inject "admins/requirement_progress"}}
+  {{#with _DATA_}}
+  <div class="demand-content" id="demand-content-show" data-company="{{requirement.purchaserName}}" data-status="{{requirement.status}}" data-name="{{requirement.name}}" data-id="{{requirement.id}}" data-end-time="{{formatDate finishDay "day"}}">
+    <div class="demand-info demand-name"><a href="javascript:void(0);" id="js-more-info"><i class="icon-arrow-down" style="float:right;"></i><strong>需求基本信息 - {{requirement.name}}</strong></a></div>
+    <div class="detail-info {{#of requirement.status "3,4,5,6"}}hide{{/of}}">
+      <div class="demand-one-line">
+        <div class="demand-info demand-series demand-info-inline" title="{{requirement.productName}}"><label><strong>产品系列:</strong></label>{{requirement.productName}} > <span class="product-scope" data-scope="{{requirement.seriesIds}}"></span></div>
+        <div class="demand-info demand-delivery demand-info-inline"><label><strong>配送园区:</strong></label>{{#each parkFactoryDtoList}}{{parkName}} > {{factoryNum}}&nbsp;&nbsp;{{/each}}</div>
+      </div>
+      <div class="demand-half-line">
+        <div class="demand-info demand-info-inline demand-count"><label><strong>采购数量:</strong></label>共<span class="currency"> {{requirement.moduleTotal}} </span>件</div>
+        <div class="demand-info demand-info-inline demand-currency"><label><strong>币种:</strong></label>{{#equals requirement.coinType "1"}}CNY 人民币{{/equals}}{{#equals requirement.coinType "2"}}USD 美元{{/equals}}{{#equals requirement.coinType "3"}}JPY 日元{{/equals}}{{#equals requirement.coinType "4"}}EUR 欧元{{/equals}}</div>
+        <br>
+        <div class="demand-info demand-info-inline demand-module"><label><strong>需求模块:</strong></label>{{requirement.moduleNum}}种</div>
+        <div class="demand-info demand-info-inline demand-module-attribute">
+          <label><strong>模块属性:</strong></label>{{#equals requirement.moduleType 1}}新品{{/equals}}{{#equals requirement.moduleType 2}}老品{{/equals}}{{#equals requirement.moduleType 3}}衍生号{{/equals}}{{#equals requirement.moduleType 4}}甲指{{/equals}}{{#equals requirement.moduleType 5}}专利{{/equals}}
+        </div>
+        <br>
+        <div class="demand-info demand-info-inline demand-tactic">
+          <label><strong>模块策略:</strong></label>{{#equals requirement.tacticsId 1}}技术领先{{/equals}}{{#equals requirement.tacticsId 2}}差异化{{/equals}}{{#equals requirement.tacticsId 3}}卓越运营{{/equals}}
+        </div>
+      </div>
+      {{!-- {{#of _DATA_.requirement.status "3,4,5,6"}} --}}
+      <div class="demand-half-line" style="width:515px;">
+        <div class="demand-info demand-select demand-info-inline"><label><strong>目标合作供应商数量:</strong></label>{{#if requirement.selectNum}}{{requirement.selectNum}}{{else}}暂无{{/if}}</div><br>
+        <div class="demand-info demand-select demand-info-inline"><label><strong>备选供应商数量:</strong></label>{{#if requirement.replaceNum}}{{requirement.replaceNum}}{{else}}暂无{{/if}}</div><br>
+        <div class="demand-info demand-quota demand-info-inline"><label><strong>配额规则:</strong></label>{{#if requirement.replaceNum}}{{#equals requirement.selectNum 3}}50%,30%,20%{{/equals}}{{#equals requirement.selectNum 2}}70%,30%{{/equals}}{{#equals requirement.selectNum 1}}100%{{/equals}}{{else}}暂无{{/if}}</div>
+      </div>
+      {{!-- {{/of}} --}}
+      <div class="demand-one-line">
+        <div class="demand-info demand-head-drop" title="{{requirement.headDrop}}"><label><strong>引领点:</strong></label>{{requirement.headDrop}}</div>
+      </div>
+      <div class="demand-one-line">
+        <div class="demand-info demand-definite"><label><strong>具体需求:</strong></label>{{requirement.description}}</div>
+      </div>
+      <div class="demand-line-last">
+        <div class="demand-info demand-attachment demand-info-inline" data-status="{{requirement.status}}" data-files="{{requirement.accessories}}"><label><i class="icon-info-small"></i>文档保密，禁止传播，海尔保留追责权利 <i class="icon-attach"></i>&nbsp;&nbsp;附件: </label>  {{#of requirement.status "1,2"}}<input type="file" name="file" style="display:none;" data-id="{{requirement.id}}"/>{{/of}}
+        </div>
+      </div>
+    </div>
+    {{#equals requirement.status 1}}
+      <div class="block block-primary demand-operate">
+        <p>{{#comDate finishDay "now" "d"}}需求交互中，{{formatDate finishDay "day"}} 24点截止，您可以参与交互<br><br>本阶段截止后，您可以进行{{else}}需求交互已截止，您可以{{/comDate}}&nbsp;&nbsp;&nbsp;<button data-id="{{requirement.id}}" class="btn btn-primary btn-medium js-transition-status" {{#equals statusType false}}disabled{{/equals}}>需求锁定</button>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="btn btn-medium btn-primary js-requirement-delay" data-id="{{requirement.id}}">申请延期</a></p>
+      </div>
+    {{/equals}}
+    {{#equals requirement.status 2}}
+      <div class="block block-primary demand-operate">
+        <p>{{#comDate finishDay "now" "d"}}需求锁定中，{{formatDate finishDay "day"}} 24点截止，您可以在模块列表完善信息<br><br>本阶段截止后，您可以进行{{else}}需求锁定已截止，您可以{{/comDate}}&nbsp;&nbsp;&nbsp;<button data-id="{{requirement.id}}" class="btn btn-primary btn-medium js-confirm-requirement" data-toggle="confirm" data-title="您确定锁定需求吗?" data-content="请确认需求所有信息已完善" data-event="confirm:lock-requirement" {{#equals statusType false}}disabled{{/equals}}>确定锁定需求</button>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="btn btn-medium btn-primary js-requirement-delay" data-id="{{requirement.id}}">申请延期</a></p>
+      </div>
+    {{/equals}}
+    {{#equals requirement.status 3}}
+      <div class="block block-primary demand-operate">
+        <p>{{#comDate finishDay "now" "d"}}方案交互中，{{formatDate finishDay "day"}} 24点截止，您可以查看方案<br><br>本阶段截止后，您可以进行{{else}}方案交互已截止，您可以{{/comDate}}&nbsp;&nbsp;&nbsp;<button data-id="{{requirement.id}}" class="btn btn-primary btn-medium js-transition-status" {{#equals statusType false}}disabled{{/equals}}>方案终投</button>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="btn btn-medium btn-primary js-requirement-delay" data-id="{{requirement.id}}">申请延期</a></p>
+      </div>
+    {{/equals}}
+    {{#equals requirement.status 4}}
+      <div class="block block-primary demand-operate">
+        <p>{{#comDate finishDay "now" "d"}}方案终投中，{{formatDate finishDay "day"}} 24点截止，您可以等待供应商确认方案<br><br>本阶段截止后，您可以进行{{else}}方案终投已截止，您可以{{/comDate}}&nbsp;&nbsp;&nbsp;<button data-id="{{requirement.id}}" class="btn btn-primary btn-medium js-transition-status" {{#equals statusType false}}disabled{{/equals}}>选定方案</button>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="btn btn-medium btn-primary js-requirement-delay" data-id="{{requirement.id}}">申请延期</a></p>
+      </div>
+    {{/equals}}
+    {{#equals requirement.status 5}}
+      <div class="block block-primary demand-operate">
+        <p>{{#comDate finishDay "now" "d"}}选定供应商与方案中，{{formatDate finishDay "day"}} 24点截止，您可以选定供应商及方案<br><br>本阶段截止后，您可以进行{{else}}选定供应商与方案已截止，您可以{{/comDate}}&nbsp;&nbsp;&nbsp;<a href="/purchaser/module-quota?requirementId={{requirementId}}" data-id="{{requirement.id}}" class="btn btn-medium js-link" disabled>查看结果</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" class="btn btn-medium btn-primary js-requirement-delay" data-id="{{requirement.id}}">申请延期</a></p>
+      </div>
+    {{/equals}}
+    {{#equals requirement.status 6}}
+      <div class="block block-primary demand-operate">
+        <p>已选定供应商与方案，需求截止 &nbsp;&nbsp;&nbsp;<a href="/purchaser/module-quota?requirementId={{requirementId}}" data-id="{{requirement.id}}" class="btn btn-medium">查看结果</a></p>
+      </div>
+    {{/equals}}
+  </div>
+  {{/with}}
+  {{assign "admins/mutual_tab" _DATA_}}
+  {{inject "admins/mutual_tab"}}
+{{/component}}

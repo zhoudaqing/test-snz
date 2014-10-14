@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <!--sns related entity-->
+        <typeAlias alias="Topic" type="io.terminus.snz.sns.models.Topic"/>
+        <typeAlias alias="TopicUser" type="io.terminus.snz.sns.models.TopicUser"/>
+        <typeAlias alias="Reply" type="io.terminus.snz.sns.models.Reply"/>
+        <typeAlias alias="User" type="io.terminus.snz.user.model.User"/>
+    </typeAliases>
+</configuration>

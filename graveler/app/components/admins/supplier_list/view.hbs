@@ -1,0 +1,68 @@
+{{#component "js-comp supplier-list"}}
+<p class="components-title"><strong>供应商列表</strong></p>
+
+<div id="block" class="block">
+  <form id="js-supplier-list-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="email">供应商代码:</label>
+        <input type="text" name="supplierCode" value="{{supplierCode}}">
+      </span>
+      <span class="span3">
+        <label for="email">供应商名称:</label>
+        <input type="text" name="supplierName" value="{{supplierName}}">
+      </span>
+      <span class="span3">
+        <label for="">综合评分:</label>
+        <input type="number" class="input-small" type="text" name="compositeScoreStart" value="{{compositeScoreStart}}">
+        -
+        <input type="number" class="input-small" type="text" name="compositeScoreEnd" value="{{compositeScoreEnd}}">
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-supplier-list-form').reset()">取消</a>
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="90">供应商代码</th>
+      <th width="140">供应商名称</th>
+      <th width="92">综合评分</th>
+      <th width="80">技术评分</th>
+      <th width="90">响应评分</th>
+      <th width="90">质量评分</th>
+      <th width="90">成本评分</th>
+      <th width="90">交付评分</th>
+      <th width="170">损失</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.data}}
+    <tr>
+      <td>{{supplierCode}}</td>
+      <td>{{supplierName}}</td>
+      <td>{{compositeScore}}</td>
+      <td>{{techScore}}</td>
+      <td>{{respScore}}</td>
+      <td>{{qualityScore}}</td>
+      <td>{{costScore}}</td>
+      <td>{{deliverScore}}</td>
+      <td>现场不良率: <span class="required">{{liveBad}}</span><br>市场不良率: <span class="required">{{marketBad}}</span></td>
+      <td>
+        <a href="/suppliers/performance?supplierCode={{supplierCode}}" />查看详情</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div id="js-pagination" class="right-text"></div>
+<br>
+{{/component}}

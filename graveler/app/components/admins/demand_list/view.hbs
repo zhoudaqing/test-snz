@@ -1,0 +1,124 @@
+{{#component "js-comp demand-list demand-step"}}
+  <!--[if lt IE 8]>
+  <div class="ie">
+      <p>为保证您的使用体验，建议使用IE8以上版本或最新版谷歌浏览器或最新版火狐浏览器</p>
+  </div>
+   <![endif]-->
+  <p class="components-title"><strong class="tab-name">需求列表</strong></p>
+  <div id="block" class="block">
+    <form id="requirement-filter-form" class="form">
+      <fieldset>
+        <span class="span3">
+          <label for="">需求状态</label>
+          <select class="select" name="status">
+            <option value="">请选择</option>
+            <option value="-5" {{#equals status "-5"}}selected{{/equals}}>未提交的需求</option>
+            <option value="-4" {{#equals status "-4"}}selected{{/equals}}>待公议的需求</option>
+            <option value="-3" {{#equals status "-3"}}selected{{/equals}}>公议通过的需求</option>
+            <option value="-2" {{#equals status "-2"}}selected{{/equals}}>公议不通过的需求</option>
+            <option value="-1" {{#equals status "-1"}}selected{{/equals}}>删除的需求</option>
+            <option value="0" {{#equals status "0"}}selected{{/equals}}>待发布的需求</option>
+            <option value="1" {{#equals status "1"}}selected{{/equals}}>需求交互</option>
+            <option value="2" {{#equals status "2"}}selected{{/equals}}>需求锁定</option>
+            <option value="3" {{#equals status "3"}}selected{{/equals}}>方案交互</option>
+            <option value="4" {{#equals status "4"}}selected{{/equals}}>方案终投</option>
+            <option value="5" {{#equals status "5"}}selected{{/equals}}>选定供应商与方案</option>
+            <option value="6" {{#equals status "6"}}selected{{/equals}}>需求结束</option>
+          </select>
+        </span>
+        <span class="span3">
+          <label for="">创建时间</label>
+          <input class="input-small datepicker" type="text" placeholder="开始时间" name="startAt" value="{{startAt}}">
+          -
+          <input class="input-small datepicker" type="text" placeholder="截止时间" name="endAt" value="{{endAt}}">
+        </span>
+        <span>
+          <label for="">需求名称</label>
+          <input type="text" placeholder="请输入需求名称" name="reqName" value="{{reqName}}">
+        </span>
+        <span class="span1">
+          <input type="submit" class="btn btn-primary" value="筛选">
+          &nbsp;
+          <a href="/platforms/requirements">取消</a>
+        </span>
+      </fieldset>
+    </form>
+  </div>
+  <div style="padding:10px 0;"><div class="inline-left">共 {{_DATA_.total}} 个需求</div><div class="demand-pagination inline-pagination" data-total="{{_DATA_.total}}"></div></div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="300" rowspan="2">需求名称</th>
+        <th width="120" rowspan="2">需求状态</th>
+        <th width="100" rowspan="2">资源量</th>
+        <th width="60" rowspan="2">模块数量</th>
+        <th width="180" colspan="3">供应商数量</th>
+        <th width="60" rowspan="2">话题数</th>
+        <th width="200" rowspan="2">操作</th>
+      </tr>
+      <tr>
+        <th width="60">推送</th>
+        <th width="60">响应</th>
+        <th width="60">提交方案</th>
+      </tr>
+    </thead>
+  </table>
+  <br>
+
+  {{#each _DATA_.data}}
+  <table class="table table-striped">
+    <tbody>
+      <tr>
+        <td colspan="9" class="left-text td-heading">
+          <span class="demand-code">需求编号: {{id}}</span><span class="demand-creator">发布人: {{creatorName}}</span>{{#if sendTime}}<span class="demand-publish-time">发布时间: {{formatDate sendTime}}</span>{{/if}}
+        </td>
+      </tr>
+      <tr class="tr-small">
+        <td class="left-text" width="280">
+          {{#if status}}
+            {{#equals status "-1"}}<a href="/platforms/requirement-detail?requirementId={{id}}">{{name}}</a>{{/equals}}
+            {{#equals status "0"}}{{name}}{{/equals}}
+            {{#of status "1,2,3,4,5,6"}}<a href="/platforms/requirement-detail?requirementId={{id}}">{{name}}</a>{{/of}}
+          {{else}}
+            {{name}}
+          {{/if}}
+        </td>
+        <td width="100" class="currency">
+          <strong>
+          {{#if status}}
+            {{#equals status "-1"}}删除状态{{/equals}}
+            {{#equals status "0"}}等待发布{{/equals}}
+            {{#equals status "1"}}需求交互{{/equals}}
+            {{#equals status "2"}}需求锁定{{/equals}}
+            {{#equals status "3"}}方案交互{{/equals}}
+            {{#equals status "4"}}方案终投{{/equals}}
+            {{#equals status "5"}}选定供应商与方案{{/equals}}
+            {{#equals status "6"}}招标结束{{/equals}}
+          {{else}}
+            {{#equals checkResult "-1"}}需求不通过{{/equals}}
+            {{#equals checkResult "0"}}未提交公议{{/equals}}
+            {{#equals checkResult "1"}}待公议需求{{/equals}}
+            {{#equals checkResult "2"}}需求公议通过{{/equals}}
+          {{/if}}
+          </strong>
+        </td>
+        <td width="80">{{moduleTotal}}</td>
+        <td width="40">{{moduleNum}}</td>
+        <td width="40">{{sendSu}}</td>
+        <td width="40">{{answerSu}}</td>
+        <td width="40">{{sendSo}}</td>
+        <td width="40">{{topicNum}}</td>
+        <td width="180">
+          {{#of checkResult "-1,0,1"}}无{{/of}}
+          {{#equals checkResult "2"}}
+            {{#of status "0"}}无{{/of}}
+            {{#of status "1,2,3,4,5,6"}}<a class="btn" href="/platforms/requirement-detail?requirementId={{id}}">处理</a>{{/of}}
+          {{/equals}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br>
+  {{/each}}
+  <div class="demand-pagination" data-total="{{_DATA_.total}}" style="padding-bottom: 20px;"></div>
+{{/component}}

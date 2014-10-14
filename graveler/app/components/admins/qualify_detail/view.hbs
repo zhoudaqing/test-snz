@@ -1,0 +1,44 @@
+{{#component "js-comp qualify-detail operation-platform"}}
+  <p class="components-title"><strong>供应商资质交互</strong>(<span class="required">*</span>项为否决项,是必评价项，其中有一项不符合、整体评价不合格。非否决内容不涉及的可以不评价，涉及项目不符合，整体评价不合格。)</p>
+  <form class="form form-aligned" id="qualify-detail-form">
+    <div class="section">
+      {{#each _DATA_}}
+        <div class="control-group submit-group" data-id="{{json this}}">
+          <label class="rule-label">{{#equals type 1}}<span class="required">*</span>{{/equals}}{{add @index 1}}、{{name}}</label>
+          <br><br>
+          <div class="operate-group">
+            <span data-empty="请填写意见"><span>意见:</span>&nbsp;&nbsp;&nbsp;<input type="text" name="view" class="input-medium check-input" value="{{view}}" {{#equals type 1}}required{{/equals}}></span>
+            &nbsp;&nbsp;&nbsp;
+            <span class="control-group">
+              <div class="btn btn-upload" data-empty="请上传文件">
+                <input type="hidden" name="subject" value="{{id}}">
+                <input class="file-input" name="attachUrl" value="{{attachUrl}}" style="display: none;">
+                <span>上传材料</span>
+                <input type="file" name="file" class="check-input" {{#equals type 1}}required{{/equals}}>
+              </div>
+              <span class="file-name">{{attachUrl}}</span>
+            </span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span>
+              结论:
+            </span>&nbsp;
+            <span>
+              <label data-empty="请选择结果">
+                <select name="isPassed" id="" {{#equals type 1}}required{{/equals}}>
+                  <option value="">请选择</option>
+                  <option value="1">通过</option>
+                  <option value="0">否决</option>
+                </select>
+              </label>
+            </span>
+          </div>
+        </div>
+        {{#if @last}}
+          <div class="control-group">
+            <button class="btn btn-primary btn-medium js-submit-form">提交评审方案</button>
+          </div>
+        {{/if}}
+      {{/each}}
+      </div>
+  </form>
+{{/component}}

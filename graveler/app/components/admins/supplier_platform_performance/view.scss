@@ -1,0 +1,21 @@
+.supplier-platform-performance {
+  .overall-plots {
+    table {
+      width: 100%;
+
+      td {
+        padding: 0
+      }
+    }
+
+    & > div {
+      float: left;
+    }
+
+    .plot {
+      height: 470px;
+    }
+  }
+
+}
+

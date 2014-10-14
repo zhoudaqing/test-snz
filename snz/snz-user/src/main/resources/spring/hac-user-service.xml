@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- Application name -->
+    <dubbo:application name="hac-user-service"/>
+
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry id="hacRegistry" address="#{app.hacRegistryUrl}" protocol="zookeeper"/>
+
+    <!-- external user interface -->
+    <dubbo:reference id="hacUserServiceClient" registry="hacRegistry"
+             interface="com.haier.openplatform.hac.service.agent.HacUserServiceClient" version="2.0"/>
+
+    <dubbo:reference id="hacUserServiceCli" registry="hacRegistry"
+                     interface="com.haier.openplatform.hac.service.HacUserServiceCli" version="2.0"/>
+
+    <bean id="accountManagerHac" class="io.terminus.snz.user.manager.AccountManagerHac" />
+
+    <bean id="accountService" class="io.terminus.snz.user.service.HacUserServiceImpl">
+        <constructor-arg index="0" value="#{app.coSessionId}" />
+        <constructor-arg index="1" value="#{app.idsAppName}" />
+        <constructor-arg index="2" value="#{app.passwdKey}" />
+    </bean>
+
+</beans>

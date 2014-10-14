@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="BlackList" >
+  <resultMap id="BlackListMap" type="BlackList" >
+    <id column="id" property="id" />
+    <result column="name" property="name"  />
+    <result column="keywords" property="keywords"  />
+    <result column="init_agent" property="initAgent"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+    name,keywords,init_agent, created_at, updated_at
+  </sql>
+
+  <select id="findById" resultMap="BlackListMap" parameterType="long" >
+    select id,<include refid="columns" />
+    from snz_blacklist
+    where id = #{id}
+  </select>
+
+  <select id="findAll" resultMap="BlackListMap" parameterType="long" >
+    select id,<include refid="columns" /> from snz_blacklist
+  </select>
+
+  <select id="findByName" resultMap="BlackListMap" parameterType="string" >
+    select id,<include refid="columns" /> from snz_blacklist where name = #{name}
+  </select>
+
+  <insert id="insert" parameterType="BlackList" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_blacklist (<include refid="columns" />)
+    values (#{name},#{keywords},#{initAgent},now(), now())
+  </insert>
+
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SupplierResourceMaterialLog">
+    <resultMap id="SupplierResourceMaterialLogMap" type="SupplierResourceMaterialLog">
+        <id property="id" column="id"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="checkerId" column="checker_id"/>
+        <result property="times" column="times"/>
+        <result property="type" column="type"/>
+        <result property="status" column="status"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="table_name">
+        snz_supplier_resource_material_logs
+    </sql>
+
+    <sql id="columns">
+        supplier_id, checker_id, `times`, `type`, `status`, `content`, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="SupplierResourceMaterialLog" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="table_name"/>
+        (<include refid="columns"/>)
+        VALUES
+        (#{supplierId}, #{checkerId}, #{times}, #{type}, #{status}, #{content}, now(), now())
+    </insert>
+
+    <select id="findLastOneBy" resultMap="SupplierResourceMaterialLogMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        <where>
+            <if test="supplierId!=null">AND supplier_id=#{supplierId}</if>
+            <if test="checkerId!=null">AND checker_id=#{checkerId}</if>
+            <if test="times!=null">AND `times`=#{times}</if>
+            <if test="type!=null">AND `type`=#{type}</if>
+            <if test="status!=null">AND `status`=#{status}</if>
+            <if test="content!=null">AND `content`=#{content}</if>
+        </where>
+        ORDER BY id desc
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="SupplierResourceMaterialLogMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        <where>
+            <if test="supplierId!=null">AND supplier_id=#{supplierId}</if>
+            <if test="checkerId!=null">AND checker_id=#{checkerId}</if>
+            <if test="times!=null">AND `times`=#{times}</if>
+            <if test="type!=null">AND `type`=#{type}</if>
+            <if test="status!=null">AND `status`=#{status}</if>
+            <if test="content!=null">AND `content`=#{content}</if>
+        </where>
+        ORDER BY id desc
+    </select>
+</mapper>

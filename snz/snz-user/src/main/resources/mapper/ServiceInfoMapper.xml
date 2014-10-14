@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanyRank" >
+  <resultMap id="CompanyRankMap" type="CompanyRank" >
+    <id column="id" property="id" />
+    <result column="user_id" property="userId" />
+    <result column="company_id" property="companyId" />
+    <result column="in_rank" property="inRank" />
+    <result column="in_rank_org" property="inRankOrg" />
+    <result column="in_rank_file" property="inRankFile" />
+    <result column="in_rank_file_name" property="inRankFileName" />
+    <result column="in_rank_remark" property="inRankRemark" />
+    <result column="out_rank" property="outRank" />
+    <result column="out_rank_org" property="outRankOrg" />
+    <result column="out_rank_file" property="outRankFile" />
+    <result column="out_rank_file_name" property="outRankFileName" />
+    <result column="out_rank_remark" property="outRankRemark" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+    user_id, company_id, in_rank, in_rank_org,
+    in_rank_file,in_rank_file_name, in_rank_remark, out_rank, out_rank_org, out_rank_file,out_rank_file_name, out_rank_remark,
+    created_at, updated_at
+  </sql>
+
+  <select id="findById" resultMap="CompanyRankMap" parameterType="long" >
+    select id,<include refid="columns" />
+    from snz_company_ranks
+    where id = #{id}
+  </select>
+
+  <select id="findByUserId" resultMap="CompanyRankMap" parameterType="long" >
+     select id,<include refid="columns" />
+     from snz_company_ranks
+     where user_id = #{userId}
+   </select>
+
+  <delete id="delete" parameterType="long" >
+    delete from snz_company_ranks where id = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="CompanyRank" useGeneratedKeys="true" keyProperty="id" >
+    insert into snz_company_ranks (<include refid="columns" />)
+    values (#{userId}, #{companyId},
+      #{inRank}, #{inRankOrg}, #{inRankFile},#{inRankFileName},
+      #{inRankRemark}, #{outRank}, #{outRankOrg},
+      #{outRankFile},#{outRankFileName}, #{outRankRemark}, now(), now())
+  </insert>
+
+  <update id="update" parameterType="CompanyRank" >
+    update snz_company_ranks
+    <set >
+      <if test="inRank != null" >
+        in_rank = #{inRank},
+      </if>
+      <if test="inRankOrg != null" >
+        in_rank_org = #{inRankOrg},
+      </if>
+      <if test="inRankFile != null" >
+        in_rank_file = #{inRankFile},
+      </if>
+      <if test="inRankFileName != null" >
+        in_rank_file_name = #{inRankFileName},
+      </if>
+      <if test="inRankRemark != null" >
+        in_rank_remark = #{inRankRemark},
+      </if>
+      <if test="outRank != null" >
+        out_rank = #{outRank},
+      </if>
+      <if test="outRankOrg != null" >
+        out_rank_org = #{outRankOrg},
+      </if>
+      <if test="outRankFile != null" >
+        out_rank_file = #{outRankFile},
+      </if>
+      <if test="outRankFileName != null" >
+        out_rank_file_name = #{outRankFileName},
+      </if>
+      <if test="outRankRemark != null" >
+        out_rank_remark = #{outRankRemark},
+      </if>
+        updated_at = now(),
+    </set>
+    where id = #{id}
+  </update>
+
+</mapper>

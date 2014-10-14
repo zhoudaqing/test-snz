@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 模块工厂信息的处理 -->
+<mapper namespace="ModuleFactory">
+    <resultMap id="moduleFactoryMap" type="ModuleFactory">
+        <id property="id" column="id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="propertyId" column="property_id"/>
+        <result property="selectNum" column="select_num"/>
+        <result property="resourceNum" column="resource_num"/>
+        <result property="salesId" column="sales_id"/>
+        <result property="salesName" column="sales_name"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        module_id, factory_num, factory_name, property_id, select_num, resource_num, sales_id, sales_name, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="moduleFactory" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_module_factory (<include refid="columns"/>) values (#{moduleId}, #{factoryNum}, #{factoryName}, #{propertyId}, #{selectNum},
+        #{resourceNum}, #{salesId}, #{salesName}, now(), now())
+    </insert>
+
+    <!-- 优化性能批量插入 -->
+    <insert id="createBatch" parameterType="moduleFactory" useGeneratedKeys="true">
+        insert into snz_module_factory (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="info" index="index" separator="," >
+            (#{info.moduleId}, #{info.factoryNum}, #{info.factoryName}, #{info.propertyId}, #{info.selectNum},
+            #{info.resourceNum}, #{info.salesId}, #{info.salesName}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="moduleFactory">
+        update snz_module_factory
+        <set>
+            <if test="propertyId!=null">property_id=#{propertyId},</if>
+            <if test="selectNum!=null">select_num=#{selectNum},</if>
+            <if test="resourceNum!=null">resource_num=#{resourceNum},</if>
+            <if test="salesId!=null">sales_id=#{salesId},</if>
+            <if test="salesName!=null">sales_name=#{salesName},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from snz_module_factory where id=#{id}
+    </delete>
+
+    <delete id="deleteByModuleId" parameterType="long">
+        delete from snz_module_factory where module_id=#{moduleId}
+    </delete>
+
+    <select id="findById" parameterType="long" resultMap="moduleFactoryMap">
+        select id, <include refid="columns"/>
+        from snz_module_factory where id=#{id}
+    </select>
+
+    <select id="findByIds" resultMap="moduleFactoryMap">
+        select id, <include refid="columns"/>
+        from snz_module_factory where id in
+        <foreach collection="list" separator="," open="(" close=")" item="id"> #{id} </foreach>
+    </select>
+
+    <select id="findByModuleId" resultMap="moduleFactoryMap">
+        select id, <include refid="columns"/>
+        from snz_module_factory where module_id=#{moduleId}
+    </select>
+</mapper>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ModuleQuotation">
+    <resultMap id="moduleQuotationMap" type="ModuleQuotation">
+        <id property="id" column="id"/>
+        <result property="solutionId" column="solution_id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="total" column="total"/>
+        <result property="price" column="price"/>
+        <result property="transactPrice" column="transact_price"/>
+        <result property="costUnit" column="cost_unit"/>
+        <result property="coinType" column="coin_type"/>
+        <result property="exchangeRate" column="exchange_rate"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        solution_id, module_id, module_name, supplier_id, supplier_name, total, price, transact_price, cost_unit, coin_type, exchange_rate, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="moduleQuotation" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_module_quotations (<include refid="columns"/>) values (#{solutionId}, #{moduleId}, #{moduleName}, #{supplierId}, #{supplierName}, #{total},
+        #{price}, #{transactPrice}, #{costUnit}, #{coinType}, #{exchangeRate}, now(), now())
+    </insert>
+
+    <!-- 批量插入模块的报价方案信息 -->
+    <insert id="createBatch" parameterType="moduleQuotation" useGeneratedKeys="true">
+        insert into snz_module_quotations (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="quotation" index="index" separator="," >
+            (#{quotation.solutionId}, #{quotation.moduleId}, #{quotation.moduleName}, #{quotation.supplierId}, #{quotation.supplierName},
+            #{quotation.total}, #{quotation.price}, #{quotation.transactPrice}, #{quotation.costUnit}, #{quotation.coinType}, #{quotation.exchangeRate}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="moduleQuotation">
+        update snz_module_quotations
+        <set>
+            <if test="price!=null">price=#{price},</if>
+            <if test="transactPrice!=null">transact_price=#{transactPrice},</if>
+            <if test="exchangeRate!=null">exchange_rate=#{exchangeRate},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="deleteBySolutionId" parameterType="long">
+        delete from snz_module_quotations where solution_id=#{solutionId}
+    </delete>
+
+    <select id="findById" parameterType="long" resultMap="moduleQuotationMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotations where id=#{id}
+    </select>
+
+    <select id="countBySolutionId" parameterType="long" resultType="int">
+        select count(id)
+        from snz_module_quotations where solution_id=#{solutionId}
+    </select>
+
+    <select id="findExist" parameterType="long" resultMap="moduleQuotationMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotations where solution_id=#{solutionId} and module_id=#{moduleId}
+    </select>
+
+    <select id="findAllQuotations" parameterType="long" resultMap="moduleQuotationMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotations where solution_id=#{solutionId}
+    </select>
+
+    <select id="findByPurchaserCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_module_quotations
+        <where>
+            solution_id = #{solutionId}
+        </where>
+    </select>
+
+    <!-- 查询谈判的报价数据 -->
+    <select id="findTransactCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_module_quotations
+        <where>
+            <include refid="filterSolution"/>
+            <if test="queryType==1">and transact_price is not null</if>
+            <if test="queryType==2">and transact_price is null</if>
+        </where>
+    </select>
+
+    <select id="findTransacts" parameterType="map" resultMap="moduleQuotationMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotations
+        <where>
+            <include refid="filterSolution"/>
+            <if test="queryType==1">and transact_price is not null</if>
+            <if test="queryType==2">and transact_price is null</if>
+        </where>
+        order by module_id
+        limit #{offset}, #{limit}
+    </select>
+
+    <!-- 查询特定的需求供应商方案 -->
+    <sql id="filterSolution">
+        and solution_id in
+        <foreach collection="solutionIds" separator="," open="(" close=")" item="solutionId">
+            #{solutionId}
+        </foreach>
+    </sql>
+
+    <select id="findByPurchaser" parameterType="map" resultMap="moduleQuotationMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotations
+        <where>
+            solution_id = #{solutionId}
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+</mapper>

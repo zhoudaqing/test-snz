@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 需求对接数据的写入状态标记 -->
+<mapper namespace="RequirementSend">
+    <resultMap id="requirementSendMap" type="RequirementSend">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="sendPLM" column="send_PLM"/>
+        <result property="replyModuleNum" column="reply_moduleNum"/>
+        <result property="businessNegotiate" column="business_negotiate"/>
+        <result property="negotiateFile" column="negotiate_file"/>
+        <result property="supplierSign" column="supplier_sign"/>
+        <result property="resultPublicity" column="result_publicity"/>
+        <result property="confirmQuota" column="confirm_quota"/>
+        <result property="sendVCode" column="send_vCode"/>
+        <result property="writeDetailQuota" column="write_detailQuota"/>
+        <result property="sendSAP" column="send_SAP"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id , send_PLM, reply_moduleNum, business_negotiate, negotiate_file, supplier_sign, result_publicity, confirm_quota, send_vCode, write_detailQuota, send_SAP, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="requirementSend" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_requirement_send (<include refid="columns"/>)
+        values (#{requirementId}, #{sendPLM}, #{replyModuleNum}, #{businessNegotiate}, #{negotiateFile}, #{supplierSign}, #{resultPublicity}, #{confirmQuota}, #{sendVCode}, #{writeDetailQuota}, #{sendSAP}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="requirementSend">
+        update snz_requirement_send
+        <set>
+            <if test="sendPLM!=null">send_PLM=#{sendPLM},</if>
+            <if test="replyModuleNum!=null">reply_moduleNum=#{replyModuleNum},</if>
+            <if test="businessNegotiate!=null">business_negotiate=#{businessNegotiate},</if>
+            <if test="negotiateFile!=null">negotiate_file=#{negotiateFile},</if>
+            <if test="supplierSign!=null">supplier_sign=#{supplierSign},</if>
+            <if test="resultPublicity!=null">result_publicity=#{resultPublicity},</if>
+            <if test="confirmQuota!=null">confirm_quota=#{confirmQuota},</if>
+            <if test="sendVCode!=null">send_vCode=#{sendVCode},</if>
+            <if test="writeDetailQuota!=null">write_detailQuota=#{writeDetailQuota},</if>
+            <if test="sendSAP!=null">send_SAP=#{sendSAP},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="requirementSendMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_send where id=#{id}
+    </select>
+
+    <select id="findByRequirementId" parameterType="long" resultMap="requirementSendMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_send where requirement_id=#{requirementId}
+    </select>
+
+</mapper>

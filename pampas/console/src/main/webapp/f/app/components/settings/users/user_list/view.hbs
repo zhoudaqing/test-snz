@@ -1,0 +1,64 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "settings-users-user-list"}}
+<div class="ui attached blue message">
+  <div class="ui right floated tiny green button js-btn-new-user">NEW USER</div>
+  <div class="header">
+    User({{_DATA_.total}})
+  </div>
+</div>
+<div class="ui attached segment">
+  <div class="ui divided list">
+    {{#each _DATA_.data}}
+    <div class="item">
+      <div class="right floated">
+        <i class="mail icon"></i>{{email}}
+        &nbsp;&nbsp;&nbsp;
+        <div class="ui buttons">
+          <div class="ui tiny button js-btn-edit-user" data-user="{{json this}}">Edit</div>
+          <!-- <div class="ui tiny red button">Block</div> -->
+          <div class="ui tiny red button js-btn-del-user" data-user-id="{{id}}">Delete</div>
+        </div>
+      </div>
+      <div class="content">
+        <i class="blue user icon"></i><a class="user-name" target="_blank" href="/settings/user_permission?userId={{id}}">{{name}} ({{realName}})</a>
+        {{#equals id _USER_.id}}
+        &nbsp;<span class="ui orange horizontal label">It's you!</span>
+        {{/equals}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+<div class="ui bottom attached message">
+  <div class="pagination-list" data-total="{{_DATA_.total}}"></div>
+</div>
+<div class="ui small modal settings-users-user-list-modal user-info">
+  <i class="close icon"></i>
+  <div class="header">
+    User info
+  </div>
+  <div class="content"></div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui positive right labeled icon button">Submit<i class="checkmark icon"></i></div>
+  </div>
+</div>
+<div class="ui small basic modal settings-users-user-list-modal del-user-confirm">
+  <div class="header">
+    Remove User
+  </div>
+  <div class="content">
+    <div class="left"><i class="trash icon"></i></div>
+    <div class="right">
+      <h2>确定要删除这个用户么？</h2>
+      <p>删除后无法恢复，已对此用户进行的权限赋予也将一并删除，请谨慎操作。</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui buttons">
+      <div class="ui negative labeled icon button"><i class="remove icon"></i> NO</div>
+      <div class="ui positive right labeled icon button">YES <i class="checkmark icon"></i></div>
+    </div>
+  </div>
+</div>
+{{/component}}

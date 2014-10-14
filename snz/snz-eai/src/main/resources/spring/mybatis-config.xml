@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias type="io.terminus.snz.eai.model.MDMConfigure" alias="mdmConfigure"/>
+        <typeAlias type="io.terminus.snz.eai.model.MDMBankView" alias="mdmBankView"/>
+        <typeAlias type="io.terminus.snz.eai.model.OutQuotaInfo" alias="outQuotaInfo"/>
+        <typeAlias type="io.terminus.snz.eai.model.OutPriceInfo" alias="outPriceInfo"/>
+        <typeAlias type="io.terminus.snz.eai.model.MDMOldModuleInfo" alias="mdmOldModuleInfo"/>
+    </typeAliases>
+</configuration>

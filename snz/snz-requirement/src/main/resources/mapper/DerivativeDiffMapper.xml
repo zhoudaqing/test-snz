@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 场景信息 -->
+<mapper namespace="DerivativeDiff">
+    <resultMap id="DerivativeDiffMap" type="DerivativeDiff">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="bomModule" column="bom_module"/>
+        <result property="matrix" column="matrix"/>
+        <result property="material" column="material"/>
+        <result property="surfaceTreatment" column="surface_treatment"/>
+        <result property="printing" column="printing"/>
+        <result property="softwareParam" column="software_param"/>
+        <result property="structure" column="structure"/>
+        <result property="overseasParts" column="overseas_parts"/>
+        <result property="hostChange" column="host_change"/>
+        <result property="drive" column="drive"/>
+        <result property="description" column="description"/>
+
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id,module_id,module_name,bom_module,matrix,material,surface_treatment,printing,software_param,structure,overseas_parts,host_change,drive,description,created_at, updated_at
+    </sql>
+
+    <sql id="queryColumns">
+        requirement_id, module_id, module_name, bom_module, matrix, material, surface_treatment, printing, software_param,
+        structure, overseas_parts, host_change, drive,description, snz_derivative_diff.created_at, snz_derivative_diff.updated_at
+    </sql>
+
+    <sql id="table_name">snz_derivative_diff</sql>
+
+
+    <insert id="create" parameterType="derivativeDiff" useGeneratedKeys="true" keyProperty="id">
+        insert into <include refid="table_name"/> (<include refid="columns"/>) values (#{requirementId},#{moduleId},#{moduleName},#{bomModule},#{matrix}, #{material}, #{surfaceTreatment}, #{printing}, #{softwareParam},
+        #{structure}, #{overseasParts}, #{hostChange}, #{drive}, #{description} , now(), now())
+    </insert>
+
+    <insert id="createBatch" parameterType="derivativeDiff" useGeneratedKeys="true">
+        insert into snz_derivative_diff (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="derivativeDiff" index="index" separator="," >
+            (#{derivativeDiff.requirementId},#{derivativeDiff.moduleId},#{derivativeDiff.moduleName},#{derivativeDiff.bomModule},#{derivativeDiff.matrix},#{derivativeDiff.material},#{derivativeDiff.surfaceTreatment},
+            #{derivativeDiff.printing}, #{derivativeDiff.softwareParam}, #{derivativeDiff.structure},#{derivativeDiff.overseasParts},#{derivativeDiff.hostChange},#{derivativeDiff.drive},#{derivativeDiff.description},now(),now())
+        </foreach>
+    </insert>
+
+    <update id="update">
+        update <include refid="table_name" />
+        <set>
+            <if test="bomModule!=null">bom_module=#{bomModule},</if>
+            <if test="matrix!=null">matrix=#{matrix},</if>
+            <if test="material!=null">material=#{material},</if>
+            <if test="surfaceTreatment!=null">surface_treatment=#{surfaceTreatment},</if>
+            <if test="printing!=null">printing=#{printing},</if>
+            <if test="softwareParam!=null">software_param=#{softwareParam},</if>
+            <if test="structure!=null">structure=#{structure},</if>
+            <if test="overseasParts!=null">overseas_parts=#{overseasParts},</if>
+            <if test="hostChange!=null">host_change=#{hostChange},</if>
+            <if test="drive!=null">drive=#{drive},</if>
+            <if test="description">description=#{description},</if>
+            updated_at = now()
+        </set>
+        where module_id=#{moduleId}
+    </update>
+
+    <!-- 通过requirementid分页查询-->
+    <select id="findByRequirementCount" parameterType="map" resultType="long">
+        select count(snz_derivative_diff.id)
+        from <include refid="table_name" /> ,snz_requirements
+        <where>
+            requirement_id  = #{requirementId} and requirement_id = snz_requirements.id
+        </where>
+    </select>
+
+    <select id="findByRequirementId" parameterType="map" resultMap="DerivativeDiffMap">
+        select snz_derivative_diff.id, <include refid="queryColumns"/>
+        from <include refid="table_name" /> ,snz_requirements
+        <where>
+            requirement_id  = #{requirementId} and requirement_id = snz_requirements.id
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+
+    <select id="findByRequirementIdWithOutPaging" parameterType="long" resultMap="DerivativeDiffMap">
+        select snz_derivative_diff.id, <include refid="columns"/>
+        from <include refid="table_name" />
+        where  requirement_id  = #{requirementId}
+    </select>
+
+    <select id="checkDiffExists" parameterType="map" resultMap="DerivativeDiffMap">
+        select snz_derivative_diff.id, <include refid="columns"/>
+        from <include refid="table_name" />
+        where  requirement_id  = #{requirementId} and module_id = #{moduleId}
+    </select>
+
+    <delete id="delete"  parameterType="map">
+        DELETE FROM <include refid="table_name" />
+        WHERE module_id = #{moduleId} and requirement_id = #{requirementId}
+    </delete>
+</mapper>

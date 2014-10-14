@@ -1,0 +1,44 @@
+{{#component "js-comp material-detail"}}
+
+<p class="components-title"><strong>物料号明细</strong>
+ {{#if _DATA_}}
+ <a href="/suppliers/material-submit?supplierCode={{supplierCode}}" class="btn btn-primary" style="float:right;margin-bottom:5px;">提交</a>
+ {{/if}}
+</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="">物料号</th>
+        <th width="">物料描述</th>
+        <th width="">供应商代码</th>
+        <th width="">供应商名称</th>
+        <th width="">采购组织</th>
+        <th width="">采购组</th>
+        <th width="">物料组</th>
+        <th width="">物料组描述</th>
+        <th width="">税码</th>
+        <th width="">有效期从</th>
+        <th width="">有效至</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {{#each _DATA_}}
+      <tr>
+          <td>{{moduleNum}}</td>
+          <td>{{moduleName}}</td>
+          <td>{{supplierCode}}</td>
+          <td>{{supplierName}}</td>
+	       <td>{{purchOrg}}</td>
+	       <td>{{purchGroup}}</td>
+	       <td>{{moduleGroup}}</td>
+	       <td>{{moduleGroupDesc}}</td>
+	       <td>{{taxCode}}</td>
+          <td>{{validityStart}}</td>
+          <td>{{validityEnd}}</td>
+      </tr>
+    {{/each}}
+
+    </tbody>
+  </table>
+{{/component}}

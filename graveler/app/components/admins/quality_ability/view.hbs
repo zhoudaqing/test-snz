@@ -1,0 +1,410 @@
+{{#component "js-comp supplier-resume-quality-ability"}}
+  <p class="components-title"><strong class="tab-name">质量能力</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">质量管理体系：</div>
+      <div class="new-value active" data-role="nav"><span>当前值</span></div>
+      <div class="old-value" data-role="nav"><span>修改前</span></div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>RoHS(QC080000)</th>
+              <th>ISO9001</th>
+              <th>ISO14001</th>
+              <th>TS16949</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>证书编号</td>
+              <td>{{supplierInfo.companyExtraQuality.rohsId}}</td>
+              <td>{{supplierInfo.companyExtraQuality.iso9001Id}}</td>
+              <td>{{supplierInfo.companyExtraQuality.iso14001Id}}</td>
+              <td>{{supplierInfo.companyExtraQuality.ts16949Id}}</td>
+            </tr>
+            <tr>
+              <td>证书有效期</td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.rohsId}}
+                  {{formatDate supplierInfo.companyExtraQuality.rohsValidDate "day"}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.iso9001Id}}
+                  {{formatDate supplierInfo.companyExtraQuality.iso9001ValidDate "day"}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.iso14001Id}}
+                  {{formatDate supplierInfo.companyExtraQuality.iso14001ValidDate "day"}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.ts16949Id}}
+                  {{formatDate supplierInfo.companyExtraQuality.ts16949ValidDate "day"}}
+                {{/if}}
+              </td>
+            </tr>
+            <tr>
+              <td>附件</td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.rohsAttachUrl}}
+                <a href="{{supplierInfo.companyExtraQuality.rohsAttachUrl}}">
+                  <span class="file-name-url">附件<span>
+                </a>
+                {{/if}}
+              </td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.iso9001AttachUrl}}
+                <a href="{{supplierInfo.companyExtraQuality.iso9001AttachUrl}}">
+                  <span class="file-name-url">附件</span>
+                </a>
+                {{/if}}
+              </td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.iso14001AttachUrl}}
+                <a href="{{supplierInfo.companyExtraQuality.iso14001AttachUrl}}">
+                  <span class="file-name-url">附件</span>
+                </a>
+                {{/if}}
+              </td>
+              <td>
+                {{#if supplierInfo.companyExtraQuality.ts16949AttachUrl}}
+                <a href="{{supplierInfo.companyExtraQuality.ts16949AttachUrl}}">
+                  <span class="file-name-url">附件</span>
+                </a>
+                {{/if}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-role="content" class="old-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>RoHS(QC080000)</th>
+              <th>ISO9001</th>
+              <th>ISO14001</th>
+              <th>TS16949</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>证书编号</td>
+              <td>
+                {{#if oldValues.quality-rohs-id}}
+                  <span class="diff-value">{{oldValues.quality-rohs-id}}</span>
+                {{else}}
+                  {{supplierInfo.companyExtraQuality.rohsId}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-iso09001-id}}
+                  <span class="diff-value">{{oldValues.quality-iso09001-id}}</span>
+                {{else}}
+                  {{supplierInfo.companyExtraQuality.iso9001Id}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-iso14001-id}}
+                  <span class="diff-value">{{oldValues.quality-iso14001-id}}</span>
+                {{else}}
+                  {{supplierInfo.companyExtraQuality.iso14001Id}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-ts16949-id}}
+                  <span class="diff-value">{{oldValues.quality-ts16949-id}}</span>
+                {{else}}
+                  {{supplierInfo.companyExtraQuality.ts16949Id}}
+                {{/if}}
+              </td>
+            </tr>
+            <tr>
+              <td>证书有效期</td>
+              <td>
+                {{#if oldValues.quality-rohs-valid-date}}
+                  {{#if oldValues.quality-rohs-id}}
+                  <span class="diff-value">
+                    {{formatDate oldValues.quality-rohs-valid-date "day"}}
+                  </span>
+                  {{/if}}
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.rohsId}}
+                    {{formatDate supplierInfo.companyExtraQuality.rohsValidDate "day"}}
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-iso9001-valid-date}}
+                  {{#if oldValues.quality-iso09001-id}}
+                    <span class="diff-value">{{formatDate oldValues.quality-iso9001-valid-date "day"}}</span>
+                  {{/if}}
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.iso9001Id}}
+                    {{formatDate supplierInfo.companyExtraQuality.iso9001ValidDate "day"}}
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-iso14001-valid-date}}
+                  {{#if oldValues.quality-iso14001-id}}
+                  <span class="diff-value">{{formatDate oldValues.quality-iso14001-valid-date "day"}}</span>
+                  {{/if}}
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.iso14001Id}}
+                    {{formatDate supplierInfo.companyExtraQuality.iso14001ValidDate "day"}}
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-ts16949-valid-date}}
+                  {{#if oldValues.quality-ts16949-id}}
+                    <span class="diff-value">{{formatDate oldValues.quality-ts16949-valid-date "day"}}</span>
+                  {{/if}}
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.ts16949Id}}
+                    {{formatDate supplierInfo.companyExtraQuality.ts16949ValidDate "day"}}
+                  {{/if}}
+                {{/if}}
+              </td>
+            </tr>
+            <tr>
+              <td>附件</td>
+              <td>
+                {{#if oldValues.quality-rohs-attach-url}}
+                  <a href="{{oldValues.quality-rohs-attach-url}}">
+                    <span name="diff-value file-name-url">附件</span>
+                  </a>
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.rohsAttachUrl}}
+                  <a href="{{supplierInfo.companyExtraQuality.rohsAttachUrl}}">
+                    <span class="file-name-url">附件</span>
+                  </a>
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-iso9001-attach-url}}
+                  <a href="{{oldValues.quality-iso9001-attach-url}}">
+                    <span class="file-name-url diff-value">附件</span>
+                  </a>
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.iso9001AttachUrl}}
+                  <a href="{{supplierInfo.companyExtraQuality.iso9001AttachUrl}}">
+                    <span class="file-name-url">附件</span>
+                  </a>
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-iso14001-attach-url}}
+                  <a href="{{oldValues.quality-iso14001-attach-url}}">
+                    <span class="file-name-url diff-value">附件</span>
+                  </a>
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.iso14001AttachUrl}}
+                  <a href="{{supplierInfo.companyExtraQuality.iso14001AttachUrl}}">
+                    <span class="file-name-url">附件</span>
+                  </a>
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td>
+                {{#if oldValues.quality-ts16949-attach-url}}
+                  <a href="{{oldValues.quality-ts16949-attach-url}}">
+                    <span class="file-name-url diff-value">附件</span>
+                  </a>
+                {{else}}
+                  {{#if supplierInfo.companyExtraQuality.ts16949AttachUrl}}
+                  <a href="{{supplierInfo.companyExtraQuality.ts16949AttachUrl}}">
+                    <span class="file-name-url">附件</span>
+                  </a>
+                  {{/if}}
+                {{/if}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">质量管理人数：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>入场检验</th>
+              <th>过程巡检</th>
+              <th>成品检验</th>
+              <th>试验室</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>人数(不重复计算)</td>
+              <td class="control-group">
+                {{supplierInfo.companyExtraQuality.numberForAdmissionTest}}
+              </td>
+              <td class="control-group">
+                {{supplierInfo.companyExtraQuality.numberForInspectionProcess}}
+              </td>
+              <td class="control-group">
+                {{supplierInfo.companyExtraQuality.numberForProductTesting}}
+              </td>
+              <td class="control-group">
+                {{supplierInfo.companyExtraQuality.numberInLab}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-list only-new">
+    <div class="compare-row">
+      <div class="new-value">
+        <label>质量管理人数附件：</label>
+        <div>
+          <a href="{{supplierInfo.companyExtraQuality.numberForQualityAttachUrl}}">
+            <span class="file-name-url">附件</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>今年质量投入：</label>
+        <div>
+          <span>{{formatPrice supplierInfo.companyExtraQuality.investmentThisYear "w" 2}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>质量试验室试验设备(台)：</label>
+        <div>
+          <div class="div-medium">{{supplierInfo.companyExtraQuality.numberOfEquipments}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>质量试验室附件：</label>
+        <div>
+          <a href="{{supplierInfo.companyExtraQuality.labAttachUrl}}">
+            <span class="file-name-url">附件</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">质量绩效：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>现场合格率</th>
+              <th>市场合格率</th>
+              <th>客户满意度</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>绩效</td>
+              <td class="control-group control-td">
+                {{supplierInfo.companyExtraQuality.checksQualifiedRate}}
+              </td>
+              <td class="control-group control-td">
+                {{supplierInfo.companyExtraQuality.marketQualifiedRate}}
+              </td>
+              <td class="control-group control-td">
+                {{supplierInfo.companyExtraQuality.customerSatisfaction}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-list only-new">
+    <div class="compare-row">
+      <div class="new-value">
+        <label>质量绩效附件：</label>
+        <div>
+          {{#if supplierInfo.companyExtraQuality.qualifiedAttachUrl}}
+          <a href="{{supplierInfo.companyExtraQuality.qualifiedAttachUrl}}">
+            <span class="file-name-url">附件</span>
+          </a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>审核员(人)：</label>
+        <div>
+          <span>{{supplierInfo.companyExtraQuality.examPeople}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>实验员(人)：</label>
+        <div>
+          <span>{{supplierInfo.companyExtraQuality.testPeople}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>绿带(人)：</label>
+        <div>
+          <span>{{supplierInfo.companyExtraQuality.greenLevel}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>黑带(人)：</label>
+        <div>
+          <span>{{supplierInfo.companyExtraQuality.blackLevel}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>质量人员资质附件：</label>
+        <div>
+          {{#if supplierInfo.companyExtraQuality.auditorAttachUrl}}
+          <a href="{{supplierInfo.companyExtraQuality.auditorAttachUrl}}">
+            <span class="file-name-url">附件</span>
+          </a>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

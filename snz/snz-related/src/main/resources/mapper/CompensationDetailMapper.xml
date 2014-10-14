@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CompensationDetail">
+
+    <!-- 结果集映射 -->
+    <resultMap id="CompensationDetailMap" type="CompensationDetail">
+        <id property="id" column="id"/>
+        <result property="listId" column="list_id"/>
+        <result property="listNum" column="list_num"/>
+        <result property="factory" column="factory"/>
+        <result property="numOfProof" column="num_of_proof"/>
+        <result property="numOfParam" column="num_of_param"/>
+        <result property="supplierAccount" column="supplier_account"/>
+        <result property="materielNo" column="materiel_no"/>
+        <result property="timeOfDelivery" column="time_of_delivery"/>
+        <result property="rTimeOfDelivery" column="r_time_of_delivery"/>
+        <result property="yTimeOfDelivery" column="y_time_of_delivery"/>
+        <result property="numOfList" column="num_of_list"/>
+        <result property="numOfDelivery" column="num_of_delivery"/>
+        <result property="numOfDifference" column="num_of_difference"/>
+        <result property="descOfDifference" column="desc_of_difference"/>
+        <result property="currentDay" column="current_day"/>
+        <result property="currentTime" column="current_time"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_compensation_details
+    </sql>
+
+    <sql id="column_all">
+       list_id, <include refid="column_except_tid"/>
+    </sql>
+
+    <sql id="column_except_tid">
+        list_num, factory, num_of_proof, num_of_param, supplier_account, materiel_no, time_of_delivery, r_time_of_delivery,
+        y_time_of_delivery, num_of_list, num_of_delivery, num_of_difference, desc_of_difference, current_day, `current_time`,
+        created_at, updated_at
+    </sql>
+
+    <sql id="values_all">
+        #{listNum}, #{factory}, #{numOfProof}, #{numOfParam}, #{supplierAccount}, #{materielNo}, #{timeOfDelivery},
+        #{rTimeOfDelivery}, #{yTimeOfDelivery}, #{numOfList}, #{numOfDelivery}, #{numOfDifference}, #{descOfDifference},
+        #{currentDay}, #{currentTime}, now(), now()
+    </sql>
+
+    <!-- 单个添加 -->
+    <insert id="createone" parameterType="CompensationDetail" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="column_except_tid"/>)
+        VALUES
+        (<include refid="values_all"/>)
+    </insert>
+
+    <!-- 批量添加 -->
+    <insert id="creates" parameterType="list">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="column_all"/>)
+        VALUES
+        <foreach collection="list" item="i" index="index" separator=",">
+            (
+            #{i.listId}, #{i.listNum}, #{i.factory}, #{i.numOfProof}, #{i.numOfParam}, #{i.supplierAccount}, #{i.materielNo}, #{i.timeOfDelivery},
+            #{i.rTimeOfDelivery}, #{i.yTimeOfDelivery}, #{i.numOfList}, #{i.numOfDelivery}, #{i.numOfDifference}, #{i.descOfDifference},
+            #{i.currentDay}, #{i.currentTime}, now(), now()
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据列表记录id返回明细页 -->
+    <select id="findById" parameterType="long" resultMap="CompensationDetailMap">
+        SELECT id,
+        <include refid="column_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE list_id=#{listId}
+    </select>
+
+    <!-- 根据id查找明细 -->
+    <select id="find" parameterType="long" resultMap="CompensationDetailMap">
+        SELECT id,
+        <include refid="column_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据索赔记录查询其索赔明细列表, 可以通过以下几个字段关联 -->
+    <select id="findByCompensation" parameterType="Compensation" resultMap="CompensationDetailMap">
+        SELECT id,
+        <include refid="column_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE 1=1
+        <if test="factory != null"> AND factory = #{factory} </if>
+        <if test="materielNo != null"> AND materiel_no = #{materielNo} </if>
+        <if test="supplierAccount != null"> AND supplier_account = #{supplierAccount} </if>
+        <if test="current != null"> AND current_day = #{current} </if>
+    </select>
+
+</mapper>

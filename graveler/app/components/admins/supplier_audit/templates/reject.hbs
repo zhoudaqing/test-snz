@@ -1,0 +1,59 @@
+<div class="modal supplier-audit-modal">
+  <div class="modal-header">
+    {{#if onlyResource}}
+    一流资源
+    {{else}}
+      {{#equals type 1}}
+        <h2>通过意见</h2>
+      {{else}}
+        <h2>拒绝意见</h2>
+      {{/equals}}
+    {{/if}}
+  </div>
+  <form class="form form-aligned deposit-form" id="reject-form">
+    <div class="modal-dialog">
+      {{#equals type 1}}
+      {{#if apply}}
+      <div class="control-group">
+        <label>一流资源确认</label>
+        <select name="resourceType" id="" class="js-select-quality">
+          <option value="0">普通资源</option>
+          <option value="1">标杆企业</option>
+          <option value="2">500强公司</option>
+        </select>
+      </div>
+      <div class="control-group rival-company">
+        <label>竞争对手1</label>
+        <input type="text" class="input-medium" name="competitor" placeholder="请至少填写一个竞争对手">
+      </div>
+      <div class="control-group rival-company">
+        <label>竞争对手2</label>
+        <input type="text" class="input-medium" name="competitor" placeholder="请至少填写一个竞争对手">
+      </div>
+      <div class="control-group rival-company">
+        <label>竞争对手3</label>
+        <input type="text" class="input-medium" name="competitor" placeholder="请至少填写一个竞争对手">
+      </div>
+      <div class="control-group rival-company">
+        <label>竞争对手4</label>
+        <input type="text" class="input-medium" name="competitor" placeholder="请至少填写一个竞争对手">
+      </div>
+      <div class="control-group rival-company">
+        <label>竞争对手5</label>
+        <input type="text" class="input-medium" name="competitor" placeholder="请至少填写一个竞争对手">
+      </div>
+      {{/if}}
+      {{/equals}}
+      {{#unless onlyResource}}
+      <div class="control-group">
+        <label>{{#equals type 1}}通过意见{{else}}拒绝意见{{/equals}}</label>
+        <input class="input-medium" name="description" type="text" placeholder="请输入{{#equals type 1}}通过意见{{else}}拒绝意见{{/equals}}" value="" >
+      </div>
+      {{/unless}}
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-medium btn-primary" type="submit">确定</button>
+      <button class="btn btn-medium close" type="button">取消</button>
+    </div>
+  </form>
+</div>

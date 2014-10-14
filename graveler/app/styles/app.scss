@@ -1,0 +1,47 @@
+@import "icons";
+@import "compass/css3/inline-block";
+@import "compass/css3/box-sizing";
+@import "supplier";
+
+.container-components {
+  margin-top: 10px;
+  right: 120px;
+  width: 1060px;
+  table {
+    width: 1060px;
+  }
+}
+.outer {
+  top: 61px;
+}
+.body-outer {
+  left: 120px;
+}
+
+.front-main {
+  .sidebar {
+    right: 120px;
+  }
+}
+
+.block {
+  margin-bottom: 10px;
+
+  .span3 {
+    width: 265px;
+    text-align: left;
+  }
+}
+
+
+.control-group-new{
+  width:450px;
+  @include inline-block(top);
+}
+.old-values{
+  color: #CC3333;
+}
+.old-line{
+  border-right: 1px solid black;
+  height: 100%;
+}

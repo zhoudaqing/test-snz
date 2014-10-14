@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanyExtraScaleAndCost" >
+    <resultMap id="CompanyExtraScaleAndCostMap" type="CompanyExtraScaleAndCost">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="tb_name">snz_company_extra_scale_and_cost</sql>
+
+    <sql id="columns">id, user_id, created_at, updated_at</sql>
+
+    <sql id="values">#{id}, #{userId}, now(), now()</sql>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="CompanyExtraScaleAndCost" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/> (<include refid="columns"/>)
+        VALUES (<include refid="values"/>)
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="CompanyExtraScaleAndCost">
+        UPDATE <include refid="tb_name"/>
+        updated_at=now()
+        WHERE user_id=#{userId}
+    </update>
+
+    <!-- 查找 -->
+    <select id="findByUserId" resultMap="CompanyExtraScaleAndCostMap" parameterType="long">
+        SELECT id, <include refid="columns"/> FROM <include refid="tb_name"/>
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

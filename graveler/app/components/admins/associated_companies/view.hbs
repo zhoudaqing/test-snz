@@ -1,0 +1,89 @@
+{{#component "js-comp associated-company operation-platform"}}
+  <p class="components-title"><strong>1.选择供应商</strong></p>
+  <div class="block supplier-a" id="block">
+    <fieldset>
+      <span class="span3"><label for="">公司名称:</label><input type="text" class=""></span>
+      <span class="span1">
+        <a class="btn btn-primary choose-company-a" href="javascript:void(0)">筛选</a>
+        <a class="btn choose-no-a" href="javascript:void(0)">取消</a>
+      </span>
+      <span class="span3 supplier-a">
+        <label for="">供应商名称:</label>
+        <span class="supplier-a-name"></span>
+        <span class="supplier-a-id"></span>
+      </span>
+      <span class="span1 supplier-a-content">
+        <a class="btn btn-primary company-own" href="javascript:void(0)">查看已关联供应商</a>
+      </span>
+  </fieldset> 
+  </div>
+  <div class="company-list-con">
+    <div class="div-table">
+      <table class="table table-striped">
+        <thead>
+          <th width="100">供应商代码</th>
+          <th width="100">公司名称</th>
+          <th width="50">法人代表</th>
+          <th width="50">操作</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="control-group" align="right">
+      <a class="btn btn-primary get-company-over" href="javascript:void(0)">关闭</a>
+    </div>
+  </div>
+  <div class="company-list-a">
+    <div class="div-table">
+      <table class="table table-striped">
+        <thead>
+          <th width="20">选择</th>
+          <th width="100">供应商代码</th>
+          <th width="100">公司名称</th>
+          <th width="50">法人代表</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="control-group" align="right">
+      <a class="btn btn-primary get-company-a" href="javascript:void(0)">确定</a>
+    </div>
+  </div>
+  <p class="components-title"><strong>2.添加关联供应商</strong></p>
+  <div class="block supplier-b" id="block">
+    <fieldset>
+      <span class="span3"><label for="">公司名称:</label><input type="text" class=""></span>
+      <span class="span1">
+        <a class="btn btn-primary choose-company-b" href="javascript:void(0)">筛选</a>
+        <a class="btn choose-no-b" href="javascript:void(0)">取消</a>
+      </span>
+      <span class="span3 supplier-b">
+        <label for="">供应商名称:</label>
+        <span class="supplier-b-name"></span>
+        <span class="supplier-b-id"></span>
+      </span>
+      <span class="span1">
+        <a class="btn btn-primary get-company" href="javascript:void(0)">确定关联</a>
+      </span>
+  </fieldset>
+  </div>
+  <div class="company-list-b">
+    <div class="div-table">
+      <table class="table table-striped">
+        <thead>
+          <th width="20">选择</th>
+          <th width="100">供应商代码</th>
+          <th width="100">公司名称</th>
+          <th width="50">法人代表</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="control-group" align="right">
+      <a class="btn btn-primary get-company-b" href="javascript:void(0)">确定</a>
+    </div>
+  </div>
+{{/component}}

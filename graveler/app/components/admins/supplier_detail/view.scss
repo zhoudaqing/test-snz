@@ -1,0 +1,31 @@
+@import "compass/css3/inline-block";
+.supplier-detail {
+  .control-group{
+    width: 400px;
+    @include inline-block(top);
+  }
+   
+  .control-group-cs{
+    width:700px;
+  }
+  .control-group-p{
+    width:1000px;
+    clear:both;
+    .control-content-p{
+      width:800px;
+      clear:both;
+     .item-p{
+      margin-right: 50px;
+      width: 150px;
+      float: left;
+     }
+    }
+  }
+  .docs {
+    display: inline-block;
+  }
+  .customer-table{
+    width: 500px;
+     @include inline-block(top);
+  }
+}

@@ -1,0 +1,154 @@
+<div class="modal">
+    <div class="modal-header">
+        <h2>策略详情</h2>
+    </div>
+    <div class="module-new modal-body" name="{{pp this}}">
+        <table class="table table-striped table-showstrategy">
+            <thead>
+                <tr>
+                    <th rowspan="3" colspan="2" width="200">策略控制</th>
+                    <th rowspan="3" >说明</th>
+                    <th colspan="4">690用户零距离交互平台Ⅰ期</th>
+                </tr>
+                <tr>
+                    <th width="80">优选</th>
+                    <th width="80">合格</th>
+                    <th width="80">限制</th>
+                    <th width="80">淘汰</th>
+                </tr>
+                <tr>
+                    <th>90~100</th>
+                    <th>80~89</th>
+                    <th>60~79</th>
+                    <th> <60 </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td rowspan="5">新业务机会</td>
+                    <td>扩充产品</td>
+                    <td>供应商可以在产品大类直接相互扩充（如由洗衣机扩充至冰箱）</td>
+                    <td>
+                        {{#between compositeScore 90 100}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>扩充物料</td>
+                    <td>供应商可以承接新的物料类型（如由电脑板模块扩充至遥控器模块）</td>
+                    <td>
+                        {{#between compositeScore 90 100}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>新品交互</td>
+                    <td>供应商可以参与零距离交互平台方案交互</td>
+                    <td>
+                        {{#between compositeScore 90 100}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>早期设计</td>
+                    <td>供应商可以参与到新产品前期联合设计开发阶段</td>
+                    <td>
+                        {{#between compositeScore 90 100}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>联合实验室</td>
+                    <td>供应商可以进驻海尔联合实验室参与产品设计</td>
+                    <td>
+                        {{#between compositeScore 90 100}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="3">定单</td>
+                    <td>停新品订单</td>
+                    <td>供应商无法参与新品方案交互</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {{#between compositeScore 70 79}}√{{/between}}
+                    </td>
+                    <td>
+                        {{#lt compositeScore 70}}√{{/lt}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>调老品订单</td>
+                    <td>/</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>采购冻结</td>
+                    <td>/</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td rowspan="4">问题检讨</td>
+                    <td>自主改善</td>
+                    <td>供应商发现问题、内部提升改善</td>
+                    <td></td>
+                    <td>
+                        {{#between compositeScore 80 89}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>书面警告</td>
+                    <td>系统自动触发或邮件警示</td>
+                    <td></td>
+                    <td>
+                        {{#between compositeScore 80 89}}√{{/between}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>总经理检讨</td>
+                    <td>总经理到海尔现场进行问题整改交互</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {{#between compositeScore 70 79}}√{{/between}}
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>现场交互验收</td>
+                    <td>海尔团队到供应商现场交互整改方案实施进度</td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        {{#between compositeScore 70 79}}√{{/between}}
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info btn-medium close">关闭</button>
+    </div>
+</div>

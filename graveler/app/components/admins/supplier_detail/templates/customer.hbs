@@ -1,0 +1,24 @@
+{{#each appliance}}
+  <tr class="customer-group-tr customer-appliance-tr {{#if @first}}first{{/if}}" data-type="1">
+    {{#if @first}}<td rowspan="{{length ../../appliance}}">家电行业</td>{{/if}}
+    <td>{{percentage}}</td>
+    <td>{{passivePercentage}}</td>
+    <td>{{remark}}</td>
+  </tr>
+{{/each}}
+{{#each car}}
+  <tr class="customer-group-tr customer-appliance-tr {{#if @first}}first{{/if}}" data-type="1">
+    {{#if @first}}<td rowspan="{{length ../../car}}">汽车行业</td>{{/if}}
+    <td>{{percentage}}</td>
+    <td>{{passivePercentage}}</td>
+    <td>{{remark}}</td>
+  </tr>
+{{/each}}
+{{#each other}}
+  <tr class="customer-group-tr customer-appliance-tr {{#if @first}}first{{/if}}" data-type="1">
+    {{#if @first}}<td rowspan="{{length ../../other}}">其他行业</td>{{/if}}
+    <td>{{percentage}}</td>
+    <td>{{passivePercentage}}</td>
+    <td>{{remark}}</td>
+  </tr>
+{{/each}}

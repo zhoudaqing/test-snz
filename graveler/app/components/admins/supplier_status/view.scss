@@ -1,0 +1,137 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+
+.status{
+  .status-info{
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 30px;
+    height: auto;
+    overflow: visible;
+    padding: 20px 0;
+    .alert-icon{
+      margin-left: 20px;
+    }
+    &.ie {
+      text-align: center;
+      border: 1px solid #717171;
+    }
+
+    ol{
+      list-style-type: none;
+      .note{
+        font-size: 12px;
+        color: #ccc;
+      }
+    }
+  }
+  .rule-span{
+    font-size: 12px;
+    color: $default-body-color;
+  }
+  .supplier-progress{
+    .block{
+      .progress-container{
+        .progress-step{
+          &.spe {
+            margin-top: 25px\0;
+          }
+        }
+
+        ul.concatenation {
+          padding: 0;
+            li {
+              display: block !important;
+              &.interval {
+                height: 50px;
+              }
+              &.interval-bar{
+                height: 30px;
+              }
+              &.rotate-up{
+                 transform: rotate(-15deg);
+                 filter: progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand',M11=0.97592582628,M12=0.2588190451025,M21=-0.2588190451025,M22=0.97592582628);
+               }
+              &.rotate-down{
+                 transform: rotate(15deg);
+                 filter: progid:DXImageTransform.Microsoft.Matrix(SizingMethod='auto expand',M11=0.97592582628,M12=-0.2588190451025,M21=0.2588190451025,M22=0.97592582628);
+              }
+
+              &.top {
+                margin-bottom:-40px\0;
+              }
+              &.bottom {
+                margin-top: 33px\0;
+              }
+            }
+
+            .progress-step {
+              margin-left: -1px;
+              margin-right: 4px;
+            }
+          }
+      }
+    }
+  }
+  .progress{
+    text-align: center;
+  }
+  .category-select{
+    @include inline-block(middle);
+    select{
+      width: 120px;
+    }
+    .third-level-div{
+      @include inline-block(middle);
+      position: relative;
+    }
+    .selected{
+      padding: 3px;
+      margin: 3px;
+      border: 1px solid $default-border-color;
+      color: $default-body-color;
+      @include inline-block(middle);
+    }
+    .select-menu {
+      left: 5px;
+      top: 40px;
+      position: absolute;
+      display: none;
+      z-index: 2;
+      width: 146px;
+      background-color: $default-background-color;
+      border-radius: 5px;
+      ul {
+        padding: 0 5px;
+        height: auto;
+        max-height: 200px !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+      li {
+        line-height: 20px !important;
+        @include inline-block(middle);
+        label {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          width: 120px !important;
+          margin: 5px 10px 5px 5px !important;
+        }
+        input{
+          width: 10px;
+        }
+      }
+      .product-operate-p {
+        text-align: right;
+        border-top: 1px solid $default-border-color;
+        margin: 0;
+        padding: 5px 10px;
+      }
+      .scope-category-label {
+        text-align: left !important;
+      }
+    }
+  }
+
+}

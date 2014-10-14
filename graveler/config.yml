@@ -1,0 +1,79 @@
+paths:
+  public: "public"
+groups:
+  scripts:
+    concat:
+      "/assets/scripts/app.js": "app/{scripts,components}/**/*.{js,coffee}"
+      "/assets/scripts/vendor.js": "vendor/**/*.{js,coffee}"
+    order:
+      - "vendor/pokeball.js"
+      - "vendor/highcharts.js"
+      - "..."
+      - "app/scripts/app.coffee"
+  styles:
+    concat:
+      "/assets/styles/vendor.css": "vendor/**/*.{css,scss,sass}"
+      "/assets/styles/app.css": "{app/styles/app.{css,scss,sass},app/components/**/view.{css,scss,sass}}"
+    order:
+      - "vendor/pokeball.css"
+      - "vendor/base.css"
+      - "..."
+  images:
+    sprite:
+      "../app/styles/icons.scss": "app/images/*.png"
+    copy:
+      "/assets/images/": "{app/images/**/*.jpg,app/images/other-images/*.png}"
+  views:
+    paths:
+      - app/views
+    copy:
+      "/views": "{app/views/**/*.hbs,app/components/**/parts/*.hbs}"
+      "/components/": "app/components/**/view.hbs"
+  templates:
+    paths:
+      - "app/components"
+    precompile:
+      "../vendor/templates.js": "app/components/**/templates/*.hbs"
+  files:
+    paths:
+      - "app/files"
+    copy:
+      "/": "app/files/*"
+modules:
+  wrapper: "cmd"
+  ignored: "vendor/**/*"
+  definition: "/scripts/app.js"
+sprites:
+  selector: ".icon-"
+  path: "/assets/images/"
+  url: "/assets/images/"
+revision:
+  files:
+    - /views/layout.hbs
+notification: true
+bundles:
+  "pokeball.js":
+    version: "master"
+    url: "http://git.aixforce.com/terminus/pokeball/raw/master/public/pokeball.js"
+  "highcharts.js":
+    version: "4.0.1"
+    url: "http://code.highcharts.com/highcharts.src.js"
+  "highcharts-more.js":
+    version: "4.0.1"
+    url: "http://code.highcharts.com/highcharts-more.src.js"
+  "highcharts-3d.js":
+    version: "4.0.1"
+    url: "http://code.highcharts.com/highcharts-3d.src.js"
+  "greatball.css":
+    version: "master"
+    url: "http://git.aixforce.com/terminus/pokeball/raw/master/public/greatball.css"
+  "base.css":
+    version: "master"
+    url: "http://git.aixforce.com/terminus/wigglytuff/raw/master/exports/base.css"
+  "../app/styles/pokeball/_variables.scss":
+    version: master
+    url: http://git.aixforce.com/terminus/pokeball/raw/master/src/styles/greatball/_variables.scss
+  masonory.js:
+    version: 3.1.5
+    url: https://raw.githubusercontent.com/desandro/masonry/v3.1.5/dist/masonry.pkgd.js
+

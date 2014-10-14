@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:properties id="app" location="classpath:app.properties"/>
+
+    <context:component-scan base-package="io.terminus.snz.user"/>
+    <context:component-scan base-package="io.terminus.snz.requirement"/>
+    <context:component-scan base-package="io.terminus.snz.sns"/>
+
+    <!-- message center -->
+    <bean id="messageCenter" class="io.terminus.snz.sns.messages.MessageCenter">
+        <!--<constructor-arg index="0" value="10" />-->
+        <constructor-arg index="0">
+            <list>
+                <ref bean="messageListener" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <import resource="mysql-dao-context-test.xml"></import>
+    <import resource="redis-dao-context-test.xml"></import>
+</beans>

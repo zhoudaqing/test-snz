@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="TransPriceGoodsInfoToHGVS" targetNamespace="http://www.example.org/TransPriceGoodsInfoToHGVS/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/TransPriceGoodsInfoToHGVS/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+      <xsd:schema targetNamespace="http://www.example.org/TransPriceGoodsInfoToHGVS/"
+                  xmlns:tns="http://www.example.org/TransPriceGoodsInfoToHGVS/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="TransPriceGoodsInfoToHGVS">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="DATAIN" type="tns:ZDWH_JHPT"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="TransPriceGoodsInfoToHGVSResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="tns:OutType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ZDWH_JHPT">
+        <xsd:sequence>
+          <xsd:element name="MANDT" type="xsd:string"/>
+          <xsd:element name="IDNO" type="xsd:string"/>
+          <xsd:element name="MATNR" type="xsd:string"/>
+          <xsd:element name="WERKS" type="xsd:string"/>
+          <xsd:element name="TYPE" type="xsd:string"/>
+          <xsd:element name="LIFNR" type="xsd:string"/>
+          <xsd:element name="EKORG" type="xsd:string"/>
+          <xsd:element name="QUOTE" type="xsd:decimal"/>
+          <xsd:element name="APLFZ" type="xsd:decimal"/>
+          <xsd:element name="EKGRP" type="xsd:string"/>
+          <xsd:element name="NETPR" type="xsd:decimal"/>
+          <xsd:element name="ZOA1" type="xsd:decimal"/>
+          <xsd:element name="ZAF1" type="xsd:decimal"/>
+          <xsd:element name="INCO1" type="xsd:string"/>
+          <xsd:element name="WAERS" type="xsd:string"/>
+          <xsd:element name="KPEIN" type="xsd:decimal"/>
+          <xsd:element name="KMEIN" type="xsd:string"/>
+          <xsd:element name="MEINS" type="xsd:string"/>
+          <xsd:element name="WERKS_F" type="xsd:string"/>
+          <xsd:element name="FLAGE" type="xsd:string"/>
+          <xsd:element name="DATA_T" type="xsd:string"/>
+          <xsd:element name="CHECK_R" type="xsd:string"/>
+          <xsd:element name="AGENT_FEE" type="xsd:decimal"/>
+          <xsd:element name="TAX" type="xsd:string"/>
+          <xsd:element name="DATAB" type="xsd:string"/>
+          <xsd:element name="DATBI" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ZDWHJG_JHPT">
+        <xsd:sequence>
+          <xsd:element name="MANDT" type="xsd:string"/>
+          <xsd:element name="IDNO" type="xsd:string"/>
+          <xsd:element name="DO_DATE" type="xsd:string"/>
+          <xsd:element name="DO_TIME" type="xsd:string"/>
+          <xsd:element name="DO_TYPE" type="xsd:string"/>
+          <xsd:element name="CODE" type="xsd:string"/>
+          <xsd:element name="LOG_TYPE" type="xsd:string"/>
+          <xsd:element name="MATNR" type="xsd:string"/>
+          <xsd:element name="WERKS" type="xsd:string"/>
+          <xsd:element name="TYPE" type="xsd:string"/>
+          <xsd:element name="LIFNR" type="xsd:string"/>
+          <xsd:element name="EKORG" type="xsd:string"/>
+          <xsd:element name="QUOTE" type="xsd:decimal"/>
+          <xsd:element name="APLFZ" type="xsd:decimal"/>
+          <xsd:element name="EKGRP" type="xsd:string"/>
+          <xsd:element name="NETPR" type="xsd:decimal"/>
+          <xsd:element name="ZOA1" type="xsd:decimal"/>
+          <xsd:element name="ZAF1" type="xsd:decimal"/>
+          <xsd:element name="INCO1" type="xsd:string"/>
+          <xsd:element name="WAERS" type="xsd:string"/>
+          <xsd:element name="KPEIN" type="xsd:decimal"/>
+          <xsd:element name="KMEIN" type="xsd:string"/>
+          <xsd:element name="MEINS" type="xsd:string"/>
+          <xsd:element name="WERKS_F" type="xsd:string"/>
+          <xsd:element name="FLAGE" type="xsd:string"/>
+          <xsd:element name="DATA_T" type="xsd:string"/>
+          <xsd:element name="CHECK_R" type="xsd:string"/>
+          <xsd:element name="ERROR" type="xsd:string"/>
+          <xsd:element name="AGENT_FEE" type="xsd:decimal"/>
+          <xsd:element name="TAX" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OutType">
+        <xsd:sequence>
+          <xsd:element name="TOTAL" type="xsd:int"/>
+          <xsd:element name="TOTAL_BAK" type="xsd:int"/>
+          <xsd:element name="UNDO" type="xsd:int"/>
+          <xsd:element name="flag" type="xsd:string"/>
+          <xsd:element name="message" type="xsd:string"/>
+          <xsd:element name="faultDetail" type="xsd:string"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="DATAOUT" type="tns:ZDWHJG_JHPT">
+      		</xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="TransPriceGoodsInfoToHGVSRequest">
+    <WL5G3N0:part element="WL5G3N1:TransPriceGoodsInfoToHGVS" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="TransPriceGoodsInfoToHGVSResponse">
+    <WL5G3N0:part element="WL5G3N1:TransPriceGoodsInfoToHGVSResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="TransPriceGoodsInfoToHGVS">
+    <WL5G3N0:operation name="TransPriceGoodsInfoToHGVS">
+      <WL5G3N0:input message="WL5G3N1:TransPriceGoodsInfoToHGVSRequest"/>
+      <WL5G3N0:output message="WL5G3N1:TransPriceGoodsInfoToHGVSResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="TransPriceGoodsInfoToHGVSSOAP" type="WL5G3N1:TransPriceGoodsInfoToHGVS">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="TransPriceGoodsInfoToHGVS">
+      <WL5G3N2:operation soapAction="http://www.example.org/TransPriceGoodsInfoToHGVS/TransPriceGoodsInfoToHGVS"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="TransPriceGoodsInfoToHGVS_Service">
+    <WL5G3N0:port binding="WL5G3N1:TransPriceGoodsInfoToHGVSSOAP" name="TransPriceGoodsInfoToHGVSSOAP">
+      <WL5G3N2:address location="http://10.135.1.110:7001/EAI/RoutingProxyService/EAI_SOAP_ServiceRoot?INT_CODE=EAI_INT_1565"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

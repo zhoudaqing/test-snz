@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean name="jobStarter" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--<ref bean="dayJobTrigger" />-->
+                <!--<ref bean="monthJobTrigger" />-->
+                <ref bean="allSyncJobTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="compensationInfoSyncer" class="io.terminus.snz.related.components.CompensationInfoSyncer"/>
+
+    <bean id="allSyncJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="compensationInfoSyncer" />
+        <property name="targetMethod" value="allSync" />
+        <property name="concurrent" value="false" />
+    </bean>
+
+    <bean id="allSyncJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="allSyncJob" />
+        <property name="cronExpression" value="0 35 23 * * ?" />
+    </bean>
+
+    <!--<bean id="dayJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="compensationInfoSyncer" />-->
+        <!--<property name="targetMethod" value="syncByDay" />-->
+        <!--<property name="concurrent" value="false" />-->
+    <!--</bean>-->
+
+    <!--<bean id="dayJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="dayJob" />-->
+        <!--<property name="cronExpression" value="0 0 0 * * ?" />-->
+    <!--</bean>-->
+
+    <!--<bean id="monthJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject" ref="compensationInfoSyncer" />-->
+        <!--<property name="targetMethod" value="syncByMonth" />-->
+        <!--<property name="concurrent" value="false" />-->
+    <!--</bean>-->
+
+    <!--<bean id="monthJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="monthJob" />-->
+        <!--<property name="cronExpression" value="0 0 0 L * ?" />-->
+    <!--</bean>-->
+
+</beans>

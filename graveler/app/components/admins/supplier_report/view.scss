@@ -1,0 +1,57 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+
+.supplier-report{
+  .table-container{
+    overflow-x: auto;
+  }
+  .hiden{
+    display: none;
+  }
+  .components-title{
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  .data-validate-item{
+    float: right;
+  }
+  .select-menu {
+    left: 0;
+    position: absolute;
+    width: 146px;
+    background-color: #fff;
+    border-radius: 5px;
+    ul {
+      padding: 0 5px;
+      height: auto;
+      max-height: 300px !important;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background-color: #fff;
+    }
+    li {
+      line-height: 20px !important;
+      @include inline-block(middle);
+      label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 120px !important;
+        margin: 5px 10px 5px 5px !important;
+      }
+    }
+    .product-operate-p {
+      text-align: right;
+      border-top: 1px solid $default-border-color;
+      margin: 0;
+      padding: 5px 10px;
+    }
+    .scope-category-label {
+      text-align: left !important;
+      color: black;
+    }
+  }
+  .inner{
+    border: 1px solid #eeeeee;
+  }
+}

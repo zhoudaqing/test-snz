@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="io.terminus.snz.message"/>
+
+    <!-- message center -->
+    <bean id="messageCenter" class="io.terminus.snz.message.components.MessageCenter">
+        <!--<constructor-arg index="0" value="10" />-->
+        <constructor-arg index="0">
+            <list>
+                <ref bean="messageListener" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="10.135.1.205"/>
+        <property name="port" value="25"/>
+    </bean>
+
+    <bean id="mailCenter" class="io.terminus.snz.message.components.MailCenter">
+        <!--<constructor-arg index="0" value="10" />-->
+        <constructor-arg index="0">
+            <list>
+                <ref bean="mailListener" />
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

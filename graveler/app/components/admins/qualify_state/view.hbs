@@ -1,0 +1,37 @@
+{{#component "js-comp admins-qualify-state"}}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>类目</th>
+      <th>资源小微</th>
+      <th>大数据</th>
+      <th>模块竞争力（商务小微）</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_}}
+    <tr>
+      <td>{{bc.name}}</td>
+      <td>
+        {{#each resource}}
+          {{name}}({{nick}})&nbsp;&nbsp;&nbsp;&nbsp;{{#if flag}}已通过{{else}}未通过{{/if}}
+          {{#unless @last}}<br>{{/unless}}
+        {{/each}}
+      </td>
+      <td>
+        {{#each bigData}}
+          {{name}}({{nick}})&nbsp;&nbsp;&nbsp;&nbsp;{{#if flag}}已通过{{else}}未通过{{/if}}
+          {{#unless @last}}<br>{{/unless}}
+        {{/each}}
+      </td>
+      <td>
+        {{#each competitive}}
+          {{name}}({{nick}})&nbsp;&nbsp;&nbsp;&nbsp;{{#if flag}}已通过{{else}}未通过{{/if}}
+          {{#unless @last}}<br>{{/unless}}
+        {{/each}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/component}}

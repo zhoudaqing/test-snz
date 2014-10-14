@@ -1,0 +1,62 @@
+<h3 style="margin-top:0;"><strong>{{#equals type "protocol"}}参与交互的供应商名单{{else}}承诺过的供应商名单{{/equals}}</strong></h3>
+{{#equals type "protocol"}}
+  {{#if data.total}}
+  <table class="table table-striped table-small">
+    <thead>
+      <tr>
+        <th>供应商名称</th>
+        <th>资质验证状态</th>
+        <th>信用等级</th>
+        <th>保证金状态</th>
+        <th>需求方案状态</th>
+        {{#if ../status}}
+          {{#equals ../status 4}}
+            <th>终投状态</th>
+          {{/equals}}
+        {{/if}}
+      </tr>
+    </thead>
+    <tbody>
+    {{#each data.data}}
+    <tr>
+      <td><a href="{{../../href}}/suppliers/resume-detail?userId={{userId}}">{{supplierName}}</a></td>
+      <td>{{#equals qualifyStatus "1"}}资质交互中{{/equals}}{{#equals qualifyStatus "2"}}资质交互通过{{/equals}}{{#equals qualifyStatus "-2"}}资质交互不通过{{/equals}}</td>
+      <td>{{#if creditStatus}}{{#equals creditStatus "-2"}}C{{/equals}}{{#equals creditStatus "-1"}}B{{/equals}}{{#equals creditStatus "1"}}BBB{{/equals}}{{#equals creditStatus "2"}}A{{/equals}}{{#equals creditStatus "3"}}AA{{/equals}}{{#equals creditStatus "4"}}AAA{{/equals}}{{#equals creditStatus "5"}}信用等级评价通过{{/equals}}{{#equals creditStatus "10"}}其他{{/equals}}{{#equals creditStatus "11"}}正在申请中{{/equals}}{{else}}未提交信用申请{{/if}}</td>
+      <td>{{#equals paidStatus 0}}已缴纳{{/equals}}{{#equals paidStatus "1"}}未缴纳{{/equals}}{{#equals paidStatus "2"}}已缴纳{{/equals}}</td>
+      <td>{{#if dealTime}}已提交方案{{else}}未提交方案{{/if}}</td>
+      {{#if ../../status}}
+          {{#equals ../../status 4}}
+            <td>{{#if solutionStatus}}是{{else}}否{{/if}}</td>
+          {{/equals}}
+        {{/if}}
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <p>{{#equals type "protocol"}}暂无参与交互的供应商{{else}}暂无承诺的供应商{{/equals}}</p>
+  {{/if}}
+{{else}}
+  {{#if data.total}}
+  <table class="table table-striped table-small">
+    <thead>
+      <tr>
+        <th>供应商名称</th>
+        <th>保证金状态</th>
+        <th>最后提交方案时间</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#each data.data}}
+    <tr>
+      <td>{{supplierName}}</td>
+      <td>{{#equals paidStatus 0}}已缴纳{{/equals}}{{#equals paidStatus "1"}}未缴纳{{/equals}}{{#equals paidStatus "2"}}已缴纳{{/equals}}</td>
+      <td>{{formatDate dealTime}}</td>
+    </tr>
+    {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <p>{{#equals type "protocol"}}暂无参与交互的供应商{{else}}暂无承诺的供应商{{/equals}}</p>
+  {{/if}}
+{{/equals}}

@@ -1,0 +1,74 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--redis 配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redisMaxTotal}"/>
+        <property name="maxIdle" value="${redisMaxIdle}"/>
+        <property name="maxWaitMillis" value="${redisMaxWaitMillis}"/>
+        <property name="testOnBorrow" value="${redisTestOnBorrow}"/>
+    </bean>
+
+    <bean id="jedisTemplate" class="io.terminus.common.redis.utils.JedisTemplate">
+        <constructor-arg index="0" ref="jedisPool"/>
+    </bean>
+
+    <!-- MyBatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:spring/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath*:/mapper/*Mapper.xml"/>
+    </bean>
+
+    <!-- 事务管理器配置, 使用jdbc事务 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <!-- 数据源配置, 使用应用中的DBCP数据库连接池 -->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <!-- Connection Info -->
+        <property name="driverClassName" value="#{app.jdbcDriver}"/>
+        <property name="url" value="#{app.jdbcUrl}"/>
+        <property name="username" value="#{app.jdbcUsername}"/>
+        <property name="password" value="#{app.jdbcPassword}"/>
+
+        <!-- Connection Pooling Info -->
+        <property name="maxActive" value="#{app.dbcpMaxActive}"/>
+        <property name="maxIdle" value="#{app.dbcpMaxIdle}"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="initialSize" value="3"/>
+        <!-- 连接Idle 30分钟后超时,每10分钟检查一次 -->
+        <property name="timeBetweenEvictionRunsMillis" value="600000"/>
+        <property name="minEvictableIdleTimeMillis" value="1800000"/>
+    </bean>
+
+    <beans profile="dev,pretest,test,test-admin,test-local,prepub,test-standalone,testadmin-standalone">
+        <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+            <constructor-arg index="0" ref="jedisPoolConfig"/>
+            <constructor-arg index="1" value="${redisHost}"/>
+            <constructor-arg index="2" value="${redisPort}" type="int"/>
+        </bean>
+    </beans>
+
+    <beans profile="prod">
+        <bean id="jedisPool" class="redis.clients.jedis.JedisSentinelPool">
+            <constructor-arg index="0" value="${redisClusterName}" />
+            <constructor-arg index="1">
+                <set>
+                    <value>${sentinelHost}:${sentinelPort}</value>
+                </set>
+            </constructor-arg>
+            <constructor-arg index="2" ref="jedisPoolConfig"/>
+        </bean>
+    </beans>
+
+</beans>

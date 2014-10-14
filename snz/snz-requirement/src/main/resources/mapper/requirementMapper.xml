@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 采购商的需求信息 -->
+<mapper namespace="Requirement">
+    <resultMap id="requirementMap" type="Requirement">
+        <id property="id" column="id"/>
+        <result property="flowId" column="flow_id"/>
+        <result property="name" column="name"/>
+        <result property="purchaserId" column="purchaser_id"/>
+        <result property="purchaserName" column="purchaser_name"/>
+        <result property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="seriesIds" column="series_ids"/>
+        <result property="materielType" column="materiel_type"/>
+        <result property="materielName" column="materiel_name"/>
+        <result property="moduleType" column="module_type"/>
+        <result property="moduleAmount" column="module_amount"/>
+        <result property="deliveryAddress" column="delivery_address"/>
+        <result property="description" column="description"/>
+        <result property="accessories" column="accessories"/>
+        <result property="selectNum" column="select_num"/>
+        <result property="replaceNum" column="replace_num"/>
+        <result property="companyScope" column="company_scope"/>
+        <result property="tacticsId" column="tactics_id"/>
+        <result property="headDrop" column="head_drop"/>
+        <result property="coinType" column="coin_type"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleTotal" column="module_total"/>
+        <result property="creatorId" column="creator_id"/>
+        <result property="creatorName" column="creator_name"/>
+        <result property="creatorPhone" column="creator_phone"/>
+        <result property="creatorEmail" column="creator_email"/>
+        <result property="checkResult" column="check_result"/>
+        <result property="checkId" column="check_id"/>
+        <result property="checkName" column="check_name"/>
+        <result property="checkTime" column="check_time"/>
+        <result property="transactType" column="transact_type"/>
+        <result property="transactFile" column="transact_file"/>
+        <result property="sendTime" column="send_time"/>
+        <result property="sendSu" column="send_su"/>
+        <result property="answerSu" column="answer_su"/>
+        <result property="sendSo" column="send_so"/>
+        <result property="topicNum" column="topic_num"/>
+        <result property="status" column="status"/>
+        <result property="solutionId" column="solution_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        flow_id, name, purchaser_id, purchaser_name, product_id, product_name, series_ids, materiel_type, materiel_name, module_type, module_amount, delivery_address, description, accessories, select_num, replace_num,
+        company_scope, tactics_id, head_drop, coin_type, module_num, module_total, creator_id, creator_name, creator_phone, creator_email, check_result,
+        check_id, check_name, check_time, transact_type, transact_file, send_time, send_su, answer_su, send_so, topic_num, status, solution_id, created_at, updated_at
+    </sql>
+
+    <sql id="queryColumns">
+        flow_id, name, purchaser_id, purchaser_name, product_id, product_name, series_ids, materiel_type, materiel_name, module_type, module_amount, delivery_address, description, accessories, select_num, replace_num,
+        company_scope, tactics_id, head_drop, coin_type, module_num, module_total, creator_id, creator_name, creator_phone, creator_email, check_result,
+        check_id, check_name, check_time, transact_type, transact_file, send_time,  send_su, answer_su, send_so, topic_num,
+        snz_requirements.status, solution_id, snz_requirements.created_at, snz_requirements.updated_at
+    </sql>
+
+    <insert id="create" parameterType="requirement" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_requirements (<include refid="columns"/>) values (#{flowId}, #{name}, #{purchaserId},#{purchaserName}, #{productId}, #{productName}, #{seriesIds}, #{materielType}, #{materielName},
+        #{moduleType}, #{moduleAmount}, #{deliveryAddress}, #{description}, #{accessories}, #{selectNum}, #{replaceNum}, #{companyScope},
+        #{tacticsId}, #{headDrop}, #{coinType}, #{moduleNum}, #{moduleTotal}, #{creatorId}, #{creatorName}, #{creatorPhone}, #{creatorEmail},
+        #{checkResult}, #{checkId},#{checkName}, #{checkTime}, #{transactType}, #{transactFile}, #{sendTime}, #{sendSu}, #{answerSu}, #{sendSo}, #{topicNum},
+        #{status}, #{solutionId}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="requirement">
+        update snz_requirements
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="purchaserId!=null">purchaser_id=#{purchaserId},</if>
+            <if test="purchaserName!=null">purchaser_name=#{purchaserName},</if>
+            <if test="productId!=null">product_id=#{productId},</if>
+            <if test="productName!=null">product_name=#{productName},</if>
+            <if test="seriesIds!=null">series_ids=#{seriesIds},</if>
+            <if test="materielType!=null">materiel_type=#{materielType},</if>
+            <if test="materielName!=null">materiel_name=#{materielName},</if>
+            <if test="moduleType!=null">module_type=#{moduleType},</if>
+
+            <if test="moduleAmount!=null">module_amount=#{moduleAmount},</if>
+            <if test="deliveryAddress!=null">delivery_address=#{deliveryAddress},</if>
+            <if test="description!=null">description=#{description},</if>
+            <if test="accessories!=null">accessories=#{accessories},</if>
+            <if test="checkResult!=null">check_result=#{checkResult},</if>
+            <if test="checkId!=null">check_id=#{checkId},</if>
+            <if test="checkName!=null">check_name=#{checkName},</if>
+            <if test="checkTime!=null">check_time=#{checkTime},</if>
+            <if test="selectNum!=null">select_num=#{selectNum},</if>
+            <if test="replaceNum!=null">replace_num=#{replaceNum},</if>
+            <if test="companyScope!=null">company_scope=#{companyScope},</if>
+            <if test="tacticsId!=null">tactics_id=#{tacticsId},</if>
+            <if test="headDrop!=null">head_drop=#{headDrop},</if>
+            <if test="coinType!=null">coin_type=#{coinType},</if>
+            <if test="moduleNum!=null">module_num=#{moduleNum},</if>
+            <if test="moduleTotal!=null">module_total=#{moduleTotal},</if>
+            <if test="transactType!=null">transact_type=#{transactType},</if>
+            <if test="transactFile!=null">transact_file=#{transactFile},</if>
+            <if test="sendTime!=null">send_time=#{sendTime},</if>
+            <if test="sendSu!=null">send_su=#{sendSu},</if>
+            <if test="answerSu!=null">answer_su=#{answerSu},</if>
+            <if test="sendSo!=null">send_so=#{sendSo},</if>
+            <if test="topicNum!=null">topic_num=#{topicNum},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="solutionId!=null">solution_id=#{solutionId},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements where id=#{id}
+    </select>
+
+    <select id="findByName" parameterType="map" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements where purchaser_id=#{purchaserId} and name=#{name}
+    </select>
+
+    <select id="findReqByStatus" parameterType="map" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements where status=#{status}
+    </select>
+
+    <!-- 只显示基本信息 -->
+    <select id="findRequirementCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_requirements
+        <where>
+            <if test="purchaserId!=null"> purchaser_id=#{purchaserId} </if>
+            <if test="checkId!=null"> and check_id=#{checkId} </if>
+            <if test="creatorId!=null"> and creator_id=#{creatorId} </if>
+            <if test="name!=null"> and name like CONCAT('%', #{name} ,'%')</if>
+            <if test="status!=null"> and status=#{status}</if>
+            <if test="status==null"> and (status is null or status!=-1)</if>
+            <if test="checkResult!=null"> and check_result=#{checkResult}</if>
+            <if test="min_num!=null"> and <![CDATA[ select_num >= #{min_num} ]]></if>
+            <if test="max_num!=null"> and <![CDATA[ select_num <= #{max_num} ]]></if>
+            <if test="startAt!=null"> and <![CDATA[ created_at >= #{startAt} ]]></if>
+            <if test="endAt!=null"> and <![CDATA[ created_at <= #{endAt} ]]></if>
+            <if test="upStartAt!=null"> and <![CDATA[ updated_at >= #{upStartAt} ]]></if>
+            <if test="upEndAt!=null"> and <![CDATA[ updated_at <= #{upEndAt} ]]></if>
+        </where>
+    </select>
+
+    <select id="findByParams" parameterType="map" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements
+        <where>
+            <if test="purchaserId!=null"> purchaser_id=#{purchaserId} </if>
+            <if test="checkId!=null"> and check_id=#{checkId} </if>
+            <if test="creatorId!=null"> and creator_id=#{creatorId} </if>
+            <if test="name!=null"> and name like CONCAT('%', #{name} ,'%')</if>
+            <if test="status!=null"> and status=#{status}</if>
+            <if test="status==null"> and (status is null or status!=-1)</if>
+            <if test="checkResult!=null"> and check_result=#{checkResult}</if>
+            <if test="min_num!=null"> and <![CDATA[ select_num >= #{min_num} ]]></if>
+            <if test="max_num!=null"> and <![CDATA[ select_num <= #{max_num} ]]></if>
+            <if test="startAt!=null"> and <![CDATA[ created_at >= #{startAt} ]]></if>
+            <if test="endAt!=null"> and <![CDATA[ created_at <= #{endAt} ]]></if>
+            <if test="upStartAt!=null"> and <![CDATA[ updated_at >= #{upStartAt} ]]></if>
+            <if test="upEndAt!=null"> and <![CDATA[ updated_at <= #{upEndAt} ]]></if>
+        </where>
+        <include refid="querySort"/>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!-- 显示用户参与的团队的需求信息 -->
+    <select id="findReqCountByTeam" parameterType="map" resultType="long">
+        select count(snz_requirements.id)
+        from snz_requirements, snz_requirement_teams
+        <where>
+            snz_requirements.id = requirement_id
+            <if test="userId!=null"> and user_id=#{userId} </if>
+            <if test="purchaserId!=null"> and purchaser_id=#{purchaserId} </if>
+            <if test="name!=null"> and name like CONCAT('%', #{name} ,'%')</if>
+            <if test="status!=null"> and status=#{status}</if>
+            <if test="status==null"> and (status is null or status!=-1)</if>
+            <if test="checkResult!=null"> and check_result=#{checkResult}</if>
+            <if test="min_num!=null"> and <![CDATA[ select_num >= #{min_num} ]]></if>
+            <if test="max_num!=null"> and <![CDATA[ select_num <= #{max_num} ]]></if>
+            <if test="startAt!=null"> and <![CDATA[ send_time >= #{startAt} ]]></if>
+            <if test="endAt!=null"> and <![CDATA[ send_time <= #{endAt} ]]></if>
+        </where>
+    </select>
+
+    <select id="findReqByTeam" parameterType="map" resultMap="requirementMap">
+        select snz_requirements.id, <include refid="queryColumns"/>
+        from snz_requirements, snz_requirement_teams
+        <where>
+            snz_requirements.id = requirement_id
+            <if test="userId!=null"> and user_id=#{userId} </if>
+            <if test="purchaserId!=null"> and purchaser_id=#{purchaserId} </if>
+            <if test="name!=null"> and name like CONCAT('%', #{name} ,'%')</if>
+            <if test="status!=null"> and status=#{status}</if>
+            <if test="status==null"> and (status is null or status!=-1)</if>
+            <if test="checkResult!=null"> and check_result=#{checkResult}</if>
+            <if test="min_num!=null"> and <![CDATA[ select_num >= #{min_num} ]]></if>
+            <if test="max_num!=null"> and <![CDATA[ select_num <= #{max_num} ]]></if>
+            <if test="startAt!=null"> and <![CDATA[ send_time >= #{startAt} ]]></if>
+            <if test="endAt!=null"> and <![CDATA[ send_time <= #{endAt} ]]></if>
+        </where>
+        <include refid="querySort"/>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--供应商纬度查询接的需求信息列表 -->
+    <select id="findCountBySupplier" parameterType="map" resultType="long">
+        select count(snz_requirements.id)
+        from snz_requirements , snz_requirement_solutions
+        <where>
+            snz_requirements.id = snz_requirement_solutions.requirement_id and supplier_id=#{supplierId}
+            <if test="purchaserId!=null"> and purchaser_id=#{purchaserId} </if>
+            <if test="name!=null"> and name like CONCAT('%', #{name} ,'%')</if>
+            <if test="status!=null"> and snz_requirements.status=#{status}</if>
+            <if test="status==null"> and snz_requirements.status >= 1</if>
+            <if test="startAt!=null"> and <![CDATA[ send_time >= #{startAt} ]]></if>
+            <if test="endAt!=null"> and <![CDATA[ send_time <= #{endAt} ]]></if>
+        </where>
+    </select>
+
+    <select id="findBySupplier" parameterType="map" resultMap="requirementMap">
+        select snz_requirements.id, <include refid="queryColumns"/>
+        from snz_requirements , snz_requirement_solutions
+        <where>
+            snz_requirements.id = snz_requirement_solutions.requirement_id and supplier_id=#{supplierId}
+            <if test="purchaserId!=null"> and purchaser_id=#{purchaserId} </if>
+            <if test="name!=null"> and name like CONCAT('%', #{name} ,'%')</if>
+            <if test="status!=null"> and snz_requirements.status=#{status}</if>
+            <if test="status==null"> and snz_requirements.status >= 1</if>
+            <if test="startAt!=null"> and <![CDATA[ send_time >= #{startAt} ]]></if>
+            <if test="endAt!=null"> and <![CDATA[ send_time <= #{endAt} ]]></if>
+        </where>
+        <include refid="querySort"/>
+        limit #{offset}, #{limit}
+    </select>
+
+    <!-- 获取全部的需求 -->
+    <select id="findAllRequirements" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements where
+        <if test="checkResult!=null"> and check_result=#{checkResult} </if>
+        <if test="toStatus!=null"> <![CDATA[ status>=0 ]]> and <![CDATA[ status<=#{toStatus} ]]> </if>
+        <if test="toStatus==null"> status is null or <![CDATA[ status<=2 ]]> </if>
+    </select>
+
+    <!-- 自动的查询预警（场景：新品、老品、衍生号，适用所有需求类型，只有新品和老品会预警）阶段处于承诺底线 -->
+    <select id="findAllExcellence" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements where check_result=2 and (module_type=1 or module_type=2) and status=3;
+    </select>
+
+    <!-- 查询逻辑的后台类目关联 -->
+    <sql id="bindSeriesIds">
+        series_id in
+        <foreach collection="pairs" separator="or" open="(" close=")" item="pair">
+            #{pair.id}
+        </foreach>
+    </sql>
+
+    <!-- 查询的排序逻辑 -->
+    <sql id="querySort">
+        <if test="sendTime == 'desc'">
+            order by send_time desc
+        </if>
+        <if test="sendTime == 'asc'">
+            order by send_time asc
+        </if>
+        <if test="createTime == 'desc'">
+            order by created_at desc
+        </if>
+        <if test="createTime == 'asc'">
+            order by created_at asc
+        </if>
+        <if test="moduleNum == 'desc'">
+            order by module_num desc
+        </if>
+        <if test="moduleNum == 'asc'">
+            order by module_num asc
+        </if>
+    </sql>
+
+    <select id="maxId" resultType="long">
+        select max(id) from snz_requirements
+    </select>
+
+    <select id="forDump" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements
+        where id &lt; #{lastId} and (status is not null and status > 0)
+        order by id desc
+        limit #{limit}
+    </select>
+
+    <select id="forDeltaDump" resultMap="requirementMap">
+        select id, <include refid="columns"/>
+        from snz_requirements
+        where id &lt; #{lastId} and updated_at &gt; #{compared} and (status is not null and status > 0)
+        order by id desc
+        limit #{limit}
+    </select>
+</mapper>

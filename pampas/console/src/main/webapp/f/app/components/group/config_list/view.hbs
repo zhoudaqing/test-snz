@@ -1,0 +1,47 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-config-list"}}
+<p>
+  There are <span class="ui green circular label">{{size _DATA_}}</span> apps registered to this cell.
+</p>
+<div class="ui four column grid">
+  {{#each _DATA_}}
+  <div class="column">
+    <div class="ui attached blue message">
+      <div class="ui tiny header">{{app.key}}</div>
+    </div>
+    <div class="ui attached bottom segment">
+      <div class="ui relaxed divided list">
+        <div class="item">
+          {{#if frontConfig}}
+          <i class="green checkmark icon"></i>
+          <div class="content">
+            <a class="header" target="_blank" href="/group/config/front_config?group={{group}}&cell={{cell}}&app={{app.key}}">Front Config</a>
+            <div class="description">Loaded: {{formatDate frontConfig.loadedAt}}</div>
+          </div>
+          {{else}}
+          <i class="red remove icon"></i>
+          <div class="content">
+            <div class="header">Front Config</div>
+          </div>
+          {{/if}}
+        </div>
+        <div class="item">
+          {{#if backConfig}}
+          <i class="green checkmark icon"></i>
+          <div class="content">
+            <a class="header" target="_blank" href="/group/config/back_config?group={{group}}&cell={{cell}}&app={{app.key}}">Back Config</a>
+            <div class="description">Loaded: {{formatDate backConfig.loadedAt}}</div>
+          </div>
+          {{else}}
+          <i class="red remove icon"></i>
+          <div class="content">
+            <div class="header">Back Config</div>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{/component}}

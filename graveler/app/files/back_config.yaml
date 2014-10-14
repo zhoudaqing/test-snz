@@ -1,0 +1,435 @@
+app: snz-admin
+
+services:
+  # 类目相关
+  "findCreditQualifyByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierCreditQualifyService:findCreditQualifyByUserId"
+
+  "deleteFeedbackByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.YzlCreditQualifyService:deleteById"
+
+  "updateFeedbackByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.YzlCreditQualifyService:update"
+
+  "feedbackfindByStatus":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.YzlCreditQualifyService:findByStatus"
+
+  "getQualifyState":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getQualifyState"
+
+  "getQualifyInfoOf":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getInfoByUserId"
+
+  "getQualifiedSubjects":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getQualifiedSubjects"
+
+  "deleteRelation":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.user.service.SupplierGroupService:deleteRelation"
+
+  "getRelatedSuppliers":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.user.service.SupplierGroupService:getRelatedSuppliers"
+
+  "createRelation":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.user.service.SupplierGroupService:createRelation"
+
+  "findCompaniesByFuzzySupplierName":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findCompaniesByFuzzySupplierName"
+
+  "rejectQualify":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.user.service.SupplierCreditQualifyService:rejectQualify"
+
+  "backendFindChildrenOf":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:findChildrenOf"
+
+  "backendCategoryCreate":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:create"
+
+  "backendCategoryUpdate":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:update"
+
+  "backendCategoryDelete":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:delete"
+
+  "backendPropertyCreate":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:createProperty"
+
+  "backendPropertyUpdate":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:updateProperty"
+
+  "backendPropertyDelete":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:deleteProperty"
+
+  "backendPropertyFindById":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:findPropertyById"
+
+  "backendPropertiesFindByBcId":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.BackendCategoryService:findPropertiesByBcId"
+
+  "attributeGet":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.BackendCategoryService:findPropertiesByBcId"
+
+  "attributeCreate":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.BackendCategoryService:createProperty"
+
+  "frontendCategoryCreate":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:create"
+
+  "frontendCategoryUpdate":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:update"
+
+  "frontendCategoryDelete":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:delete"
+
+  "frontendFindBindingsOf":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:findBindingsOf"
+
+  "frontendUnbind":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:unbind"
+
+  "frontendBind":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:bind"
+
+  # 供应商相关
+  "approveSupplier":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.AccountService:approveSupplier"
+
+  "findSupplierBy":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findSupplierBy"
+
+  "findDetailSupplierByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findDetailSupplierByUserId"
+
+  "findSupplierTQRDCInfoBy":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findSupplierTQRDCInfoBy"
+
+  "findDetailSupplierTQRDCInfo":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findDetailSupplierTQRDCInfo"
+
+  "findSupplierTQRDCInfos":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findSupplierTQRDCInfos"
+
+  "confirmResource":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:confirmResource"
+
+  "findSupplierModuleDetails":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierModuleDetailService:findBySupplierCode"
+
+  "postSupplierModuleDetailsToHGVS":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierModuleDetailService:postToHGVS"
+
+  # 供应商资质
+  "findSupplierQualifyBy":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:pagingBy"
+
+  "findSupplierQualifyByMaster":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:filteringSuppliersByQualifyStatusOnlyLastSevenDays"
+
+  "getQualifyInfo":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getSubjectsNeedQualify"
+
+  "getQualifyDetails":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getQualifyDetails"
+
+  "rejectByHigherChecker":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:rejectByHigherChecker"
+
+  "createQualification":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:qualifyByChecker"
+
+  "findSupplierByRefuse":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findRefusedSuppliers"
+
+  "findSupplierCountBySupplyParkIds":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountBySupplyParkIds"
+
+  "findAllPark":
+    type: SPRING
+    uri: "io.terminus.snz.related.services.DeliveryService:findAllPark"
+
+  "findSupplierCountByStatus":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountByStatus"
+
+  "findSupplierCountByLevel":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountByLevel"
+
+  "pagingCreditQualify":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierCreditQualifyService:pagingCreditQualify"
+
+  "updateCreditQualify":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierCreditQualifyService:updateCreditQualify"
+
+  "findSupplierCountByIndustries":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountByIndustries"
+
+  "findBaseCompanyByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findBaseCompanyByUserId"
+
+  "getProductLine":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findAllProductLine"
+
+  "getCountries":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.AddressService:countries"
+
+  "getProvinces":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.AddressService:provinces"
+
+  "getCities":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.AddressService:citiesOf"
+
+  "getAncestorsOf":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:ancestorsOf"
+
+  "frontendFindChildrenOf":
+    type: SPRING # type，默认 DUBBO ，可选：DUBBO, SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:findChildrenOf"
+
+  "findContactInfoByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findContactInfoByUserId"
+
+  "findCompanyRankByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findCompanyRankByUserId"
+
+  "findFinanceByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findFinanceByUserId"
+
+  "getResearchAbility":  #搜索研发能力数据
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyExtraService:findRDByUser"
+
+  "getQualityAbility":  #搜索质量能力数据
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyExtraService:findQualityByUser"
+
+  "getDelivery":  #搜索交货数据
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyExtraService:findDeliveryByUser"
+
+  "findEnterPassSuppliers":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findEnterPassSuppliers"
+
+  "queryBaseCompanyByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:queryBaseCompanyByUserId"
+
+  "queryPaperworkByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:queryPaperworkByUserId"
+
+  "findUnCacheCompanyByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:findUnCacheCompanyByUserId"
+
+  "queryContactInfoByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:queryContactInfoByUserId"
+
+  "queryCompanyRankByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:queryCompanyRankByUserId"
+
+  "queryFinanceByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:queryFinanceByUserId"
+
+  "findRDByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyExtraService:findRDByUserId"
+
+  "findQualityByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyExtraService:findQualityByUserId"
+
+  "findDeliveryByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyExtraService:findDeliveryByUserId"
+
+  "findSupplierReparationBy":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.ReparationService:findSupplierReparationBy"
+
+  "pagingCompanyHasSupplierCode":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:pagingCompanyHasSupplierCode"
+
+  "getSupplierSummaryByModule":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierTQRDCInfoService:getSupplierSummaryByModule"
+  "bulkOverwriteSubjects":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:bulkOverwriteSubjects"
+
+  "getAllValidSubjects":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getAllValidSubjects"
+
+  "askForReject":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:askForReject"
+
+  "inviteAnotherToCheckWithBcs":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:inviteAnotherToCheckWithBcs"
+
+  "getBcsCanInvite":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierResourceMaterialService:getBcsCanInvite"
+
+  "findStaffByWorkNo":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.AccountService:findStaffByWorkNo"
+
+  "findStaffByName":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.AccountService:findStaffByName"
+
+  "findSupplierReparationSumaries":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierSummaryService:findSupplierReparationSumaries"
+
+  "getSupplierStep":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.CompanyService:getSupplierStep"
+
+  "getSupplierCountByDimensions":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierReportService:getSupplierCountByDimensions"
+
+  "findOwnMainBusinesses":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierReportService:findOwnMainBusinesses"
+
+  "findByLevels":
+    type: SPRING
+    uri: "io.terminus.snz.category.service.FrontendCategoryService:findByLevels"
+
+  "queryReport":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierReportService:queryReport"
+
+  "findRequirementByPurchaser":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementService:findByPurchaser"
+
+  "fullDumpMarketSummary":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.ReparationService:fullDumpMarketSummary"
+  "findRequirementDetailById":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementService:findDetailById"
+
+  "pagingPublicTopics":
+    type: SPRING
+    uri: "io.terminus.snz.sns.services.TopicService:pagingPublics"
+
+  "findModuleByParams":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.ModuleService:findByParams"
+
+  "findQuotasByRequirementId":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementQuotaService:findByRequirementId"
+
+  "findSignByParam":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementSolutionService:findSignByParam"
+
+  "findRequirementSolutionsByRequirementIdWithAdmin":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementSolutionService:findByRequirementId"
+
+  "findTSolutionRank":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementQuotaService:findTSolutionRank"
+
+  "findEndSolutions":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementQuotaService:findEndSolutions"
+
+  "findTopicPeople":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementService:findTopicPeople"
+
+  "findQuestionnairesByPaging":
+    type: SPRING
+    uri: "io.terminus.snz.requirement.service.RequirementQuestionnaireService:findQuestionnairesByPaging"
+
+  "findSuppliersAppointed":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierAppointedService:findbyParams"
+
+  "auditSupplierAppointed":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierAppointedService:confirmJiaZhi"
+
+  "rejectSupplierAppointed":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierAppointedService:rejectJiaZhi"
+
+  "getReportPath":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierReportService:getReportPath"
+
+  "findSupplierTimeLinesByUserId":
+    type: SPRING
+    uri: "io.terminus.snz.user.service.SupplierTimeLineService:findSupplierTimeLinesByUserId"

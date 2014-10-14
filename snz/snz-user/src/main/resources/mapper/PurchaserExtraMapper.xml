@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="PurchaserExtra" >
+  <resultMap id="PurchaserExtraMap" type="PurchaserExtra" >
+    <id column="id" property="id" />
+    <result column="employee_id" property="employeeId" />
+    <result column="department" property="department" />
+    <result column="leader" property="leader" />
+    <result column="position" property="position" />
+    <result column="user_id" property="userId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+    employee_id, department, leader, position,user_id, created_at,updated_at
+  </sql>
+
+   <select id="findById" resultMap="PurchaserExtraMap" parameterType="long" >
+        select id,<include refid="columns" />
+        from snz_purchaser_extras
+        where id = #{id}
+    </select>
+
+  <select id="findByUserId" resultMap="PurchaserExtraMap" parameterType="long" >
+     select id,<include refid="columns" />
+     from snz_purchaser_extras
+     where user_id = #{userId}
+   </select>
+
+  <insert id="insert" parameterType="PurchaserExtra" useGeneratedKeys="true" keyProperty="id" >
+    insert into snz_purchaser_extras (<include refid="columns" />)
+    values (#{employeeId}, #{department},
+      #{leader}, #{position},#{userId}, now(), now())
+  </insert>
+
+  <update id="updateByUserId" parameterType="PurchaserExtra" >
+    update snz_purchaser_extras
+    <set >
+      <if test="employeeId != null" >
+        employee_id = #{employeeId},
+      </if>
+      <if test="department != null" >
+        department = #{department},
+      </if>
+      <if test="leader != null" >
+        leader = #{leader},
+      </if>
+      <if test="position != null" >
+        position = #{position},
+      </if>
+        updated_at = now()
+    </set>
+    where user_id = #{userId}
+  </update>
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SceneBadRecord">
+    <resultMap id="SceneBadRecordMap" type="SceneBadRecord">
+        <id property="id" column="id"/>
+        <id property="wId" column="w_id"/>
+        <id property="moduleNum" column="module_num"/>
+        <id property="vCode" column="v_code"/>
+        <id property="wCount" column="w_count"/>
+        <id property="sendAt" column="send_at"/>
+        <id property="depart" column="depart"/>
+        <id property="departName" column="depart_name"/>
+        <id property="loadBatch" column="load_batch"/>
+        <id property="money" column="money"/>
+        <id property="createdAt" column="created_at"/>
+        <id property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        w_id, module_num, v_code, w_count, send_at, depart, depart_name, load_batch, money, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="SceneBadRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `snz_supplier_scene_bad_records`
+        (<include refid="columns"/>)
+        VALUES
+        (#{wId}, #{moduleNum}, #{vCode}, #{wCount}, #{sendAt}, #{depart}, #{departName}, #{loadBatch}, #{money}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="SceneBadRecord">
+        update `snz_supplier_scene_bad_records`
+        <set>
+            <if test="wId!=null"> w_id=#{wId}, </if>
+            <if test="moduleNum!=null"> module_num=#{moduleNum}, </if>
+            <if test="vCode!=null"> v_code=#{vCode}, </if>
+            <if test="wCount!=null"> w_count=#{wCount}, </if>
+            <if test="sendAt!=null"> send_at=#{sendAt}, </if>
+            <if test="depart!=null"> depart=#{depart}, </if>
+            <if test="departName!=null"> depart_name=#{depart_name}, </if>
+            <if test="loadBatch!=null"> load_batch=#{loadBatch}, </if>
+            <if test="money!=null"> money=#{money}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="SceneBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `snz_supplier_scene_bad_records` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="SceneBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `snz_supplier_scene_bad_records`
+        <where>
+            <if test="wId!=null"> and w_id=#{wId} </if>
+            <if test="moduleNum!=null"> and module_num=#{moduleNum} </if>
+            <if test="vCode!=null"> and v_code=#{vCode} </if>
+            <if test="wCount!=null"> and w_count=#{wCount} </if>
+            <if test="sendAt!=null"> and send_at=#{sendAt} </if>
+            <if test="depart!=null"> and depart=#{depart} </if>
+            <if test="departName!=null"> and depart_name=#{depart_name} </if>
+            <if test="loadBatch!=null"> and load_batch=#{loadBatch} </if>
+            <if test="money!=null"> and money=#{money} </if>
+            <if test="id!=null">and id=#{id}</if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="findBetween" resultMap="SceneBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `snz_supplier_scene_bad_records`
+        <where>
+            <if test="vCode!=null"> and v_code=#{vCode} </if>
+            <if test="startAt!=null"> and send_at >= #{startAt} </if>
+            <if test="endAt!=null"> and send_at &lt; #{endAt} </if>
+        </where>
+    </select>
+
+    <select id="findByWId" resultMap="SceneBadRecordMap">
+        select id, <include refid="columns"/>
+        from snz_supplier_scene_bad_records
+        where w_id = #{wId}
+        limit 1
+    </select>
+</mapper>

@@ -1,0 +1,32 @@
+.questions-form {
+  .modal-body {
+    padding: 10px 40px;
+    position: relative;
+    width: 600px;
+    overflow: hidden;
+    border-right-width: 0;
+
+    i {
+      position: absolute;
+      right: -140px;
+      top: -50px;
+    }
+
+    span.note {
+      font-size: 12px;
+    }
+  }
+  .control-group {
+    margin-bottom: 10px;
+  }
+
+  label {
+    text-align: left !important;
+    width: 14em !important;
+    padding: 0 0 8px 0;
+    &.left-required {
+      margin-left: -12px;
+      width: 15em !important;
+    }
+  }
+}

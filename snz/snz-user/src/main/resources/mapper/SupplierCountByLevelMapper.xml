@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SupplierCountByLevel" >
+  <resultMap id="SupplierCountByLevelMap" type="SupplierCountByLevel" >
+    <id column="id" property="id" />
+    <result column="month" property="month"  />
+    <result column="level" property="level"  />
+    <result column="supplier_count" property="supplierCount"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+   `month`, `level`,supplier_count,created_at, updated_at
+  </sql>
+
+  <select id="findLastBy" resultMap="SupplierCountByLevelMap" parameterType="int" >
+     select id,<include refid="columns" />
+     from snz_supplier_count_by_level
+     where level = #{level} order by month desc limit #{limit}
+  </select>
+
+ <select id="countByMonth" resultType="int" parameterType="string">
+     select count(id) from snz_supplier_count_by_level where month=#{month}
+ </select>
+
+  <insert id="insert" parameterType="SupplierCountByLevel" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_supplier_count_by_level (<include refid="columns" />)
+    values (#{month},#{level},#{supplierCount},now(), now())
+  </insert>
+
+</mapper>

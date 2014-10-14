@@ -1,0 +1,35 @@
+<div class="table-container">
+  <table class="table table-striped" data-total="{{_DATA_.total}}">
+    <thead>
+      <tr>
+        <th width="150">模块编号</th>
+        <th width="150">模块</th>
+        <th width="150">模块配额</th>
+        <th width="150">我的报价</th>
+        <th width="100">跟标报价</th>
+        <th width="80">是否跟标</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data.data}}
+      <tr>
+        <td>{{moduleId}}</td>
+        <td>{{moduleName}}</td>
+        <td>{{#equals status "1"}}{{quantity}}{{/equals}}</td>
+        <td>{{formatPrice originalCost}}</td>
+        <td>{{formatPrice actualCost}}</td>
+        <td>
+          {{#of status "0,1"}}
+            {{#equals status "0"}}未同意{{/equals}}
+            {{#equals status "1"}}同意跟标{{/equals}}
+          {{else}}
+            <button type="button" class="btn btn-info" data-id="{{id}}" data-toggle="confirm" data-title="您确定跟标吗?" data-content="跟标后将确定模块配额" data-event="confirm:with-bidding">跟标</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class="btn btn-info" data-id="{{id}}" data-toggle="confirm" data-title="您确定不跟标吗?" data-content="不跟标将失去这个模块的配额" data-event="confirm:without-bidding">不跟标</button>
+          {{/of}}
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<div class="quota-pagination"></div>

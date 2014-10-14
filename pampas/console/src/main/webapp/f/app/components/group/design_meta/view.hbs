@@ -1,0 +1,39 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-design-meta"}}
+{{#if _DATA_}}
+<div class="ui icon success message">
+  <i class="magic icon"></i>
+  <div class="content">
+    <p>
+      Group[{{group}}] 支持装修，下面列出所有运行在这个 Group 中的带有前端配置的 app
+      <br/>
+      redis: {{_DATA_.redisUrl}}
+    </p>
+  </div>
+</div>
+<div class="ui horizontal list">
+  {{#each _DATA_.apps}}
+  <div class="item">
+    {{#equals this app}}
+    <div class="ui pointing below label">
+      <i class="desktop icon"></i> {{this}}
+    </div>
+    {{else}}
+    <a href="/group/design?group={{group}}&app={{this}}" class="ui label">
+      <i class="desktop icon"></i> {{this}}
+    </a>
+    {{/equals}}
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<div class="ui icon warning message">
+  <i class="attention icon"></i>
+  <div class="content">
+    <p>
+      Group[{{group}}] 不支持装修
+    </p>
+  </div>
+</div>
+{{/if}}
+{{/component}}

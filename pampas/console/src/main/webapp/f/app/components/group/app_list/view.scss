@@ -1,0 +1,43 @@
+/*
+ * Copyright (c) 2014 杭州端点网络科技有限公司
+ */
+
+.group-app-list {
+  margin-bottom: 10rem;
+
+  .app-row {
+    > .app-key {
+      position: relative;
+
+      > .app-detail {
+        display: none;
+        position: absolute;
+        z-index: 1000;
+
+        left: 0;
+        top: 100%;
+
+        padding-top: 5px;
+
+        > table {
+          box-shadow: 0 0 5px rgba(black, 0.2);
+        }
+      }
+    }
+
+    &:hover {
+      > .app-key > .app-detail {
+        display: block;
+      }
+    }
+  }
+}
+
+.group-app-list-modal {
+  .ui.form {
+    textarea.desc {
+      min-height: 6em;
+      height: 6em;
+    }
+  }
+}

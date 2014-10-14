@@ -1,0 +1,40 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>修改模块供应商数量</h2>
+  </div>
+  <form class="form form-aligned select-num-form" data-id="{{module.id}}" data-req="{{module.requirementId}}">
+    <div class="modal-body">
+      <div class="control-group">
+        <label class="factory-label">模块名称:</label>{{module.moduleName}}
+      </div>
+      <div class="control-group">
+        <label class="factory-label">模块专用号:</label>{{module.moduleNum}}
+      </div>
+      <div class="control-group">
+        <label class="factory-label">模块属性:</label>{{module.seriesName}}
+      </div>
+      <table class="table table-striped" style="width: 580px;">
+        <thead>
+          <tr>
+            <th width="80">工厂代号</th>
+            <th width="400">工厂全称</th>
+            <th width="100">对应供应商数量</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each factoryList}}
+          <tr>
+            <td>{{factoryNum}}</td>
+            <td>{{factoryName}}</td>
+            <td><input type="number" name="selectNum" class="input-small" value="{{selectNum}}" max="3" min="1" data-num="{{factoryNum}}" data-id="{{id}}" required></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-primary btn-medium" value="确定" />
+      <button class="btn btn-info btn-medium close">关闭</button>
+    </div>
+  </form>
+</div>

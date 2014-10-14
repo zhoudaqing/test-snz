@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Finance">
+    <resultMap id="FinanceMap" type="Finance">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="country" property="country"/>
+        <result column="opening_bank" property="openingBank"/>
+        <result column="open_license" property="openLicense"/>
+        <result column="bank_code" property="bankCode"/>
+        <result column="bank_account" property="bankAccount"/>
+        <result column="coin_type" property="coinType"/>
+        <result column="recent_finance" property="recentFinance"/>
+        <result column="company_id" property="companyId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+    user_id,country,opening_bank,open_license,bank_code,bank_account,coin_type, recent_finance,company_id,
+    created_at, updated_at
+    </sql>
+
+    <select id="findById" resultMap="FinanceMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_company_finances where id = #{id}
+    </select>
+
+    <select id="findByUserId" resultMap="FinanceMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_company_finances where user_id = #{userId}
+    </select>
+
+
+    <delete id="delete" parameterType="long">
+      delete from snz_company_finances where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="Finance" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_company_finances(<include refid="columns"/>)
+        values (#{userId},#{country},#{openingBank},#{openLicense},
+        #{bankCode},#{bankAccount},#{coinType},
+        #{recentFinance},#{companyId},now(), now()
+        )
+    </insert>
+
+    <update id="update" parameterType="Finance">
+        update snz_company_finances
+        <set>
+            <if test="country != null">
+                country = #{country},
+            </if>
+            <if test="openingBank != null">
+                opening_bank = #{openingBank},
+            </if>
+            <if test="openLicense != null">
+                open_license = #{openLicense},
+            </if>
+            <if test="bankCode != null">
+                bank_code = #{bankCode},
+            </if>
+            <if test="bankAccount != null">
+                bank_account = #{bankAccount},
+            </if>
+            <if test="coinType != null">
+                coin_type = #{coinType},
+            </if>
+            <if test="recentFinance != null">
+                recent_finance = #{recentFinance},
+            </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

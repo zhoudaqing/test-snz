@@ -1,0 +1,79 @@
+{{#component "js-comp sidebar"}}
+  <ul class="sidebar-ul">
+    <li class="sidebar-li">
+      <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;平台总览</strong></a>
+      <ul class="inner sidebar-inner-ul">
+        <li class="inner-item" id="sites-config"><div class="text-a"><a href="/platforms/performance" class="inner-item-a">总绩效</a></div><span class="corner"></span><span class="wide"></span></li>
+        <li class="inner-item" id="sites-config"><div class="text-a"><a href="/platforms/supplier" class="inner-item-a">供应商</a></div><span class="corner"></span><span class="wide"></span></li>
+        <li class="inner-item" id="sites-config"><div class="text-a"><a href="/platforms/demand" class="inner-item-a">需求</a></div><span class="corner"></span><span class="wide"></span></li>
+        <li class="inner-item" id="sites-config"><div class="text-a"><a href="/platforms/buyer" class="inner-item-a">采购商</a></div><span class="corner"></span><span class="wide"></span></li>
+      </ul>
+    </li>
+    {{#equals _USER_.type "1"}}
+    <li class="sidebar-li">
+      <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;抢单管理</strong></a>
+      <ul class="inner sidebar-inner-ul">
+        <li class="inner-item"><div class="text-a"><a href="/platforms/requirements" class="inner-item-a">需求列表</a></div><span class="corner"></span><span class="wide"></span></li>
+      </ul>
+    </li>
+    <li class="sidebar-li">
+      <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;问卷调查</strong></a>
+      <ul class="inner sidebar-inner-ul">
+        <li class="inner-item"><div class="text-a"><a href="/platforms/questionnaires" class="inner-item-a">问卷列表</a></div><span class="corner"></span><span class="wide"></span></li>
+      </ul>
+    </li>
+    {{/equals}}
+    <li class="sidebar-li">
+      <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;供应商管理</strong></a>
+      <ul class="inner sidebar-inner-ul">
+        {{#contain _USER_.roles "resource"}}
+          <li class="inner-item" id="sites-config"><div class="text-a"><a href="/suppliers/audit" class="inner-item-a">供应商校验</a></div><span class="corner"></span><span class="wide"></span></li>
+          <li class="inner-item" id="sites-config"><div class="text-a"><a href="/suppliers/reject" class="inner-item-a">供应商驳回记录</a></div><span class="corner"></span><span class="wide"></span></li>
+        {{/contain}}
+        {{#contain _USER_.roles "sharing"}}
+          <li class="inner-item" id="shop-templates"><div class="text-a"><a href="/suppliers/credit-list" class="inner-item-a">信用评价列表</a></div><span class="corner"></span><span class="wide"></span></li>
+        {{/contain}}
+        {{#containAny _USER_.roles "resource,big_data,competitive,micro_master"}}
+          <li class="inner-item" id="sites-config"><div class="text-a"><a href="/suppliers/qualify" class="inner-item-a">供应商资质交互</a></div><span class="corner"></span><span class="wide"></span></li>
+        {{/containAny}}
+
+        {{#containAny _USER_.roles "common_research,competitive,common_chain,common_manufacture,common_reputation,resource"}}
+          <li class="inner-item" id="shop-templates"><div class="text-a"><a href="/suppliers/list" class="inner-item-a">综合评价</a></div><span class="corner"></span><span class="wide"></span></li>
+        {{/containAny}}
+
+        <li class="inner-item" id="shop-templates"><div class="text-a"><a href="/suppliers/resume" class="inner-item-a">供应商履历</a></div><span class="corner"></span><span class="wide"></span></li>
+          <li class="inner-item" id="shop-templates"><div class="text-a"><a href="/suppliers/appointed?status={{#containAny _USER_.roles "micro_master"}}2{{/containAny}}{{#containAny _USER_.roles "resource"}}1{{/containAny}}" class="inner-item-a">甲指供应商</a></div><span class="corner"></span><span class="wide"></span></li>
+        {{#containAny _USER_.roles "resource,competitive"}}
+          <li class="inner-item" id="shop-templates"><div class="text-a"><a href="/suppliers/order-list" class="inner-item-a">用户评价</a></div><span class="corner"></span><span class="wide"></span></li>
+        {{/containAny}}
+
+        <li class="inner-item"><div class="text-a"><a href="/suppliers/report" class="inner-item-a">供应商报表</a></div><span class="corner"></span><span class="wide"></span></li>
+      </ul>
+    </li>
+    {{#contain _USER_.roles "common_research"}}
+    <li class="sidebar-li">
+      <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;类目管理</strong></a>
+      <ul class="inner sidebar-inner-ul">
+        <li class="inner-item" id="sites-config"><div class="text-a"><a href="/categories/backend" class="inner-item-a">后台类目</a></div><span class="corner"></span><span class="wide"></span></li>
+        <li class="inner-item" id="shop-templates"><div class="text-a"><a href="/categories/frontend" class="inner-item-a">前台类目</a></div><span class="corner"></span><span class="wide"></span></li>
+      </ul>
+    </li>
+    {{/contain}}
+    {{#equals _USER_.type 1}}
+      <li class="sidebar-li">
+        <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;条目</strong></a>
+        <ul class="inner sidebar-inner-ul">
+          <li class="inner-item" id="sites-config"><div class="text-a"><a href="/suppliers/qualify-rule" class="inner-item-a">资质校验条目</a></div><span class="corner"></span><span class="wide"></span></li>
+        </ul>
+      </li>
+    {{/equals}}
+    {{#contain _USER_.roles "resource"}}
+      <li class="sidebar-li">
+        <a href="javascript:void(0);" class="sidebar-li-a"><i class="icon-minus"></i><strong>&nbsp;联合体管理</strong></a>
+        <ul class="inner sidebar-inner-ul">
+          <li class="inner-item" id="sites-config"><div class="text-a"><a href="/suppliers/associate" class="inner-item-a">联合体管控</a></div><span class="corner"></span><span class="wide"></span></li>
+        </ul>
+      </li>
+    {{/contain}}
+  </ul>
+{{/component}}

@@ -1,0 +1,22 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-list"}}
+<div class="ui vertical menu">
+  <div class="header item">
+    <i class="cloud icon"></i>{{size _DATA_}} Groups
+  </div>
+  <div class="item">
+    <div class="ui input">
+      <input type="text" placeholder="Search..." class="js-input-group-filter">
+    </div>
+  </div>
+  <div class="item list-wrap">
+    <div class="menu">
+      {{#each _DATA_}}
+      <a data-group="{{this}}" href="/group/config?group={{this}}" class="group-row item {{#equals group this}}active{{/equals}}">
+        {{#equals group this}}<i class="angle right icon"></i>{{/equals}}{{this}}
+      </a>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{/component}}

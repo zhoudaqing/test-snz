@@ -1,0 +1,62 @@
+{{#component "supplier-list js-comp"}}
+<p class="components-title"><strong>供应商信用评价列表</strong></p>
+
+<div id="block" class="block">
+  <form id="js-supplier-audit-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+
+      <span class="span3">
+        <label>请选择类型</label>
+        <select class="select" name="type">
+          <option value="">请选择</option>
+          <option value="0" {{#equals type 0}}selected{{/equals}}>申诉中</option>
+          <option value="1" {{#equals type 1}}selected{{/equals}}>审核通过</option>
+          <option value="2" {{#equals type 2}}selected{{/equals}}>审核未通过</option>
+          <option value="3" {{#equals type 3}}selected{{/equals}}>审核中</option>
+        </select>
+      </span>
+      <span class="span1">
+        <button type="submit" class="btn btn-primary">筛选</button>
+        <!--a href="javascript:void" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a-->
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="70">供应商ID</th>
+      <th width="160">供应商名称</th>
+      <th width="150">供应商地址</th>
+      <th width="180">注册时间</th>
+      <th width="168">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.data}}
+    <tr>
+      <td>{{company.id}}</td>
+      <td><a href="/suppliers/resume-detail?userId={{company.userId}}">{{company.corporation}}</a></td>
+      <td>{{company.corpAddr}}</td>
+      <td>{{formatDate company.createdAt "day"}}</td>
+      <td>
+        {{#equals supplierCreditQualify.status "11"}}
+          <a class="btn js-credit" href="javascript: void(0);" data-id="{{supplierCreditQualify.id}}" >信用评价</a>
+        {{else}}
+          <span>信用等级：{{#equals supplierCreditQualify.status "4"}}AAA{{/equals}}{{#equals supplierCreditQualify.status "3"}}AA{{/equals}}{{#equals supplierCreditQualify.status "2"}}A{{/equals}}{{#equals supplierCreditQualify.status "1"}}BBB{{/equals}}{{#equals supplierCreditQualify.status "-1"}}B{{/equals}}{{#equals supplierCreditQualify.status "-2"}}C{{/equals}}{{#equals supplierCreditQualify.status "-3"}}其他<br>{{supplierCreditQualify.message}} {{/equals}}{{#equals supplierCreditQualify.status "-4"}}财务报表异常{{/equals}}</span>
+        {{/equals}}
+        {{#equals type 1}}
+        {{#contain _USER_.roles "micro_master"}}
+        <a class="btn  js-reject-submit" data-toggle="confirm" data-title="您真要驳回吗？" data-event="confirm:btn" data-content="一旦操作,将无法恢复。" style="display:none" >驳回</a>
+        <a class="btn  js-reject" data-id="{{supplierCreditQualify.id}}">驳回</a>
+        {{/contain}}
+        {{/equals}}
+      </td>
+    </tr>
+    {{/each}}  </tbody>
+</table>
+<div id="js-pagination" class="right-text"></div>
+<div id="js-company-id" style="display:none"></div>
+{{/component}}

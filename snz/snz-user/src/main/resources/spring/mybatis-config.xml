@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias alias="User" type="io.terminus.snz.user.model.User"/>
+        <typeAlias alias="Company" type="io.terminus.snz.user.model.Company"/>
+        <typeAlias alias="UserComplaint" type="io.terminus.snz.user.model.UserComplaint"/>
+        <typeAlias alias="ComplaintChat" type="io.terminus.snz.user.model.ComplaintChat"/>
+        <typeAlias alias="Finance" type="io.terminus.snz.user.model.Finance"/>
+        <typeAlias alias="ContactInfo" type="io.terminus.snz.user.model.ContactInfo"/>
+        <typeAlias alias="CompanyRank" type="io.terminus.snz.user.model.CompanyRank"/>
+        <typeAlias alias="AdditionalDoc" type="io.terminus.snz.user.model.AdditionalDoc"/>
+        <typeAlias alias="CompanyMainBusiness" type="io.terminus.snz.user.model.CompanyMainBusiness"/>
+        <typeAlias alias="CompanyMainBusinessTmp" type="io.terminus.snz.user.model.CompanyMainBusinessTmp"/>
+        <typeAlias alias="Address" type="io.terminus.snz.user.model.Address"/>
+        <typeAlias alias="PurchaserExtra" type="io.terminus.snz.user.model.PurchaserExtra"/>
+        <typeAlias alias="PurchaserAuthority" type="io.terminus.snz.user.model.PurchaserAuthority"/>
+        <typeAlias alias="SupplierTQRDCInfo" type="io.terminus.snz.user.model.SupplierTQRDCInfo"/>
+        <typeAlias alias="SupplierTQRDCInfoTmp" type="io.terminus.snz.user.model.SupplierTQRDCInfoTmp"/>
+        <typeAlias alias="BlackList" type="io.terminus.snz.user.model.BlackList"/>
+        <typeAlias alias="CompanyExtraRD" type="io.terminus.snz.user.model.CompanyExtraRD"/>
+        <typeAlias alias="CompanyExtraQuality" type="io.terminus.snz.user.model.CompanyExtraQuality"/>
+        <typeAlias alias="CompanyExtraResponse" type="io.terminus.snz.user.model.CompanyExtraResponse"/>
+        <typeAlias alias="CompanyExtraDelivery" type="io.terminus.snz.user.model.CompanyExtraDelivery"/>
+        <typeAlias alias="CompanyExtraScaleAndCost" type="io.terminus.snz.user.model.CompanyExtraScaleAndCost"/>
+        <typeAlias alias="ProductLine" type="io.terminus.snz.user.model.ProductLine"/>
+        <typeAlias alias="CompanySupplyPark" type="io.terminus.snz.user.model.CompanySupplyPark"/>
+        <typeAlias alias="SupplierLocationInfo" type="io.terminus.snz.user.model.SupplierLocationInfo"/>
+        <typeAlias alias="SupplierApproveLog" type="io.terminus.snz.user.model.SupplierApproveLog"/>
+        <typeAlias alias="SupplierModuleCount" type="io.terminus.snz.user.model.SupplierModuleCount"/>
+        <typeAlias alias="SupplierModuleDetail" type="io.terminus.snz.user.model.SupplierModuleDetail"/>
+
+        <!--
+        <typeAlias alias="SupplierQualification" type="io.terminus.snz.user.model.SupplierQualification"/>
+        -->
+        <typeAlias alias="SupplierCountBySupplyPark" type="io.terminus.snz.user.model.SupplierCountBySupplyPark"/>
+        <typeAlias alias="SupplierCountByStatus" type="io.terminus.snz.user.model.SupplierCountByStatus"/>
+        <typeAlias alias="SupplierCountByLevel" type="io.terminus.snz.user.model.SupplierCountByLevel"/>
+        <typeAlias alias="SupplierCountByIndustry" type="io.terminus.snz.user.model.SupplierCountByIndustry"/>
+        <typeAlias alias="MainBusinessApprover" type="io.terminus.snz.user.model.MainBusinessApprover"/>
+        <typeAlias alias="ProductOwner" type="io.terminus.snz.user.model.ProductOwner"/>
+
+        <typeAlias alias="supplierCreditQualify" type="io.terminus.snz.user.model.SupplierCreditQualify"/>
+        <typeAlias alias="YzlCreditQualify" type="io.terminus.snz.user.model.YzlCreditQualify"/>
+        <!-- supplier qualify related -->
+        <typeAlias alias="SupplierResourceMaterialInfo" type="io.terminus.snz.user.model.SupplierResourceMaterialInfo"/>
+        <typeAlias alias="SupplierResourceMaterialLog" type="io.terminus.snz.user.model.SupplierResourceMaterialLog"/>
+        <typeAlias alias="SupplierResourceMaterialSubject" type="io.terminus.snz.user.model.SupplierResourceMaterialSubject"/>
+
+        <typeAlias alias="SupplierResource" type="io.terminus.snz.user.model.SupplierResource"/>
+        <typeAlias alias="SupplierReparationSumaries" type="io.terminus.snz.user.model.SupplierReparationSumaries"/>
+
+        <typeAlias alias="TQRDCManagerContact" type="io.terminus.snz.user.model.TQRDCManagerContact"/>
+        <typeAlias alias="SupplierContact" type="io.terminus.snz.user.model.SupplierContact"/>
+
+        <!-- supplier group related -->
+        <typeAlias alias="SupplierGroupRelation" type="io.terminus.snz.user.model.SupplierGroupRelation"/>
+
+        <typeAlias alias="SupplierAppointed" type="io.terminus.snz.user.model.SupplierAppointed"/>
+    </typeAliases>
+</configuration>

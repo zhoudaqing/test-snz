@@ -1,0 +1,143 @@
+app: console
+
+auths:
+  whiteList:
+    - pattern: "/login"
+      methods:
+        - ALL
+    - pattern: "/assets/.+"
+      methods:
+        - ALL
+    - pattern: "/api/user/login"
+      methods:
+        - ALL
+  protectedList:
+    - pattern: ".+"
+      types:
+        - ALL
+
+components:
+  "welcome":
+    name: "欢迎和概览"
+    service: console:countAllCells
+  "group_list":
+    name: "Group 列表"
+    service: console:listAllGroups
+    desc: "列出所有的 group"
+  "group/app_list":
+    name: "App 列表"
+    service: console:listAllAppsWithSetting
+    desc: "列出指定 group 下的所有 app ，以及增删改动作"
+  "group/cell_list":
+    name: "Cell 列表"
+    service: console:listCellsByGroup
+    desc: "列出指定 group 下的所有 cell"
+  "group/config_list":
+    name: "App 配置列表"
+    service: console:listAppsByCell
+  "group/config/front_config":
+    name: "前端配置"
+    service: console:getFrontConfig
+  "group/config/back_config":
+    name: "后端配置"
+    service: console:getBackConfig
+  "group/design_meta":
+    name: "装修信息"
+    service: console:getDesignMetaInfo
+    desc: "是否支持装修，支持则列出 redis 和 app"
+  "group/site_list":
+    name: "装修 Site 列表"
+    service: console:listSites
+    desc: "列出指定 app 的所有 site"
+  "settings/users/user_list":
+    name: "用户列表"
+    service: console:pagingUser
+    desc: "用户管理列表"
+  "settings/users/user_permission":
+    name: "用户权限"
+    service: console:findUserAndPermissions
+    desc: "管理用户权限"
+  "profile":
+    name: "用户信息"
+    service: console:getCurrentUserPermissions
+    desc: "用户信息设置和权限查看"
+
+mappings:
+  - pattern: "api/design/group/{group}/meta_info"
+    methods:
+      - GET
+    service: console:getDesignMetaInfo
+  - pattern: "api/design/group/{group}/app/{app}/site"
+    methods:
+      - POST
+    service: console:createSite
+  - pattern: "api/design/group/{group}/site/{siteId}"
+    methods:
+      - PUT
+    service: console:updateSite
+  - pattern: "api/design/group/{group}/site/{siteId}"
+    methods:
+      - DELETE
+    service: console:deleteSite
+  - pattern: "api/design/group/{group}/site/{siteId}/publish"
+    methods:
+      - POST
+    service: console:publishSite
+  - pattern: "api/settings/group/{group}/app"
+    methods:
+      - POST
+    service: console:createApp
+  - pattern: "api/settings/group/{group}/app"
+    methods:
+      - PUT
+    service: console:updateApp
+  - pattern: "api/settings/group/{group}/app/{appKey}"
+    methods:
+      - DELETE
+    service: console:deleteApp
+  - pattern: "api/settings/group/{group}/app/{appKey}"
+    methods:
+      - GET
+    service: console:getApp
+  - pattern: "api/settings/group/{group}/app/{appKey}/extra-domains"
+    methods:
+      - PUT
+    service: console:updateExtraDomains
+  - pattern: "api/settings/group/{group}/app/{appKey}/extra-domains"
+    methods:
+      - GET
+    service: console:getExtraDomains
+
+  - pattern: "api/settings/user"
+    methods:
+      - POST
+    service: console:createUser
+  - pattern: "api/settings/user"
+    methods:
+      - PUT
+    service: console:updateUser
+  - pattern: "api/settings/user/{userId}"
+    methods:
+      - DELETE
+    service: console:deleteUser
+  - pattern: "api/settings/user/{userId}/permissions"
+    methods:
+      - POST
+    service: console:userAuthorize
+
+  - pattern: "api/user/login"
+    methods:
+      - POST
+    service: console:login
+  - pattern: "api/user/logout"
+    methods:
+      - POST
+    service: console:logout
+  - pattern: "api/user/profile"
+    methods:
+      - PUT
+    service: console:updateCurrentUser
+  - pattern: "api/user/password"
+    methods:
+      - PUT
+    service: console:updateUserPassword

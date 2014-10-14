@@ -1,0 +1,39 @@
+{{#component "js-comp supplier-count"}}
+    <p class="components-title"><strong>综合绩效</strong></p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th rowspan="2" width="90">模块</th>
+            <th rowspan="2" width="140">模块商总数</th>
+            <th colspan="4"width="702">综合绩效</th>
+        </tr>
+        <tr>
+            <th><a href="/suppliers/list?compositeScoreStart=90&compositeScoreEnd=100">优选</a></th>
+            <th><a href="/suppliers/list?compositeScoreStart=80&compositeScoreEnd=89">合格</a></th>
+            <th><a href="/suppliers/list?compositeScoreStart=60&compositeScoreEnd=79">限制</a></th>
+            <th><a href="/suppliers/list?compositeScoreStart=0&compositeScoreEnd=59">淘汰</a></th>
+        </tr>
+        </thead>
+        <tbody>
+		  {{#each _DATA_.supplierModuleCounts}}
+            <tr>
+                <td><a href="/suppliers/list?compositeScoreStart=0&compositeScoreEnd=100&module={{moduleName}}">{{moduleName}}</a></td>
+                <td>{{supplierCount}}</td>
+                <td><a href="/suppliers/list?compositeScoreStart=90&compositeScoreEnd=100&module={{moduleName}}">{{bestCount}}</a></td>
+                <td><a href="/suppliers/list?compositeScoreStart=80&compositeScoreEnd=89&module={{moduleName}}">{{standardCount}}</a></td>
+                <td><a href="/suppliers/list?compositeScoreStart=60&compositeScoreEnd=79&module={{moduleName}}">{{limitedCount}}</a></td>
+                <td><a href="/suppliers/list?compositeScoreStart=0&compositeScoreEnd=59&module={{moduleName}}">{{badCount}}</a></td>
+            </tr>
+		  {{/each}}
+        <tr>
+            <td>总计</td>
+            <td>{{_DATA_.supplierTotal}}</td>
+            <td>{{_DATA_.bestTotal}}</td>
+            <td>{{_DATA_.standardTotal}}</td>
+            <td>{{_DATA_.limitedTotal}}</td>
+            <td>{{_DATA_.badTotal}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+{{/component}}

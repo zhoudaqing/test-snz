@@ -1,0 +1,15 @@
+{{#with moduleInfo}}
+  <td>{{module.id}}</td>
+  <td>{{module.moduleNum}}</td>
+  <td>{{module.moduleName}}</td>
+  <td>{{module.seriesName}}</td>
+  {{#each factoryList}}
+  <td width="80">{{resourceNum}}{{salesName}}</td>
+  {{/each}}
+  <td>{{module.attestationsName}}</td>
+  <td>{{#if module.quality}}{{module.quality}}PPM{{/if}}</td>
+  <td width="100">{{formatPrice module.cost}}元/{{module.units.cost.quantityName}}{{module.units.cost.salesName}}</td>
+  <td width="100">{{#if module.delivery}}{{module.delivery}} {{module.units.delivery.salesName}}{{/if}}</td>
+  <td>{{formatDate module.supplyAt "day"}}</td>
+  <td>{{#of module.checkResult "2"}}{{#of module.status "0,1,2"}}<a href="javascript:void(0);" class="js-edit-module" data-module="{{json this}}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-id="{{module.id}}" data-toggle="confirm" data-title="您确定删除吗?" data-content="删除之后需要无法恢复，只能重新添加" data-event="confirm:delete-module" class="js-delete-module">删除</a>{{else}}模块已锁定{{/of}}{{else}}<a href="javascript:void(0);" class="js-edit-module" data-module="{{json this}}">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" data-id="{{module.id}}" data-toggle="confirm" data-title="您确定删除吗?" data-content="删除之后需要无法恢复，只能重新添加" data-event="confirm:delete-module" class="js-delete-module">删除</a>{{/of}}</td>
+{{/with}}

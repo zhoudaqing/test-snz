@@ -1,0 +1,58 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>发起话题</h2>
+  </div>
+  <form class="form form-aligned" id="new-topic-form" data-id="{{reqId}}">
+    <div class="topic-new modal-body">
+      <input type="hidden" name="companyName" value="{{companyName}}">
+      <input type="hidden" name="reqId" value="{{reqId}}">
+      <div class="topic-now"><i class="icon-topic-now"></i></div>
+      <div class="form-left">
+        <div class="control-group">
+          <label for="" style="width:3em;">标题:</label>
+          <input type="text" placeholder="请输入标题" name="title" style="width:363px;" required/>
+        </div>
+        <div class="control-group">
+          <label for="" style="width:3em;margin-top:7px;">内容:</label>
+          <textarea name="content" id="" cols="50" rows="10" style="width:350px;" placeholder="请输入内容" reqiured></textarea>
+        </div>
+        <div class="control-group">
+          <label for="" class="control-label" style="width:55px;"><i class="icon-attach"></i>&nbsp;附件:</label>
+          <div class="attachment-file control-content">
+            <input type="hidden" class="file-input" name="files">
+            <div class="btn btn-upload">
+              <span>选择附件</span>
+              <input type="file" name="file">
+            </div>
+            <div class="file-info-show">
+              <i class="icon-info-small" style="vertical-align:top;"></i><span class="note">最多5个附件</span>
+              <span class="file-name"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-right">
+        <div class="topic-scope">
+          <div class="select-topic-scope">
+            <input type="hidden" id="joinerIds">
+            <label for="scope-all-public" class="scope-select-label">
+              <input type="radio" name="scope" checked id="scope-all-public" value="1" /> 公开讨论
+            </label>
+            {{#of reqStatus "3,4,5"}}
+            <label for="scope-group-privacy" class="scope-select-label">
+              <input type="radio" name="scope" id="scope-group-privacy" value="2" /> 当前圈子公开
+            </label>
+            <label for="scope-group-public" class="scope-select-label">
+              <input type="radio" name="scope" id="scope-group-public" value="3" /> 当前圈子私密
+            </label>
+            {{/of}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-primary btn-medium" value="确定" />
+      <button class="btn btn-info btn-medium close">关闭</button>
+    </div>
+  </form>
+</div>

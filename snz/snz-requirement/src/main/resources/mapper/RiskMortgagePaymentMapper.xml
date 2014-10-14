@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RiskMortgagePayment">
+
+    <resultMap id="RiskMortgagePaymentMap" type="RiskMortgagePayment">
+        <id property="id" column="id"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierDetail" column="supplier_detail"/>
+        <result property="purchaserCode" column="purchaser_code"/>
+        <result property="amount" column="amount"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <!-- table details -->
+    <sql id="tb_name">snz_risk_mortgage_payments</sql>
+    <sql id="columns">supplier_code, supplier_detail, purchaser_code, amount, created_at, updated_at</sql>
+    <sql id="values">#{supplierCode}, #{supplierDetail}, #{purchaserCode}, #{amount}, now(), now()</sql>
+
+    <!-- create related -->
+    <insert id="create" parameterType="map" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/> (<include refid="columns"/>)
+        VALUES (<include refid="values"/>)
+    </insert>
+
+    <!-- update related -->
+    <update id="update" parameterType="map">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            <if test="supplierCode!=null">supplier_code=#{supplierCode},</if>
+            <if test="supplierDetail!=null">supplier_detail=#{supplierDetail},</if>
+            <if test="purchaserCode!=null">purchaser_code=#{purchaserCode},</if>
+            <if test="amount!=null">amount=#{amount},</if>
+            updated_at = now()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- delete related -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tb_name"/>
+        WHERE id = #{id}
+    </delete>
+
+    <!-- query related -->
+    <select id="findById" parameterType="long" resultMap="RiskMortgagePaymentMap">
+        SELECT id, <include refid="columns"/> FROM <include refid="tb_name"/>
+        WHERE id = #{id}
+    </select>
+
+    <select id="findBy" parameterType="map" resultMap="RiskMortgagePaymentMap">
+        SELECT id, <include refid="columns"/> FROM <include refid="tb_name"/>
+        <where>
+            <if test="supplierCode!=null">supplier_code=#{supplierCode}</if>
+            <if test="supplierDetail!=null">AND supplier_detail=#{supplierDetail}</if>
+            <if test="purchaserCode!=null">AND purchaser_code=#{purchaserCode}</if>
+            <if test="amount!=null">AND amount=#{amount}</if>
+        </where>
+    </select>
+
+</mapper>

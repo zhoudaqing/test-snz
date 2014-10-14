@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SupplierAppointed">
+    <resultMap id="SupplierAppointedMap" type="SupplierAppointed">
+        <id column="id" property="id"/>
+        <result column="corporation" property="corporation"/>
+        <result column="company_id"  property="companyId"/>
+        <result column="requirement_id" property="requirementId"/>
+        <result column="requirement_name" property="requirementName"/>
+        <result column="series_ids"  property="seriesIds"/>
+        <result column="creator_id"  property="creatorId"/>
+        <result column="status"      property="status"/>
+        <result column="advice"      property="advice"/>
+        <result column="created_at"  property="createdAt"/>
+        <result column="updated_at"  property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+        corporation, company_id, requirement_id, requirement_name, series_ids, creator_id, status, advice, created_at, updated_at
+    </sql>
+
+    <select id="findSupplierAppiontedByParams" resultMap="SupplierAppointedMap" parameterType="map">
+        select id,
+        <include refid="columns"/>
+        from snz_supplier_appoint
+        <where>
+            <if test="supplierName!=null">
+            corporation like CONCAT('%', #{supplierName} ,'%')
+            </if>
+            <if test="status!=null">
+            and status=#{status}
+            </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countSupplierAppointed" resultType="long" parameterType="map">
+        select count(id)
+        from snz_supplier_appoint
+        <where>
+            <if test="supplierName!=null">
+                corporation like CONCAT('%', #{supplierName} ,'%')
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="SupplierAppointed" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_supplier_appoint(<include refid="columns"/>)
+        values (#{corporation},#{companyId},#{requirementId},#{requirementName},#{seriesIds},#{creatorId},#{status},#{advice},now(), now())
+    </insert>
+
+    <update id="update" parameterType="SupplierAppointed">
+        update snz_supplier_appoint
+        <set>
+            <if test="corporation != null">
+                corporation = #{corporation},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            <if test="requirementId != null">
+                requirement_id = #{requirementId},
+            </if>
+            <if test="requirementName != null">
+                requirement_name = #{requirementName},
+            </if>
+            <if test="seriesIds != null">
+                series_ids = #{seriesIds},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="advice != null">
+                advice = #{advice},
+            </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="map">
+        update snz_supplier_appoint
+        <set>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="advice != null">
+                advice = #{advice},
+            </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findCompanyById" resultMap="SupplierAppointedMap" parameterType="long">
+        select id, <include refid="columns"/>
+        from snz_supplier_appoint
+        where id = #{id}
+    </select>
+
+    <select id="findCompany" resultMap="SupplierAppointedMap" parameterType="long">
+        select id, <include refid="columns"/>
+        from snz_supplier_appoint
+        where requirement_id = #{requirementId}
+    </select>
+
+    <select id="findCompanyByCorp" resultMap="SupplierAppointedMap" parameterType="String">
+        select id, <include refid="columns"/>
+        from snz_supplier_appoint
+        where corporation = #{corporation}
+              <if test="requirementId != null">
+              and requirement_id = #{requirementId}
+              </if>
+        limit 1
+    </select>
+
+    <select id="findCompanyByReq" resultMap="SupplierAppointedMap" parameterType="long">
+        select id, <include refid="columns"/>
+        from snz_supplier_appoint
+        where  requirement_id = #{requirementId}
+    </select>
+
+    <update id="updateCompanyIdByCorp" parameterType="map">
+        update snz_supplier_appoint
+        <set>
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            updated_at = now()
+        </set>
+        where corporation = #{corporation}
+    </update>
+
+    <delete id="deleteCompanyByReq"  parameterType="long">
+        DELETE FROM snz_supplier_appoint WHERE requirement_id = #{requirementId}
+    </delete>
+
+</mapper>

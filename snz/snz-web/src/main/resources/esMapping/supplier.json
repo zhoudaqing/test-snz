@@ -1,0 +1,63 @@
+{
+    "supplier": {
+        "all": {
+            "enabled": false
+        },
+        "index.query.default_field": "name",
+        "properties": {
+            "id": {
+                "type" : "long"
+            },
+            "companyName": {
+                "type" : "string",
+                "index_analyzer": "jieba_index",
+                "search_analyzer": "jieba_search"
+            },
+            "mainBusinessIds": {
+                "type": "long"
+            },
+            "secondIds": {
+                "type": "long"
+            },
+            "firstIds": {
+                "type": "long"
+            },
+            "corpAddr": {
+                "type": "string",
+                "index": "no"
+            },
+            "regCapital": {
+                "type" : "long",
+                "index": "no"
+            },
+            "rcCoinType": {
+                "type": "integer",
+                "index": "no"
+            },
+            "participateCount": {
+                "type": "integer"
+            },
+            "mobile": {
+                "type": "string",
+                "index": "no"
+            },
+            "tags": {
+                "type": "string",
+                "index": "no"
+            },
+            "type": {
+                "type": "integer"
+            },
+            "approveStatus": {
+                "type": "integer"
+            },
+            "status": {
+                "type": "integer"
+            },
+            "createdAt": {
+                "type": "date",
+                "format": "dateOptionalTime"
+            }
+        }
+    }
+}

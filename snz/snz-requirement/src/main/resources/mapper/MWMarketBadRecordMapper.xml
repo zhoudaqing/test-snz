@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MWMarketBadRecord">
+    <resultMap id="MarketBadRecordMap" type="MWMarketBadRecord">
+        <id property="id" column="id"/>
+        <result property="oid" column="oid"/>
+        <result property="reportAt" column="report_at"/>
+        <result property="port" column="port"/>
+        <result property="pl" column="pl"/>
+        <result property="business" column="business"/>
+        <result property="branch" column="branch"/>
+        <result property="productId" column="product_id"/>
+        <result property="productSid" column="product_sid"/>
+        <result property="assembledAt" column="assembled_at"/>
+        <result property="logAt" column="log_at"/>
+        <result property="complain" column="complain"/>
+        <result property="maintType" column="maint_type"/>
+        <result property="serviceType" column="service_type"/>
+        <result property="describe" column="describe"/>
+        <result property="cause" column="cause"/>
+        <result property="object" column="object"/>
+        <result property="action" column="action"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="vCode" column="v_code"/>
+        <result property="price" column="price"/>
+        <result property="fee" column="fee"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="status" column="status"/>
+    </resultMap>
+
+    <sql id="columns">
+      oid, report_at, port, pl, business, branch, product_id, product_sid, assembled_at, log_at, complain, maint_type,
+      service_type, `describe`, cause, object, `action`, module_num, v_code, price, fee, module_name, status
+    </sql>
+
+    <insert id="create" parameterType="MarketBadRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mw_supplier_market_bad_records`
+        (<include refid="columns"/>)
+        VALUES
+        (#{oid}, #{reportAt}, #{port}, #{pl}, #{business}, #{branch}, #{productId}, #{productSid}, #{assembledAt}, #{logAt},
+        #{complain}, #{maintType}, #{serviceType}, #{describe}, #{cause}, #{object}, #{action}, #{moduleNum}, #{vCode},
+        #{price}, #{fee}, #{moduleName}, #{status})
+    </insert>
+
+    <update id="update" parameterType="MarketBadRecord">
+        update `mw_supplier_market_bad_records`
+        <set>
+            <if test="oid!=null"> oid=#{oid}, </if>
+            <if test="reportAt!=null"> report_at=#{reportAt}, </if>
+            <if test="port!=null"> port=#{port}, </if>
+            <if test="pl!=null"> pl=#{pl}, </if>
+            <if test="business!=null"> business=#{business}, </if>
+            <if test="branch!=null"> branch=#{branch}, </if>
+            <if test="productId!=null"> product_id=#{productId}, </if>
+            <if test="productSid!=null"> product_sid=#{productSid}, </if>
+            <if test="assembledAt!=null"> assembled_at=#{assembledAt}, </if>
+            <if test="logAt!=null"> log_at=#{logAt}, </if>
+            <if test="complain!=null"> complain=#{complain}, </if>
+            <if test="maintType!=null"> maint_type=#{maintType}, </if>
+            <if test="serviceType!=null"> service_type=#{serviceType}, </if>
+            <if test="describe!=null"> describe=#{describe}, </if>
+            <if test="cause!=null"> cause=#{cause}, </if>
+            <if test="object!=null"> object=#{object}, </if>
+            <if test="action!=null"> action=#{action}, </if>
+            <if test="moduleNum!=null"> module_num=#{moduleNum}, </if>
+            <if test="vCode!=null"> v_code=#{vCode}, </if>
+            <if test="price!=null"> price=#{price}, </if>
+            <if test="fee!=null"> fee=#{fee}, </if>
+            <if test="moduleName!=null"> module_name=#{moduleName}, </if>
+            <if test="status!=null"> status=#{status}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="MarketBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_supplier_market_bad_records` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="MarketBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_supplier_market_bad_records`
+        <where>
+            <if test="oid!=null"> and oid=#{oid} </if>
+            <if test="reportAt!=null"> and report_at=#{reportAt} </if>
+            <if test="port!=null"> and port=#{port} </if>
+            <if test="pl!=null"> and pl=#{pl} </if>
+            <if test="business!=null"> and business=#{business} </if>
+            <if test="branch!=null"> and branch=#{branch} </if>
+            <if test="productId!=null"> and product_id=#{productId} </if>
+            <if test="productSid!=null"> and product_sid=#{productSid} </if>
+            <if test="assembledAt!=null"> and assembled_at=#{assembledAt} </if>
+            <if test="logAt!=null"> and log_at=#{logAt} </if>
+            <if test="complain!=null"> and complain=#{complain} </if>
+            <if test="maintType!=null"> and maint_type=#{maintType} </if>
+            <if test="serviceType!=null"> and service_type=#{serviceType} </if>
+            <if test="describe!=null"> and describe=#{describe} </if>
+            <if test="cause!=null"> and cause=#{cause} </if>
+            <if test="object!=null"> and object=#{object} </if>
+            <if test="action!=null"> and action=#{action} </if>
+            <if test="moduleNum!=null"> and module_num=#{moduleNum} </if>
+            <if test="vCode!=null"> and v_code=#{vCode} </if>
+            <if test="price!=null"> and price=#{price} </if>
+            <if test="fee!=null"> and fee=#{fee} </if>
+            <if test="moduleName!=null"> and module_name=#{moduleName} </if>
+            <if test="status!=null"> and status=#{status} </if>
+            <if test="id!=null">and id=#{id}</if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="findBetween" resultMap="MarketBadRecordMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_supplier_market_bad_records`
+        <where>
+            <if test="vCode!=null"> and v_code=#{vCode} </if>
+            <if test="startAt!=null"> and report_at >= #{startAt} </if>
+            <if test="endAt!=null"> and report_at &lt; #{endAt} </if>
+        </where>
+    </select>
+
+    <select id="maxIdIn" resultType="long">
+        select max(id)
+        from `mw_supplier_market_bad_records`
+        <where>
+            <if test="startAt!=null"> and report_at >= #{startAt} </if>
+            <if test="endAt!=null"> and report_at &lt; #{endAt} </if>
+        </where>
+    </select>
+
+    <select id="forDumpIn" resultMap="MarketBadRecordMap">
+        select id, <include refid="columns"/>
+        from mw_supplier_market_bad_records
+        <where>
+            <if test="maxId!=null"> id &lt; #{maxId} </if>
+            <if test="vCode!=null"> and v_code = #{vCode} </if>
+            <if test="startAt!=null"> and report_at >= #{startAt} </if>
+            <if test="endAt!=null"> and report_at &lt; #{endAt} </if>
+        </where>
+        order by id desc
+        limit #{offset}, #{limit}
+    </select>
+
+
+    <delete id="deleteInIds" parameterType="list">
+        delete from mw_supplier_market_bad_records
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

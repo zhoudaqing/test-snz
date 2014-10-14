@@ -1,0 +1,163 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+
+.mutual-tab {
+  .tab {
+    margin-bottom: 20px;
+  }
+  #range-supplier-table {
+    .special-color {
+      background-color: #fff9f1;
+    }
+    .range-supplier {
+      color: $default-body-color;
+    }
+  }
+  .table {
+    margin-bottom: 0;
+  }
+  .table-input {
+    width: 100%;
+  }
+  .table-large {
+    width: 1059px;
+  }
+  .table-small {
+    width: 1019px;
+  }
+  .topic-pagination,.module-pagination,.quota-pagination {
+    padding: 20px 0;
+    text-align: right;
+  }
+  .table-container {
+    overflow-x: auto;
+  }
+  .select-label {
+    width: 45px !important;
+  }
+  .attachment-file-group {
+    @include inline-block(top);
+  }
+  .one-row {
+    height: 30px;
+    line-height: 30px;
+    border-bottom: 1px solid $default-border-color;
+  }
+  .multi-row {
+    white-space: nowrap;
+    span {
+      @include inline-block(middle);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100px;
+      text-align: center;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .supplier-list-ul {
+    background-color: white;
+  }
+  .supplier-list-li {
+    height: 24px;
+    float: none;
+    margin: 5px 0;
+    i {
+      margin-top: -5px;
+    }
+  }
+}
+.small-table {
+  &.table-striped{
+    td{
+      padding:0;
+      height:32px;
+    }
+  }
+  .inner-table {
+    width: 100%;
+    td {
+      border: none;
+    }
+  }
+}
+
+#new-topic-form {
+  .control-content {
+    @include inline-block(top);
+  }
+  .control-label {
+    margin-top: 6px;
+  }
+  .file-info-show {
+    @include inline-block(middle);
+  }
+  .form-left,.form-right {
+    @include inline-block(top);
+  }
+  .topic-now {
+    padding:0 0 5px 8px;
+  }
+  .form-left {
+    margin-right: 10px;
+  }
+  .scope-select-label {
+    position: relative;
+    .menu-dropdown {
+      background-color: $default-background-color;
+      position: absolute;
+      border-radius: 5px;
+      top: 22px;
+      width: 270px;
+      max-height: 250px;
+      padding: 10px 0;
+      .hide {
+        display: none;
+      }
+      ul {
+        height: auto;
+        border: none;
+      }
+      label {
+        line-height: 20px;
+      }
+      p {
+        padding-left: 10px;
+        .ul-show-a {
+          color: $default-body-color;
+        }
+      }
+      li {
+        margin-right: 5px;
+        line-height: 20px;
+        @include inline-block(middle);
+        white-space: nowrap;
+      }
+      &.second-label {
+        left: -75px;
+        &:before {
+          left: 126px;
+        }
+        &:after {
+          left: 126px;
+        }
+      }
+      &.third-label {
+        left: -173px;
+        &:before {
+          left: 224px;
+        }
+        &:after {
+          left: 224px;
+        }
+      }
+    }
+  }
+}
+.select-num-form {
+  label {
+    width: 7em !important;
+    text-align: left !important;
+  }
+}

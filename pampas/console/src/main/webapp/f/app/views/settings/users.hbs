@@ -1,0 +1,16 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#partial "menu"}}
+  {{#inject "main_menu"}}
+  {
+    "active": 3
+  }
+  {{/inject}}
+{{/partial}}
+{{#partial "content"}}
+  {{#hasPermission "admin"}}
+  {{inject "settings/users/user_list"}}
+  {{else}}
+  {{inject "no_auth"}}
+  {{/hasPermission}}
+{{/partial}}
+{{> main_layout}}

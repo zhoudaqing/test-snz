@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CompensationReply">
+
+    <!-- 结果集映射 -->
+    <resultMap id="CompensationReplyMap" type="CompensationReply">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="listId" column="list_id"/>
+        <result property="content" column="content"/>
+        <result property="companyName" column="company_name"/>
+        <result property="files" column="files"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_compensation_replies
+    </sql>
+
+    <sql id="column_except_id">
+        user_id, list_id, content, company_name, files, created_at, updated_at
+    </sql>
+
+    <sql id="values_all">
+        #{userId}, #{listId}, #{content}, #{companyName}, #{files}, now(), now()
+    </sql>
+
+    <!-- 根据回复id查找回复 -->
+    <select id="findById" parameterType="Long" resultType="CompensationReply">
+        SELECT id,
+        <include refid="column_except_id"/>
+        FROM <include refid="tb_name"/>
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据回复对象查找明细id -->
+    <select id="findDetailById" parameterType="CompensationReply" resultType="long">
+        SELECT list_id
+        FROM <include refid="tb_name"/>
+        WHERE id=#{id}
+    </select>
+
+    <!-- 创建回复 -->
+    <insert id="create" parameterType="CompensationReply" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="column_except_id"/>)
+        VALUES
+        (<include refid="values_all"/>)
+    </insert>
+
+    <!-- 根据明细id查找相关回复 -->
+    <select id="findByDid" parameterType="long" resultType="CompensationReply">
+        SELECT id,
+        <include refid="column_except_id"/>
+        FROM <include refid="tb_name"/>
+        WHERE list_id=#{listId}
+    </select>
+
+    <!-- 根据明细id删除回复 -->
+    <delete id="deleteByDid" parameterType="long">
+        DELETE
+        FROM <include refid="tb_name"/>
+        WHERE list_id=#{listId}
+    </delete>
+
+    <!-- 分页获取目标明细相关的所有回复信息(返回reply分页) -->
+    <select id="findAllReply" parameterType="map" resultMap="CompensationReplyMap">
+        SELECT id,
+        <include refid="column_except_id"/>
+        FROM <include refid="tb_name"/>
+        WHERE list_id=#{listId}
+        order by id desc
+        limit #{offset}, #{size}
+    </select>
+
+</mapper>

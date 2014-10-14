@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SupplierTQRDCInfoTmp">
+
+    <resultMap id="supplierTQRDCInfoTmpResultMap" type="SupplierTQRDCInfoTmp">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="companyId" column="company_id"/>
+        <result property="specialNumber" column="special_number"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="module" column="module"/>
+        <result property="productLineId" column="product_line_id"/>
+        <result property="productLine" column="product_line"/>
+        <result property="location" column="location"/>
+        <result property="rank" column="rank"/>
+        <result property="date" column="date"/>
+        <result property="compositeScore" column="composite_score"/>
+        <result property="supplierStatus" column="supplier_status"/>
+        <result property="techScore" column="tech_score"/>
+        <result property="delayDays" column="delay_days"/>
+        <result property="newProductPass" column="new_product_pass"/>
+        <result property="qualityScore" column="quality_score"/>
+        <result property="liveBad" column="live_bad"/>
+        <result property="marketBad" column="market_bad"/>
+        <result property="respScore" column="resp_score"/>
+        <result property="programPromisedRate" column="program_promised_rate"/>
+        <result property="programSelectedRate" column="program_selected_rate"/>
+        <result property="programAdoptedRate" column="program_adopted_rate"/>
+        <result property="requirementResp" column="requirement_resp"/>
+        <result property="deliverScore" column="deliver_score"/>
+        <result property="deliverDiff" column="deliver_diff"/>
+        <result property="costScore" column="cost_score"/>
+        <result property="increment" column="increment"/>
+        <result property="techScoreRank" column="tech_score_rank"/>
+        <result property="qualityScoreRank" column="quality_score_rank"/>
+        <result property="respScoreRank" column="resp_score_rank"/>
+        <result property="deliveryScoreRank" column="delivery_score_rank"/>
+        <result property="affectDeliveryCount" column="affect_delivery_count"/>
+        <result property="costScoreRank" column="cost_score_rank"/>
+        <result property="priceReductionAmount" column="price_reduction_amount"/>
+        <result property="priceReductionRange" column="price_reduction_range"/>
+    </resultMap>
+
+
+    <sql id="columns">
+    user_id,company_id,special_number,supplier_code,supplier_name,module,product_line_id,product_line,
+    location,rank,date,composite_score,supplier_status,tech_score,delay_days,new_product_pass,
+    quality_score,live_bad,market_bad,resp_score,program_promised_rate,program_selected_rate,
+    program_adopted_rate,requirement_resp,deliver_score,deliver_diff,cost_score,increment,
+    tech_score_rank,quality_score_rank,resp_score_rank,delivery_score_rank,affect_delivery_count,
+    cost_score_rank,price_reduction_amount,price_reduction_range,created_at,updated_at
+    </sql>
+
+
+    <sql id="query_conditions">
+      <if test="userId!=null">AND user_id = #{userId}</if>
+      <if test="companyId!=null">AND company_id = #{companyId}</if>
+      <if test="specialNumber!=null">AND special_number = #{specialNumber}</if>
+      <if test="supplierCode!=null">AND supplier_code = #{supplierCode}</if>
+      <if test="supplierName!=null">AND supplier_name = #{supplierName}</if>
+      <if test="module!=null">AND module = #{module}</if>
+      <if test="productLineId!=null">AND product_line_id = #{productLineId}</if>
+      <if test="productLine!=null">AND product_line = #{productLine}</if>
+      <if test="location!=null">AND location = #{location}</if>
+      <if test="rank!=null">AND rank = #{rank}</if>
+      <if test="date!=null">AND date = #{date}</if>
+      <if test="compositeScore!=null">AND composite_score = #{compositeScore}</if>
+      <if test="supplierStatus!=null">AND supplier_status = #{supplierStatus}</if>
+      <if test="techScore!=null">AND tech_score = #{techScore}</if>
+      <if test="delayDays!=null">AND delay_days = #{delayDays}</if>
+      <if test="newProductPass!=null">AND new_product_pass = #{newProductPass}</if>
+      <if test="qualityScore!=null">AND quality_score = #{qualityScore}</if>
+      <if test="liveBad!=null">AND live_bad = #{liveBad}</if>
+      <if test="marketBad!=null">AND market_bad = #{marketBad}</if>
+      <if test="respScore!=null">AND resp_score = #{respScore}</if>
+      <if test="programPromisedRate!=null">AND program_promised_rate = #{programPromisedRate}</if>
+      <if test="programSelectedRate!=null">AND program_selected_rate = #{programSelectedRate}</if>
+      <if test="programAdoptedRate!=null">AND program_adopted_rate = #{programAdoptedRate}</if>
+      <if test="requirementResp!=null">AND requirement_resp = #{requirementResp}</if>
+      <if test="deliverScore!=null">AND deliver_score = #{deliverScore}</if>
+      <if test="deliverDiff!=null">AND deliver_diff = #{deliverDiff}</if>
+      <if test="costScore!=null">AND cost_score = #{costScore}</if>
+      <if test="increment!=null">AND increment = #{increment}</if>
+      <if test="techScoreRank!=null">AND tech_score_rank = #{techScoreRank}</if>
+      <if test="qualityScoreRank!=null">AND quality_score_rank = #{qualityScoreRank}</if>
+      <if test="respScoreRank!=null">AND resp_score_rank = #{respScoreRank}</if>
+      <if test="deliveryScoreRank!=null">AND delivery_score_rank = #{deliveryScoreRank}</if>
+      <if test="affectDeliveryCount!=null">AND affect_delivery_count = #{affectDeliveryCount}</if>
+      <if test="costScoreRank!=null">AND cost_score_rank = #{costScoreRank}</if>
+      <if test="priceReductionAmount!=null">AND price_reduction_amount = #{priceReductionAmount}</if>
+      <if test="priceReductionRange!=null">AND price_reduction_range = #{priceReductionRange}</if>
+    </sql>
+
+
+    <insert id="create" parameterType="SupplierTQRDCInfoTmp" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_supplier_tqrdc_infos_tmp ( <include refid="columns"/>)
+      VALUES(
+       #{userId},#{companyId},#{specialNumber},#{supplierCode},#{supplierName},#{module},#{productLineId},
+        #{productLine},#{location},#{rank},#{date},#{compositeScore},#{supplierStatus},#{techScore},
+        #{delayDays},#{newProductPass},#{qualityScore},#{liveBad},#{marketBad},#{respScore},
+        #{programPromisedRate},#{programSelectedRate},#{programAdoptedRate},#{requirementResp},
+        #{deliverScore},#{deliverDiff},#{costScore},#{increment},#{techScoreRank},#{qualityScoreRank},
+        #{respScoreRank},#{deliveryScoreRank},#{affectDeliveryCount},#{costScoreRank},#{priceReductionAmount},
+        #{priceReductionRange},now(),now()
+      )
+    </insert>
+
+
+    <select id="findById" parameterType="long" resultMap="supplierTQRDCInfoTmpResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_supplier_tqrdc_infos_tmp
+      WHERE
+       `id` = #{id}
+    </select>
+
+
+    <select id="findByIds" parameterType="list" resultMap="supplierTQRDCInfoTmpResultMap">
+        SELECT id,<include refid="columns"/>
+            FROM snz_supplier_tqrdc_infos_tmp
+        WHERE
+            id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+    </select>
+
+
+    <select id="findByDate" parameterType="java.util.Map" resultMap="supplierTQRDCInfoTmpResultMap">
+        SELECT a.id,<include refid="columns"/>
+          FROM  snz_supplier_tqrdc_infos_tmp AS a,
+                (SELECT id
+                    FROM snz_supplier_tqrdc_infos_tmp
+                  WHERE `date`=#{date} and composite_score>0 group by supplier_code order by id desc) as b
+        WHERE a.id = b.id AND
+              a.date = #{date}
+    </select>
+
+    <select id="findByUserId" parameterType="long" resultMap="supplierTQRDCInfoTmpResultMap">
+        SELECT id,<include refid="columns"/>
+        FROM snz_supplier_tqrdc_infos_tmp
+        WHERE `user_id` =#{userId}
+    </select>
+
+    <update id="update" parameterType="SupplierTQRDCInfoTmp">
+      UPDATE snz_supplier_tqrdc_infos_tmp
+      <set>
+          <if test="userId!=null">user_id = #{userId},</if>
+          <if test="companyId!=null">company_id = #{companyId},</if>
+          <if test="specialNumber!=null">special_number = #{specialNumber},</if>
+          <if test="supplierCode!=null">supplier_code = #{supplierCode},</if>
+          <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+          <if test="module!=null">module = #{module},</if>
+          <if test="productLineId!=null">product_line_id = #{productLineId},</if>
+          <if test="productLine!=null">product_line = #{productLine},</if>
+          <if test="location!=null">location = #{location},</if>
+          <if test="rank!=null">rank = #{rank},</if>
+          <if test="date!=null">date = #{date},</if>
+          <if test="compositeScore!=null">composite_score = #{compositeScore},</if>
+          <if test="supplierStatus!=null">supplier_status = #{supplierStatus},</if>
+          <if test="techScore!=null">tech_score = #{techScore},</if>
+          <if test="delayDays!=null">delay_days = #{delayDays},</if>
+          <if test="newProductPass!=null">new_product_pass = #{newProductPass},</if>
+          <if test="qualityScore!=null">quality_score = #{qualityScore},</if>
+          <if test="liveBad!=null">live_bad = #{liveBad},</if>
+          <if test="marketBad!=null">market_bad = #{marketBad},</if>
+          <if test="respScore!=null">resp_score = #{respScore},</if>
+          <if test="programPromisedRate!=null">program_promised_rate = #{programPromisedRate},</if>
+          <if test="programSelectedRate!=null">program_selected_rate = #{programSelectedRate},</if>
+          <if test="programAdoptedRate!=null">program_adopted_rate = #{programAdoptedRate},</if>
+          <if test="requirementResp!=null">requirement_resp = #{requirementResp},</if>
+          <if test="deliverScore!=null">deliver_score = #{deliverScore},</if>
+          <if test="deliverDiff!=null">deliver_diff = #{deliverDiff},</if>
+          <if test="costScore!=null">cost_score = #{costScore},</if>
+          <if test="increment!=null">increment = #{increment},</if>
+          <if test="techScoreRank!=null">tech_score_rank = #{techScoreRank},</if>
+          <if test="qualityScoreRank!=null">quality_score_rank = #{qualityScoreRank},</if>
+          <if test="respScoreRank!=null">resp_score_rank = #{respScoreRank},</if>
+          <if test="deliveryScoreRank!=null">delivery_score_rank = #{deliveryScoreRank},</if>
+          <if test="affectDeliveryCount!=null">affect_delivery_count = #{affectDeliveryCount},</if>
+          <if test="costScoreRank!=null">cost_score_rank = #{costScoreRank},</if>
+          <if test="priceReductionAmount!=null">price_reduction_amount = #{priceReductionAmount},</if>
+          <if test="priceReductionRange!=null">price_reduction_range = #{priceReductionRange},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_supplier_tqrdc_infos_tmp
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

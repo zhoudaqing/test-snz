@@ -1,0 +1,409 @@
+---
+app: snz-admin
+services:
+  deleteFeedbackByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.YzlCreditQualifyService:deleteById
+  updateFeedbackByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.YzlCreditQualifyService:update
+  findCreditQualifyByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierCreditQualifyService:findCreditQualifyByUserId
+  feedbackfindByStatus:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.YzlCreditQualifyService:findByStatus
+  getQualifyState:
+    type: SPRING
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:getQualifyState
+  getQualifyInfoOf:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:getInfo
+  getQualifiedSubjects:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService.getQualifiedSubjects
+  deleteRelation:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierGroupService.deleteRelation
+  getRelatedSuppliers:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierGroupService.getRelatedSuppliers
+  createRelation:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierGroupService.createRelation
+  findCompaniesByFuzzySupplierName:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService.findCompaniesByFuzzySupplierName
+  rejectQualify:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierCreditQualifyService:rejectQualify
+  backendFindChildrenOf:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:findChildrenOf
+  backendCategoryCreate:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:create
+  backendCategoryUpdate:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:update
+  backendCategoryDelete:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:delete
+  backendPropertyCreate:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:createProperty
+  backendPropertyUpdate:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:updateProperty
+  backendPropertyDelete:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:deleteProperty
+  backendPropertyFindById:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:findPropertyById
+  backendPropertiesFindByBcId:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.BackendCategoryService:findPropertiesByBcId
+  attributeGet:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.BackendCategoryService:findPropertiesByBcId
+  attributeCreate:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.BackendCategoryService:createProperty
+  frontendCategoryCreate:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:create
+  frontendCategoryUpdate:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:update
+  frontendCategoryDelete:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:delete
+  frontendFindBindingsOf:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:findBindingsOf
+  frontendUnbind:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:unbind
+  frontendBind:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:bind
+  approveSupplier:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.AccountService:approveSupplier
+  findSupplierBy:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findSupplierBy
+  findDetailSupplierByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findDetailSupplierByUserId
+  findSupplierTQRDCInfoBy:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findSupplierTQRDCInfoBy
+  findDetailSupplierTQRDCInfo:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findDetailSupplierTQRDCInfo
+  findSupplierTQRDCInfos:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findSupplierTQRDCInfos
+  confirmResource:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:confirmResource
+  findSupplierModuleDetails:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierModuleDetailService:findBySupplierCode
+  postSupplierModuleDetailsToHGVS:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierModuleDetailService:postToHGVS
+  findSupplierQualifyBy:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:pagingBy
+  findSupplierQualifyByMaster:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:filteringSuppliersByQualifyStatusOnlyLastSevenDays
+  getQualifyInfo:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:getSubjectsNeedQualify
+  getQualifyDetails:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:getQualifyDetails
+  rejectByHigherChecker:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:rejectByHigherChecker
+  createQualification:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:qualifyByChecker
+  findSupplierByRefuse:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findRefusedSuppliers
+  findSupplierCountBySupplyParkIds:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountBySupplyParkIds
+  findAllPark:
+    app: snz-related
+    type: DUBBO
+    uri: io.terminus.snz.related.services.DeliveryService:findAllPark
+  findSupplierCountByStatus:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountByStatus
+  findSupplierCountByLevel:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountByLevel
+  pagingCreditQualify:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierCreditQualifyService:pagingCreditQualify
+  updateCreditQualify:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierCreditQualifyService:updateCreditQualify
+  findSupplierCountByIndustries:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierSummaryService:findSupplierCountByIndustries
+  findBaseCompanyByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findBaseCompanyByUserId
+  getProductLine:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findAllProductLine
+  getCountries:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.AddressService:countries
+  getProvinces:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.AddressService:provinces
+  getCities:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.AddressService:citiesOf
+  getAncestorsOf:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:ancestorsOf
+  frontendFindChildrenOf:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:findChildrenOf
+  findContactInfoByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findContactInfoByUserId
+  findCompanyRankByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findCompanyRankByUserId
+  findFinanceByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findFinanceByUserId
+  getResearchAbility:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyExtraService:findRDByUser
+  getQualityAbility:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyExtraService:findQualityByUser
+  getDelivery:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyExtraService:findDeliveryByUser
+  findEnterPassSuppliers:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findEnterPassSuppliers
+  queryBaseCompanyByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:queryBaseCompanyByUserId
+  queryPaperworkByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:queryPaperworkByUserId
+  findUnCacheCompanyByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:findUnCacheCompanyByUserId
+  queryContactInfoByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:queryContactInfoByUserId
+  queryCompanyRankByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:queryCompanyRankByUserId
+  queryFinanceByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:queryFinanceByUserId
+  findRDByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyExtraService:findRDByUserId
+  findQualityByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyExtraService:findQualityByUserId
+  findDeliveryByUserId:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyExtraService:findDeliveryByUserId
+  findSupplierReparationBy:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.ReparationService:findSupplierReparationBy
+  pagingCompanyHasSupplierCode:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:pagingCompanyHasSupplierCode
+  getSupplierSummaryByModule:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierTQRDCInfoService:getSupplierSummaryByModule
+  bulkOverwriteSubjects:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:bulkOverwriteSubjects
+  getAllValidSubjects:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:getAllValidSubjects
+  askForReject:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:askForReject
+  getBcsCanInvite:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:getBcsCanInvite
+  inviteAnotherToCheckWithBcs:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierResourceMaterialService:inviteAnotherToCheckWithBcs
+  findStaffByWorkNo:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.AccountService:findStaffByWorkNo
+  findStaffByName:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.AccountService:findStaffByName
+  findSupplierReparationSumaries:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierSummaryService:findSupplierReparationSumaries
+  getSupplierStep:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.CompanyService:getSupplierStep
+  getSupplierCountByDimensions:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierReportService:getSupplierCountByDimensions
+  findOwnMainBusinesses:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierReportService:findOwnMainBusinesses
+  findByLevels:
+    app: snz-category
+    type: DUBBO
+    uri: io.terminus.snz.category.service.FrontendCategoryService:findByLevels
+  queryReport:
+    app: snz-user
+    type: DUBBO
+    uri: io.terminus.snz.user.service.SupplierReportService:queryReport
+  findRequirementByPurchaser:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementService:findByPurchaser
+  findRequirementDetailById:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementService:findDetailById
+  pagingPublicTopics:
+    app: snz-sns
+    type: DUBBO
+    uri: io.terminus.snz.sns.services.TopicService:pagingPublics
+  findModuleByParams:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.ModuleService:findByParams
+  findQuotasByRequirementId:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementQuotaService:findByRequirementId
+  findSignByParam:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementSolutionService:findSignByParam
+  findRequirementSolutionsByRequirementIdWithAdmin:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementSolutionService:findByRequirementId
+  findTSolutionRank:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementQuotaService:findTSolutionRank
+  findEndSolutions:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementQuotaService:findEndSolutions
+  findTopicPeople:
+    app: snz-requirement
+    type: DUBBO
+    uri: io.terminus.snz.requirement.service.RequirementService:findTopicPeople
+  findSupplierTimeLinesByUserId:
+    type: DUBBO
+    uri: "io.terminus.snz.user.service.SupplierTimeLineService:findSupplierTimeLinesByUserId"

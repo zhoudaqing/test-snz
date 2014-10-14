@@ -1,0 +1,8 @@
+@import "compass/css3/inline-block";
+
+.supplier-code{
+  .control-group{
+    @include inline-block(middle);
+    width: 450px;
+  }
+}

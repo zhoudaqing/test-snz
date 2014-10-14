@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 创建需求时确认需求团队人员信息 -->
+<mapper namespace="RequirementTeam">
+    <resultMap id="requirementTeamMap" type="RequirementTeam">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="requirementName" column="requirement_name"/>
+        <result property="type" column="type"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userNumber" column="user_number"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id, requirement_name, type, user_id, user_name, user_number, user_phone, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="requirementTeam" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_requirement_teams (<include refid="columns"/>) values (#{requirementId},#{requirementName},#{type}, #{userId},
+        #{userName}, #{userNumber}, #{userPhone}, now(), now())
+    </insert>
+
+    <!-- 优化性能批量插入 -->
+    <insert id="createBatch" parameterType="requirementTeam" useGeneratedKeys="true">
+        insert into snz_requirement_teams (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="team" index="index" separator="," >
+            (#{team.requirementId},#{team.requirementName},#{team.type}, #{team.userId}, #{team.userName}, #{team.userNumber}, #{team.userPhone}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="requirementTeam">
+        update snz_requirement_teams
+        <set>
+            <if test="requirementId!=null">requirement_id=#{requirementId},</if>
+            <if test="requirementName!=null">requirement_name=#{requirementName},</if>
+            <if test="type!=null">type=#{type},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="userName!=null">user_name=#{userName},</if>
+            <if test="userNumber!=null">user_number=#{userNumber},</if>
+            <if test="userPhone!=null">user_phone=#{userPhone},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from snz_requirement_teams where id=#{id}
+    </delete>
+
+    <select id="findById" parameterType="long" resultMap="requirementTeamMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_teams where id=#{id}
+    </select>
+
+    <select id="findByRequirementId" parameterType="long" resultMap="requirementTeamMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_teams where requirement_id=#{requirementId}
+    </select>
+
+    <select id="findByIdType" resultMap="requirementTeamMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_teams where user_id=#{userId} and type=#{teamType}
+    </select>
+</mapper>

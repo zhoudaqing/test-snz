@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="TransCashPledgeFrom" targetNamespace="http://www.example.org/TransCashPledgeFrom/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/TransCashPledgeFrom/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+      <xsd:schema targetNamespace="http://www.example.org/TransCashPledgeFrom/"
+                  xmlns:tns="http://www.example.org/TransCashPledgeFrom/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="TransCashPledgeFrom">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ITAB_LOG" type="tns:ZFI_MKZY_LOG"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="TransCashPledgeFromResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="ITAB_LOG" type="tns:ZFI_MKZY_LOG"/>
+            <xsd:element name="EAIMessage" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ZFI_MKZY_LOG">
+        <xsd:sequence>
+          <xsd:element name="XBLNR" type="xsd:string"/>
+          <xsd:element name="CODE" type="xsd:string"/>
+          <xsd:element name="GJAHR" type="xsd:string"/>
+          <xsd:element name="BUKRS" type="xsd:string"/>
+          <xsd:element name="MONAT" type="xsd:string"/>
+          <xsd:element name="BUDAT" type="xsd:string"/>
+          <xsd:element name="LIFNR" type="xsd:string"/>
+          <xsd:element name="DEDAT" type="xsd:string"/>
+          <xsd:element name="DMBTR" type="xsd:decimal"/>
+          <xsd:element name="LX" type="xsd:string"/>
+          <xsd:element name="CPUDT" type="xsd:string"/>
+          <xsd:element name="CPUTM" type="xsd:string"/>
+          <xsd:element name="BELNR" type="xsd:string"/>
+          <xsd:element name="FLAG" type="xsd:string"/>
+          <xsd:element name="MESSAGE" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="TransCashPledgeFromRequest">
+    <WL5G3N0:part element="WL5G3N1:TransCashPledgeFrom" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="TransCashPledgeFromResponse">
+    <WL5G3N0:part element="WL5G3N1:TransCashPledgeFromResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="TransCashPledgeFrom">
+    <WL5G3N0:operation name="TransCashPledgeFrom">
+      <WL5G3N0:input message="WL5G3N1:TransCashPledgeFromRequest"/>
+      <WL5G3N0:output message="WL5G3N1:TransCashPledgeFromResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="TransCashPledgeFromSOAP" type="WL5G3N1:TransCashPledgeFrom">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="TransCashPledgeFrom">
+      <WL5G3N2:operation soapAction="http://www.example.org/TransCashPledgeFrom/TransCashPledgeFrom"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="TransCashPledgeFrom">
+    <WL5G3N0:port binding="WL5G3N1:TransCashPledgeFromSOAP" name="TransCashPledgeFromSOAP">
+      <WL5G3N2:address location="http://10.135.28.77:10101/EAI/RoutingProxyService/EAI_SOAP_ServiceRoot?INT_CODE=GVS_test_010"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

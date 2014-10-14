@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OutQuotaInfo">
+    <resultMap id="OutQuotaInfoMap" type="OutQuotaInfo">
+        <id property="id" column="id"/>
+        <result property="modulenum" column="module_num"/>
+        <result property="modulename" column="module_name"/>
+        <result property="factorynum" column="factory_num"/>
+        <result property="matkl" column="matkl"/>
+        <result property="supplierid" column="supplier_id"/>
+        <result property="suppliername" column="supplier_name"/>
+        <result property="quantity" column="quantity"/>
+        <result property="createdat" column="created_at"/>
+        <result property="updatedat" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+      module_num, module_name, factory_num, matkl, supplier_id, supplier_name, quantity, created_at, updated_at
+    </sql>
+
+
+    <select id="findbymatnrall" resultMap="OutQuotaInfoMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_quota_temp_infos`
+        where module_num=#{MATNR} and supplier_id=#{WERKS} and factory_num=#{FACTORY}
+    </select>
+
+    <insert id="create" parameterType="OutQuotaInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mw_quota_temp_infos`
+        (<include refid="columns"/>)
+        VALUES
+        (#{modulenum}, #{modulename}, #{factorynum}, #{matkl}, #{supplierid}, #{suppliername}, #{quantity}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="OutQuotaInfo">
+        update `mw_quota_temp_infos`
+        <set>
+            <if test="modulename!=null"> module_name=#{modulename}, </if>
+            <if test="matkl!=null"> matkl=#{matkl}, </if>
+            <if test="suppliername!=null"> supplier_name=#{suppliername}, </if>
+            <if test="quantity!=null"> quantity=#{quantity}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="findById" resultMap="OutQuotaInfoMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_quota_temp_infos` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBymodulenum" resultMap="OutQuotaInfoMap">
+        select id,<include refid="columns"/> from `mw_quota_temp_infos` where module_num = #{modulenum}
+    </select>
+
+</mapper>

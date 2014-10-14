@@ -1,0 +1,184 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-app-list"}}
+{{#assign "groupAuth"}}group:{{group}}{{/assign}}
+{{#if _DATA_.implant}}
+<div class="ui icon warning message">
+  <i class="attention icon"></i>
+  <div class="content">
+    <div class="header">IMPLANT MODE</div>
+    <p>Group: [{{group}}] 是嵌入式的，因此只有一个 App ，并且无法进行增删改动作。</p>
+  </div>
+</div>
+<table class="ui table segment">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Domain</th>
+      <th>Path</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.apps}}
+    <tr>
+      <td rowspan="3">{{key}}</td>
+      <td>Domain: {{domain}}</td>
+      <td>AssetsHome: {{assetsHome}}</td>
+    </tr>
+    <tr>
+      <td>ProxyRoot: {{proxyRoot}}</td>
+      <td>ConfigPath: {{configPath}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>ConfigJsPath: {{configJsPath}}</td>
+    </tr>
+    <tr>
+      <td colspan="3">Desc: {{desc}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+<div class="ui icon info message">
+  <i class="attention icon"></i>
+  <div class="content">
+    <div class="header">CENTER MODE</div>
+    <p>
+      Group: [{{group}}] 是中心化的，它的 rootPath 被配置为：[{{_DATA_.rootPath}}]
+      <br>
+      <br>
+      {{#hasPermission groupAuth}}
+      你可以 <button class="ui tiny blue button js-btn-new-app"><i class="add icon"></i> CREATE NEW APP</button>
+      {{else}}
+      你无权新建 App
+      {{/hasPermission}}
+    </p>
+  </div>
+</div>
+<table class="ui table segment">
+  <thead>
+    <tr>
+      <th>Key</th>
+      <th>Domain</th>
+      <th>AssetsHome</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#if _DATA_.apps}}
+    {{#each _DATA_.apps}}
+    <tr class="app-row">
+      <td class="app-key">
+        {{key}}
+        <div class="app-detail">
+          <table class="ui table segment">
+            <tbody>
+              <tr>
+                <td>ProxyRoot:</td>
+                <td>{{proxyRoot}}</td>
+              </tr>
+              <tr>
+                <td>AssetsHome:</td>
+                <td>{{assetsHome}}</td>
+              </tr>
+              <tr>
+                <td>ConfigPath:</td>
+                <td>{{configPath}}</td>
+              </tr>
+              <tr>
+                <td>ConfigJsFile:</td>
+                <td>{{configJsFile}}</td>
+              </tr>
+              <tr>
+                <td colspan="2">Desc: {{desc}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </td>
+      <td>{{domain}}</td>
+      <td>{{assetsHome}}</td>
+      <td>
+        {{#assign "appAuth"}}group:{{group}}:app:{{key}}{{/assign}}
+        {{#hasPermission appAuth}}
+        <div class="ui buttons">
+          <div class="ui tiny button js-btn-edit-app" data-app-key="{{key}}"><i class="info icon"></i> EDIT</div>
+          <div class="ui tiny labeled top right pointing dropdown button">
+            <i class="settings icon"></i> SETTINGS
+            <div class="menu">
+              <div class="item js-btn-extra-domains" data-app-key="{{key}}">Extra Domains</div>
+            </div>
+          </div>
+          <div class="ui tiny red button js-btn-del-app" data-app-key="{{key}}"><i class="trash icon"></i> DELETE</div>
+        </div>
+        {{else}}
+        无权操作
+        {{/hasPermission}}
+      </td>
+    </tr>
+    {{/each}}
+    {{else}}
+    <tr>
+      <td colspan="4" style="text-align:center;">还没有任何 App</td>
+    </tr>
+    {{/if}}
+  </tbody>
+</table>
+<input type="hidden" class="js-val-root-path" value="{{_DATA_.rootPath}}">
+{{/if}}
+<div class="ui small modal group-app-list-modal app-info">
+  <i class="close icon"></i>
+  <div class="header">
+    App info
+  </div>
+  <div class="content"></div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui positive right labeled icon button">Submit<i class="checkmark icon"></i></div>
+  </div>
+</div>
+<div class="ui small modal group-app-list-modal extra-domains">
+  <i class="close icon"></i>
+  <div class="header">
+    App Extra Domains
+  </div>
+  <div class="content">
+    <div class="ui blue message">
+      <i class="icon info"></i> 每行一个额外域名，不要添加 http:// 的前缀
+    </div>
+    <textarea name="extraDomains" style="width: 100%; height: 200px;"></textarea>
+  </div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui positive right labeled icon button">Submit<i class="checkmark icon"></i></div>
+  </div>
+</div>
+<div class="ui small basic modal group-app-list-modal del-app-confirm">
+  <div class="header">
+    Delete App
+  </div>
+  <div class="content">
+    <div class="left"><i class="trash icon"></i></div>
+    <div class="right">
+      <h2>确定要删除这个 App 么？</h2>
+      <p>删除后无法恢复，并且所有此 App 下的站点都将无法访问（站点数据会被保留），请谨慎操作</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui buttons">
+      <div class="ui negative labeled icon button"><i class="remove icon"></i> NO</div>
+      <div class="ui positive right labeled icon button">YES <i class="checkmark icon"></i></div>
+    </div>
+  </div>
+</div>
+<div class="ui page dimmer">
+  <div class="content">
+    <div class="center">
+      <h2 class="ui icon header">
+        <i class="loading icon"></i>
+        Loading...
+      </h2>
+    </div>
+  </div>
+</div>
+{{/component}}

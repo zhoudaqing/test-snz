@@ -1,0 +1,18 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-cell-list"}}
+<div class="ui horizontal list">
+  {{#each _DATA_}}
+  <div class="item">
+    {{#equals this cell}}
+    <div class="ui pointing below label">
+      <i class="hdd icon"></i> {{this}}
+    </div>
+    {{else}}
+    <a class="ui label" href="/group/config?group={{group}}&cell={{this}}">
+      <i class="hdd icon"></i> {{this}}
+    </a>
+    {{/equals}}
+  </div>
+  {{/each}}
+</div>
+{{/component}}

@@ -1,0 +1,89 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>模块配置</h2>
+  </div>
+  <form class="form form-aligned module-form" data-type="2" {{#if module.id}}data-id="{{module.id}}"{{/if}} data-series="{{pp module.seriesIds}}">
+    <div class="module-new modal-body">
+    {{#with module}}
+      <input type="hidden" value="2" name="type">
+      <input type="hidden" value="{{requirementId}}" name="requirementId">
+      {{#if id}}<input type="hidden" value="{{id}}" name="id">{{/if}}
+      <div class="form-left">
+        <div class="control-group">
+          <label for="moduleNum">模块专用号:</label>
+          <input id="moduleNum" name="moduleNum" type="text" placeholder="请输入模块专用号" value="{{moduleNum}}" {{#if moduleNum}}readOnly{{/if}} data-num="{{moduleNum}}">
+          {{#unless moduleNum}}<button class="btn btn-primary js-search-module" style="vertical-align:baseline;" type="button">搜索</button>{{/unless}}
+        </div>
+        <div class="control-group">
+          <label for="category"><span class="required">*</span>模块描述:</label>
+          <input id="name" name="moduleName" type="text" placeholder="请输入物料号名称" required value="{{moduleName}}" {{#if moduleName}}readOnly{{/if}}>
+        </div>
+        <div class="control-group">
+          <label>模块属性:</label>
+          <select class="select" style="width:164px;" id="module-category" name="seriesId" {{#if seriesId}}disabled{{/if}}>
+            {{#each seriesIds}}
+            <option value="{{bcId}}" data-name="{{name}}" {{#equals ../seriesId bcId}}selected{{/equals}}>{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="control-group">
+          <label>产品分类:</label>
+          <select class="select" style="width:164px;" id="category-property" name="propertyId" {{#if propertyId}}data-property="{{propertyId}}"{{/if}}></select>
+        </div>
+        {{!-- <div class="control-group">
+          <label for="attestation"><span class="required">*</span>认证:</label>
+          <select name="attestationId" id="attestation-select" style="width:164px;" required {{#if attestationId}}data-id="{{attestationId}}"{{/if}}></select>
+        </div> --}}
+        <div class="control-group" style="width:900px;">
+          <label for="attestation"><span class="required">*</span>认证:</label>
+          <span id="attestation-select-multiple" class="data-validate-item" style="position:relative;" {{#if attestations}}data-checkdata="{{attestations}}"{{/if}} {{#if attestationId}}data-id="{{attestationId}}"{{/if}}>
+            <button class="btn js-select-multiple" style="width:164px;" type="button" {{#if requirementId}}data-id="{{requirementId}}"{{/if}}>请选择认证 &nbsp;<span class="caret" style="margin-top:4px;"></span></button>
+            <span class="attestation-show"></span>
+          </span>
+        </div>
+        <div class="control-group">
+          <label for="quality">质量目标:</label>
+          <input id="quality" name="quality" type="text" placeholder="请输入质量目标" value="{{quality}}"> PPM
+        </div>
+        <div class="control-group" id="cost-group">
+          <label for="cost">成本目标:</label>
+          <input id="cost" name="cost" type="text" placeholder="请输入成本目标,最多2位小数" value="{{formatPrice cost}}" pattern="^(\d+\.[0-9]{1,2})$|^(\d+)$"/> {{#if units}}元/{{units.cost.quantityName}}{{units.cost.salesName}}{{else}}元/{{/if}}
+        </div>
+        <div class="control-group" id="delivery-group">
+          <label for="delivery">高峰月产能:</label>
+          <input id="delivery" name="delivery" type="text" placeholder="请输入产能要求" value="{{delivery}}">{{#if units}} {{units.delivery.salesName}}{{/if}}
+        </div>
+        <div class="control-group">
+          <label for="supplyAt"><span class="required">*</span>要求供货时间:</label>
+          <input type="text" id="supplyAt" placeholder="请选择要求供货时间" class="datepicker" name="supplyAt" value="{{formatDate supplyAt "day"}}" required>
+        </div>
+      </div>
+      {{/with}}
+      <div class="form-right">
+        <div>资源量:</div>
+        <div class="control-group">
+          <p>1. 标注“<span class="currency">*</span>”是必填项，公示给供应商，其他项可在需求锁定环节锁定<br>2. 请先检查配额分配规则是否制定，否则无法计算合作供应商数量和模块配额分配比例<br>3. 资源量值必须填写整百正整数，如100、9900等</p>
+        </div>
+        {{#if factoryList}}
+          {{#each factoryList}}
+        <div class="control-group resource-group" data-id="{{id}}">
+          <label style="width:60px;"><span class="required">*</span>{{factoryNum}}:</label>
+          <input type="text" pattern="^\d+00$" placeholder="请输入整百正整数" class="resource-input" data-num="{{factoryNum}}" data-name="{{factoryName}}" value="{{resourceNum}}"> <select class="unit-sales input-small" readOnly><option value="{{salesId}}" data-name="{{salesName}}">{{salesName}}</option></select>
+        </div>
+          {{/each}}
+        {{else}}
+          {{#each module.factory}}
+          <div class="control-group resource-group">
+            <label style="width:60px;"><span class="required">*</span>{{factoryNum}}:</label>
+            <input type="text" pattern="^\d+00$" placeholder="请输入整百正整数" class="resource-input" data-id="{{id}}" data-num="{{factoryNum}}" data-name="{{factoryName}}" required>
+          </div>
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-success btn-medium" value="确定">
+      <button class="btn btn-info btn-medium close">关闭</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SupplierContact">
+
+	 <!--  行结果列映射到实例属性名称  -->
+    <resultMap id="supplierContactResultMap" type="SupplierContact">
+        <id property="id" column="id"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="phone" column="phone"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+	 <!--  行结果列名  -->
+    <sql id="columns">
+    supplier_name,supplier_code,phone,created_at,updated_at
+    </sql>
+
+	 <!--  新增 供应商联系方式  -->
+    <insert id="create" parameterType="SupplierContact" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_supplier_contacts ( <include refid="columns"/>)
+      VALUES(
+       #{supplierName},#{supplierCode},#{phone},now(),now()
+      )
+    </insert>
+
+
+    <update id="update" parameterType="SupplierContact">
+      UPDATE snz_supplier_contacts
+      <set>
+          <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+          <if test="supplierCode!=null">supplier_code = #{supplierCode},</if>
+          <if test="phone!=null">phone = #{phone},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_supplier_contacts
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+    <select id="listAll" resultMap="supplierContactResultMap">
+        SELECT * FROM snz_supplier_contacts where phone is not null
+    </select>
+
+
+    <select id="findBySupplierCodeOrName" parameterType="map" resultMap="supplierContactResultMap">
+        SELECT *
+          FROM snz_supplier_contacts
+        WHERE supplier_code=#{supplierCode} OR supplier_name = #{supplierName}
+          LIMIT 1
+    </select>
+
+</mapper>

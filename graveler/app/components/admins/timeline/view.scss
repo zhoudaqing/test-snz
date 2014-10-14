@@ -1,0 +1,24 @@
+@import "compass/css3/inline-block";
+@import "pokeball/variables";
+
+.admins-timeline {
+  .timeline {
+    margin: 0 auto;
+  }
+  .more {
+    margin: 20px 200px;
+    border-top: 1px solid $default-border-color;
+    text-align: center;
+
+    .link-more {
+      @include inline-block(baseline);
+      padding: 20px;
+      font-size: 20px;
+
+      &.disabled {
+        color: $btn-disabled-color;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

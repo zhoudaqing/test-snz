@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="ReceiveClaimInfoFromGVS" targetNamespace="http://www.example.org/ReceiveClaimInfoFromGVS/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/ReceiveClaimInfoFromGVS/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+      <xsd:schema targetNamespace="http://www.example.org/ReceiveClaimInfoFromGVS/"
+                  xmlns:tns="http://www.example.org/ReceiveClaimInfoFromGVS/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="ReceiveClaimInfoFromGVS">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="T_INPUT" type="tns:ZSPJH_INPUT2"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReceiveClaimInfoFromGVSResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="out" type="tns:OutType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ZSPJH_INPUT2">
+        <xsd:sequence>
+          <xsd:element name="Z_RETSTA" type="xsd:string"/>
+          <xsd:element name="LIFNR" type="xsd:string"/>
+          <xsd:element name="WERKS" type="xsd:string"/>
+          <xsd:element name="MATNR" type="xsd:string"/>
+          <xsd:element name="ZDATE" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OutType">
+        <xsd:sequence>
+          <xsd:element name="Z_RET" type="xsd:string"/>
+          <xsd:element name="EAIFlag" type="xsd:string"/>
+          <xsd:element name="EAIMessage" type="xsd:string"/>
+          <xsd:element name="EAIDetail" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="ReceiveClaimInfoFromGVSRequest">
+    <WL5G3N0:part element="WL5G3N1:ReceiveClaimInfoFromGVS" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="ReceiveClaimInfoFromGVSResponse">
+    <WL5G3N0:part element="WL5G3N1:ReceiveClaimInfoFromGVSResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="ReceiveClaimInfoFromGVS">
+    <WL5G3N0:operation name="ReceiveClaimInfoFromGVS">
+      <WL5G3N0:input message="WL5G3N1:ReceiveClaimInfoFromGVSRequest"/>
+      <WL5G3N0:output message="WL5G3N1:ReceiveClaimInfoFromGVSResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="ReceiveClaimInfoFromGVSSOAP" type="WL5G3N1:ReceiveClaimInfoFromGVS">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="ReceiveClaimInfoFromGVS">
+      <WL5G3N2:operation soapAction="http://www.example.org/ReceiveClaimInfoFromGVS/ReceiveClaimInfoFromGVS"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="ReceiveClaimInfoFromGVS">
+    <WL5G3N0:port binding="WL5G3N1:ReceiveClaimInfoFromGVSSOAP" name="ReceiveClaimInfoFromGVSSOAP">
+      <WL5G3N2:address location="http://10.135.1.110:7001/EAI/RoutingProxyService/EAI_SOAP_ServiceRoot?INT_CODE=EAI_INT_1685"/>
+      <!--<WL5G3N2:address location="http://10.135.1.110:7001/EAI/RoutingProxyService/EAI_SOAP_ServiceRoot?INT_CODE=EAI_INT_1685"/>-->
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

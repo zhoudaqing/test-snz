@@ -1,0 +1,61 @@
+{{#component "js-comp feedback_manage operation-platform"}}
+<p class="components-title"><strong>用户反馈管理</strong></p>
+<div id="block" class="block">
+  <form id="js-feedback-manage-form" novalidate="true">
+    <fieldset>
+      <span class="span3">
+        <label for="feedbacks">问题种类:</label>
+        <select class="select" name="feedbacks">
+          <option {{#equals feedbacks "4"}}selected{{/equals}} value="1">无模块接口/封包标准</option>
+          <option {{#equals feedbacks "3"}}selected{{/equals}} value="2">接口/封包标准不清晰</option>
+          <option {{#equals feedbacks "2"}}selected{{/equals}} value="3">接口/封包非行业标准</option>
+          <option {{#equals feedbacks "1"}}selected{{/equals}} value="4">订单量较小</option>
+          <option {{#equals feedbacks "-1"}}selected{{/equals}} value="5">园区无法配套</option>
+          <option {{#equals feedbacks "-1"}}selected{{/equals}} value="6">项目周期太短</option>
+          <option {{#equals feedbacks "-3"}}selected{{/equals}} value="7">其它原因</option>
+        </select>
+      </span>
+      <span class="span3">
+         <label for="email">供应商0:</label>
+         <input type="text" name="user_id" value="{{user_id}}" >
+         <label for="email">​更新值userid:</label>
+         <input type="text" name="user_notKnown_1" value="{{user_notKnown_1}}" >
+         <label for="email">​更新值supplier:</label>
+         <input type="text" name="user_notKnown_2" value="{{user_notKnown_2}}" >
+         <label for="email">​更新值status:</label>
+         <input type="text" name="user_notKnown_3" value="{{user_notKnown_3}}" >
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="button" class="btn btn-primary" id="feedback_find">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-feedback-manage-form').reset()">取消</a>
+      </span>
+      <button type="button" class="btn btn-primary" id="feedback_delete">删除111</button>
+      <button type="button" class="btn btn-primary" id="feedback_update">更新</button>
+      <button type="button" class="btn btn-primary" id="feedback_update">更新</button>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="40" rowspan="3">编号</th>
+      <th width="70" rowspan="3">供应商代码</th>
+      <th width="152"  rowspan="3">供应商名称</th>
+      <th width="488" rowspan="6">用户反馈</th>
+    </tr>
+  </thead>
+  <tbody data-test="{{json _DATA_.data}}">
+     {{#each _DATA_.data }}
+     <tr>
+      <td>{{supplierResource.product}}</td>
+      <td>{{supplierResource.vcode}}</td>
+      <td>{{supplierResource.supplierName}}</td>
+      <td>{{supplierResource.userName}}</td>
+     </tr>
+     {{/each }}
+  </tbody>
+</table>
+{{/component}}

@@ -1,0 +1,83 @@
+{{#component "js-comp supplier-resume-delivery"}}
+  <p class="components-title"><strong class="tab-name">交货</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">生产设备：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table id="device-group-table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>设备名称</th>
+              <th>参数</th>
+              <th>数量</th>
+              <th>附件</th>
+            </tr>
+          </thead>
+          <tbody data-content="{{listOfEquipments}}" data-url="{{_HREF_.photohref}}">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">自动化设备：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table id="autodevice-group-table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>设备名称</th>
+              <th>参数</th>
+              <th>数量</th>
+              <th>附件</th>
+            </tr>
+          </thead>
+          <tbody data-content="{{listOfAutomationEquipment}}" data-url="{{_HREF_.photohref}}">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="compare-list only-new">
+    <div class="compare-row">
+      <div class="new-value">
+        <label>模块上年产量：</label>
+        <div>
+          {{moduleProductionCapacity}}
+          &nbsp;&nbsp;
+          {{#if moduleProductionCapacityAttachUrl}}
+          <span class="file-name">
+            <a href="{{moduleProductionCapacityAttachUrl}}">附件</a>
+          </span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>交货周期(天)：</label>
+        <div>
+          {{deliveryCycle}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>布局规划：</label>
+        <div>
+          {{deliveryArea}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{/with}}
+{{/component}}

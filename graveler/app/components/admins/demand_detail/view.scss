@@ -1,0 +1,247 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+@import "icons";
+
+.demand-detail {
+  .demand-info-inline {
+    label {
+      text-align: right;
+      width: 80px;
+    }
+  }
+
+  .demand-content {
+    border: 1px solid $default-border-color;
+    margin-bottom: 30px;
+    padding: 20px 20px 10px;
+
+    &.front-show {
+      border: 0;
+      margin-bottom: 20px;
+      padding: 20px 0;
+    }
+
+    .demand-one-line,
+    .demand-half-line {
+      margin-bottom: 5px;
+      border: 1px dashed $default-border-color;
+      background-color: #e4f2fc;
+
+      &.all-width {
+        .demand-info-inline {
+          width: 160px;
+        }
+      }
+    }
+
+    .hahah {
+      color: #000;
+    }
+
+    .hahah {
+      border-width: 1px;
+    }
+
+    .demand-line-last {
+      @extend .icon-border-image;
+      margin-bottom: 5px;
+      width: 100%;
+      height: 40px;
+    }
+
+    .demand-half-line {
+      @include inline-block(middle);
+      width: 495px;
+    }
+
+    .demand-series {
+      width: 50%;
+    }
+
+    .demand-name {
+      background-color: $default-background-color;
+      padding-left: 10px;
+      height: 28px;
+      line-height: 28px;
+      font-size: 14px;
+
+      i {
+        margin: 3px 5px 0 0;
+      }
+    }
+
+    .demand-select {
+      label {
+        width: auto !important;
+        text-align: left !important;
+      }
+
+      padding-left: 20px;
+      width: 170px;
+    }
+
+    .demand-quota {
+      label {
+        margin-left: -2px;
+      }
+
+      width: 250px;
+    }
+
+    .detail-info {
+      &.hide {
+        display: none;
+      }
+    }
+
+    .demand-tactic {
+      width: 135px;
+    }
+
+    .product-scope {
+      @include inline-block(bottom);
+      overflow: hidden;
+      width: 260px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+    }
+
+    .demand-delivery {
+      label {
+        margin-left: -3px;
+        width: 64px !important;
+      }
+
+      &.front-width {
+        label {
+          width: 78px !important;
+        }
+      }
+    }
+
+    .demand-head-drop {
+      padding-left: 23px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+
+      label {
+        width: auto !important;
+      }
+    }
+
+    .demand-info {
+      margin: 7px 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+
+      label {
+        margin-right: 10px;
+        width: 75px;
+        text-align: right;
+      }
+
+      &.demand-info-inline {
+        @include inline-block(middle);
+      }
+    }
+
+    .demand-currency {
+      min-width: 155px;
+
+      label {
+        width: 70px;
+      }
+    }
+
+    .demand-count {
+      width: 190px;
+    }
+
+    .demand-module-attribute {
+      width: 180px;
+
+      label {
+        width: 95px;
+      }
+    }
+
+    .demand-module {
+      width: 190px;
+
+      label {
+        width: 75px;
+      }
+    }
+
+    .demand-definite {
+      padding-left: 23px;
+      height: 50px;
+      word-break: break-all;
+      overflow: auto;
+      white-space: normal;
+
+      label {
+        width: auto;
+      }
+    }
+
+    .demand-last {
+      @include inline-block(middle);
+      width: 400px;
+    }
+
+    .demand-attachment {
+      text-align: right;
+      width: 100%;
+
+      label {
+        width: auto;
+      }
+
+      a.replace-file {
+        text-decoration: underline;
+        color: #323431;
+      }
+
+      a.js-no-file {
+        color: #000;
+        cursor: default;
+      }
+
+      a.js-notshow-file {
+        display: none;
+      }
+    }
+
+    .demand-operate {
+      padding: 15px;
+      text-align: center;
+      min-height: 0;
+
+      p {
+        margin: 0;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .progress-action {
+    height: 65px;
+    background-color: #fff9ec;
+
+    p {
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+
+      span {
+        margin-right: 20px;
+        vertical-align: middle;
+        font-size: 14px;
+      }
+    }
+  }
+}

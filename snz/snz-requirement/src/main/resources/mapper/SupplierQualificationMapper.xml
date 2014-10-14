@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SupplierQualification">
+    <resultMap id="SupplierQualificationMap" type="SupplierQualification">
+        <id property="id" column="id"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="vCode" column="v_code"/>
+        <result property="stage" column="stage"/>
+        <result property="opCode" column="op_code"/>
+        <result property="opMsg" column="op_msg"/>
+        <result property="country" column="country"/>
+        <result property="piPartner" column="pi_partner"/>
+        <result property="currency" column="currency"/>
+        <result property="purchOrg" column="purch_org"/>
+        <result property="bankCode" column="bank_code"/>
+        <result property="bankOwner" column="bank_owner"/>
+        <result property="bankNation" column="bank_nation"/>
+        <result property="bankNum" column="bank_num"/>
+        <result property="payMethod" column="pay_method"/>
+        <result property="payTerm" column="pay_term"/>
+        <result property="order" column="order"/>
+        <result property="slave" column="slave"/>
+        <result property="comCode" column="com_code"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        supplier_id, v_code, stage, op_code, op_msg, country, pi_partner, currency, purch_org, bank_code, bank_owner, bank_nation, bank_num,
+        pay_method, pay_term, `order`, slave, com_code, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="SupplierQualification" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mdm_supplier_qualifications`
+        (<include refid="columns"/>)
+        VALUES
+        (#{supplierId}, #{vCode}, #{stage}, #{opCode}, #{opMsg}, #{country}, #{piPartner}, #{currency}, #{purchOrg}, #{bankCode}, #{bankOwner},
+        #{bankNation}, #{bankNum}, #{payMethod}, #{payTerm}, #{order}, #{slave}, #{comCode}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="SupplierQualification">
+        update `mdm_supplier_qualifications`
+        <set>
+            <if test="supplierId!=null">supplier_id=#{supplierId}, </if>
+            <if test="vCode!=null"> v_code=#{vCode}, </if>
+            <if test="stage!=null"> stage=#{stage}, </if>
+            <if test="opCode"> op_code=#{opCode}, </if>
+            <if test="opMsg"> op_msg=#{opMsg}, </if>
+            <if test="country"> country=#{country}, </if>
+            <if test="piPartner!=null"> pi_partner=#{piPartner}, </if>
+            <if test="currency!=null"> currency=#{currency}, </if>
+            <if test="purchOrg!=null"> purch_org=#{purchOrg}, </if>
+            <if test="bankCode!=null"> bank_code=#{bankCode}, </if>
+            <if test="bankOwner!=null"> bank_owner=#{bankOwner}, </if>
+            <if test="bankNation!=null"> bank_nation=#{bankNation}, </if>
+            <if test="bankNum!=null"> bank_num=#{bankNum}, </if>
+            <if test="payMethod!=null"> pay_method=#{payMethod}, </if>
+            <if test="payTerm!=null"> pay_term=#{payTerm}, </if>
+            <if test="order!=null"> order=#{order}, </if>
+            <if test="slave!=null"> slave=#{slave}, </if>
+            <if test="comCode!=null"> com_code=#{comCode}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="SupplierQualificationMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_supplier_qualifications` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="SupplierQualificationMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_supplier_qualifications`
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="supplierId"> and supplier_id=#{supplierId} </if>
+            <if test="vCode"> and v_code=#{vCode} </if>
+            <if test="stage"> and stage=#{stage} </if>
+            <if test="opCode"> and op_code=#{opCode} </if>
+            <if test="opMsg"> and op_msg=#{opMsg} </if>
+            <if test="country"> and country=#{country} </if>
+            <if test="piPartner!=null"> and pi_partner=#{piPartner} </if>
+            <if test="currency!=null"> and currency=#{currency} </if>
+            <if test="purchOrg!=null"> and purch_org=#{purchOrg} </if>
+            <if test="bankCode!=null"> and bank_code=#{bankCode} </if>
+            <if test="bankOwner!=null"> and bank_owner=#{bankOwner} </if>
+            <if test="bankNation!=null"> and bank_nation=#{bankNation} </if>
+            <if test="bankNum!=null"> and bank_num=#{bankNum} </if>
+            <if test="payMethod!=null"> and pay_method=#{payMethod} </if>
+            <if test="payTerm!=null"> and pay_term=#{payTerm} </if>
+            <if test="order!=null"> and order=#{order} </if>
+            <if test="slave!=null"> and slave=#{slave} </if>
+            <if test="comCode!=null"> and com_code=#{comCode} </if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="findBySupplierId" resultMap="SupplierQualificationMap">
+        select id, <include refid="columns"/>
+        from `mdm_supplier_qualifications`
+        where supplier_id=#{supplierId}
+        limit 1
+    </select>
+</mapper>

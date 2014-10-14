@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="SelectInfoFromMDM" targetNamespace="http://www.example.org/SelectInfoFromMDM/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/SelectInfoFromMDM/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema targetNamespace="http://www.example.org/SelectInfoFromMDM/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/SelectInfoFromMDM/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="SelectInfoFromMDM_OP">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="in" type="tns:inType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="SelectInfoFromMDM_OPResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="Output">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="out" type="xsd:string"/>
+                  <xsd:element name="PageCount" type="xsd:string"/>
+                  <xsd:element name="CurrentPage" type="xsd:string"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="inType">
+        <xsd:sequence>
+          <xsd:element name="CurrentPage" type="xsd:string"/>
+          <xsd:element name="StartTime" type="xsd:string"/>
+          <xsd:element name="EndTime" type="xsd:string"/>
+          <xsd:element name="Department" type="xsd:string"/>
+          <xsd:element name="TableName" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="SelectInfoFromMDM_OPRequest">
+    <WL5G3N0:part element="WL5G3N1:SelectInfoFromMDM_OP" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="SelectInfoFromMDM_OPResponse">
+    <WL5G3N0:part element="WL5G3N1:SelectInfoFromMDM_OPResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="SelectInfoFromMDM">
+    <WL5G3N0:operation name="SelectInfoFromMDM_OP">
+      <WL5G3N0:input message="WL5G3N1:SelectInfoFromMDM_OPRequest"/>
+      <WL5G3N0:output message="WL5G3N1:SelectInfoFromMDM_OPResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="SelectInfoFromMDMSOAP" type="WL5G3N1:SelectInfoFromMDM">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="SelectInfoFromMDM_OP">
+      <WL5G3N2:operation soapAction="http://www.example.org/SelectInfoFromMDM/SelectInfoFromMDM_OP"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="SelectInfoFromMDM">
+    <WL5G3N0:port binding="WL5G3N1:SelectInfoFromMDMSOAP" name="SelectInfoFromMDMSOAP">
+      <WL5G3N2:address location="http://10.135.17.72:10101/EAI/service/MDM/SelectInfoFromMDM/SelectInfoFromMDM"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

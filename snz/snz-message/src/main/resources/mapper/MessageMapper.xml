@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message">
+
+    <!-- 结果集映射 -->
+    <resultMap id="messageMap" type="Message">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="content" column="content"/>
+        <result property="mtype" column="mtype"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_messages
+    </sql>
+
+    <sql id="cols_all">
+        id, <include refid="cols_execlue_id"/>
+    </sql>
+
+    <sql id="cols_execlue_id">
+        user_id, content, mtype, created_at, updated_at
+    </sql>
+
+    <sql id="vals_all">
+        #{userId}, #{content}, #{mtype}, now(), now()
+    </sql>
+
+    <!-- 根据单个id查找 -->
+    <select id="findById" parameterType="long" resultMap="messageMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id = #{id}
+    </select>
+
+    <!-- 根据多个id查找 -->
+    <select id="findByIds" parameterType="list" resultMap="messageMap">
+        SELECT id,
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+        ORDER BY id DESC
+    </select>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="Message" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        (<include refid="vals_all"/>)
+    </insert>
+
+    <!-- 根据id删除 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tb_name"/> WHERE id=#{id}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deletes" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 计数 -->
+    <select id="count" resultType="long" parameterType="map">
+        SELECT COUNT(1) FROM <include refid="tb_name"/>
+        WHERE 1=1
+        <if test="userId!=null">
+            AND user_id = #{userId}
+        </if>
+        <if test="mtype!=null">
+            AND mtype = #{mtype}
+        </if>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="pagination" parameterType="map" resultMap="messageMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        WHERE 1=1
+        <if test="userId!=null">
+            AND user_id = #{userId}
+        </if>
+        <if test="mtype!=null">
+            AND mtype = #{mtype}
+        </if>
+        LIMIT #{offset},#{limit}
+    </select>
+
+</mapper>

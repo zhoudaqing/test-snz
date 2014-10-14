@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MDMBankView">
+    <resultMap id="MDMBankViewMap" type="MDMBankView">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="country" column="country"/>
+    </resultMap>
+
+    <sql id="columns">
+        code, `name`, country
+    </sql>
+
+    <insert id="create" parameterType="MDMBankView" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mdm_bank_views`
+        (<include refid="columns"/>)
+        VALUES
+        (#{code}, #{name}, #{country})
+    </insert>
+
+    <update id="update" parameterType="MDMBankView">
+        update `mdm_bank_views`
+        <set>
+            <if test="code"> code=#{code}, </if>
+            <if test="name"> `name`=#{name}, </if>
+            <if test="country"> country=#{country} </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="MDMBankViewMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_bank_views` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="MDMBankViewMap">
+        select id,
+        <include refid="columns"/>
+        from `mdm_bank_views`
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="code"> and code=#{code} </if>
+            <if test="name"> and `name`=#{name} </if>
+            <if test="country"> and country=#{country} </if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="findCountByFuzzyName" parameterType="map" resultType="long" >
+        select count(id) from `mdm_bank_views`
+        <where> 1=1
+        <if test="name!=null">and name like  CONCAT('%', #{name} ,'%') </if>
+        </where>
+    </select>
+
+    <select id="findByFuzzyName" parameterType="map" resultMap="MDMBankViewMap">
+        select id,<include refid="columns"/> from `mdm_bank_views`
+        <where> 1=1
+            <if test="name!=null">and name like CONCAT('%', #{name}, '%')</if>
+        </where>
+        limit #{offset}, #{size}
+    </select>
+    <select id="findByName" parameterType="String" resultMap="MDMBankViewMap">
+        select id,<include refid="columns"/>from `mdm_bank_views`
+        where name=#{name}
+    </select>
+
+</mapper>

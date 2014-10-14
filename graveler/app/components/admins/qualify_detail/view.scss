@@ -1,0 +1,33 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+
+.qualify-detail{
+  #qualify-detail-form{
+    .section-group{
+      margin-top: 50px;
+    }
+    h4{
+      margin-bottom: 30px;
+    }
+    .control-group{
+      label{
+        width: auto;
+      }
+      .fake-file-btn{
+        vertical-align: top;
+      }
+    }
+    hr{
+      border: 1px solid $default-border-color;
+    }
+    .file-name{
+      @include inline-block(top);
+      width: 150px;
+      height: 26px;
+      line-height: 26px;
+      white-space: nowrap;
+      text-overflow: ellpisis;
+      overflow: hidden;
+    }
+  }
+}

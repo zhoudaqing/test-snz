@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductOwner">
+
+    <resultMap id="productOwnerResultMap" type="ProductOwner">
+        <id property="id" column="id"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="productLineId" column="product_line_id"/>
+        <result property="productLineName" column="product_line_name"/>
+        <result property="ownerName" column="owner_name"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+
+    <sql id="columns">
+    factory_num,factory_name,product_line_id,product_line_name,owner_name,owner_id,created_at,updated_at
+    </sql>
+
+
+    <sql id="query_conditions">
+      <if test="factoryNum!=null">AND factory_num = #{factoryNum}</if>
+      <if test="factoryName!=null">AND factory_name = #{factoryName}</if>
+      <if test="productLineId!=null">AND product_line_id = #{productLineId}</if>
+      <if test="productLineName!=null">AND product_line_name = #{productLineName}</if>
+      <if test="ownerName!=null">AND owner_name = #{ownerName}</if>
+      <if test="ownerId!=null">AND owner_id = #{ownerId}</if>
+    </sql>
+
+
+    <insert id="create" parameterType="ProductOwner" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_product_owners ( <include refid="columns"/>)
+      VALUES(
+       #{factoryNum},#{factoryName},#{productLineId},#{productLineName},#{ownerName},#{ownerId},now(),now()
+      )
+    </insert>
+
+
+    <select id="findById" parameterType="long" resultMap="productOwnerResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_product_owners
+      WHERE
+       `id` = #{id}
+    </select>
+
+
+    <select id="findByIds" parameterType="list" resultMap="productOwnerResultMap">
+        SELECT id,<include refid="columns"/>
+            FROM snz_product_owners
+        WHERE
+            id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+    </select>
+
+
+    <select id="findByProductLineId" parameterType="long" resultMap="productOwnerResultMap">
+      SELECT id,<include refid="columns"/>
+        FROM  snz_product_owners
+      WHERE product_line_id=#{productLineId}
+    </select>
+
+
+    <select id="findByProductLineName" parameterType="string" resultMap="productOwnerResultMap">
+      SELECT id,<include refid="columns"/>
+        FROM  snz_product_owners
+      WHERE product_line_name LIKE concat('%', concat(#{productLineName}, '%'))
+    </select>
+
+
+    <update id="update" parameterType="ProductOwner">
+      UPDATE snz_product_owners
+      <set>
+          <if test="factoryNum!=null">factory_num = #{factoryNum},</if>
+          <if test="factoryName!=null">factory_name = #{factoryName},</if>
+          <if test="productLineId!=null">product_line_id = #{productLineId},</if>
+          <if test="productLineName!=null">product_line_name = #{productLineName},</if>
+          <if test="ownerName!=null">owner_name = #{ownerName},</if>
+          <if test="ownerId!=null">owner_id = #{ownerId},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_product_owners
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

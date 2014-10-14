@@ -1,0 +1,375 @@
+{{#component "js-comp supplier-report"}}
+<h3>供应商报表</h3>
+<div id="reportplot" class="main-plot" data-points="[1498,1300,998,700,500,200]"></div>
+
+<div class="components-title"><strong>供应商表格</strong><span class="line"></span>
+  <span id="backend-second-select" class="data-validate-item" style="position:relative;">
+    <button class="btn js-select-column" style="width:145px;" type="button">请选择表格列 &nbsp;
+      <span class="caret" style="margin-top:4px;"></span>
+    </button>
+    <div class="menu menu-dropdown up select-menu hiden"  style="top:30px;">
+      <ul id="supplier-select-ul">
+{{!--           <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="index">序号</label></li> --}}
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="step">状态</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="supplierCode">供应商编码</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="corporation_supplyName">供应商名称</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="accountType">类型(制造/渠道)</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="creditQualifyResult">信用等级评价结果</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="participateCount">响应交互数量</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="selectedSolutionCount">方案中选数量</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="listedStatus">是否上市公司</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="personScale_employeeNum">员工人数</label></li>
+          <li><label for="" class="scope-category-label"><input checked="checked" type="checkbox" value="customers">主要客户</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="aptitudeQualifyResult">资质交互结果</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="initAgent_legalPerson">法人</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="supplierCode_code">供应商代码</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="corporation_legalPerson">法人公司名称</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="groupName">集团公司名称</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="groupAddr">集团公司地址</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="regCapital">注册资金(万)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="personScale_company">公司规模人数</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="foundAt">公司成立时间</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="regCountryName">公司注册国家</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="regRegion">隶属地区</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="fixedAssets">固定资产(万)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="productLine">所属产品线</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="officialWebsite">公司网站</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="nature">企业性质</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="worldTop">是否世界500强</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="listedRegion">上市地区</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="ticker">股票代码</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="companySupplyParks">可供货园区</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="factories_area">工厂面积(平方米)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="factories_num">人数(人)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="factories_assets">固定资产(万元)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="name">联系人</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="mobile">联系人手机</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="officePhone">联系人办公电话</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="email">联系人邮箱</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" checked="checked" value="recentFinance_sold">销售额(万元)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="recentFinance_net">净利润(万元)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="assets">研发资产(万)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="labArea">试验室面积(㎡)</label></li>
+          <li><label for="" class="scope-category-label"><input type="checkbox" value="numberOfPatents">专利数量</label></li>
+      </ul>
+      <p class="product-operate-p">
+        <button type="button" class="btn btn-small btn-info close">关闭</button>
+      </p>
+    </div>
+    <span class="product-show"></span>
+  </span>
+</div>
+<div id="block" class="block">
+  <form id="js-supplier-audit-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="">时间段:&nbsp;&nbsp;&nbsp;</label>
+        <input id="registeredAtStart"class="input-small datepicker" type="text" placeholder="开始时间" name="registeredAtStart" value="{{registeredAtStart}}">
+        -
+        <input id="registeredAtEnd" class="input-small datepicker" type="text" placeholder="截止时间" name="registeredAtEnd" value="{{registeredAtEnd}}">
+      </span>
+      <span class="span3">
+        <label for="step">状态:&nbsp;&nbsp;&nbsp;</label>
+        <select class="select" name="step">
+          <option value="">请选择</option>
+          <option {{#equals step "1"}}selected{{/equals}} value="1">广选</option>
+          <option {{#equals step "2"}}selected{{/equals}} value="2">完善信息</option>
+          <option {{#equals step "3"}}selected{{/equals}} value="3">入围</option>
+          <option {{#equals step "4"}}selected{{/equals}} value="4">备选</option>
+          <option {{#equals step "5"}}selected{{/equals}} value="5">合作</option>
+          <option {{#equals step "6"}}selected{{/equals}} value="6">淘汰</option>
+        </select>
+      </span>
+      <span class="span3">
+        <label for="strategy">策略:&nbsp;&nbsp;&nbsp;</label>
+        <select class="select" name="strategy">
+          <option value="">请选择</option>
+          <option {{#equals strategy "1"}}selected{{/equals}} value="1">淘汰</option>
+          <option {{#equals strategy "2"}}selected{{/equals}} value="2">限制</option>
+          <option {{#equals strategy "3"}}selected{{/equals}} value="3">优选</option>
+          <option {{#equals strategy "4"}}selected{{/equals}} value="4">备选</option>
+        </select>
+      </span>
+      <span class="">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a>
+      </span>
+    </fieldset>
+    <fieldset>
+       <span class="span3">
+        <label for="smallResources">资源小微:</label>
+        <select class="select" name="moduleId" data-moduleid="{{moduleId}}">
+          <option value="">请选择</option>
+        </select>
+      </span>
+      <span class="span3">
+        <label for="mainBusinessId">行业:&nbsp;&nbsp;&nbsp;</label>
+        <select class="select" name="mainBusinessId" data-industry="{{mainBusinessId}}">
+          <option value="">请选择</option>
+        </select>
+      </span>
+      <span class="span3">
+        <label for="supplyParkId">园区:&nbsp;&nbsp;&nbsp;</label>
+        <select class="select" name="supplyParkId" data-park="{{supplyParkId}}">
+          <option value="">请选择</option>
+        </select>
+      </span>
+      <span class="">
+        <label for="remember"></label>
+        <input type="button" class="btn btn-primary js-export-report" value="导出"/>
+        <a href="javascript:void" data-status="show" class="js-extra-condition">显示条件</a>
+      </span>
+    </fieldset>
+    <fieldset class="condition-extra hiden">
+      <span class="span3">
+        <label for="park">竞争对手:</label>
+        <select class="select" name="competitor">
+          <option value="">请选择</option>
+{{!--           <option value="1">伊莱克斯</option>
+          <option value="2">惠尔蒲</option>
+          <option value="3">三星</option>
+          <option value="4">格力</option>
+          <option value="4">LG</option> --}}
+        </select>
+      </span>
+
+      <span class="span3">
+        <label for="park">产业线:</label>
+        <select class="select" name="industryLine">
+          <option value="">请选择</option>
+{{!--           <option value="1">冰箱</option>
+          <option value="2">空调</option>
+          <option value="3">洗衣机</option> --}}
+        </select>
+      </span>
+      <span class="span3">
+        <label for="moduleId">模块:&nbsp;&nbsp;&nbsp;</label>
+        <select class="select" name="moduleId" >
+          <option value="">请选择</option>
+{{!--           <option value="1">青岛</option>
+          <option value="2">合肥</option>
+          <option value="3">武汉</option> --}}
+        </select>
+      </span>
+    </fieldset>
+  </form>
+</div>
+<div class="table-container">
+<table class="table table-striped" style="">
+  <thead>
+    <tr>
+      <th class="index" width="50">序号</th>
+      <th class="step" width="90">状态</th>
+      <th class="supplierCode" width="150">供应商编码</th>
+      <th class="corporation_supplyName" width="200">供应商名称</th>
+      <th class="accountType" width="100">类型(制造/渠道)</th>
+      <th class="creditQualifyResult" width="120">信用等级评价结果</th>
+      <th class="participateCount" width="100">响应交互数量</th>
+      <th class="selectedSolutionCount" width="100">方案中选数量</th>
+      <th class="listedStatus" width="100">是否上市公司</th>
+      <th class="personScale_employeeNum" width="90">员工人数</th>
+      <th class="customers" width="300">主要客户</th>
+      <th class="aptitudeQualifyResult" width="200">资质交互结果</th>
+      <th class="initAgent_legalPerson" width="120">法人</th>
+      <th class="supplierCode_code" width="100">供应商代码</th>
+      <th class="corporation_legalPerson" width="200">法人公司名称</th>
+      <th class="groupName" width="200">集团公司名称</th>
+      <th class="groupAddr" width="200">集团公司地址</th>
+      <th class="regCapital" width="100">注册资金(万)</th>
+      <th class="personScale_company" width="100">公司规模人数</th>
+      <th class="foundAt" width="100">公司成立时间</th>
+      <th class="regCountryName" width="100">公司注册国家</th>
+      <th class="regRegion" width="150">隶属地区</th>
+      <th class="fixedAssets" width="100">固定资产(万)</th>
+      <th class="productLine" width="350">所属产品线</th>
+      <th class="officialWebsite" width="150">公司网站</th>
+      <th class="nature" width="100">企业性质</th>
+      <th class="worldTop" width="100">是否世界500强</th>
+      <th class="listedRegion" width="100">上市地区</th>
+      <th class="ticker" width="100">股票代码</th>
+      <th class="companySupplyParks" width="300">可供货园区</th>
+      <th class="factories_area" width="200">工厂面积(平方米)</th>
+      <th class="factories_num" width="90">人数(人)</th>
+      <th class="factories_assets" width="150">固定资产(万元)</th>
+      <th class="name" width="90">联系人</th>
+      <th class="mobile" width="150">联系人手机</th>
+      <th class="officePhone" width="150">联系人办公电话</th>
+      <th class="email" width="200">联系人邮箱</th>
+      <th class="recentFinance_sold" width="150">销售额(万元)</th>
+      <th class="recentFinance_net" width="150">净利润(万元)</th>
+      <th class="assets" width="150">研发资产(万)</th>
+      <th class="labArea" width="150">试验室面积(㎡)</th>
+      <th class="numberOfPatents" width="150">专利数量</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{#each _DATA_.data}}
+    <tr>
+     <td class="index">{{add @index 1}}</td>
+     <td class="step">
+        {{#equals user.step 1}}
+          广选
+        {{/equals}}
+        {{#equals user.step 2}}
+          完善信息
+        {{/equals}}
+        {{#equals user.step 3}}
+          入围
+        {{/equals}}
+        {{#equals user.step 4}}
+          备选
+        {{/equals}}
+        {{#equals user.step 5}}
+          合作
+        {{/equals}}
+        {{#equals user.step 6}}
+          淘汰
+        {{/equals}}
+     </td>
+     <td class="supplierCode">
+      {{company.supplierCode}}
+     </td>
+     <td class="corporation_supplyName">
+       {{company.corporation}}
+     </td>
+     <td class="accountType">
+       {{#equals user.accountType 1}}
+        制造商
+       {{/equals}}
+       {{#equals user.accountType 2}}
+        渠道商
+       {{/equals}}
+     </td>
+     <td class="creditQualifyResult">{{creditQualifyResult}}</td>
+     <td class="participateCount">{{company.participateCount}}</td>
+     <td class="selectedSolutionCount">{{selectedSolutionCount}}</td>
+     <td class="listedStatus">
+       {{#equals company.listedStatus 0}}
+        没有上市
+       {{/equals}}
+       {{#equals company.listedStatus 1}}
+        已上市
+       {{/equals}}
+     </td>
+     <td class="personScale_employeeNum">{{company.personScale}}</td>
+     <td class="customers" data-value="{{company.customers}}">
+     </td>
+     <td class="aptitudeQualifyResult">
+       {{aptitudeQualifyResult}}
+     </td>
+     <td class="initAgent_legalPerson">
+      {{company.initAgent}}
+     </td>
+     <td class="supplierCode_code">
+       {{company.supplierCode}}
+     </td>
+     <td class="corporation_legalPerson">
+       {{company.corporation}}
+     </td>
+     <td class="groupName">
+       {{company.groupName}}
+     </td>
+     <td class="groupAddr">
+       {{company.groupAddr}}
+     </td>
+     <td class="regCapital">
+       {{formatPrice company.regCapital "w"}}
+     </td>
+     <td class="personScale_company">
+       {{company.personScale}}
+     </td>
+     <td class="foundAt">
+        {{formatDate company.foundAt "day"}}
+     </td>
+     <td class="regCountryName">
+       {{regCountryName}}
+     </td>
+     <td class="regRegion">{{regRegion}} </td>
+     <td class="fixedAssets">
+      {{formatPrice company.fixedAssets "w"}}
+     </td>
+     <td class="productLine">
+     {{company.productLine}}
+     </td>
+     <td class="officialWebsite">
+       {{company.officialWebsite}}
+     </td>
+     <td class="nature">
+        {{#equals company.nature 1}}
+          国有
+        {{/equals}}
+        {{#equals company.nature 2}}
+          集体
+        {{/equals}}
+        {{#equals company.nature 3}}
+          民营
+        {{/equals}}
+        {{#equals company.nature 4}}
+          私营
+        {{/equals}}
+        {{#equals company.nature 5}}
+          合资
+        {{/equals}}
+        {{#equals company.nature 6}}
+          外资
+        {{/equals}}
+        {{#equals company.nature 7}}
+          其他
+        {{/equals}}
+     </td>
+     <td class="worldTop">
+       {{#equals company.worldTop 0}}
+        否
+       {{/equals}}
+       {{#equals company.worldTop 1}}
+        是
+       {{/equals}}
+     </td>
+     <td class="listedRegion">
+       {{company.listedRegion}}
+     </td>
+     <td class="ticker">
+       {{company.ticker}}
+     </td>
+     <td class="companySupplyParks">
+        {{#each companySupplyParks}}
+          {{name}} &nbsp;
+        {{/each}}
+     </td>
+     <td class="factories_area"data-value="{{company.factories}}">
+     </td>
+     <td class="factories_num" data-value="{{company.factories}}">
+
+     </td>
+     <td class="factories_assets" data-value="{{company.factories}}">
+     </td>
+     <td class="name">
+       {{contactInfo.name}}
+     </td>
+     <td class="mobile">
+       {{contactInfo.mobile}}
+     </td>
+     <td class="officePhone">
+       {{contactInfo.officePhone}}
+     </td>
+     <td class="email" >
+        {{contactInfo.email}}
+     </td>
+     <td class="recentFinance_sold" data-value="{{finance.recentFinance}}">
+     </td>
+     <td class="recentFinance_net" data-value="{{finance.recentFinance}}">
+     </td>
+     <td class="assets">{{formatPrice companyExtraRD.assets "w"}}</td>
+     <td class="labArea">{{companyExtraRD.labArea}}</td>
+     <td class="numberOfPatents">{{companyExtraRD.numberOfPatents}}</td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
+</div>
+<div id="js-pagination" class="right-text"></div>
+<br><br>
+{{/component}}

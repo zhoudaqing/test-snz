@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Deposit">
+
+    <!-- 结果集映射 -->
+    <resultMap id="depositMap" type="Deposit">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="dealId" column="deal_id"/>
+        <result property="dealTime" column="deal_time"/>
+        <result property="dealUrl" column="deal_url"/>
+        <result property="amount" column="amount"/>
+        <result property="bankInfo" column="bank_info"/>
+        <result property="type" column="type"/>
+        <result property="status" column="status"/>
+        <result property="syncStatus" column="sync_status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_deposits
+    </sql>
+
+    <sql id="columns">
+        requirement_id, supplier_id,
+        deal_id, deal_time, deal_url,
+        amount, bank_info, `type`, status, sync_status,
+        created_at, updated_at
+    </sql>
+
+    <!-- 根据单个id查找 -->
+    <select id="findById" parameterType="long" resultMap="depositMap">
+        SELECT
+        id,
+        <include refid="columns"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id = #{id}
+    </select>
+
+    <!-- 查询 -->
+    <select id="findBy" parameterType="Deposit" resultMap="depositMap">
+        SELECT
+        id, <include refid="columns"/>
+        FROM
+        <include refid="tb_name"/>
+        <where>
+            <if test="requirementId!=null">requirement_id=#{requirementId}</if>
+            <if test="supplierId!=null">AND supplier_id=#{supplierId}</if>
+            <if test="dealId!=null">AND deal_id=#{dealId}</if>
+            <if test="dealTime!=null">AND deal_time=#{dealTime}</if>
+            <if test="dealUrl!=null">AND deal_url=#{dealUrl}</if>
+            <if test="amount!=null">AND amount=#{amount}</if>
+            <if test="bankInfo!=null">AND bank_info=#{bankInfo}</if>
+            <if test="type!=null">AND `type`=#{type}</if>
+            <if test="status!=null">AND status=#{status}</if>
+            <if test="syncStatus!=null">AND sync_status=#{syncStatus}</if>
+        </where>
+    </select>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="Deposit" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+        <include refid="tb_name"/>
+        (<include refid="columns"/>)
+        VALUES
+        (#{requirementId}, #{supplierId},
+        #{dealId}, #{dealTime}, #{dealUrl},
+        #{amount}, #{bankInfo}, #{type}, #{status}, #{syncStatus}, now(), now())
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="Deposit">
+        UPDATE
+        <include refid="tb_name"/>
+        <set>
+            <if test="requirementId!=null">requirement_id=#{requirementId},</if>
+            <if test="supplierId!=null">supplier_id=#{supplierId},</if>
+            <if test="dealId!=null">deal_id=#{dealId},</if>
+            <if test="dealTime!=null">deal_time=#{dealTime},</if>
+            <if test="dealUrl!=null">deal_url=#{dealUrl},</if>
+            <if test="amount!=null">amount=#{amount},</if>
+            <if test="bankInfo!=null">bank_info=#{bankInfo},</if>
+            <if test="type!=null">`type`=#{type},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="syncStatus!=null">sync_status=#{syncStatus},</if>
+            updated_at = now()
+        </set>
+        WHERE id=#{id}
+    </update>
+</mapper>

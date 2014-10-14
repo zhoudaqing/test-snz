@@ -1,0 +1,252 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-config-front-config"}}
+<h2 class="ui header" id="summary">
+  <i class="text file icon"></i>
+  <div class="content">
+    Front Config
+    <div class="sub header">{{cell}}@{{group}}[{{app}}]: {{_DATA_.location}}</div>
+  </div>
+</h2>
+<div class="ui icon info message">
+  <i class="info letter icon"></i>
+  <div class="content">
+    <div class="header">Info</div>
+    <div class="ui horizontal bulleted list">
+      <div class="item">
+        <div class="ui teal label">
+          Components
+          <div class="detail">{{size _DATA_.components}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="ui teal label">
+          Mappings
+          <div class="detail">{{size _DATA_.mappings}}</div>
+        </div>
+      </div>
+      <div class="item">
+        <div class="ui teal label">
+          Hrefs
+          <div class="detail">{{size _DATA_.Hrefs}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- <div class="ui icon warning message">
+  <i class="exclamation icon"></i>
+  <div class="content">
+    <div class="header">Warning</div>
+    <ul class="list">
+      <li>Mapping duplicated: /api/user/gogogo</li>
+      <li>Auths not exists</li>
+    </ul>
+  </div>
+</div>
+<div class="ui icon error message">
+  <i class="frown icon"></i>
+  <div class="content">
+    <div class="header">Error</div>
+    <ul class="list">
+      <li>Last refresh failed: 404 Not Found</li>
+    </ul>
+  </div>
+</div> --}}
+<div class="ui divider"></div>
+<div class="ui attached top message" id="components">
+  <div class="header">
+    Components
+  </div>
+</div>
+<div class="ui stacked attached bottom segment">
+  {{#if _DATA_.components}}
+  <table class="ui table segment">
+    <thead>
+      <tr>
+        <th>NAME</th>
+        <th>PATH</th>
+        <th>CATEGORY</th>
+        <th>SERVICE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each _DATA_.components}}
+      <tr>
+        <td>
+          {{name}}
+          {{#if desc}}
+          <i class="info icon js-desc-popup" data-content="{{desc}}" data-variation="large" data-position="right center"></i>
+          {{/if}}
+        </td>
+        <td>{{path}}</td>
+        <td>{{category}}</td>
+        <td>{{service}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <p>No components.</p>
+  {{/if}}
+</div>
+<div class="ui attached top message" id="mappings">
+  <div class="header">
+    Mappings
+  </div>
+</div>
+<div class="ui stacked attached bottom segment">
+  {{#if _DATA_.mappings}}
+  <table class="ui table segment">
+    <thead>
+      <tr>
+        <th>PATTERN</th>
+        <th>METHODS</th>
+        <th>SERVICE</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each _DATA_.mappings}}
+      <tr>
+        <td>
+          {{pattern}}
+          {{#if desc}}
+          <i class="info icon js-desc-popup" data-content="{{desc}}" data-variation="large" data-position="right center"></i>
+          {{/if}}
+        </td>
+        <td>{{methods}}</td>
+        <td>{{service}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <i class="ban circle icon"></i>
+  {{/if}}
+</div>
+<div class="ui attached top message" id="auths">
+  <div class="header">
+    Auths
+  </div>
+</div>
+<div class="ui stacked attached bottom segment">
+  <h4 class="ui header">Protected List</h4>
+  {{#if _DATA_.auths.protectedList}}
+  <table class="ui table segment">
+    <thead>
+      <tr>
+        <th>PATTERN</th>
+        <th>TYPES</th>
+        <th>ROLES</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each _DATA_.auths.protectedList}}
+      <tr>
+        <td>{{pattern}}</td>
+        <td>{{types}}</td>
+        <td>{{roles}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <i class="ban circle icon"></i>
+  {{/if}}
+  <h4 class="ui header">White List</h4>
+  {{#if _DATA_.auths.whiteList}}
+  <table class="ui table segment">
+    <thead>
+      <tr>
+        <th>PATTERN</th>
+        <th>METHODS</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each _DATA_.auths.whiteList}}
+      <tr>
+        <td>{{pattern}}</td>
+        <td>{{methods}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <i class="ban circle icon"></i>
+  {{/if}}
+</div>
+<div class="ui attached top message" id="render">
+  <div class="header">
+    Render
+  </div>
+</div>
+<div class="ui stacked attached bottom segment">
+  <div class="ui two column grid">
+    <div class="column">
+      <div class="ui segment">
+        <div class="ui top left attached label">
+          Prefixs
+        </div>
+        {{#if _DATA_.render.prefixs}}
+        <ul class="list">
+          {{#each _DATA_.render.prefixs}}
+          <li>{{this}}</li>
+          {{/each}}
+        </ul>
+        {{else}}
+        <i class="ban circle icon"></i>
+        {{/if}}
+      </div>
+    </div>
+    <div class="column">
+      <div class="ui segment">
+        <div class="ui top left attached label">
+          Eevee Layout
+        </div>
+        {{#if _DATA_.render.eeveeLayout}}
+        <p>{{_DATA_.render.eeveeLayout}}</p>
+        {{else}}
+        <i class="ban circle icon"></i>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="ui attached top message" id="hrefs">
+  <div class="header">
+    Hrefs
+  </div>
+</div>
+<div class="ui stacked attached bottom segment">
+  {{#if _DATA_.hrefs}}
+  <div class="ui list">
+    {{#each _DATA_.hrefs}}
+    <div class="item">
+      <div class="ui label"><i class="url icon"></i> {{@key}}</div>
+      {{this}}
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <i class="ban circle icon"></i>
+  {{/if}}
+</div>
+<ui class="ui black right attached button sidebar-toggle-button">
+  <i class="list layout icon"></i>
+</ui>
+<div class="ui thin inverted vertical icon menu sidebar js-sidebar">
+  <div class="item">
+    <i class="big location icon"></i>
+  </div>
+  <a href="#summary" class="item">SUMMARY</a>
+  <div class="item">
+    CONFIGS
+    <div class="menu">
+      <a href="#components" class="item">Components</a>
+      <a href="#mappings" class="item">Mappings</a>
+      <a href="#auths" class="item">Auths</a>
+      <a href="#render" class="item">Render</a>
+      <a href="#hrefs" class="item">Hrefs</a>
+    </div>
+  </div>
+</div>
+{{/component}}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ComplaintChat">
+
+	 <!--  行结果列映射到实例属性名称  -->
+    <resultMap id="complaintChatResultMap" type="ComplaintChat">
+        <id property="id" column="id"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="senderId" column="sender_id"/>
+        <result property="senderName" column="sender_name"/>
+        <result property="message" column="message"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+	 <!--  行结果列名  -->
+    <sql id="columns">
+      parent_id,sender_id,sender_name,message,created_at,updated_at
+    </sql>
+
+	 <!--  查询条件可选性判断  -->
+    <sql id="query_conditions">
+      <if test="parentId!=null">AND parent_id = #{parentId}</if>
+      <if test="senderId!=null">AND sender_id = #{senderId}</if>
+      <if test="senderName!=null">AND sender_name = #{senderName}</if>
+      <if test="minId!=null"><![CDATA[ AND id > #{minId}]]></if>
+    </sql>
+
+	 <!--  新增 抱怨信息聊天记录  -->
+    <insert id="create" parameterType="ComplaintChat" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_complaint_chats ( <include refid="columns"/>)
+      VALUES(
+       #{parentId},#{senderId},#{senderName},#{message},now(),now()
+      )
+    </insert>
+
+	 <!--  根据自增ID查找 抱怨信息聊天记录  -->
+    <select id="findById" parameterType="long" resultMap="complaintChatResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_complaint_chats
+      WHERE
+       `id` = #{id}
+    </select>
+
+	 <!--  根据自增ID列表查找 抱怨信息聊天记录 -->
+    <select id="findByIds" parameterType="list" resultMap="complaintChatResultMap">
+        SELECT id,<include refid="columns"/>
+            FROM snz_complaint_chats
+        WHERE
+            id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+                #{id}
+            </foreach>
+    </select>
+
+	 <!--  根据可选查询条件统计总记录数  -->
+    <select id="countBy" parameterType="java.util.Map" resultType="int">
+      SELECT COUNT(1)
+        FROM snz_complaint_chats
+      <where>
+          <include refid="query_conditions"/>
+      </where>
+    </select>
+
+    <!--  根据可选查询条件查询行记录  -->
+    <select id="findBy" parameterType="java.util.Map" resultMap="complaintChatResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_complaint_chats
+      <where>
+        <include refid="query_conditions"/>
+      </where>
+        ORDER BY id DESC
+        <if test="offset!=null and limit!=null">
+            LIMIT #{offset}, #{limit}
+        </if>
+    </select>
+
+	 <select id="findByParentId" parameterType="java.lang.Long" resultMap="complaintChatResultMap">
+      SELECT id,<include refid="columns"/>
+        FROM  snz_complaint_chats
+      WHERE parent_id=#{parentId}
+         ORDER BY created_at DESC
+         LIMIT 300
+    </select>
+
+
+    <update id="update" parameterType="ComplaintChat">
+      UPDATE snz_complaint_chats
+      <set>
+          <if test="parentId!=null">parent_id = #{parentId},</if>
+          <if test="senderId!=null">sender_id = #{senderId},</if>
+          <if test="senderName!=null">sender_name = #{senderName},</if>
+          <if test="message!=null">message = #{message},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_complaint_chats
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

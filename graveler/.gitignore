@@ -1,0 +1,9 @@
+public/
+.sass-cache
+.DS_Store
+vendor/
+icons.scss
+Linnerfile
+.idea/
+_variables.scss
+graveler.zip

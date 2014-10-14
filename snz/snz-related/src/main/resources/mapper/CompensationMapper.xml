@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Compensation">
+
+    <!-- 结果集映射 -->
+    <resultMap id="compensationMap" type="Compensation">
+        <id property="id" column="id"/>
+        <result property="park" column="park"/>
+        <result property="productLine" column="product_line"/>
+        <result property="supplierAccount" column="supplier_account"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="isInternal" column="is_internal"/>
+        <result property="factory" column="factory"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="materielNo" column="materiel_no"/>
+        <result property="materielDesc" column="materiel_desc"/>
+        <result property="purchaserGroup" column="purchaser_group"/>
+        <result property="purchaserGroupDesc" column="purchaser_group_desc"/>
+        <result property="score" column="score"/>
+        <result property="isMoney" column="is_money"/>
+        <result property="money" column="money"/>
+        <result property="deductedAt" column="deducted_at"/>
+        <result property="current" column="current"/>
+        <result property="status" column="status"/>
+        <result property="result" column="result"/>
+        <result property="enteredAt" column="entered_at"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_compensations
+    </sql>
+
+    <sql id="cols_all">
+        id, <include refid="cols_execlue_id"/>
+    </sql>
+
+    <sql id="cols_execlue_id">
+        park, product_line, supplier_account, supplier_name, is_internal, factory,
+        factory_name, materiel_no, materiel_desc, purchaser_group, purchaser_group_desc,
+        score, is_money, money, deducted_at, current, status, result, entered_at,
+        created_at, updated_at
+    </sql>
+
+    <sql id="vals_all">
+        #{park}, #{productLine}, #{supplierAccount}, #{supplierName}, #{isInternal},
+        #{factory}, #{factoryName}, #{materielNo}, #{materielDesc}, #{purchaserGroup},
+        #{purchaserGroupDesc}, #{score}, #{isMoney}, #{money}, #{deductedAt}, now(),
+        #{status}, #{result}, #{enteredAt},
+        now(), now()
+    </sql>
+
+    <!-- 分页查询条件 -->
+    <sql id="criterias">
+        WHERE 1=1
+        <if test="status != null"> AND status = #{status} </if>
+        <if test="productLine != null"> AND product_line = #{productLine} </if>
+        <!--<if test="factory != null"> AND factory = #{factory} </if>-->
+        <if test="supplierName != null"> AND supplier_name = #{supplierName} </if>
+        <if test="supplierAccount != null"> AND supplier_account = #{supplierAccount} </if>
+        <if test="materielNo != null"> AND materiel_no = #{materielNo} </if>
+        <if test="deductedStartAt != null"> AND deducted_at &gt;= #{deductedStartAt} </if>
+        <if test="deductedEndAt != null"> AND deducted_at &lt;= #{deductedEndAt} </if>
+    </sql>
+
+    <sql id="criteriasForPurchaser">
+        WHERE 1=1
+        <if test="status != null"> AND status = #{status} </if>
+        <if test="productLine != null"> AND product_line = #{productLine} </if>
+        <!--<if test="factory != null"> AND factory = #{factory} </if>-->
+        <if test="supplierName != null"> AND supplier_name = #{supplierName} </if>
+        <if test="supplierAccount != null"> AND supplier_account = #{supplierAccount} </if>
+        <if test="materielNo != null"> AND materiel_no = #{materielNo} </if>
+        <if test="deductedStartAt != null"> AND `current` &gt;= #{deductedStartAt} </if>
+        <if test="deductedEndAt != null"> AND `current` &lt;= #{deductedEndAt} </if>
+        <if test="factories != null">
+            AND factory IN
+            <foreach collection="factories" separator="," open="("
+                     close=")" item="factory">
+                #{factory}
+            </foreach>
+        </if>
+    </sql>
+
+    <!-- 列表查询条件 -->
+    <sql id="criteriasForList">
+        WHERE 1=1
+        <if test="status != null"> AND status = #{status} </if>
+        <if test="productLine != null"> AND product_line = #{productLine} </if>
+        <if test="factory != null"> AND factory = #{factory} </if>
+        <if test="supplierName != null"> AND supplier_name = #{supplierName} </if>
+        <if test="supplierAccount != null"> AND supplier_account = #{supplierAccount} </if>
+        <if test="materielNo != null"> AND materiel_no = #{materielNo} </if>
+    </sql>
+
+    <!-- 添加 -->
+    <insert id="create" parameterType="Compensation" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        (<include refid="vals_all"/>)
+    </insert>
+
+    <!-- 批量添加 -->
+    <insert id="creates" parameterType="list">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        <foreach collection="list" item="i" index="index" separator=",">
+            (
+            #{i.park}, #{i.productLine}, #{i.supplierAccount}, #{i.supplierName}, #{i.isInternal},
+            #{i.factory}, #{i.factoryName}, #{i.materielNo}, #{i.materielDesc}, #{i.purchaserGroup},
+            #{i.purchaserGroupDesc}, #{i.score}, #{i.isMoney}, #{i.money}, #{i.deductedAt}, now(),
+            #{i.status}, #{i.result}, #{i.enteredAt}, now(), now()
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据id删除 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tb_name"/> WHERE id=#{id}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deletes" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="Compensation">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            <if test="status!=null"> status=#{status},</if>
+            updated_at=now()
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- 根据单个id查找 -->
+    <select id="load" parameterType="long" resultMap="compensationMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id=#{id}
+    </select>
+
+    <!-- 根据多个id查找 -->
+    <select id="loads" parameterType="list" resultMap="compensationMap">
+        SELECT id,
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+        ORDER BY id DESC
+    </select>
+
+    <select id="list" parameterType="Compensation" resultMap="compensationMap">
+        SELECT id,
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        <include refid="criteriasForList"/>
+    </select>
+
+    <!-- 计数 -->
+    <select id="count" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM <include refid="tb_name"/>
+        <include refid="criterias"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="paging" parameterType="map" resultMap="compensationMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        <include refid="criterias"/>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 计数 -->
+    <select id="countForPurchaser" parameterType="map" resultType="long">
+        SELECT COUNT(1)
+        FROM <include refid="tb_name"/>
+        <include refid="criteriasForPurchaser"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="pagingForPurchaser" parameterType="map" resultMap="compensationMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        <include refid="criteriasForPurchaser"/>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 根据信息查询id -->
+    <select id="findOneByInfo" parameterType="CompensationDetail" resultType="Compensation">
+        SELECT id,
+        <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        <where>
+            <if test="supplierAccount!=null">and supplier_account=#{supplierAccount} </if>
+            <if test="factory!=null">and factory=#{factory} </if>
+            <if test="materielNo!=null">and materiel_no=#{materielNo} </if>
+        </where>
+        LIMIT 1
+    </select>
+
+    <!-- 自动更新列表记录状态 -->
+    <update id="autoUpdate" parameterType="date">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            status = 3,
+            updated_at=now()
+        </set>
+        <where>
+            <if test="date!=null"><![CDATA[ and created_at <= #{date} ]]></if>
+        </where>
+    </update>
+
+    <!-- 获取一个月内申诉列表  -->
+    <select id="getSumOfMonth" parameterType="date" resultMap="compensationMap">
+        SELECT <include refid="cols_all"/>
+        FROM <include refid="tb_name"/>
+        <where>
+            <if test="dateLine!=null"><![CDATA[created_at > #{dateLine}]]></if>
+        </where>
+    </select>
+</mapper>

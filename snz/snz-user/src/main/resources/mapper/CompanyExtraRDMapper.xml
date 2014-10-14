@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanyExtraRD" >
+    <resultMap id="CompanyExtraRDMap" type="CompanyExtraRD">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="award_level" property="awardLevel"/>
+        <result column="number_of_people" property="numberOfPeople"/>
+        <result column="number_of_intermediate_engineer" property="numberOfIntermediateEngineer"/>
+        <result column="other_names" property="otherNames"/>
+        <result column="sum_number_of_engineer" property="sumNumberOfEngineer"/>
+        <result column="number_of_senior_engineer" property="numberOfSeniorEngineer"/>
+        <result column="investment_this_year" property="investmentThisYear"/>
+        <result column="investment_last_year" property="investmentLastYear"/>
+        <result column="investment_before_last_year" property="investmentBeforeLastYear"/>
+        <result column="assets" property="assets"/>
+        <result column="facility_attach_url" property="facilityAttachUrl"/>
+        <result column="lab_area" property="labArea"/>
+        <result column="number_of_equipments" property="numberOfEquipments"/>
+        <result column="lab_level" property="labLevel"/>
+        <result column="lab_attach_url" property="labAttachUrl"/>
+        <result column="number_of_patents" property="numberOfPatents"/>
+        <result column="number_of_patents_for_inventions" property="numberOfPatentsForInventions"/>
+        <result column="number_of_patents_last_three_years" property="numberOfPatentsLastThreeYears"/>
+        <result column="patents_attach_url" property="patentsAttachUrl"/>
+        <result column="national_technology_awards" property="nationalTechnologyAwards"/>
+        <result column="provincial_technology_awards" property="provincialTechnologyAwards"/>
+        <result column="success_stories" property="successStories"/>
+        <result column="success_stories_attach_url" property="successStoriesAttachUrl"/>
+        <result column="other_ability_description" property="otherAbilityDescription"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="tb_name">snz_company_extra_rd</sql>
+
+    <sql id="columns">user_id, award_level, number_of_people, number_of_intermediate_engineer, other_names, sum_number_of_engineer,  number_of_senior_engineer, investment_this_year, investment_last_year, investment_before_last_year, assets, facility_attach_url, lab_area, number_of_equipments, lab_level, lab_attach_url, number_of_patents, number_of_patents_for_inventions, number_of_patents_last_three_years, patents_attach_url, national_technology_awards, provincial_technology_awards, success_stories, success_stories_attach_url, other_ability_description, created_at, updated_at</sql>
+
+    <sql id="values">#{userId}, #{awardLevel}, #{numberOfPeople}, #{numberOfIntermediateEngineer}, #{otherNames}, #{sumNumberOfEngineer}, #{numberOfSeniorEngineer}, #{investmentThisYear}, #{investmentLastYear}, #{investmentBeforeLastYear}, #{assets}, #{facilityAttachUrl}, #{labArea}, #{numberOfEquipments}, #{labLevel}, #{labAttachUrl}, #{numberOfPatents}, #{numberOfPatentsForInventions}, #{numberOfPatentsLastThreeYears}, #{patentsAttachUrl}, #{nationalTechnologyAwards}, #{provincialTechnologyAwards}, #{successStories}, #{successStoriesAttachUrl}, #{otherAbilityDescription}, now(), now()</sql>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="CompanyExtraRD" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/> (<include refid="columns"/>)
+        VALUES (<include refid="values"/>)
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="CompanyExtraRD">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            <if test="numberOfPeople!=null">number_of_people=#{numberOfPeople},</if>
+            <if test="awardLevel!=null">award_level=#{awardLevel},</if>
+            <if test="numberOfIntermediateEngineer!=null">number_of_intermediate_engineer=#{numberOfIntermediateEngineer},</if>
+            <if test="otherNames!=null">other_names=#{otherNames},</if>
+            <if test="sumNumberOfEngineer!=null">sum_number_of_engineer=#{sumNumberOfEngineer},</if>
+            <if test="numberOfSeniorEngineer!=null">number_of_senior_engineer=#{numberOfSeniorEngineer},</if>
+            <if test="investmentThisYear!=null">investment_this_year=#{investmentThisYear},</if>
+            <if test="investmentLastYear!=null">investment_last_year=#{investmentLastYear},</if>
+            <if test="investmentBeforeLastYear!=null">investment_before_last_year=#{investmentBeforeLastYear},</if>
+            <if test="assets!=null">assets=#{assets},</if>
+            <if test="facilityAttachUrl!=null">facility_attach_url=#{facilityAttachUrl},</if>
+            <if test="labArea!=null">lab_area=#{labArea},</if>
+            <if test="numberOfEquipments!=null">number_of_equipments=#{numberOfEquipments},</if>
+            <if test="labLevel!=null">lab_level=#{labLevel},</if>
+            <if test="labAttachUrl!=null">lab_attach_url=#{labAttachUrl},</if>
+            <if test="numberOfPatents!=null">number_of_patents=#{numberOfPatents},</if>
+            <if test="numberOfPatentsForInventions!=null">number_of_patents_for_inventions=#{numberOfPatentsForInventions},</if>
+            <if test="numberOfPatentsLastThreeYears!=null">number_of_patents_last_three_years=#{numberOfPatentsLastThreeYears},</if>
+            <if test="patentsAttachUrl!=null">patents_attach_url=#{patentsAttachUrl},</if>
+            <if test="nationalTechnologyAwards!=null">national_technology_awards=#{nationalTechnologyAwards},</if>
+            <if test="provincialTechnologyAwards!=null">provincial_technology_awards=#{provincialTechnologyAwards},</if>
+            <if test="successStories!=null">success_stories=#{successStories},</if>
+            <if test="successStoriesAttachUrl!=null">success_stories_attach_url=#{successStoriesAttachUrl},</if>
+            <if test="otherAbilityDescription!=null">other_ability_description=#{otherAbilityDescription},</if>
+            updated_at=now()
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+
+    <!-- 查找 -->
+    <select id="findByUserId" resultMap="CompanyExtraRDMap" parameterType="long">
+        SELECT id, <include refid="columns"/> FROM <include refid="tb_name"/>
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

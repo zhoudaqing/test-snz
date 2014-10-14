@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanySupplyPark" >
+  <resultMap id="CompanySupplyParkMap" type="CompanySupplyPark" >
+    <id column="id" property="id" />
+    <result column="supply_park_id" property="supplyParkId"  />
+    <result column="name" property="name"  />
+    <result column="company_id" property="companyId"  />
+    <result column="user_id" property="userId"  />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+    supply_park_id,name,company_id,user_id, created_at, updated_at
+  </sql>
+
+ <select id="countBySupplyParkId" resultType="long" parameterType="long">
+     select count(id) from snz_company_supply_park where supply_park_id = #{supplyParkId}
+ </select>
+
+  <select id="findByUserId" resultMap="CompanySupplyParkMap" parameterType="long" >
+    select id,<include refid="columns" /> from snz_company_supply_park where user_id = #{userId}
+  </select>
+
+  <select id="findByCompanyId" resultMap="CompanySupplyParkMap" parameterType="long" >
+     select id,<include refid="columns" /> from snz_company_supply_park where company_id = #{companyId}
+  </select>
+
+  <delete id="deleteByUserId" parameterType="long" >
+    delete from snz_company_supply_park where user_id = #{userId}
+  </delete>
+
+  <insert id="insert" parameterType="CompanySupplyPark" useGeneratedKeys="true" keyProperty="id">
+    insert into snz_company_supply_park (<include refid="columns" />)
+    values (#{supplyParkId},#{name},#{companyId},#{userId},now(), now())
+  </insert>
+
+   <select id="findUserIdsBySupplyParkId" resultType="long" parameterType="long">
+      select user_id from snz_company_supply_park
+      <where>
+          supply_park_id = #{supplyParkId}
+          <if test="list!=null">
+              and user_id in
+              <foreach collection="list" separator="," open="(" close=")" item="userId">
+                  #{userId}
+              </foreach>
+          </if>
+      </where>
+   </select>
+
+</mapper>

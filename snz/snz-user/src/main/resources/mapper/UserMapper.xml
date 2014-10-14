@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="User">
+    <resultMap id="UserMap" type="User">
+        <id column="id" property="id"/>
+        <id column="outer_id" property="outerId"/>
+        <result column="name" property="name"/>
+        <result column="nick" property="nick"/>
+        <result column="encrypted_password" property="encryptedPassword"/>
+        <result column="mobile" property="mobile"/>
+        <result column="phone" property="phone"/>
+        <result column="type" property="type"/>
+        <result column="role_str" property="roleStr"/>
+        <result column="account_type" property="accountType"/>
+        <result column="status" property="status"/>
+        <result column="approve_status" property="approveStatus"/>
+        <result column="enter_pass_at" property="enterPassAt"/>
+        <result column="last_login_at" property="lastLoginAt"/>
+        <result column="email" property="email"/>
+        <result column="origin" property="origin"/>
+        <result column="refuse_status" property="refuseStatus"/>
+        <result column="qualify_status" property="qualifyStatus"/>
+        <result column="tags" property="tags"/>
+        <result column="step" property="step"/>
+        <result column="last_submit_approval_at" property="lastSubmitApprovalAt"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+    outer_id, name, nick, encrypted_password, mobile, phone,type, role_str,account_type,status,approve_status,enter_pass_at, last_login_at, email,origin,refuse_status,qualify_status,tags,step,last_submit_approval_at, created_at, updated_at
+  </sql>
+
+    <select id="findById" resultMap="UserMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_users
+        where id = #{id}
+    </select>
+
+    <select id="findByOuterId" resultMap="UserMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_users
+        where outer_id = #{outerId}
+    </select>
+
+    <select id="findByIds" resultMap="UserMap" parameterType="list">
+        select id,
+        <include refid="columns"/>
+        from snz_users
+        where id in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByNick" resultMap="UserMap" parameterType="string">
+        select id,
+        <include refid="columns"/>
+        from snz_users where nick = #{nick}
+    </select>
+
+    <select id="findByNicks" resultMap="UserMap" parameterType="list">
+        select id,
+        <include refid="columns"/>
+        from snz_users where nick in
+        <foreach collection="list" separator="," open="(" close=")" item="nick">
+            #{nick}
+        </foreach>
+    </select>
+
+    <!-- TODO: to be refactored -->
+    <select id="findByRoleStr" parameterType="string" resultMap="UserMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_users
+        WHERE role_str like CONCAT('%', #{roleStr}, '%')
+    </select>
+
+    <select id="countBy" resultType="long" parameterType="int">
+        select count(id) from snz_users
+        <where>
+            <if test="type!=null">
+                type=#{type}
+            </if>
+            <if test="approveStatus!=null">
+                and approve_status=#{approveStatus}
+            </if>
+            <if test="refuseStatus!=null">
+                and refuse_status=#{refuseStatus}
+            </if>
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+        </where>
+    </select>
+
+    <select id="findBy" resultMap="UserMap" parameterType="int">
+        select id,
+        <include refid="columns"/>
+        from snz_users
+        <where>
+            <if test="type!=null">
+                type=#{type}
+            </if>
+            <if test="approveStatus!=null">
+                and approve_status=#{approveStatus}
+            </if>
+            <if test="refuseStatus!=null">
+                and refuse_status=#{refuseStatus}
+            </if>
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+        </where>
+        order by created_at desc limit #{offset},#{limit}
+    </select>
+
+    <select id="countByApproveAndUserIds" resultType="long" parameterType="map">
+        select count(id) from snz_users
+        <where>
+            <if test="type!=null">
+                type=#{type}
+            </if>
+            <if test="approveStatus!=null">
+                and approve_status=#{approveStatus}
+            </if>
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" open="(" separator="," close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="findByApproveAndUserIds" resultMap="UserMap">
+        select id,<include refid="columns"/> from snz_users
+        <where>
+            <if test="type!=null">
+                type=#{type}
+            </if>
+            <if test="approveStatus!=null">
+                and approve_status=#{approveStatus}
+            </if>
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+               <foreach collection="list" open="(" separator="," close=")" item="userId">
+                   #{userId}
+               </foreach>
+            </if>
+        </where>
+        order by created_at desc limit #{offset},#{limit}
+    </select>
+
+    <select id="countLastEnterPassByUserIds" resultType="long" parameterType="map">
+        select count(id) from snz_users
+        <where>
+            type=2 and enter_pass_at &gt;= #{date}
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" open="(" separator="," close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+    <select id="findLastEnterPassByUserIds" resultMap="UserMap">
+        select id,<include refid="columns"/> from snz_users
+        <where>
+            type=2 and enter_pass_at &gt;= #{date}
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" open="(" separator="," close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+        order by enter_pass_at desc limit #{offset},#{limit}
+    </select>
+
+    <select id="countApprovingSupplierByUserIds" resultType="long">
+        select count(id) from snz_users
+        <where>
+            type=2 and (approve_status=1 or approve_status=3)
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" open="(" separator="," close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="findApprovingSupplierByUserIds" resultMap="UserMap">
+        select id,<include refid="columns"/> from snz_users
+        <where>
+            type=2 and (approve_status=1 or approve_status=3)
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" open="(" separator="," close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+        order by created_at desc limit #{offset},#{limit}
+    </select>
+
+    <select id="countQualifyingBy" resultType="long" parameterType="map">
+        SELECT COUNT(id) FROM snz_users
+        <where>
+            <if test="nick!=null">nick=#{nick}</if>
+            AND qualify_status = 1
+        </where>
+    </select>
+
+    <select id="findQualifyingBy" resultMap="UserMap" parameterType="map">
+        SELECT id,
+        <include refid="columns"/>
+        FROM snz_users
+        <where>
+            <if test="nick!=null">nick=#{nick}</if>
+            AND qualify_status = 1
+        </where>
+    </select>
+
+    <delete id="delete" parameterType="long">
+    delete from snz_users where id = #{id}
+  </delete>
+
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_users (<include refid="columns"/>)
+        values (#{outerId}, #{name}, #{nick},
+        #{encryptedPassword}, #{mobile}, #{phone},#{type},
+        #{roleStr},#{accountType},#{status},#{approveStatus},#{enterPassAt}, #{lastLoginAt},
+        #{email},#{origin},#{refuseStatus},#{qualifyStatus},#{tags},#{step},#{lastSubmitApprovalAt},now(), now())
+    </insert>
+
+    <update id="update" parameterType="User">
+        update snz_users
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="nick != null">
+                nick = #{nick},
+            </if>
+            <if test="encryptedPassword != null">
+                encrypted_password = #{encryptedPassword},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="roleStr != null">
+                role_str = #{roleStr},
+            </if>
+            <if test="accountType != null">
+                account_type = #{accountType},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="enterPassAt != null">
+                enter_pass_at = #{enterPassAt},
+            </if>
+            <if test="lastLoginAt != null">
+                last_login_at = #{lastLoginAt},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="origin!=null">
+                origin=#{origin},
+            </if>
+            <if test="refuseStatus!=null">
+                refuse_status=#{refuseStatus},
+            </if>
+            <if test="qualifyStatus!=null">
+                qualify_status=#{qualifyStatus},
+            </if>
+            <if test="tags!=null">
+                tags=#{tags},
+            </if>
+            <if test="step!=null">
+                step=#{step},
+            </if>
+            <if test="lastSubmitApprovalAt!=null">
+                last_submit_approval_at=#{lastSubmitApprovalAt},
+            </if>
+            <if test="outerId!=null">
+                outer_id=#{outerId},
+            </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="maxSupplierId" resultType="long">
+        select max(id)
+        from snz_users
+        where type=2
+    </select>
+
+    <select id="forDump" resultMap="UserMap">
+        select id,
+        <include refid="columns"/>
+        from snz_users
+        where id &lt; #{lastId}
+        and type=2
+        order by id desc
+        limit #{limit}
+    </select>
+
+    <select id="forDeltaDump" resultMap="UserMap">
+        select id,
+        <include refid="columns"/>
+        from snz_users
+        where id &lt; #{lastId}
+        and type=2
+        and updated_at &gt; #{compared}
+        order by id desc
+        limit #{limit}
+    </select>
+
+    <select id="countQualifiedSupplier" resultType="long">
+        select count(id) from snz_users where type=2 and qualify_status=2
+    </select>
+
+    <select id="findExistedOuterIds" parameterType="list" resultType="long">
+        SELECT outer_id
+        FROM snz_users
+        WHERE outer_id IN
+        <foreach collection="list" separator="," open="(" close=")" item="outer_id">
+            #{outer_id}
+        </foreach>
+    </select>
+
+    <select id="findExistedNicks" parameterType="list" resultType="string">
+        SELECT nick
+        FROM snz_users
+        WHERE nick IN
+        <foreach collection="list" separator="," open="(" close=")" item="nick">
+            #{nick}
+        </foreach>
+    </select>
+
+    <select id="countEnterPassSupplier" resultType="long">
+        select count(id) from snz_users
+        <where>
+            type=2 and (approve_status=-2 or approve_status=2 or approve_status=3)
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" separator="," open="(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findEnterPassSupplier" resultMap="UserMap">
+        select * from snz_users
+        <where>
+            type=2 and (approve_status=-2 or approve_status=2 or approve_status=3)
+            <if test="nick!=null">
+                and nick=#{nick}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" separator="," open="(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+        limit #{offset},#{limit}
+    </select>
+
+    <select id="countSupplierByCreatedAtAndStepAndIds" resultType="long">
+        select count(id) from snz_users
+        <where>
+            type=2
+            <if test="createdAtStart!=null">
+               and created_at &gt;=#{createdAtStart}
+            </if>
+            <if test="createdAtEnd!=null">
+                and created_at &lt;=#{createdAtEnd}
+            </if>
+            <if test="step!=null">
+              and  step=#{step}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" separator="," open="(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="findSupplierByCreatedAtAndStepAndIds" resultMap="UserMap">
+        select * from snz_users
+        <where>
+            type=2
+            <if test="createdAtStart!=null">
+                and  created_at &gt;=#{createdAtStart}
+            </if>
+            <if test="createdAtEnd!=null">
+                and created_at &lt;=#{createdAtEnd}
+            </if>
+            <if test="step!=null">
+                and  step=#{step}
+            </if>
+            <if test="list!=null">
+                and id in
+                <foreach collection="list" separator="," open="(" close=")" item="id">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="offset!=null and limit!=null">
+                limit #{offset},#{limit}
+            </if>
+        </where>
+    </select>
+
+    <select id="findApprovingUserIdsWithSubmitAt" resultType="long">
+        select id from snz_users
+        where  type=2 and (approve_status=1 or approve_status=3) and last_submit_approval_at &lt;= #{date}
+    </select>
+
+</mapper>

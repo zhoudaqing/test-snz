@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="OuterSysVendorInfoToMDM" targetNamespace="http://www.example.org/OuterSysVendorInfoToMDM/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/OuterSysVendorInfoToMDM/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+      <xsd:schema targetNamespace="http://www.example.org/OuterSysVendorInfoToMDM/"
+                  xmlns:tns="http://www.example.org/OuterSysVendorInfoToMDM/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="OuterSysVendorInfoToMDM">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="IN_VENDOR_CODE" type="xsd:string"/>
+            <xsd:element name="IN_VENDOR_NAME" type="xsd:string"/>
+            <xsd:element name="IN_ACCOUNT_GRP_CODE" type="xsd:string">
+          	</xsd:element>
+            <xsd:element name="IN_TAX_CODE" type="xsd:string"/>
+            <xsd:element name="IN_STREET_ROOM" type="xsd:string"/>
+            <xsd:element name="IN_POSTAL_CODE_CITY" type="xsd:string">
+          	</xsd:element>
+            <xsd:element name="IN_COUNTRY" type="xsd:string"/>
+            <xsd:element name="IN_REGION" type="xsd:string"/>
+            <xsd:element name="IN_PHONE_NUMBER" type="xsd:string"/>
+            <xsd:element name="T_VENDOR_COMPANY" type="tns:RSP_VENDOR_COMPANY_TABLE">
+          	</xsd:element>
+            <xsd:element name="T_VENDOR_BANK" type="tns:RSP_VENDOR_BANK_TABLE">
+          	</xsd:element>
+            <xsd:element name="T_VENDOR_PUR" type="tns:RSP_VENDOR_PUR_TABLE">
+          	</xsd:element>
+            <xsd:element name="SYSTEM_NAME" type="xsd:string"/>
+            <xsd:element name="VIEW_BANK_FLAG" type="xsd:string"/>
+            <xsd:element name="OPERATE_TYPE" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="OuterSysVendorInfoToMDMResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RETCODE" type="xsd:string"/>
+            <xsd:element name="RETMSG" type="xsd:string"/>
+            <xsd:element name="OUT_ROW_ID" type="xsd:string"/>
+            <xsd:element name="OUT_VENDOR_CODE" type="xsd:string"/>
+            <xsd:element name="OUT_TAX_CODE" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="RSP_VENDOR_COMPANY_TABLE">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="T_VENDOR_COMPANY_ITEM" type="tns:RSP_VENDOR_COMPANY_TYPE">
+      		</xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RSP_VENDOR_BANK_TABLE">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="T_VENDOR_BANK_ITEM" type="tns:RSP_VENDOR_BANK_TYPE">
+      		</xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RSP_VENDOR_PUR_TABLE">
+        <xsd:sequence>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="T_VENDOR_PUR_ITEM" type="tns:RSP_VENDOR_PUR_TYPE">
+      		</xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RSP_VENDOR_PUR_TYPE">
+        <xsd:sequence>
+          <xsd:element name="PURCHASE_GRP_CODE" type="xsd:string"/>
+          <xsd:element name="ORDER_CURRENCY" type="xsd:string"/>
+          <xsd:element name="PARTNER_PI" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RSP_VENDOR_COMPANY_TYPE">
+        <xsd:sequence>
+          <xsd:element name="COMPANY_CODE" type="xsd:string"/>
+          <xsd:element name="RECONCILE_ACCOUNT" type="xsd:string"/>
+          <xsd:element name="SEQUENCE_NO" type="xsd:string"/>
+          <xsd:element name="PAYMENT_TERM" type="xsd:string"/>
+          <xsd:element name="PAYMENT_METHOD" type="xsd:string"/>
+          <xsd:element name="HQ" type="xsd:string"/>
+          <xsd:element name="CASH_MGT_GROUP" type="xsd:string"/>
+          <xsd:element name="ACCOUNTING_CUSTOMER" type="xsd:string">
+      		</xsd:element>
+          <xsd:element name="TOLERANCE_GROUP" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RSP_VENDOR_BANK_TYPE">
+        <xsd:sequence>
+          <xsd:element name="ACCOUNT_HOLDER_NAME" type="xsd:string"/>
+          <xsd:element name="BANK_COUNTRY" type="xsd:string"/>
+          <xsd:element name="BANK_ACCOUNT_NUM" type="xsd:string"/>
+          <xsd:element name="BANK_BRANCH_CODE" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="OuterSysVendorInfoToMDMRequest">
+    <WL5G3N0:part element="WL5G3N1:OuterSysVendorInfoToMDM" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="OuterSysVendorInfoToMDMResponse">
+    <WL5G3N0:part element="WL5G3N1:OuterSysVendorInfoToMDMResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="OuterSysVendorInfoToMDM">
+    <WL5G3N0:operation name="OuterSysVendorInfoToMDM">
+      <WL5G3N0:input message="WL5G3N1:OuterSysVendorInfoToMDMRequest"/>
+      <WL5G3N0:output message="WL5G3N1:OuterSysVendorInfoToMDMResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="OuterSysVendorInfoToMDMSOAP" type="WL5G3N1:OuterSysVendorInfoToMDM">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="OuterSysVendorInfoToMDM">
+      <WL5G3N2:operation soapAction="http://www.example.org/OuterSysVendorInfoToMDM/OuterSysVendorInfoToMDM"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="OuterSysVendorInfoToMDM">
+    <WL5G3N0:port binding="WL5G3N1:OuterSysVendorInfoToMDMSOAP" name="OuterSysVendorInfoToMDMSOAP">
+      <WL5G3N2:address location="http://10.135.17.72:10101/EAI/service/MDM/OuterSysVendorInfoToMDM/OuterSysVendorInfoToMDM"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

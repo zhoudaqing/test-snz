@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <util:properties id="app" location="classpath:app.properties"/>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+    <!-- Application name -->
+    <dubbo:application name="#{app.appName}" logger="slf4j"/>
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry id="haierRegistry" address="#{app.dubboRegistry}" protocol="zookeeper"/>
+    <!-- expose this service through dubbo protocol, through port 20880 -->
+    <dubbo:protocol serialization="nativejava" name="dubbo" port="#{app.dubboPort}" threads="#{app.dubboThreads}"
+                    heartbeat="#{app.dubboHeartBeats}"/>
+
+    <!-- user dubbo service -->
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.AccountService" ref="accountService" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.CompanyService" ref="companyServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.AddressService" ref="addressServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.DataImportService" ref="dataImportServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.CompanyExtraService" ref="companyExtraServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierSummaryService" ref="supplierSummaryServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.TagService" ref="tagServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierResourceMaterialService" ref="supplierResourceMaterialServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierCreditQualifyService" ref="supplierCreditQualifyServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierTQRDCInfoService" ref="supplierTQRDCInfoServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.UserComplaintService" ref="userComplaintServiceImpl" retries="1" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.ComplaintChatService" ref="complaintChatServiceImpl" retries="1" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierTQRDCInfoTmpService" ref="supplierTQRDCInfoTmpServiceImpl" retries="1" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierInfoChangedService" ref="supplierInfoChangedServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.ProductOwnerService" ref="productOwnerServiceImpl" retries="0" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierInfoStashService" ref="supplierInfoStashServiceImpl" retries="1" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierReportService" ref="supplierReportServiceImpl" retries="1" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.TQRDCInfoSendService" ref="tQRDCInfoSendServiceImpl" retries="1" />
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierAppointedService" ref="supplierAppointedServiceImpl" retries="1" />
+
+    <!-- supplier group related -->
+    <dubbo:service register="haierRegistry" interface="io.terminus.snz.user.service.SupplierGroupService" ref="supplierGroupServiceImpl" retries="1"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierModuleDetailService" ref="supplierModuleDetailServiceImpl" retries="1" />
+
+    <!--supplier search related service-->
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierIndexService" ref="supplierIndexServiceImpl"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.SupplierSearchService" ref="supplierSearchServiceImpl"/>
+
+    <!--purchaser authority-->
+    <dubbo:service registry="haierRegistry" interface="io.terminus.snz.user.service.PurchaserAuthorityService" ref="purchaserAuthorityServiceImpl"/>
+
+    <!-- service agent -->
+    <bean id="agentImpl" class="io.terminus.pampas.client.AgentImpl"/>
+    <dubbo:service registry="haierRegistry" interface="io.terminus.pampas.client.Agent" ref="agentImpl" version="#{app.appName}"/>
+
+    <import resource="user-service-context.xml"/>
+    <import resource="persistence-context.xml"/>
+
+    <!--######### service provided by hac #########-->
+    <dubbo:registry id="hacRegistry" address="#{app.hacRegistryUrl}" protocol="zookeeper"/>
+
+    <dubbo:reference id="hacUserServiceClient" registry="hacRegistry"
+                     interface="com.haier.openplatform.hac.service.agent.HacUserServiceClient" version="2.0"/>
+    <dubbo:reference id="hacUserServiceCli" registry="hacRegistry"
+                     interface="com.haier.openplatform.hac.service.HacUserServiceCli" version="2.0"/>
+
+    <bean id="accountManagerHac" class="io.terminus.snz.user.manager.AccountManagerHac" />
+
+    <bean id="accountService" class="io.terminus.snz.user.service.HacUserServiceImpl">
+        <constructor-arg index="0" value="#{app.coSessionId}" />
+        <constructor-arg index="1" value="#{app.idsAppName}" />
+        <constructor-arg index="2" value="#{app.passwdKey}" />
+    </bean>
+</beans>

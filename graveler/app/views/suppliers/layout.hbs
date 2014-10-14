@@ -1,0 +1,22 @@
+{{#partial "title"}}{{{block "realTitle"}}}{{/partial}}
+{{#partial "body"}}
+{{inject "common/header"}}
+<div class="front-main">
+  <div class="sidebar-outer">
+    <div class="body-outer">
+      {{inject "common/sidebar"}}
+      <div class="container-components">
+        {{{block "realBody"}}}
+      </div>
+    </div>
+  </div>
+</div>
+<div style="clear:both"></div>
+<div class="front-footer">
+  <div class="session"></div>
+  <div class="copyright">
+    <span>Copyright © 2014海尔电子商务有限公司 版权所有 鲁ICP备14025465号&nbsp;&nbsp;平台答疑邮箱：b@terminus.io</span>
+  </div>
+</div>
+{{/partial}}
+{{> layout}}

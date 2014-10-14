@@ -1,0 +1,62 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>申请延期</h2>
+  </div>
+  <form class="form form-aligned" id="time-form" data-type="{{type}}" {{#if requirement}}data-requirement="{{requirementId}}"{{/if}}>
+    <div class="modal-body">
+      <div class="time-plan" style="margin-top:0;">
+        <div class="plan-step clearfix">
+          {{#if predictTimeList}}
+          <p>计划时间</p>
+          <ul style="margin-left:50px;">
+            {{#each predictTimeList}}
+            <li class="plan-step-{{type}} {{#equals type _DATA_.requirement.status}}active{{/equals}}">
+              <span class="plan-title">{{#equals type "1"}}需求交互{{/equals}}{{#equals type "2"}}{{#equals _DATA_.requirement.status "1"}}<i class="icon-plan-title-arrow"></i>{{/equals}}需求锁定{{/equals}}{{#equals type "3"}}{{#equals _DATA_.requirement.status "2"}}<i class="icon-plan-title-arrow"></i>{{/equals}}方案交互{{/equals}}{{#equals type "4"}}{{#equals _DATA_.requirement.status "3"}}<i class="icon-plan-title-arrow"></i>{{/equals}}方案终投{{/equals}}{{#equals type "5"}}{{#equals _DATA_.requirement.status "4"}}<i class="icon-plan-title-arrow"></i>{{/equals}}选定供应商与方案{{/equals}}</span>
+              <div class="date-div {{#equals type 5}}last{{/equals}}" id="requirement-mutual-period" data-type="{{type}}" style="height:30px;margin-bottom:20px;">
+                {{formatDate predictStart "day"}} - {{formatDate predictEnd "day"}}
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+          <br>
+          <p>实际时间</p>
+          {{/if}}
+          <ul>
+            {{#each requirementTimes}}
+            <li class="plan-step-{{type}} {{#equals type ../status}}active{{/equals}}">
+              <span class="plan-title">{{#equals type "1"}}需求交互{{/equals}}{{#equals type "2"}}{{#equals ../status "1"}}<i class="icon-plan-title-arrow"></i>{{/equals}}需求锁定{{/equals}}{{#equals type "3"}}{{#equals ../status "2"}}<i class="icon-plan-title-arrow"></i>{{/equals}}方案交互{{/equals}}{{#equals type "4"}}{{#equals ../status "3"}}<i class="icon-plan-title-arrow"></i>{{/equals}}方案终投{{/equals}}{{#equals type "5"}}{{#equals ../status "4"}}<i class="icon-plan-title-arrow"></i>{{/equals}}选定供应商与方案{{/equals}}</span>
+              <div class="date-div control-group" id="requirement-mutual-period" data-type="{{type}}" data-id="{{id}}">
+                <span class="required">*</span><span class="time-desc-span">开始时间</span><div class="input-group input-group-append" style="display:inline-block;">
+                  <input type="text" class="datepicker predict-start time-input" style="width:65px" placeholder="开始时间" value="{{formatDate predictStart "day"}}" {{#lt type ../status}}readOnly{{else}}data-write="true"{{/lt}}>
+                  <span class="input-group-btn">
+                  <button class="btn calendar" type="button" {{#lt type ../status}}disabled{{/lt}}>
+                  <i class="icon-calendar"></i>
+                  </button>
+                  </span>
+                </div><br><br>
+                <span class="required">*</span><span class="time-desc-span">结束时间</span><div class="input-group input-group-append" style="display:inline-block;">
+                  <input type="text" class="datepicker predict-end time-input" style="width:65px" placeholder="截止时间" value="{{formatDate predictEnd "day"}}" {{#lt type ../status}}readOnly{{else}}data-write="true"{{/lt}}>
+                  <span class="input-group-btn">
+                  <button class="btn calendar" type="button"{{#lt type ../status}}disabled{{/lt}}>
+                  <i class="icon-calendar"></i>
+                  </button>
+                  </span>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+            <li class="plan-step-6">
+              <span class="plan-title">&nbsp;</span>
+              <div class="date-div">结果公示</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <input class="btn btn-primary btn-medium" type="submit" value="确定">
+      &nbsp;
+      <button class="btn btn-info btn-medium close">取消</button>
+    </div>
+  </form>
+</div>

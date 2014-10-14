@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="CompanyExtraQuality" >
+    <resultMap id="CompanyExtraQualityMap" type="CompanyExtraQuality">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="rohs_id" property="rohsId"/>
+        <result column="rohs_valid_date" property="rohsValidDate"/>
+        <result column="rohs_attach_url" property="rohsAttachUrl"/>
+        <result column="iso9001_id" property="iso9001Id"/>
+        <result column="iso9001_valid_date" property="iso9001ValidDate"/>
+        <result column="iso9001_attach_url" property="iso9001AttachUrl"/>
+        <result column="iso14001_id" property="iso14001Id"/>
+        <result column="iso14001_valid_date" property="iso14001ValidDate"/>
+        <result column="iso14001_attach_url" property="iso14001AttachUrl"/>
+        <result column="ts16949_id" property="ts16949Id"/>
+        <result column="ts16949_valid_date" property="ts16949ValidDate"/>
+        <result column="ts16949_attach_url" property="ts16949AttachUrl"/>
+        <result column="number_for_admission_test" property="numberForAdmissionTest"/>
+        <result column="number_for_inspection_process" property="numberForInspectionProcess"/>
+        <result column="number_for_product_testing" property="numberForProductTesting"/>
+        <result column="number_in_lab" property="numberInLab"/>
+        <result column="number_for_quality_attach_url" property="numberForQualityAttachUrl"/>
+        <result column="auditor_type" property="auditorType"/>
+        <result column="exam_people" property="examPeople"/>
+        <result column="test_people" property="testPeople"/>
+        <result column="green_level" property="greenLevel"/>
+        <result column="black_level" property="blackLevel"/>
+        <result column="auditor_attach_url" property="auditorAttachUrl"/>
+        <result column="investment_this_year" property="investmentThisYear"/>
+        <result column="investment_last_year" property="investmentLastYear"/>
+        <result column="investment_befor_last_year" property="investmentBeforLastYear"/>
+        <result column="number_of_equipments" property="numberOfEquipments"/>
+        <result column="lab_level" property="labLevel"/>
+        <result column="lab_attach_url" property="labAttachUrl"/>
+        <result column="checks_qualified_rate" property="checksQualifiedRate"/>
+        <result column="market_qualified_rate" property="marketQualifiedRate"/>
+        <result column="customer_satisfaction" property="customerSatisfaction"/>
+        <result column="qualified_attach_url" property="qualifiedAttachUrl"/>
+        <result column="quality_tools" property="qualityTools"/>
+        <result column="ctq_cpk" property="ctqCpk"/>
+        <result column="other_ability_description" property="otherAbilityDescription"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="tb_name">snz_company_extra_quality</sql>
+
+    <sql id="columns">user_id, rohs_id, rohs_valid_date, rohs_attach_url, iso9001_id, iso9001_valid_date, iso9001_attach_url, iso14001_id, iso14001_valid_date, iso14001_attach_url, ts16949_id, ts16949_valid_date, ts16949_attach_url, number_for_admission_test, number_for_inspection_process, number_for_product_testing, number_in_lab, number_for_quality_attach_url, auditor_type, exam_people, test_people, green_level, black_level, auditor_attach_url, investment_this_year, investment_last_year, investment_befor_last_year, number_of_equipments, lab_level, lab_attach_url, checks_qualified_rate, market_qualified_rate, customer_satisfaction, qualified_attach_url, quality_tools, ctq_cpk, other_ability_description, created_at, updated_at</sql>
+
+    <sql id="values">#{userId}, #{rohsId}, #{rohsValidDate}, #{rohsAttachUrl}, #{iso9001Id}, #{iso9001ValidDate}, #{iso9001AttachUrl}, #{iso14001Id}, #{iso14001ValidDate}, #{iso14001AttachUrl}, #{ts16949Id}, #{ts16949ValidDate}, #{ts16949AttachUrl}, #{numberForAdmissionTest}, #{numberForInspectionProcess}, #{numberForProductTesting}, #{numberInLab}, #{numberForQualityAttachUrl}, #{auditorType}, #{examPeople}, #{testPeople}, #{greenLevel}, #{blackLevel}, #{auditorAttachUrl}, #{investmentThisYear}, #{investmentLastYear}, #{investmentBeforLastYear}, #{numberOfEquipments}, #{labLevel}, #{labAttachUrl}, #{checksQualifiedRate}, #{marketQualifiedRate}, #{customerSatisfaction}, #{qualifiedAttachUrl}, #{qualityTools}, #{ctqCpk}, #{otherAbilityDescription}, now(), now()</sql>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="CompanyExtraQuality" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/> (<include refid="columns"/>)
+        VALUES (<include refid="values"/>)
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="CompanyExtraQuality">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            <if test="rohsId!=null">rohs_id=#{rohsId},</if>
+            <if test="rohsValidDate!=null">rohs_valid_date=#{rohsValidDate},</if>
+            <if test="rohsAttachUrl!=null">rohs_attach_url=#{rohsAttachUrl},</if>
+            <if test="iso9001Id!=null">iso9001_id=#{iso9001Id},</if>
+            <if test="iso9001ValidDate!=null">iso9001_valid_date=#{iso9001ValidDate},</if>
+            <if test="iso9001AttachUrl!=null">iso9001_attach_url=#{iso9001AttachUrl},</if>
+            <if test="iso14001Id!=null">iso14001_id=#{iso14001Id},</if>
+            <if test="iso14001ValidDate!=null">iso14001_valid_date=#{iso14001ValidDate},</if>
+            <if test="iso14001AttachUrl!=null">iso14001_attach_url=#{iso14001AttachUrl},</if>
+            <if test="ts16949Id!=null">ts16949_id=#{ts16949Id},</if>
+            <if test="ts16949ValidDate!=null">ts16949_valid_date=#{ts16949ValidDate},</if>
+            <if test="ts16949AttachUrl!=null">ts16949_attach_url=#{ts16949AttachUrl},</if>
+            <if test="numberForAdmissionTest!=null">number_for_admission_test=#{numberForAdmissionTest},</if>
+            <if test="numberForInspectionProcess!=null">number_for_inspection_process=#{numberForInspectionProcess},</if>
+            <if test="numberForProductTesting!=null">number_for_product_testing=#{numberForProductTesting},</if>
+            <if test="numberInLab!=null">number_in_lab=#{numberInLab},</if>
+            <if test="numberForQualityAttachUrl!=null">number_for_quality_attach_url=#{numberForQualityAttachUrl},</if>
+            <if test="auditorType!=null">auditor_type=#{auditorType},</if>
+            <if test="examPeople!=null">exam_people=#{examPeople},</if>
+            <if test="testPeople!=null">test_people=#{testPeople},</if>
+            <if test="greenLevel!=null">green_level=#{greenLevel},</if>
+            <if test="blackLevel!=null">black_level=#{blackLevel},</if>
+            <if test="auditorAttachUrl!=null">auditor_attach_url=#{auditorAttachUrl},</if>
+            <if test="investmentThisYear!=null">investment_this_year=#{investmentThisYear},</if>
+            <if test="investmentLastYear!=null">investment_last_year=#{investmentLastYear},</if>
+            <if test="investmentBeforLastYear!=null">investment_befor_last_year=#{investmentBeforLastYear},</if>
+            <if test="numberOfEquipments!=null">number_of_equipments=#{numberOfEquipments},</if>
+            <if test="labLevel!=null">lab_level=#{labLevel},</if>
+            <if test="labAttachUrl!=null">lab_attach_url=#{labAttachUrl},</if>
+            <if test="checksQualifiedRate!=null">checks_qualified_rate=#{checksQualifiedRate},</if>
+            <if test="marketQualifiedRate!=null">market_qualified_rate=#{marketQualifiedRate},</if>
+            <if test="customerSatisfaction!=null">customer_satisfaction=#{customerSatisfaction},</if>
+            <if test="qualifiedAttachUrl!=null">qualified_attach_url=#{qualifiedAttachUrl},</if>
+            <if test="qualityTools!=null">quality_tools=#{qualityTools},</if>
+            <if test="ctqCpk!=null">ctq_cpk=#{ctqCpk},</if>
+            <if test="otherAbilityDescription!=null">other_ability_description=#{otherAbilityDescription},</if>
+            updated_at=now()
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+
+    <!-- 查找 -->
+    <select id="findByUserId" resultMap="CompanyExtraQualityMap" parameterType="long">
+        SELECT id, <include refid="columns"/> FROM <include refid="tb_name"/>
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

@@ -1,0 +1,49 @@
+{{#component "js-comp question-list"}}
+<p class="components-title"><strong>调查问卷列表</strong></p>
+
+<div id="block" class="block">
+  <form id="js-supplier-list-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="supplier-name">供应商名称:</label>
+        <input type="text" name="corporation" id="supplier-name" value="{{corporation}}" placeholder="请输入供应商名称">
+      </span>
+      <span class="span3">
+        <label for="requirement-name">需求名称:</label>
+        <input type="text" name="requirementName" id="requirement-name" value="{{requirementName}}" placeholder="请输入需求名称">
+      </span>
+      <span class="span1">
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="/platforms/questionnaires">取消</a>
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="300">供应商名称</th>
+      <th width="300">需求名称</th>
+      <th width="200">提交时间</th>
+      <th width="200">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.data}}
+    <tr data-info="{{json this}}">
+      <td>{{corporation}}</td>
+      <td>{{requirementName}}</td>
+      <td>{{formatDate createdAt}}</td>
+      <td>
+        <a href="javascript:void(0);" class="js-questionnaire-detail">查看详情</a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div class="question-pagination" data-toal="{{_DATA_.total}}"></div>
+<br>
+{{/component}}

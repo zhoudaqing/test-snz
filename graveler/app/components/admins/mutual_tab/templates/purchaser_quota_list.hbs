@@ -1,0 +1,47 @@
+<div class="table-container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th width="150">模块编号</th>
+        <th width="200">模块专用号</th>
+        <th width="150">模块描述</th>
+        <th width="150">资源量</th>
+        <th width="200">中选供应商</th>
+        <th width="100">供应商报价</th>
+        <th width="150">配额比例</th>
+        <th width="100">是否跟标</th>
+        {{!-- {{#of user members}}
+        <th width="100">操作</th>
+        {{/of}} --}}
+      </tr>
+    </thead>
+    <tbody>
+      {{#each data.data}}
+      <tr>
+        <td>{{moduleId}}</td>
+        <td>{{moduleNum}}</td>
+        <td>{{moduleName}}</td>
+        <td>{{quantity}}</td>
+        <td>{{supplierName}}</td>
+        <td>{{formatPrice originalCost}}</td>
+        <td>{{scale}}</td>
+        <td>
+          {{#if status}}
+            {{#equals status "0"}}不同意{{/equals}}
+            {{#equals status "1"}}同意{{/equals}}
+          {{else}}
+            未回复
+          {{/if}}
+        </td>
+        {{!-- {{#of ../user ../members}}
+        <td><a href="javascript:void(0);" class="js-edit-quotation">修改配额</a></td>
+        {{/of}} --}}
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+{{!-- {{#of user members}}
+<p style="text-align:right;"><button data-id="{{requirementId}}:1" class="btn btn-medium" data-toggle="confirm" data-event="confirm:select-end" data-title="确定发起商务谈判吗？" data-content="发起商务谈判操作不可逆">商务谈判</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-id="{{requirementId}}:2" class="btn btn-medium" data-toggle="confirm" data-event="confirm:select-end" data-title="确定发起供应商跟标吗？" data-content="发起供应商跟标操作不可逆">供应商跟标</button>&nbsp;&nbsp;&nbsp;&nbsp;<button data-id="{{requirementId}}:3" class="btn btn-medium" data-toggle="confirm" data-event="confirm:select-end" data-title="确定结果公示吗？" data-content="结果公示后所有人可见相关结果">结果公示</button></p>
+{{/of}} --}}
+<div class="quota-pagination" data-total="{{data.total}}"></div>

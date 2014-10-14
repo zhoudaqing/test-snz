@@ -1,0 +1,14 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#partial "content"}}
+{{#inject "group/group_menu"}}
+{
+  "active": "design"
+}
+{{/inject}}
+{{inject "group/design_meta"}}
+{{#if app}}
+<div class="ui divider"></div>
+{{inject "group/site_list"}}
+{{/if}}
+{{/partial}}
+{{> main_layout}}

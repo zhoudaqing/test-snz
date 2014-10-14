@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 创建具体的需求模块方案信息 -->
+<mapper namespace="Module">
+    <resultMap id="moduleMap" type="Module">
+        <id property="id" column="id"/>
+        <result property="moduleFlowNum" column="module_flowNum"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="type" column="type"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="oldModuleId" column="old_moduleId"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="seriesId" column="series_id"/>
+        <result property="seriesName" column="series_name"/>
+        <result property="propertyId" column="property_id"/>
+        <result property="total" column="total"/>
+        <result property="quality" column="quality"/>
+        <result property="cost" column="cost"/>
+        <result property="delivery" column="delivery"/>
+        <result property="attestations" column="attestations"/>
+        <result property="supplyAt" column="supply_at"/>
+        <result property="units" column="units"/>
+        <result property="selectNum" column="select_num"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        module_flowNum, requirement_id, type, module_name, old_moduleId, module_num, series_id, series_name, property_id, total, quality, cost,
+        delivery, attestations, supply_at, units, select_num, created_at, updated_at
+    </sql>
+
+    <sql id="queryColumns">
+        snz_modules.module_flowNum, snz_modules.requirement_id, snz_modules.type, snz_modules.module_name, snz_modules.old_moduleId, snz_modules.module_num, snz_modules.series_id, snz_modules.series_name,
+        snz_modules.property_id, snz_modules.total, snz_modules.quality, snz_modules.cost, snz_modules.delivery, snz_modules.attestations,
+        snz_modules.supply_at, snz_modules.units, snz_modules.select_num, snz_modules.created_at, snz_modules.updated_at
+    </sql>
+
+    <insert id="create" parameterType="module" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_modules (<include refid="columns"/>) values (#{moduleFlowNum},#{requirementId},#{type},#{moduleName}, #{oldModuleId}, #{moduleNum}, #{seriesId}, #{seriesName}, #{propertyId},
+        #{total}, #{quality}, #{cost}, #{delivery}, #{attestations}, #{supplyAt}, #{units}, #{selectNum}, now(), now())
+    </insert>
+
+    <!-- 优化性能批量插入 -->
+    <insert id="createBatch" parameterType="module" useGeneratedKeys="true">
+        insert into snz_modules (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="module" index="index" separator="," >
+            (#{module.moduleFlowNum},#{module.requirementId},#{module.type},#{module.moduleName},#{module.oldModuleId},#{module.moduleNum},#{module.seriesId},#{module.seriesName},
+            #{module.propertyId}, #{module.total}, #{module.quality}, #{module.cost}, #{module.delivery}, #{module.attestations}, #{module.supplyAt},
+            #{module.units}, #{module.selectNum}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="module">
+        update snz_modules
+        <set>
+            <if test="type!=null">type=#{type},</if>
+            <if test="moduleName!=null">module_name=#{moduleName},</if>
+            <if test="oldModuleId!=null">old_moduleId=#{oldModuleId},</if>
+            <if test="moduleNum!=null">module_num=#{moduleNum},</if>
+            <if test="seriesId!=null">series_id=#{seriesId},</if>
+            <if test="seriesName!=null">series_name=#{seriesName},</if>
+            <if test="propertyId!=null">property_id=#{propertyId},</if>
+            <if test="total!=null">total=#{total},</if>
+            <if test="quality!=null">quality=#{quality},</if>
+            <if test="cost!=null">cost=#{cost},</if>
+            <if test="delivery!=null">delivery=#{delivery},</if>
+            <if test="attestations!=null">attestations=#{attestations},</if>
+            <if test="supplyAt!=null">supply_at=#{supplyAt},</if>
+            <if test="units!=null">units=#{units},</if>
+            <if test="selectNum!=null">select_num=#{selectNum},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from snz_modules where id=#{id}
+    </delete>
+
+    <delete id="deleteByReqId" parameterType="long">
+        delete from snz_modules where requirement_id=#{requirementId}
+    </delete>
+
+    <select id="findById" parameterType="long" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules where id=#{id}
+    </select>
+
+    <select id="findByIds" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules where id in
+        <foreach collection="list" separator="," open="(" close=")" item="id"> #{id} </foreach>
+    </select>
+
+    <select id="countById" parameterType="long" resultType="int">
+        select count(id)
+        from snz_modules where requirement_id=#{requirementId}
+    </select>
+
+    <select id="findModules" parameterType="long" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules where requirement_id=#{requirementId};
+    </select>
+
+    <!-- 查询全部还未写入模块专用号的模块信息(需求当前以锁定,定时任务) -->
+    <select id="findNoModuleNum" parameterType="long" resultMap="moduleMap">
+        select snz_modules.id, <include refid="queryColumns"/>
+        from snz_modules, snz_requirements
+        <where>
+            requirement_id=snz_requirements.id and snz_requirements.status > 2 and snz_modules.module_num is null
+            <if test="requirementId!=null"> and requirement_id=#{requirementId} </if>
+        </where>
+    </select>
+
+    <!-- 设置分页查询 -->
+    <select id="findModuleCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_modules
+        <where>
+            <if test="id!=null">and id = #{id}</if>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId}</if>
+            <if test="tacticsId!=null"> and tactics_id=#{tacticsId} </if>
+            <if test="type!=null"> and type=#{type} </if>
+            <if test="seriesId!=null"> and series_id=#{seriesId} </if>
+            <if test="moduleNum!=null"> and module_num=#{moduleNum} </if>
+        </where>
+    </select>
+
+    <select id="findByParams" parameterType="map" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules
+        <where>
+            <if test="id!=null">and id = #{id}</if>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId}</if>
+            <if test="tacticsId!=null"> and tactics_id=#{tacticsId} </if>
+            <if test="type!=null"> and type=#{type} </if>
+            <if test="seriesId!=null"> and series_id=#{seriesId} </if>
+            <if test="moduleNum!=null"> and module_num=#{moduleNum} </if>
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+
+    <!-- 查询未提交的模块 -->
+    <select id="findFilterCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_modules
+        <where>
+            requirement_id=#{requirementId}
+            <if test="filterIds!=null"><include refid="filterModuleIds"/></if>
+        </where>
+    </select>
+
+    <select id="findFilter" parameterType="map" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules
+        <where>
+            requirement_id=#{requirementId}
+            <if test="filterIds!=null"><include refid="filterModuleIds"/></if>
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+
+    <sql id="filterModuleIds">
+        and id not in
+        <foreach collection="filterIds" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </sql>
+
+    <select id="countByPurchaserId" resultType="long">
+        select count(1) from snz_modules
+        where snz_modules.requirement_id in
+        (<include refid="findRequirementIdByPurchaserId"/>)
+    </select>
+
+    <sql id="findRequirementIdByPurchaserId">
+        select id from snz_requirements
+        <where>
+            <if test="purchaserId!=null"> snz_requirements.purchaser_id=#{purchaserId} </if>
+            <if test="status!=null"> and snz_requirements.status=#{status} </if>
+        </where>
+    </sql>
+
+
+    <!-- 衍生号的逻辑部分 -->
+    <select id="findDerive" parameterType="map" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules where module_num=#{moduleNum} and type=#{moduleType}
+    </select>
+
+    <select id="findOneBy" resultMap="moduleMap">
+        select id, <include refid="columns"/>
+        from snz_modules
+        <where>
+            <if test="type!=null"> and `type`=#{type} </if>
+            <if test="moduleName!=null"> and `module_name`=#{moduleName} </if>
+            <if test="oldModuleId!=null"> and `old_moduleId`=#{oldModuleId} </if>
+            <if test="moduleNum!=null"> and `module_num`=#{moduleNum} </if>
+            <if test="seriesId!=null"> and `series_id`=#{seriesId} </if>
+            <if test="seriesName!=null"> and `series_name`=#{seriesName} </if>
+            <if test="propertyId!=null"> and `property_id`=#{propertyId} </if>
+            <if test="resourceNum!=null"> and `resource_num`=#{resourceNum} </if>
+            <if test="total!=null"> and `total`=#{total} </if>
+            <if test="quality!=null"> and `quality`=#{quality} </if>
+            <if test="cost!=null"> and `cost`=#{cost} </if>
+            <if test="delivery!=null"> and `delivery`=#{delivery} </if>
+            <if test="attestations!=null"> and `attestations`=#{attestations} </if>
+            <if test="supplyAt!=null"> and `supply_at`=#{supplyAt} </if>
+            <if test="units!=null"> and `units`=#{units} </if>
+            <if test="selectNum!=null"> and `select_num`=#{selectNum} </if>
+        </where>
+        limit 1
+    </select>
+    
+    <select id="findModulesByFuzzyModuleName" parameterType="string" resultMap="moduleMap">
+        SELECT id, <include refid="columns"/>
+          FROM snz_modules
+        WHERE module_name like CONCAT('%', CONCAT(#{moduleName}, '%'))
+    </select>
+
+    <select id="findOldModuleById" parameterType="int" resultMap="moduleMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_modules
+        WHERE module_num = #{moduleNum} and type = 2
+        limit 1
+    </select>
+
+    <delete id="deleteByParams" parameterType="map">
+        delete from snz_modules 
+        where id = #{moduleId} and requirement_id = #{requirementId}
+    </delete>
+
+</mapper>

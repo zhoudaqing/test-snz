@@ -1,0 +1,47 @@
+.supplier-performance {
+  .overall-plots {
+    overflow: hidden;
+    table {
+      width: 100%;
+
+      td {
+        padding: 0
+      }
+    }
+
+    & > div {
+      width: 340px;
+      float: left;
+      margin-right: 15px;
+
+      &:last-child {
+        margin-right: 0
+      }
+    }
+
+    .plot {
+      height: 270px;
+    }
+
+    .last {
+      margin-right: 0;
+    }
+  }
+
+  table {
+    .plot {
+      height: 100px;
+    }
+  }
+}
+.modal{
+  table.table-showstrategy {
+    th{
+      height: 30px;
+    }
+    td{
+      height: 30px;
+      padding: 0;
+    }
+  }
+}

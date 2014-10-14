@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:consumer timeout="#{app.dubboTimeout}"/>
+
+    <!-- user services -->
+    <dubbo:reference interface="io.terminus.snz.user.service.AccountService" id="accountService"/>
+    <dubbo:reference interface="io.terminus.snz.user.service.CompanyService" id="companyService"/>
+
+    <!-- requirement services -->
+    <dubbo:reference interface="io.terminus.snz.requirement.service.RequirementService" id="requirementService"/>
+
+    <!-- message services -->
+    <dubbo:reference interface="io.terminus.snz.message.services.MessageService" id="messageService"/>
+
+    <!-- statistic services -->
+    <dubbo:reference interface=" io.terminus.snz.statistic.service.RequirementCountService" id="requirementCountService"/>
+</beans>

@@ -1,0 +1,38 @@
+require 'rake/contrib/ftptools'
+
+desc "release golem in minutes"
+task :release do
+  exec "linner build && rsync -rv --progress public/* 690jh@10.135.17.108:~/project/assets/graveler"
+end
+
+desc "Release graveler to test server"
+task :release_test do
+  system "linner b && rsync -rv --progress public/* admin@10.135.108.204:~/assets/graveler"
+end
+
+desc "Build package"
+task :build do
+    Rake::Task['clean'].execute
+    system "linner build"
+end
+
+desc "Package and push graveler to ftp"
+task :package => :build do
+    system 'zip graveler.zip -r public'
+end
+
+desc "Upload package to snz test server"
+task :upload => [:build, :package] do
+    Rake::FtpUploader.connect "/690front", "10.135.16.79", "690", "690" do |ftp|
+        puts 'starting uploadding file graveler.zip ...'
+        ftp.upload_files 'graveler.zip'
+        puts 'uploaded file graveler.zip !'
+    end
+
+    Rake::Task['clean'].execute
+end
+
+desc "Clean dir"
+task :clean do
+    system "rm graveler.zip"
+end

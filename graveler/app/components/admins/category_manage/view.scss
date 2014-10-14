@@ -1,0 +1,484 @@
+@import "compass/css3/inline-block";
+@import "pokeball/variables";
+
+.edit-panel{
+  .input-spu-name{
+    text-align: left;
+    input.input-large{
+      width: 295px !important;
+      // padding: .5em;
+    }
+  }
+  &.disable{
+    display: none;
+  }
+  // margin-left: 790px;
+  // float: right;
+  display: block;
+  height: 100%;
+  overflow: auto;
+  width: 408px;
+  border-left: 1px solid $default-border-color;
+  border-right: 1px solid $default-border-color;
+
+  .tab-content{
+    padding: 0 .5em 0 .5em;
+    >*{
+      display: none;
+    }
+    >*.active{
+      display: block;
+    }
+    #edit-category{
+      ul{
+        position: relative;
+        li{
+          border-bottom: 1px dashed $default-border-color;
+          line-height: 40px;
+          &:hover{
+            span.operate.on-hover{
+              @include inline-block(middle);
+              span{
+                a{
+                  text-align: left;
+                }
+              }
+            }
+            span.end{
+              display: none;
+            }
+          }
+          span.attribute{
+            width: 160px;
+            @include inline-block(middle);
+            span.attr{
+              @include inline-block(middle);
+              width: 100px;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+            }
+            span.is-enum{
+              width: 50px;
+              @include inline-block(middle);
+            }
+          }
+          span.end{
+            position: absolute;
+            right:.5em;
+
+          }
+          span.operate.on-hover{
+            position: absolute;
+            display: none;
+            right:12px;
+          }
+          span.operate.edit-status{
+            position: absolute;
+            right: .5em;
+          }
+          span.only-delete{
+            padding: 9px 0 0 0;
+            @include inline-block(middle);
+          }
+
+          .disable-status{
+            display: none !important;
+          }
+          .active-status{
+            display: inline-block !important;
+          }
+        }
+      }
+      .add-attr-li{
+        height: 34px;
+        padding: 6px 0 0 0;
+      }
+      .properties-edit{
+        padding: 0 .5em;
+        form{
+          padding-top: 0;
+        }
+        .title-label{
+          margin-left: 12px;
+        }
+        ul{
+          list-style: none;
+          margin-left: 10px;
+          li{
+            border-bottom: 0px;
+            line-height: 35px;
+            input{
+              &[readOnly=true]{
+                background-color: #fff;
+              }
+              &.attribute-show{
+                width: 142px;
+              }
+              &.update-category-input{
+                width: 92px;
+              }
+            }
+          }
+          .button-group{
+            text-align: left;
+            margin-bottom: 20px;
+          }
+        }
+      }
+      .properties-edit-panel{
+        padding: 0 .5em;
+        .properties-edit-ul{
+          list-style: none;
+          margin-top: 5px;
+          margin-left: 10px;
+          width: 160px;
+          li{
+            border-bottom: 0px;
+            line-height: 25px;
+            .attribute-value{
+              color: #f69e09;
+              font-weight: bold;
+              text-align: left;
+            }
+          }
+        }
+      }
+
+      .properties-edit-form{
+        height: 35px;
+        .input-group{
+          width: 160px;
+          margin: 4px 0 0 0;
+          width: 160px;
+          text-align: left;
+          line-height: 28px;
+          button{
+            background-color: #7B8AB5;
+            border: 1px solid #7B8AB5;
+          }
+          span{
+            @include inline-block(baseline);
+          }
+
+
+        }
+      }
+      .add-attribute-form{
+        .input-group{
+          width: 140px;
+          line-height: 28px;
+          input{
+          }
+        }
+      }
+    }
+
+    #spu-manage{
+      position: relative;
+      .caret{
+        margin-top: 3px;
+      }
+      .dropdown-group{
+        width:90px;
+        height: 24px;
+        @include inline-block(middle);
+        .dropdown-title{
+          padding-left: 0;
+          padding-right: 0;
+          width: 90px;
+          position: absolute;
+          .spu-operate-item{
+            padding-top: 10px;
+          }
+        }
+      }
+      ul{
+        &.spu-list{
+          margin-bottom: 60px;
+        }
+        li{
+          position: relative;
+          border-bottom: 1px dashed $default-border-color;
+          line-height: 40px;
+
+          // TODO show name without delay
+          span.spu-name{
+            @include inline-block(middle);
+            width: 100px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+
+            // position: relative;
+            // z-index: 90;
+          }
+          span.spu-status{
+            display: inline;
+          }
+          span.operate.on-hover{
+            position: absolute;
+            right:0;
+          }
+          span.spu-id{
+            @include inline-block(middle);
+            width:50px;
+          }
+        }
+      }
+      .properties-edit-panel{
+        ul{
+          margin-top: 5px;
+          list-style: none;
+          li{
+            border-bottom: 0px;
+            line-height: 25px;
+            .attribute-value{
+              color: #f69e09;              
+              font-weight: bold;
+            }
+          }
+        }
+      }
+      .key-name{
+        width: 100%;
+        .attribute-seller-value{
+          float: left;
+          width: 100%;
+          @include inline-block(middle);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+      .spu-new{
+        height: auto;
+        table{
+          margin: 2px 5px;
+          select{
+            width: 100px;
+            &.select{
+              width: 172px;
+            }
+          }
+          tr{
+            vertical-align: middle;
+            &.spu-property-list{
+              position: relative;
+              .tip{
+                position: absolute;
+                &.up{
+                  left: 50px;
+                  margin-top: 40px;
+                }
+              }
+            }
+          }
+          .search-brand{
+            @include inline-block(middle);
+          }
+          .search-brand-group{
+            position: relative;
+            i{
+              position: absolute;
+              top: 8px;
+              left: 9px;
+
+            }
+            input{
+              width: 100px;
+              padding-left: 25px;
+            }
+          }
+          table-layout: fixed;
+          th.spu-name, .spu-attr{
+            width: 60px;
+            height: 40px;
+          }
+          th.spu-attr{
+            vertical-align: top;
+            line-height: 40px;
+          }
+          th.select-spu-brand{
+            text-align: left;
+          }
+          td{
+            height: 40px;
+            width: 102px;
+            vertical-align: middle;
+            input{
+              display: inline;
+              vertical-align: middle;
+              &[type="text"]{
+                width: 190px;
+              }
+            }
+            &.spu-attribute{
+              span{
+                width: 80px;
+                @include inline-block(middle);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                vertical-align: middle;
+                &:hover{
+                  overflow: visible;
+                }
+              }
+            }
+            &.spu-sku{
+              width: 100px;
+            }
+            &.operate-button-group{
+              width: auto;
+
+            }
+          }
+        }
+      }
+      .span-active{
+        color: #f69e09;
+        font-weight: bold;
+      }
+    }
+  }
+  form{
+    .form-group{
+      width: 100%;
+      @include inline-block(middle);
+      margin-bottom: 10px;
+    }
+    .form-desc{
+      @include inline-block(middle);
+      width: 20%;
+      height: 100%;
+      vertical-align: middle;
+    }
+    .update-category-input{
+      @include inline-block(middle);
+      width: 70px;
+    }
+    .form-line{
+      line-height: 28px;
+      display: block;
+    }
+    .form-part{
+      @include inline-block(middle);
+      margin-right: 2em;
+    }
+  }
+}
+
+span.input-icon{
+  position: relative;
+  @include inline-block(middle);
+  width: 160px;
+  i.input-right{
+    font-size: 14px;
+    position: absolute;
+    right: .8em;
+    top:.7em;
+    cursor: pointer;
+  }
+  i.input-left{
+    position: absolute;
+    left: 1em;
+    top: 1.2em;
+    cursor: pointer;
+    &:hover{
+      padding:1px;
+      border: 1px $default-border-color solid;
+    }
+  }
+}
+
+ul{
+  padding: 0;
+  list-style: none;
+
+  &.tab{
+    margin-top: 10px;
+    margin: 0px;
+    display: block;
+    height: 40px;
+    border-bottom: 1px solid $default-border-color;
+    background-color: $default-background-color;
+    margin-bottom: 5px;
+    li{
+      float: left;
+      margin-left: -1px;
+      text-align: center;
+      line-height: 40px;
+      width: 115px;
+      .switch-panel{
+        // color: $menu-title-label-color;
+      }
+      &.active{
+        font-weight: bold;
+        border:1px solid $default-border-color;
+        border-bottom: none;
+        background-color: white;
+        .switch-panel{
+          color: #717171;
+        }
+      }
+    }
+  }
+  .add-attr-li{
+    label{
+      width: 35px;
+      letter-spacing: -2px;
+    }
+  }
+}
+
+.menu-panel.left{
+  z-index:90;
+  position:absolute;
+  background-color: white;
+  border:1px solid;
+  border-color:$default-border-color;
+  left:0; top: 0;
+  height:auto; width:100%;
+}
+.menu-panel.left::before{
+  content:""; /*需要有内容,这里是一个空字符串*/
+  position:absolute; /*相对于弹出层定位*/
+  border:6px solid;
+  border-color:transparent $default-border-color transparent transparent;
+  left:-13px; top:10px; /*相对于盒子边框定位三角形*/
+  height:0px; width:0px; /*收缩边框创造三角形*/
+}
+.menu-panel.left::after{
+  content:""; /*需要有内容,这里是一个空字符串*/
+  position:absolute; /*相对于弹出层定位*/
+  border:6px solid;
+  border-color:transparent white transparent transparent;
+  left:-12px; top:10px; /*相对于盒子边框定位三角形*/
+  height:0px; width:0px; /*收缩边框创造三角形*/
+}
+.menu-panel.top{
+  z-index: 100;
+  position:absolute;
+  border:1px solid;
+  background-color: $default-panel-color;
+  border-color:$default-border-color;
+  left:0; top: 0;
+  height:auto; width:100%;
+}
+.menu-panel.top::before{
+  content:""; /*需要有内容,这里是一个空字符串*/
+  position:absolute; /*相对于弹出层定位*/
+  border:6px solid;
+  border-color:transparent transparent $default-border-color transparent;
+  left:10px; top:-12px; /*相对于盒子边框定位三角形*/
+  height:0px; width:0px; /*收缩边框创造三角形*/
+}
+.menu-panel.top::after{
+  content:""; /*需要有内容,这里是一个空字符串*/
+  position:absolute; /*相对于弹出层定位*/
+  border:6px solid;
+  border-color:transparent transparent $default-panel-color transparent;
+  left:10px; top:-11px; /*相对于盒子边框定位三角形*/
+  height:0px; width:0px; /*收缩边框创造三角形*/
+}

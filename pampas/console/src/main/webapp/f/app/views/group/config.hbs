@@ -1,0 +1,14 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#partial "content"}}
+{{#inject "group/group_menu"}}
+{
+  "active": "config"
+}
+{{/inject}}
+{{inject "group/cell_list"}}
+{{#if cell}}
+<div class="ui divider"></div>
+{{inject "group/config_list"}}
+{{/if}}
+{{/partial}}
+{{> main_layout}}

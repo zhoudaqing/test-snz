@@ -1,0 +1,11 @@
+{{#partial "title"}}首页{{/partial}}
+{{#partial "body"}}
+<script charset="utf-8">
+  {{#if _USER_}}
+  window.location.href = "/platforms/performance"
+  {{else}}
+  window.location.href = "/login"
+  {{/if}}
+</script>
+{{/partial}}
+{{> layout}}

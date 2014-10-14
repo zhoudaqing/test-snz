@@ -1,0 +1,13 @@
+{{#each data}}
+  <div class="control-group control-group-new old-line" style="width: 500px;"><label for="">{{name}}:</label>
+    <div class="control-content">
+      <div class="paperwork-info">
+        <img src="{{#equals license ""}}http://admin.snz.com/assets/images/other-images/null.png{{else}}{{license}}{{/equals}}" alt="" class="paperwork-image"><br>
+      </div>
+      <div class="paperwork-valid">
+        <p>证件有效期: {{date}}</p>
+        <p>证 件 编 号: {{licenseId}}</p>
+      </div>
+    </div>
+  </div>
+{{/each}}

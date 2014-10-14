@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <context:component-scan base-package="io.terminus.snz,io.terminus.search"/>
+
+    <util:properties id="app" location="classpath:app.properties"/>
+
+    <!-- 提供Spring Aop的支持 -->
+    <aop:aspectj-autoproxy/>
+    <!-- 分布式环境下的redis锁 -->
+    <bean id="redisLockOperation" class="io.terminus.common.annotation.RedisLockOperation"></bean>
+    <!-- schedule job -->
+    <task:annotation-driven/>
+
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:messages</value>
+                <value>classpath:exceptions</value>
+            </list>
+        </property>
+        <property name="cacheSeconds" value="3600">
+        </property>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean id="setting" class="io.terminus.pampas.engine.Setting">
+        <property name="mode" value="IMPLANT"/>
+        <property name="implantApp">
+            <bean class="io.terminus.pampas.engine.model.App">
+                <property name="key" value="#{app.appName}"/>
+                <property name="domain" value="#{app.domain}"/>
+                <property name="assetsHome" value="#{app.assetsHome}"/>
+                <property name="configPath" value="#{app.configPath}"/>
+            </bean>
+        </property>
+        <property name="devMode" value="#{app.mode == 'dev' or app.mode == 'pretest' or app.mode == 'testhac' or app.mode == 'test-local' or app.mode == 'test-standalone'}"/>
+        <property name="registryId" value="pampas"/>
+    </bean>
+
+    <bean id="nPIImportJob" class="io.terminus.snz.web.jobs.NPIImportJob">
+        <property name="npiHost" value="58.56.128.22"/>
+        <property name="npiPort" value="21"/>
+        <property name="npiDir" value="/eai/JHPT"/>
+        <property name="npiUsername" value="GPS_EX"/>
+        <property name="npiPassword" value="GPS_EX#123"/>
+        <property name="fileEncoding" value="GBK"/>
+    </bean>
+
+    <import resource="classpath*:/pampas/engine-context.xml"/>
+    <import resource="classpath*:/spring/redis-persistence-context.xml"/>
+
+    <beans profile="test,test-admin,test-local,prod">
+        <dubbo:application name="#{app.appName}"/>
+        <dubbo:registry id="pampas" protocol="zookeeper" address="#{app.dubboRegistry}"/>
+        <dubbo:protocol name="dubbo" port="#{app.dubboPort}"/>
+        <import resource="classpath*:/spring/web-dubbo-consumer.xml"/>
+        <import resource="classpath*:/pampas/register-context.xml"/>
+    </beans>
+
+    <!-- standalone -->
+    <beans profile="dev,dev-admin,pretest,testhac,pretest-admin,testadmin-standalone,test-standalone">
+        <import resource="classpath*:/spring/mysql-persistence-context.xml" />
+        <import resource="classpath*:/spring/user-service-context.xml" />
+        <import resource="classpath*:/spring/requirement-service-context.xml" />
+        <import resource="classpath*:/spring/sns-service-context.xml" />
+        <import resource="classpath*:/spring/message-service-context.xml" />
+        <import resource="classpath*:/spring/related-service-context.xml"/>
+        <import resource="classpath*:/spring/statistic-service-context.xml"/>
+    </beans>
+
+    <!-- file server -->
+    <beans profile="dev,dev-admin,testhac">
+        <import resource="classpath*:/spring/upyun.xml"/>
+    </beans>
+
+    <!-- 上传到本地 -->
+    <beans profile="test,test-admin,test-local,testadmin-standalone,test-standalone">
+        <bean id="fileServer" class="io.terminus.snz.web.controllers.file.LocalDiskFileServer" >
+            <constructor-arg index="0" value="#{app.fileFolder}"/>
+            <constructor-arg index="1" value="#{app.fileBaseUrl}"/>
+        </bean>
+    </beans>
+
+    <!-- 上传到图片服务器 -->
+    <beans profile="prod-standalone,prodadmin-standalone,pretest,pretest-admin">
+        <bean id="fileServer" class="io.terminus.snz.web.controllers.file.NginxFileServer" >
+            <constructor-arg index="0" value="#{app.fileBaseUrl}"/>
+        </bean>
+    </beans>
+</beans>

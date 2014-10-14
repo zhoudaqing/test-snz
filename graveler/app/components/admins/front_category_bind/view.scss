@@ -1,0 +1,62 @@
+@import "compass/css3/inline-block";
+@import "pokeball/variables";
+
+.front-category-bind{
+  overflow: auto;
+  display: block;
+  height: 100%;
+  border-left: 1px solid $default-border-color;
+  border-right: 1px solid $default-border-color;
+  border-top: 1px solid $default-border-color;
+  padding-left: 10px;
+  width: 568px;
+  .bind-header{
+    width: 100%;
+    text-align: center;
+    padding: 12px 0 17px 0;
+    .bind-header-span{
+      font-weight: bold;
+      font-size: 13px;
+    }
+  }
+  .bind-category-show {
+    padding: 10px 0;
+    .binded-label{
+      font-weight: bold;
+      font-size: 13px;
+      margin: 10px 0 5px 0;
+      display: block;
+      span{
+        font-weight: 600;
+      }
+    }
+  }
+  .hide {
+    display: none;
+  }
+}
+.popup-bind{
+  padding: 10px 20px 0px 20px;
+  .pop-main{
+    width: 640px;
+    overflow: hidden;
+    height: 317px;
+    border: 1px solid $default-border-color;
+    text-align: left;
+    .category{
+      // height: 317px;
+      border-top: 0;
+      .divide-ul{
+        height: 245px;
+        // overflow-y : auto;
+        .divide-li{
+          &:hover{
+            i.next{
+              display: inline-block;
+            }
+          }
+        }
+      }
+    }
+  }
+}

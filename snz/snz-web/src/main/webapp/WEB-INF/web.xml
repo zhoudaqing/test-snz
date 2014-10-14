@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>SNZ Web Application</display-name>
+
+    <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:/spring/root-context.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>snz-web.root</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>${mode}</param-value>
+    </context-param>
+
+    <!-- Spring Root Context -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- Spring Mvc Context -->
+    <servlet>
+        <servlet-name>snz-dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:/spring/servlet-context.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>snz-dispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!--<filter>-->
+        <!--<filter-name>AFSessionFilter</filter-name>-->
+        <!--<filter-class>com.aixforce.session.AFSessionFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>sessionCookieName</param-name>-->
+            <!--<param-value>msid</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>cookieDomain</param-name>-->
+            <!--<param-value>${domain}</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>AFSessionFilter</filter-name>-->
+        <!--<servlet-name>snz-dispatcher</servlet-name>-->
+    <!--</filter-mapping>-->
+
+    <!-- Session Timeout -->
+    <session-config>
+        <!-- web.xml expects the session timeout in minutes: -->
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
+
+    <!-- Filter Chain -->
+
+    <!-- Encoding Filter -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <servlet-name>snz-dispatcher</servlet-name>
+    </filter-mapping>
+
+    <!-- Extral _method hidden parameter filter -->
+    <filter>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <servlet-name>snz-dispatcher</servlet-name>
+    </filter-mapping>
+
+    <!-- 查询供应商用户是否已经签订了保密协议，否则跳转到签订保密协议页面 -->
+    <filter>
+        <filter-name>checkSignSecrecyFilter</filter-name>
+        <filter-class>io.terminus.snz.web.filters.CheckSignSecrecyFilter</filter-class>
+        <init-param>
+            <param-name>redirectURL</param-name>
+            <param-value>/demand/demand_protocol</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>checkSignSecrecyFilter</filter-name>
+        <url-pattern>/demand/demand_detail</url-pattern>
+    </filter-mapping>
+</web-app>

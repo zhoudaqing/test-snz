@@ -1,0 +1,13 @@
+<div class="front-category-bind js-comp" data-comp-path="front_category_bind/front_category_bind" data-frontid="{{pp data.frontCategoryData}}">
+  <div class="bind-header">
+  	<span class="bind-header-span">后台类目</span>
+  </div>
+  <button class="btn btn-primary btn-small js-front-category-select">增加后台类目</button>
+  <div class="bind-category-show">
+  {{#each data.data}}
+  <label class="binded-label" data-id="{{id}}" data-path="{{path}}"><i class="icon-trash-small js-delete-binded-category"></i>&nbsp;&nbsp;&nbsp;已绑定: <span>{{path}}</span></label>
+  {{/each}}
+  </div>
+  <button class="btn btn-primary btn-small js-front-category-bind {{#equals data.data ""}}hide{{/equals}}">绑定</button>
+  <button class="btn btn-small js-front-category-delete {{#equals data.data ""}}hide{{/equals}}" data-id="{{userId}}" data-toggle="confirm" data-title="您确定解除所有绑定吗?" data-content="解除之后需要重新绑定，确定解除吗？" data-event="confirm:delete-bind">解除所有绑定</button>
+</div>

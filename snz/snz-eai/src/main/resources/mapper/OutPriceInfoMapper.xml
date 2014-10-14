@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OutPriceInfo">
+    <resultMap id="OutPriceInfoMap" type="OutPriceInfo">
+        <id property="id" column="id"/>
+        <result property="modulenum" column="module_num"/>
+        <result property="modulename" column="module_name"/>
+        <result property="matkl" column="matkl"/>
+        <result property="supplierid" column="supplier_id"/>
+        <result property="suppliername" column="supplier_name"/>
+        <result property="purchaseorg" column="purchase_org"/>
+        <result property="purchasetype" column="purchase_type"/>
+        <result property="scale" column="scale"/>
+        <result property="feeunit" column="fee_unit"/>
+        <result property="purchaseunit" column="purchase_unit"/>
+        <result property="cointype" column="coin_type"/>
+        <result property="createdat" column="created_at"/>
+        <result property="updatedat" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+      module_num, module_name, matkl, supplier_id, supplier_name, purchase_org,purchase_type,scale,fee_unit,purchase_unit,coin_type, created_at, updated_at
+    </sql>
+
+    <select id="findbymatnrORwerks" resultMap="OutPriceInfoMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_price_temp_infos`
+        where module_num=#{MATNR} and supplier_id=#{WERKS}
+        limit 1
+    </select>
+
+    <insert id="createother" parameterType="OutPriceInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mw_price_temp_infos`
+        (<include refid="columns"/>)
+        VALUES
+        (#{modulenum}, #{modulename}, #{matkl}, #{supplierid}, #{suppliername},
+        #{purchaseorg},#{purchasetype},#{scale},#{feeunit},#{purchaseunit},#{cointype},now(), now())
+    </insert>
+
+    <update id="updateother" parameterType="OutPriceInfo">
+        update `mw_price_temp_infos`
+        <set>
+            <if test="modulename!=null"> module_name=#{modulename}, </if>
+            <if test="matkl!=null"> matkl=#{matkl}, </if>
+            <if test="suppliername!=null"> supplier_name=#{suppliername}, </if>
+            <if test="purchaseorg!=null"> purchase_org=#{purchaseorg}, </if>
+            <if test="purchasetype!=null"> purchase_type=#{purchasetype}, </if>
+            <if test="scale!=null"> scale=#{scale}, </if>
+            <if test="feeunit!=null"> fee_unit=#{feeunit}, </if>
+            <if test="purchaseunit!=null"> purchase_unit=#{purchaseunit}, </if>
+            <if test="cointype!=null"> coin_type=#{cointype}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="findById" resultMap="OutPriceInfoMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_price_temp_infos` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBymodulenum" resultMap="OutPriceInfoMap">
+        select id,<include refid="columns"/> from `mw_price_temp_infos` where module_num = #{modulenum}
+    </select>
+</mapper>

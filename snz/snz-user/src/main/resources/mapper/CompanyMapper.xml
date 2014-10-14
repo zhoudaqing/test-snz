@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="Company">
+    <resultMap id="CompanyMap" type="Company">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="resource_type" property="resourceType"/>
+        <result column="competitors" property="competitors"/>
+        <result column="is_complete" property="isComplete"/>
+        <result column="include_keywords" property="includeKeywords"/>
+        <result column="product_line" property="productLine"/>
+        <result column="corporation" property="corporation"/>
+        <result column="corp_addr" property="corpAddr"/>
+        <result column="supplier_code" property="supplierCode"/>
+        <result column="acting_brand" property="actingBrand"/>
+        <result column="zipcode" property="zipcode"/>
+        <result column="group_name" property="groupName"/>
+        <result column="group_addr" property="groupAddr"/>
+        <result column="init_agent" property="initAgent"/>
+        <result column="fixed_assets" property="fixedAssets"/>
+        <result column="fa_coin_type" property="faCoinType"/>
+        <result column="reg_capital" property="regCapital"/>
+        <result column="rc_coin_type" property="rcCoinType"/>
+        <result column="reg_country" property="regCountry"/>
+        <result column="reg_province" property="regProvince"/>
+        <result column="reg_city" property="regCity"/>
+        <result column="world_top" property="worldTop"/>
+        <result column="official_website" property="officialWebsite"/>
+        <result column="person_scale" property="personScale"/>
+        <result column="found_at" property="foundAt"/>
+        <result column="desc" property="desc"/>
+        <result column="nature" property="nature"/>
+        <result column="listed_status" property="listedStatus"/>
+        <result column="listed_region" property="listedRegion"/>
+        <result column="ticker" property="ticker"/>
+        <result column="business_license" property="businessLicense"/>
+        <result column="business_license_id" property="businessLicenseId"/>
+        <result column="bl_date" property="blDate"/>
+        <result column="org_cert" property="orgCert"/>
+        <result column="org_cert_id" property="orgCertId"/>
+        <result column="oc_date" property="ocDate"/>
+        <result column="tax_no" property="taxNo"/>
+        <result column="tax_no_id" property="taxNoId"/>
+        <result column="tn_date" property="tnDate"/>
+        <result column="participate_count" property="participateCount"/>
+        <result column="customers" property="customers"/>
+        <result column="factories" property="factories"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+    user_id,resource_type,competitors,is_complete,include_keywords,product_line,corporation, corp_addr,supplier_code,acting_brand,zipcode, group_name, group_addr, init_agent,fixed_assets,fa_coin_type, reg_capital,rc_coin_type,
+    reg_country,reg_province,reg_city,world_top,official_website, person_scale, found_at, `desc`,nature,listed_status,listed_region,ticker, business_license,business_license_id,
+    bl_date, org_cert,org_cert_id, oc_date, tax_no,tax_no_id, tn_date,
+    participate_count,customers,factories,created_at, updated_at
+  </sql>
+
+    <select id="findById" resultMap="CompanyMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_companies
+        where id = #{id}
+    </select>
+
+    <select id="findByCorporation" resultMap="CompanyMap" parameterType="string">
+        select id,
+        <include refid="columns"/>
+        from snz_companies
+        where corporation = #{corporation}
+    </select>
+
+    <select id="findByIds" resultMap="CompanyMap">
+        select id,
+        <include refid="columns"/>
+        from snz_companies
+        where id in
+        <foreach collection="list" open="(" separator="," close=")" item="item">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="findByUserId" resultMap="CompanyMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_companies
+        where user_id = #{userId}
+    </select>
+
+    <select id="findBySupplierCode" resultMap="CompanyMap" parameterType="String">
+        SELECT ID,
+        <include refid="columns"/>
+          FROM snz_companies
+        WHERE supplier_code = #{supplierCode}
+    </select>
+
+    <delete id="delete" parameterType="long">
+    delete from snz_companies where id = #{id}
+  </delete>
+
+    <insert id="insert" parameterType="Company" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_companies (<include refid="columns"/>)
+        values (#{userId},#{resourceType},#{competitors},#{isComplete},#{includeKeywords},#{productLine},#{corporation},
+        #{corpAddr},#{supplierCode},#{actingBrand},
+        #{zipcode}, #{groupName}, #{groupAddr},
+        #{initAgent},#{fixedAssets},#{faCoinType}, #{regCapital},#{rcCoinType},
+        #{regCountry},#{regProvince},#{regCity},
+        #{worldTop},#{officialWebsite},
+        #{personScale}, #{foundAt}, #{desc},#{nature},
+        #{listedStatus}, #{listedRegion}, #{ticker},
+        #{businessLicense},#{businessLicenseId}, #{blDate}, #{orgCert},#{orgCertId},
+        #{ocDate}, #{taxNo},#{taxNoId}, #{tnDate},#{participateCount},#{customers},#{factories},now(), now())
+    </insert>
+
+    <update id="updateParticipateCount" parameterType="long">
+    update snz_companies set participate_count = participate_count+1 where id = #{id}
+  </update>
+
+    <update id="update" parameterType="Company">
+        update snz_companies
+        <set>
+            <if test="resourceType!=null">
+                resource_type=#{resourceType},
+            </if>
+            <if test="competitors!=null">
+                competitors=#{competitors},
+            </if>
+            <if test="isComplete!=null">
+                is_complete=#{isComplete},
+            </if>
+            <if test="includeKeywords!=null">
+                include_keywords=#{includeKeywords},
+            </if>
+            <if test="productLine!=null">
+                product_line=#{productLine},
+            </if>
+            <if test="corporation != null">
+                corporation = #{corporation},
+            </if>
+            <if test="corpAddr != null">
+                corp_addr = #{corpAddr},
+            </if>
+            <if test="supplierCode != null">
+                supplier_code = #{supplierCode},
+            </if>
+            <if test="actingBrand != null">
+                acting_brand = #{actingBrand},
+            </if>
+            <if test="zipcode != null">
+                zipcode = #{zipcode},
+            </if>
+            <if test="zipcode != null">
+                zipcode = #{zipcode},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName},
+            </if>
+            <if test="groupAddr != null">
+                group_addr = #{groupAddr},
+            </if>
+            <if test="initAgent != null">
+                init_agent = #{initAgent},
+            </if>
+            <if test="fixedAssets != null">
+                fixed_assets = #{fixedAssets},
+            </if>
+            <if test="faCoinType != null">
+                fa_coin_type = #{faCoinType},
+            </if>
+            <if test="regCapital != null">
+                reg_capital = #{regCapital},
+            </if>
+            <if test="rcCoinType != null">
+                rc_coin_type = #{rcCoinType},
+            </if>
+            <if test="regCountry != null">
+                reg_country = #{regCountry},
+            </if>
+            <if test="regProvince != null">
+                reg_province = #{regProvince},
+            </if>
+            <if test="regCity != null">
+                reg_city = #{regCity},
+            </if>
+            <if test="worldTop != null">
+                world_top = #{worldTop},
+            </if>
+            <if test="officialWebsite != null">
+                official_website = #{officialWebsite},
+            </if>
+            <if test="personScale != null">
+                person_scale = #{personScale},
+            </if>
+            <if test="foundAt != null">
+                found_at = #{foundAt},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc},
+            </if>
+            <if test="nature != null">
+                nature = #{nature},
+            </if>
+            <if test="listedStatus != null">
+                listed_status = #{listedStatus},
+            </if>
+            <if test="listedRegion != null">
+                listed_region = #{listedRegion},
+            </if>
+            <if test="ticker != null">
+                ticker = #{ticker},
+            </if>
+            <if test="businessLicense != null">
+                business_license = #{businessLicense},
+            </if>
+            <if test="businessLicenseId != null">
+                business_license_id = #{businessLicenseId},
+            </if>
+            <if test="blDate != null">
+                bl_date = #{blDate},
+            </if>
+            <if test="orgCert != null">
+                org_cert = #{orgCert},
+            </if>
+            <if test="orgCertId != null">
+                org_cert_id = #{orgCertId},
+            </if>
+            <if test="ocDate != null">
+                oc_date = #{ocDate},
+            </if>
+            <if test="taxNo != null">
+                tax_no = #{taxNo},
+            </if>
+            <if test="taxNoId != null">
+                tax_no_id = #{taxNoId},
+            </if>
+            <if test="tnDate != null">
+                tn_date = #{tnDate},
+            </if>
+            <if test="participateCount != null">
+                participate_count=#{participateCount},
+            </if>
+            <if test="customers != null">
+                customers=#{customers},
+            </if>
+            <if test="factories != null">
+                factories=#{factories},
+            </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="countSuppliersForQualify" resultType="long">
+        select count(1) from
+        snz_companies left join
+        (select supplier_id as qid, stage from mdm_supplier_qualifications) as q
+        on snz_companies.id = q.qid where
+        (<if test="stage==1">
+            q.qid is null or
+        </if>
+        q.stage=#{stage})
+        <if test="corporation!=null"> and corporation=#{corporation} </if>
+    </select>
+
+    <select id="findSuppliersForQualify" resultMap="CompanyMap">
+        select id,
+        <include refid="columns"/>
+        from
+        snz_companies left join
+        (select supplier_id as qid, stage from mdm_supplier_qualifications) as q
+        on snz_companies.id = q.qid where
+        (<if test="stage==1">
+            q.qid is null or
+        </if>
+        q.stage=#{stage})
+        <if test="corporation!=null"> and corporation=#{corporation} </if>
+
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="countSupplier" resultType="long">
+        select count(id) from snz_companies
+    </select>
+
+    <select id="countParticipatedSupplier" resultType="long">
+        select count(id) from snz_companies where participate_count>0
+    </select>
+
+    <select id="countSupplierHasSupplierCode" resultType="long">
+        select count(1) from snz_companies
+        where supplier_code is not null
+        <if test="companyName!=null">
+            and corporation like CONCAT('%',CONCAT(#{companyName}, '%'))
+        </if>
+    </select>
+
+    <select id="pagingCompanyHasSupplierCode" resultMap="CompanyMap">
+        select id, <include refid="columns"/>
+        from snz_companies
+        where supplier_code is not null
+        <if test="companyName!=null">
+            and corporation like concat('%', concat(#{companyName}, '%'))
+        </if>
+        order by supplier_code desc
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="findCompanyBySupplierName" parameterType="string" resultMap="CompanyMap">
+        SELECT id, <include refid="columns"/>
+          FROM snz_companies
+        WHERE
+          corporation like CONCAT('%',CONCAT(#{supplierName}, '%'))
+    </select>
+
+    <select id="findCompanyHasVCode" resultMap="CompanyMap">
+        select id, supplier_code
+        from snz_companies
+        where supplier_code is not null
+        limit #{offset}, #{limit}
+    </select>
+
+    <select id="findUserIdsByFuzzyCorporation" resultType="long">
+        SELECT user_id FROM snz_companies
+        <where>
+            corporation like CONCAT('%',CONCAT(#{corporation}, '%'))
+            <if test="list!=null">
+                and user_id in
+                <foreach collection="list" open="(" separator="," close=")" item="userId">
+                    #{userId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+</mapper>

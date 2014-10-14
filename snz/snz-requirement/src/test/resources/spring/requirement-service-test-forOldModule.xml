@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="io.terminus.snz.requirement.dao"/>
+    <context:component-scan base-package="io.terminus.snz.requirement.service" use-default-filters="false">
+        <context:include-filter type="assignable" expression="io.terminus.snz.requirement.service.OldModuleServiceImpl"></context:include-filter>
+        <context:include-filter type="assignable" expression="io.terminus.snz.requirement.service.DerivativeServiceImpl"></context:include-filter>
+    </context:component-scan>
+    <context:component-scan base-package="io.terminus.snz.requirement.manager" use-default-filters="false">
+        <context:include-filter type="assignable" expression="io.terminus.snz.requirement.manager.DerivativeDiffManager"></context:include-filter>
+    </context:component-scan>
+
+    <util:properties id="app" location="classpath:app.properties"/>
+
+    <import resource="mysql-dao-context-test.xml"></import>
+</beans>

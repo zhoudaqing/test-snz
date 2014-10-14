@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="SupplierApproveLog">
+    <resultMap id="SupplierApproveLogMap" type="SupplierApproveLog">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="approve_type" property="approveType"/>
+        <result column="approved_at" property="approvedAt"/>
+        <result column="approver_id" property="approverId"/>
+        <result column="approver_name" property="approverName"/>
+        <result column="approve_result" property="approveResult"/>
+        <result column="description" property="description"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+      user_id,approve_type,approved_at,approver_id,approver_name,approve_result,description,created_at, updated_at
+    </sql>
+
+    <select id="findByUserId" resultMap="SupplierApproveLogMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_supplier_approve_logs where user_id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="SupplierApproveLog" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_supplier_approve_logs(<include refid="columns"/>)
+        values (#{userId},#{approveType},#{approvedAt},#{approverId},#{approverName},
+        #{approveResult},#{description},now(), now()
+        )
+    </insert>
+
+    <update id="update" parameterType="SupplierApproveLog">
+        update snz_supplier_approve_logs
+        <set>
+            <if test="approveType != null">
+                approve_type = #{approveType},
+            </if>
+            <if test="approvedAt != null">
+                approved_at = #{approvedAt},
+            </if>
+            <if test="approverId != null">
+                approver_id = #{approverId},
+            </if>
+            <if test="approverName != null">
+                approver_name = #{approverName},
+            </if>
+            <if test="approveResult != null">
+                approve_result = #{approveResult},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            updated_at = now(),
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        delete from snz_supplier_approve_logs where id=#{id}
+    </delete>
+
+    <select id="findLastByUserIdAndApproveType" resultMap="SupplierApproveLogMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_supplier_approve_logs
+        <where>
+            user_id = #{userId}
+            <if test="approveType!=null">
+                and approve_type=#{approveType}
+            </if>
+        </where>
+        order by created_at desc limit 1
+    </select>
+
+</mapper>

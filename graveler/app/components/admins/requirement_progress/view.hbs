@@ -1,0 +1,82 @@
+{{#component "purchaser-post-step"}}
+<h3>{{#of _DATA_.requirement.status "1,2,3,4,5,6"}}
+  {{#equals _DATA_.requirement.status "1"}}需求交互{{/equals}}
+  {{#equals _DATA_.requirement.status "2"}}需求锁定{{/equals}}
+  {{#equals _DATA_.requirement.status "3"}}方案交互{{/equals}}
+  {{#equals _DATA_.requirement.status "4"}}方案终投{{/equals}}
+  {{#equals _DATA_.requirement.status "5"}}选定供应商与方案{{/equals}}
+  {{else}}发布需求{{/of}}</h3>
+<div class="post-step">
+  {{#unless bigStep}}
+  <div class="step" style="display:none;">
+    <ul class="{{#equals step "1"}}icon-post-progress-1{{/equals}} {{#equals step "2"}}icon-post-progress-2{{/equals}} {{#equals step "3"}}icon-post-progress-3{{/equals}} {{#equals step "4"}}icon-post-progress-4{{/equals}}">
+      <li class="step-title step-title-1">抢单交互</li>
+      <li class="step-title step-title-2">量价锁定</li>
+      <li class="step-title step-title-3">按单支付</li>
+      <li class="step-title last step-title-4">绩效优化</li>
+    </ul>
+  </div>
+  {{/unless}}
+  {{#equals _USER_.type 2 }}
+  <div class="progress">
+    <ol>
+      <li class="progress-step {{#of _DATA_.requirement.status "1,2,3,4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "3,4,5,6"}}&#8730;{{else}}1{{/of}}</span><br>
+        <span class="progress-step-into">需求交互<br /><span class="progress-step-date">{{#of _DATA_.requirement.status "1,2"}}{{formatDate _DATA_.finishDay "day"}} 24点截止{{/of}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "3,4,5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "3,4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "4,5,6"}}&#8730;{{else}}2{{/of}}</span><br>
+        <span class="progress-step-into">{{#of _DATA_.requirement.tacticsId "1,2"}}方案交互{{else}}底线承诺{{/of}}<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "3"}}{{formatDate _DATA_.finishDay "day"}} 24点截止{{/equals}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "4,5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "5,6"}}&#8730;{{else}}3{{/of}}</span><br>
+        <span class="progress-step-into">{{#of _DATA_.requirement.tacticsId "1,2"}}方案{{/of}}终投<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "4"}}{{formatDate _DATA_.finishDay "day"}} 24点截止{{/equals}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "5,6"}}active{{/of}}">
+        <span class="progress-step-number">4</span><br>
+        <span class="progress-step-into">结果公示<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "5"}}{{#equals requirementId 71}}{{else}}{{formatDate _DATA_.finishDay "day"}} 24点截止{{/equals}}{{/equals}}</span></span>
+      </li>
+    </ol>
+  </div>
+  {{/equals}}
+
+  {{#of _USER_.type "1,3"}}
+   <div class="progress">
+    <ol>
+      <li class="progress-step {{#of _DATA_.requirement.status "1,2,3,4,5,6"}}active{{/of}}">
+      <span class="progress-step-number">{{#of _DATA_.requirement.status "1,2,3,4,5,6"}}&#8730;{{else}}1{{/of}}</span><br>
+      <span class="progress-step-into">需求发布<br /><span class="progress-step-date"></span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "1,2,3,4,5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "1,2,3,4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "2,3,4,5,6"}}&#8730;{{else}}2{{/of}}</span><br>
+        <span class="progress-step-into">需求交互<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "1"}}{{formatDate _DATA_.finishDay "day"}}截止{{/equals}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "2,3,4,5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "2,3,4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "3,4,5,6"}}&#8730;{{else}}3{{/of}}</span><br>
+        <span class="progress-step-into">需求锁定<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "2"}}{{formatDate _DATA_.finishDay "day"}}截止{{/equals}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "3,4,5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "3,4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "4,5,6"}}&#8730;{{else}}4{{/of}}</span><br>
+        <span class="progress-step-into">方案交互<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "3"}}{{formatDate _DATA_.finishDay "day"}}截止{{/equals}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "4,5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "4,5,6"}}active{{/of}}">
+        <span class="progress-step-number">{{#of _DATA_.requirement.status "5,6"}}&#8730;{{else}}5{{/of}}</span><br>
+        <span class="progress-step-into">方案终投<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "4"}}{{formatDate _DATA_.finishDay "day"}}截止{{/equals}}</span></span>
+      </li>
+      <li class="progress-bar {{#of _DATA_.requirement.status "5,6"}}active{{/of}}"></li>
+      <li class="progress-step {{#of _DATA_.requirement.status "5,6"}}active{{/of}}">
+        <span class="progress-step-number">6</span><br>
+        <span class="progress-step-into last">选定供应商与方案<br /><span class="progress-step-date">{{#equals _DATA_.requirement.status "5"}}{{#equals requirementId 71}}{{else}}{{formatDate _DATA_.finishDay "day"}}截止{{/equals}}{{/equals}}</span></span>
+      </li>
+    </ol>
+  </div>
+  {{/of}}
+</div>
+{{/component}}

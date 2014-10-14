@@ -1,0 +1,618 @@
+app: snz-admin
+
+components:
+
+  "admins/qualify_info": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "后台类目管理"
+    service: "snz-admin:getQualifiedSubjects" # app:serviceKey
+
+  "admins/qualify_state":
+    category: "OFFICIAL"
+    name: "资质状态"
+    service: "snz-admin:getQualifyState"
+
+  "admins/back_category": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "后台类目管理"
+    service: "snz-admin:backendFindChildrenOf" # app:serviceKey
+
+  "admins/front_category": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "前台类目管理"
+    service: "snz-admin:frontendFindChildrenOf" # app:serviceKey
+
+  "admins/supplier_audit":
+    category: "OFFICIAL"
+    name: "分页查找待审核的供应商与三证"
+    service: "snz-admin:findSupplierBy"
+
+  "admins/supplier_list":
+    category: "OFFICIAL"
+    name: "分页查找供应商"
+    service: "snz-admin:findSupplierTQRDCInfoBy"
+
+  "admins/supplier_detail":
+    category: "OFFICIAL"
+    name: "查看供应商详情"
+    service: "snz-admin:findDetailSupplierByUserId"
+
+  "admins/supplier_performance":
+    category: "OFFICIAL"
+    name: "查看供应商绩效"
+    service: "snz-admin:findDetailSupplierTQRDCInfo"
+
+  "admins/material_detail":
+    category: "OFFICIAL"
+    name: "查看供应商物料明细"
+    service: "snz-admin:findSupplierModuleDetails"
+
+  "admins/material_submit":
+    category: "OFFICIAL"
+    name: "提交供应商物料信息到SAP"
+    service: "snz-admin:postSupplierModuleDetailsToHGVS"
+
+  "admins/supplier_qualify":
+    category: "OFFICIAL"
+    name: "查看供应商资质校验列表"
+    service: "snz-admin:findSupplierQualifyBy"
+
+  "admins/master_qualify":
+    category: "OFFICIAL"
+    name: "查看供应商资质校验列表by高级权限"
+    service: "snz-admin:findSupplierQualifyByMaster"
+
+  "admins/qualify_detail":
+    category: "OFFICIAL"
+    name: "查看供应商资质鉴定内容"
+    service: "snz-admin:getQualifyInfo"
+
+  "admins/master_qualify_detail":
+    category: "OFFICIAL"
+    name: "查看供应商资质鉴定内容BY高级权限"
+    service: "snz-admin:getQualifyDetails"
+
+  "admins/supplier_reject":
+    category: "OFFICIAL"
+    name: "查看供应商驳回记录"
+    service: "snz-admin:findSupplierByRefuse"
+
+  "admins/supplier_platform_performance":
+    category: "OFFICIAL"
+    name: "查看供应商平台绩效"
+    service: "snz-admin:findSupplierTQRDCInfos"
+
+  "admins/credit_list":
+    category: "OFFICIAL"
+    name: "查看供应商信用评价列表"
+    service: "snz-admin:pagingCreditQualify"
+
+  "admins/supplier_resume":
+    category: "OFFICIAL"
+    name: "查看供应商履历列表"
+    service: "snz-admin:findEnterPassSuppliers"
+
+  "admins/supplier_resume_tab":
+    category: "OFFICIAL"
+    name: "查看供应商履历tab"
+    service: "snz-admin:findUnCacheCompanyByUserId"
+
+  "admins/timeline":
+    category: "OFFICIAL"
+    name: "时间线"
+    service: "snz-admin:findSupplierTimeLinesByUserId"
+
+  "admins/company_info": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "公司信息"
+    service: "snz-admin:queryBaseCompanyByUserId" # app:serviceKey
+    desc: "公司信息修改" # 可选
+
+  "admins/paperwork_info": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "公司三证信息"
+    service: "snz-admin:queryPaperworkByUserId" # app:serviceKey
+    desc: "公司三证信息修改" # 可选
+
+  "admins/contact_info": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "联系人信息"
+    service: "snz-admin:queryContactInfoByUserId" # app:serviceKey
+    desc: "联系人信息修改" # 可选
+
+  "admins/service_info": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "公司排名信息"
+    service: "snz-admin:queryCompanyRankByUserId" # app:serviceKey
+    desc: "公司排名信息修改" # 可选
+
+  "admins/qualification_info": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "公司财务信息"
+    service: "snz-admin:queryFinanceByUserId" # app:serviceKey
+    desc: "公司财务信息修改" # 可选
+
+  "admins/research_ability": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "研发能力"
+    service: "snz-admin:findRDByUserId" # app:serviceKey
+    desc: "设置研发能力" # 可选
+
+  "admins/quality_ability": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "质量能力"
+    service: "snz-admin:findQualityByUserId" # app:serviceKey
+    desc: "设置质量能力" # 可选
+
+  "admins/delivery": # component path
+    category: "OFFICIAL" # category: OFFICIAL, TEMPLATE, SHOP, ITEM, ITEM_TEMPLATE
+    name: "交货"
+    service: "snz-admin:findDeliveryByUserId" # app:serviceKey
+    desc: "设置交货" # 可选
+
+  "admins/supplier_order_list":
+    category: "OFFICIAL"
+    name: "查看供应商索赔列表"
+    service: "snz-admin:findSupplierReparationSumaries"
+
+  "admins/supplier_order_detail":
+    category: "OFFICIAL"
+    name: "供应商查看不良记录"
+    service: "snz-admin:findSupplierReparationBy"
+
+  "admins/supplier_count":
+    category: "OFFICIAL"
+    name: "供应商綜合統計"
+    service: "snz-admin:getSupplierSummaryByModule"
+  "admins/qualify_rule":
+    category: "OFFICIAL"
+    name: "获取资质校验条目内容"
+    service: "snz-admin:getAllValidSubjects"
+
+  "admins/supplier_status":
+    category: "OFFICIAL"
+    name: "代理商注册状态"
+    service: "snz-admin:getSupplierStep"
+    desc: "获取代理商注册状态"
+
+  "admins/supplier_report":
+    category: "OFFICIAL"
+    name: "供应商报表"
+    service: "snz-admin:queryReport"
+    desc: "供应商报表"
+
+  "admins/demand_list":
+    category: "OFFICIAL"
+    name: "所有需求的列表"
+    service: "snz-admin:findRequirementByPurchaser"
+    desc: "为admin显示所有需求列表"
+
+  "admins/demand_detail":
+    category: "OFFICIAL"
+    name: "需求详情"
+    service: "snz-admin:findRequirementDetailById"
+    desc: "显示需求详情"
+
+  "admins/supplier_appointed":
+    category: "OFFICIAL"
+    name: "查看甲指供应商列表"
+    service: "snz-admin:findSuppliersAppointed"
+    desc: "显示甲指供应商列表"
+
+  "admins/questionnaire_manage":
+    category: "OFFICIAL"
+    name: "显示调查问卷列表"
+    service: "snz-admin:findQuestionnairesByPaging"
+    desc: "显示调查问卷列表"
+
+mappings:
+  - pattern: "api/admin/bad-market/dump/full"
+    methods:
+      - GET
+    service: "snz-admin:fullDumpMarketSummary"
+    desc:    "全量 dump 市场不良统计"
+
+  - pattern: "api/admin/feedback_manage/updateFeedbackByUserId"
+    methods:
+      - POST
+    service: "snz-admin:updateFeedbackByUserId"
+    desc:    "全量 dump 市场不良统计"
+
+  - pattern: "api/admin/feedback_manage/findByStatus"
+    methods:
+      - POST
+    service: "snz-admin:feedbackfindByStatus"
+    desc:    "全量 dump 市场不良统计"
+
+  - pattern: "api/admin/feedback_manage/deleteFeedbackByUserId"
+    methods:
+      - POST
+    service: "snz-admin:deleteFeedbackByUserId"
+    desc:    "全量 dump 市场不良统计"
+
+  - pattern: "api/admin/supplier/audit" # like SpringMVC
+    methods: # methods 多选: ALL, GET, POST, HEAD, OPTIONS, PUT, PATCH, DELETE, TRACE
+      - POST
+    service: "snz-admin:approveSupplier" # app:serviceKey
+    desc: "admin审核供应商入驻以及审核供应商三证" # 可选
+
+  - pattern: "api/admin/supplier/resource/confirm"
+    methods:
+      - PUT
+    service: "snz-admin:confirmResource"
+    desc: "admin修改供应商一流资源"
+
+  - pattern: "api/admin/supplier/{supplierId}/requirement/{requirementId}/qualify"
+    methods:
+      - POST
+    service: "snz-admin:qualify"
+    desc: "审核供应商资质"
+
+  - pattern: "api/admin/backCategories"
+    methods:
+      - POST
+    service: "snz-admin:backendCategoryCreate"
+    desc: "创建后台类目"
+
+  - pattern: "api/admin/backCategories"
+    methods:
+      - PUT
+    service: "snz-admin:backendCategoryUpdate"
+    desc: "更新后台类目"
+
+  - pattern: "api/admin/backCategories/{id}"
+    methods:
+      - DELETE
+    service: "snz-admin:backendCategoryDelete"
+    desc: "删除后台类目"
+
+  - pattern: "api/admin/backCategories/{id}/children"
+    methods:
+      - GET
+    service: "snz-admin:backendFindChildrenOf"
+    desc: "查找后台子类目"
+
+  - pattern: "api/admin/backCategories/{bcId}/properties"
+    methods:
+      - GET
+    service: "snz-admin:backendPropertiesFindByBcId"
+    desc: "查找后台类目的所有属性"
+
+  - pattern: "api/admin/backProperties"
+    methods:
+      - POST
+    service: "snz-admin:backendPropertyCreate"
+    desc: "创建后台类目属性"
+
+  - pattern: "api/admin/backProperties/{id}"
+    methods:
+      - PUT
+    service: "snz-admin:backendPropertyUpdate"
+    desc: "更新后台类目属性"
+
+  - pattern: "api/admin/backProperties/{id}"
+    methods:
+      - DELETE
+    service: "snz-admin:backendPropertyDelete"
+    desc: "删除后台类目属性"
+
+  - pattern: "api/admin/backProperties/{id}"
+    methods:
+      - GET
+    service: "snz-admin:backendPropertyFindById"
+    desc: "查询类目属性"
+
+
+  - pattern: "api/admin/frontCategories"
+    methods:
+      - POST
+    service: "snz-admin:frontendCategoryCreate"
+    desc: "创建前台类目"
+
+  - pattern: "api/admin/frontCategories"
+    methods:
+      - PUT
+    service: "snz-admin:frontendCategoryUpdate"
+    desc: "更新前台类目"
+
+  - pattern: "api/admin/frontCategories/{id}"
+    methods:
+      - DELETE
+    service: "snz-admin:frontendCategoryDelete"
+    desc: "删除前台类目"
+
+  - pattern: "api/admin/frontCategories/{id}/children"
+    methods:
+      - GET
+    service: "snz-admin:frontendFindChildrenOf"
+    desc: "查找前台子类目"
+
+  - pattern: "api/admin/frontCategories/{id}/mapping"
+    methods:
+      - GET
+    service: "snz-admin:frontendFindBindingsOf"
+    desc: "查找前台叶子类目绑定的后台叶子类目"
+
+  - pattern: "api/admin/frontCategories/{fcid}/mapping"
+    methods:
+      - DELETE
+    service: "snz-admin:frontendUnbind"
+    desc: "解除前台叶子类目的绑定关系"
+
+  - pattern: "api/admin/frontCategories/mapping"
+    methods:
+      - POST
+    service: "snz-admin:frontendBind"
+    desc: "绑定前台叶子类目和后台叶子类目集合"
+
+  - pattern: "api/supplier/qualification"
+    methods:
+      - POST
+    service: "snz-admin:createQualification"
+    desc: "供应商提交资质验证内容"
+
+  - pattern: "api/supplier/parks/count"
+    methods:
+      - GET
+    service: "snz-admin:findSupplierCountBySupplyParkIds"
+    desc: "按照园区维度获取供应商数量"
+
+  - pattern: "api/delivery/parks"
+    methods:
+      - GET
+    service: "snz-admin:findAllPark"
+    desc: "查询所有园区"
+
+  - pattern: "api/supplier/status/count"
+    methods:
+      - GET
+    service: "snz-admin:findSupplierCountByStatus"
+    desc: "按照状态维度获取供应商数量"
+
+  - pattern: "api/supplier/level/count"
+    methods:
+      - GET
+    service: "snz-admin:findSupplierCountByLevel"
+    desc: "按照层次维度获取供应商数量"
+
+  - pattern: "api/supplier/credit/update"
+    methods:
+      - POST
+    service: "snz-admin:updateCreditQualify"
+    desc: "提交供应商信用体系评价"
+
+  - pattern: "api/supplier/category/count"
+    methods:
+      - GET
+    service: "snz-admin:findSupplierCountByIndustries"
+    desc: "按照一级类目查询供应商数量"
+
+  - pattern: "api/supplier/qualify/reject"
+    methods:
+      - GET
+    service: "snz-admin:rejectByHigherChecker"
+    desc: "二级供应商驳回一级资质校验的通过"
+
+  - pattern: "api/supplier/productline"
+    methods:
+      - GET
+    service: "snz-admin:getProductLine"
+    desc: "删除额外的文档"
+
+  - pattern: "api/category/ancestors/{id}"
+    methods:
+      - GET
+    service: "snz-admin:getAncestorsOf"
+    desc: "删除额外的文档"
+
+  - pattern: "api/countries"
+    methods:
+      - GET
+    service: "snz-admin:getCountries"
+    desc: "获取国家信息"
+
+  - pattern: "api/provinces"
+    methods:
+      - GET
+    service: "snz-admin:getProvinces"
+    desc: "获取国内省份信息"
+
+  - pattern: "api/provinces/{provinceId}/cities"
+    methods:
+      - GET
+    service: "snz-admin:getCities"
+    desc: "根据省份获取城市信息"
+
+  - pattern: "api/category/frontendCategory/{id}/children"
+    methods:
+      - GET
+    service: "snz-admin:frontendFindChildrenOf"
+    desc: "前台类目根据父类目id获取子类目"
+
+  - pattern: "api/category/frontendCategory/{fcid}/binds"
+    methods:
+      - GET
+    service: "snz-admin:findBcNamesByFcid"
+    desc: "前台类目根据id查找绑定的后台类目"
+
+  - pattern: "api/qualify/rule"
+    methods:
+      - POST
+    service: "snz-admin:bulkOverwriteSubjects"
+    desc: "提交资质校验条目"
+
+  - pattern: "api/qualify/getBcsCanInvite"
+    methods:
+      - GET
+    service: "snz-admin:getBcsCanInvite"
+    desc: "根据供应商ID查询类目"
+
+  - pattern: "api/qualify/reject/apply"
+    methods:
+      - GET
+    service: "snz-admin:askForReject"
+    desc: "申请二级驳回"
+
+  - pattern: "api/qualify/reject"
+    methods:
+      - GET
+    service: "snz-admin:rejectByHigherChecker"
+    desc: "二级驳回"
+
+  - pattern: "api/haier/staff/workNo"
+    methods:
+      - GET
+    service: "snz-admin:findStaffByWorkNo"
+    desc: "根据工号获取海尔的员工信息"
+
+  - pattern: "api/haier/staff/name"
+    methods:
+      - GET
+    service: "snz-admin:findStaffByName"
+    desc: "根据名字模糊查询海尔的员工信息列表"
+
+  - pattern: "api/qualify/invite"
+    methods:
+      - POST
+    service: "snz-admin:inviteAnotherToCheckWithBcs"
+    desc: "邀请新成员"
+
+  - pattern: "api/supplier/credit-list/reject"
+    methods:
+      - GET
+    service: "snz-admin:rejectQualify"
+    desc: "二级供应商驳回一级资质校验的通过"
+
+  - pattern: "api/supplier/count"
+    methods:
+      - GET
+    service: "snz-admin:getSupplierCountByDimensions"
+    desc: "供应商报表获取供应商不同纬度的统计数据"
+
+  - pattern: "api/supplier/businesses"
+    methods:
+      - GET
+    service: "snz-admin:findOwnMainBusinesses"
+    desc: "获取行业"
+
+  - pattern: "api/supplier/frontendCategory/{level}"
+    methods:
+      - GET
+    service: "snz-admin:findByLevels"
+    desc: "获取资源小微分类"
+
+  - pattern: "api/topics"
+    methods:
+      - GET
+    service: "snz-admin:pagingPublicTopics"
+    desc: "公开话题分页列表"
+
+  - pattern: "api/admin/requirement/{requirementId}/moduleList"
+    methods:
+      - GET
+    service: "snz-admin:findModuleByParams"
+    desc: "异步获取模块列表"
+
+  - pattern: "api/admin/requirement/{requirementId}/moduleQuota"
+    methods:
+      - GET
+    service: "snz-admin:findQuotasByRequirementId"
+    desc: "admin根据需求id获取所有配额信息"
+
+  - pattern: "api/admin/requirement/{requirementId}/suppliers"
+    methods:
+      - GET
+    service: "snz-admin:findSignByParam"
+    desc: "获取签署了保密协议的供应商列表"
+
+  - pattern: "api/admin/requirement/{requirementId}/solutions"
+    methods:
+      - GET
+    service: "snz-admin:findRequirementSolutionsByRequirementIdWithAdmin"
+    desc: "采购商根据requirementId获取所有solution对象"
+
+  - pattern: "api/purchaser/tSolutions"
+    methods:
+      - GET
+    service: "snz-admin:findTSolutionRank"
+    desc: "根据技术T显示供应商选定方案列表"
+
+  - pattern: "api/purchaser/solutions"
+    methods:
+      - GET
+    service: "snz-admin:findEndSolutions"
+    desc: "根据成本C获取供应商选定方案列表"
+
+  - pattern: "api/topic/{requirementId}/users"
+    methods:
+      - GET
+    service: "snz-admin:findTopicPeople"
+    desc: "获取可以参与话题的采购商用户"
+
+  - pattern: "api/admin/requirement/solution/updateBatchTechnology"
+    methods:
+      - POST
+    service: "snz-admin:updateBatchTechnology"
+    desc: "admin对供应商方案进行批量T评分"
+
+  - pattern: "api/admins/associate"
+    methods:
+      - POST
+    service: "snz-admin:findCompaniesByFuzzySupplierName"
+    desc: "查询公司信息"
+
+  - pattern: "api/admins/createRelation"
+    methods:
+      - POST
+    service: "snz-admin:createRelation"
+    desc: ""
+
+  - pattern: "api/admins/getRelatedSuppliers"
+    methods:
+      - POST
+    service: "snz-admin:getRelatedSuppliers"
+    desc: ""
+
+  - pattern: "api/admins/deleteRelation"
+    methods:
+      - POST
+    service: "snz-admin:deleteRelation"
+    desc: ""
+
+  - pattern: "api/admin/supplierAppointed/audit"
+    methods:
+      - POST
+    service: "snz-admin:auditSupplierAppointed"
+    desc: "审核甲指供应商"
+
+  - pattern: "api/admin/supplierAppointed/reject"
+    methods:
+      - POST
+    service: "snz-admin:rejectSupplierAppointed"
+    desc: "退回甲指供应商"
+
+  - pattern: "api/supplier/checkQualified"
+    methods:
+      - GET
+    service: "snz-admin:getQualifyInfoOf"
+    desc: "供应商查询资质验证申请状态"
+
+  - pattern: "api/supplier/credit/info"
+    methods:
+      - GET
+    service: "snz-admin:findCreditQualifyByUserId"
+    desc: "提交供应商编码信息"
+
+  - pattern: "api/admin/supplierreport/export"
+    methods:
+      - GET
+    service: "snz-admin:getReportPath"
+    desc: "退回甲指供应商"
+
+  - pattern: "api/supplier/timeline"
+    methods:
+      - GET
+    service: "snz-admin:findSupplierTimeLinesByUserId"
+
+hrefs: # 可选，所有出现在这个 hash 里的值都会以 _HREF_ 为 key 注入渲染上下文
+  photohref: "http://l.ihaier.com"

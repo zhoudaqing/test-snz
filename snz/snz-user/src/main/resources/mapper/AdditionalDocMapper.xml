@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="AdditionalDoc">
+    <resultMap id="AdditionalDocMap" type="AdditionalDoc">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="finance_id" property="financeId"/>
+        <result column="name" property="name"/>
+        <result column="files" property="files"/>
+        <result column="comment" property="comment"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+      user_id, finance_id, name, files, comment, created_at, updated_at
+    </sql>
+
+    <select id="findById" resultMap="AdditionalDocMap" parameterType="long">
+        select id,<include refid="columns"/>
+        from snz_additional_docs
+        where id = #{id}
+    </select>
+
+    <select id="findByFinanceId" resultMap="AdditionalDocMap" parameterType="long">
+        select id,<include refid="columns"/>
+        from snz_additional_docs
+        where finance_id = #{financeId}
+    </select>
+
+    <delete id="delete" parameterType="long">
+      delete from snz_additional_docs
+      where id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="AdditionalDoc" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_additional_docs (<include refid="columns"/>)
+        values (#{userId}, #{financeId},
+        #{name}, #{files}, #{comment},now(), now()
+        )
+    </insert>
+
+    <update id="update" parameterType="AdditionalDoc">
+        update snz_additional_docs
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="files != null">
+                files = #{files},
+            </if>
+            <if test="comment != null">
+                comment = #{comment},
+            </if>
+            updated_at = now(),
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

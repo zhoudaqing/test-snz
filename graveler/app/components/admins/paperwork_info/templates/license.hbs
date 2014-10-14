@@ -1,0 +1,29 @@
+{{#each data}}
+<div class="compare-row">
+  <div class="new-value">
+    <label>{{new.name}}：</label>
+    <div>
+      <img src="{{#unless new.license}}http://admin.snz.com/assets/images/other-images/null.png{{else}}{{new.license}}{{/unless}}" alt="" class="paperwork-image">
+      {{#if new.date}}
+      <br><br>
+      证件有效期: {{new.date}}
+      {{/if}}
+      <br><br>
+      证件编号: {{new.licenseId}}
+    </div>
+  </div>
+  {{#if old}}
+  <div class="old-value">
+    <div>
+      <img src="{{#unless old.license}}http://admin.snz.com/assets/images/other-images/null.png{{else}}{{old.license}}{{/unless}}" alt="" class="paperwork-image">
+      {{#if old.date}}
+      <br><br>
+      证件有效期: {{old.date}}
+      {{/if}}
+      <br><br>
+      证件编号: {{old.licenseId}}
+    </div>
+  </div>
+  {{/if}}
+</div>
+{{/each}}

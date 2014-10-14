@@ -1,0 +1,69 @@
+/*
+ * Copyright (c) 2014 杭州端点网络科技有限公司
+ */
+
+@import "color";
+
+@mixin clearfloat {
+  *zoom: 1;
+
+  &:before, &:after {
+    display: table;
+    line-height: 0;
+    content: "";
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+html, body {
+  font-size: 15px;
+  color: $font-color;
+  background-color: $background-color;
+  margin: 0;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.main {
+  &.container {
+    margin: 50px 100px;
+
+    min-height: 300px;
+
+    &.two-column {
+      > .left {
+        width: 250px;
+        float: left;
+      }
+
+      > .right {
+        width: calc(100% - 300px);
+        float: right;
+      }
+
+      @include clearfloat;
+    }
+  }
+}
+
+.footer {
+  &.container {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+
+  .copyright {
+    text-align: center;
+    color: $secondary-font-color;
+
+    i.icon {
+      margin: 0;
+    }
+  }
+}

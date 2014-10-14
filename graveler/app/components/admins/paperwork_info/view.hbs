@@ -1,0 +1,15 @@
+{{#component "js-comp supplier-resume-paperwork-info"}}
+  <p class="components-title"><strong class="tab-name">证件信息</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-list" data-license="{{json supplierInfo}}" data-license-old="{{json oldValues}}" data-url="{{_HREF_.photohref}}">
+    <div class="compare-title">
+      <div class="new-value">
+        <label>当前值&nbsp;&nbsp;&nbsp;</label>
+      </div>
+      <div class="old-value">
+        修改前
+      </div>
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

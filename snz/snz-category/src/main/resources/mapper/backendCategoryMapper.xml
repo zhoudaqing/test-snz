@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 后台类目 -->
+<mapper namespace="BackendCategory">
+    <resultMap id="BackendCategoryMap" type="BackendCategory">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parent_id"/>
+        <result property="level" column="level"/>
+        <result property="hasChildren" column="has_children"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        name, parent_id, level, has_children, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="BackendCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_backend_categorys (<include refid="columns"/>) values (#{name},#{parentId},#{level}, #{hasChildren}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="BackendCategory">
+        UPDATE snz_backend_categorys
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="hasChildren!=null">has_children=#{hasChildren},</if>
+            updated_at = now()
+        </set>
+        WHERE id=#{id}
+    </update>
+
+   <delete id="delete"  parameterType="long">
+       DELETE FROM snz_backend_categorys WHERE id=#{id}
+   </delete>
+
+    <select id="findById" parameterType="long" resultMap="BackendCategoryMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_backend_categorys WHERE id=#{id}
+    </select>
+
+    <select id="findByIds" parameterType="long" resultMap="BackendCategoryMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_backend_categorys WHERE id IN
+        <foreach item="id" collection="list"
+                 open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByLevelAndName" parameterType="map" resultMap="BackendCategoryMap">
+        SELECT id, <include refid="columns"/> FROM snz_backend_categorys
+        WHERE `level` = #{level} AND `name` = #{name}
+    </select>
+
+    <select id="findByLevels" resultMap="BackendCategoryMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_backend_categorys
+        WHERE level=#{level}
+    </select>
+
+    <select id="findByParentIdAndLevel" resultMap="BackendCategoryMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_backend_categorys
+        WHERE parent_id = #{parentId} and level=#{level}
+    </select>
+
+    <select id="findChildrenOf" resultMap="BackendCategoryMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_backend_categorys
+        WHERE parent_id=#{id}
+    </select>
+</mapper>

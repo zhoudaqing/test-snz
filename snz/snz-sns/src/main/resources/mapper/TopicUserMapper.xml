@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TopicUser">
+
+    <!-- 结果集映射 -->
+    <resultMap id="topicUserMap" type="TopicUser">
+        <result property="userId" column="user_id"/>
+        <result property="topicId" column="topic_id"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_users_topics
+    </sql>
+
+    <sql id="cols_all">
+        id, <include refid="cols_execlue_id"/>
+    </sql>
+
+    <sql id="cols_execlue_id">
+        user_id, topic_id, created_at, updated_at
+    </sql>
+
+    <sql id="vals_all">
+        #{userId},#{topicId}, now(), now()
+    </sql>
+
+    <!-- 插入 -->
+    <insert id="create" parameterType="TopicUser">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        (<include refid="vals_all"/>)
+    </insert>
+
+    <!-- 批量插入 -->
+    <insert id="createBatch" parameterType="list">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        <foreach collection="list" item="tu" index="index" separator="," >
+            (#{tu.userId},#{tu.topicId},now(),now())
+        </foreach>
+    </insert>
+
+    <delete id="delete" parameterType="TopicUser">
+        DELETE FROM <include refid="tb_name"/> WHERE user_id=#{userId} and topic_id=#{topicId}
+    </delete>
+
+    <delete id="deleteByUserId" parameterType="TopicUser">
+        DELETE FROM <include refid="tb_name"/> WHERE user_id=#{userId}
+    </delete>
+
+    <delete id="deleteByTopicId" parameterType="TopicUser">
+        DELETE FROM <include refid="tb_name"/> WHERE topic_id=#{topicId}
+    </delete>
+
+    <delete id="deleteByUserIds" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE user_id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="userId">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <delete id="deleteByTopicIds" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE topic_id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 判断某用户是否在某话题下 -->
+    <select id="exist" parameterType="map" resultMap="topicUserMap">
+        SELECT user_id
+        FROM
+        <include refid="tb_name"/>
+        WHERE user_id=#{userId} AND topic_id=#{topicId}
+    </select>
+
+    <!-- 查询参与某话题的用户id列表 -->
+    <select id="findUserIdsByTopicId" parameterType="long" resultType="Long">
+        SELECT user_id
+        FROM <include refid="tb_name" />
+        WHERE
+        topic_id=#{topicId}
+    </select>
+
+    <!-- 查询话题的圈子人数 -->
+    <select id="countTopicUsers" parameterType="list" resultType="Long">
+        SELECT COUNT(1)
+        FROM <include refid="tb_name" />
+        WHERE topic_id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+        GROUP BY topic_id
+        ORDER BY topic_id DESC
+    </select>
+
+    <!--  根据话题查找该话题的朋友圈  -->
+    <select id="findFriends" parameterType="Topic" resultType="io.terminus.snz.sns.dtos.TopicFriend">
+        SELECT a.`user_id` userId, a.`topic_id` topicId, b.`nick`, b.`name`, c.`corporation`
+          FROM `snz_users_topics`  a
+        LEFT JOIN `snz_users` b on a.`user_id` = b.id
+        LEFT JOIN `snz_companies` c on a.`user_id` = c.`user_id`
+          WHERE topic_id = #{id};
+    </select>
+    
+</mapper>

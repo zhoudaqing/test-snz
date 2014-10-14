@@ -1,0 +1,22 @@
+<div class="menu-panel left" style="display:block;">
+  <div class="properties-edit-panel" >   
+    <ul class="properties-edit-ul">
+      <li><label for="" class="properties-edit-label"><a>查看属性值</a></label></li>
+      {{#if data.value1}}
+      <li>
+        <span class="attribute-value">  最小量: {{data.value1}}</span>
+      </li>
+      {{/if}}
+      {{#if data.value2}}
+      <li>
+        <span class="attribute-value">资源量2: {{data.value2}}</span>
+      </li>
+      {{/if}}
+      {{#if data.value3}}
+      <li>
+        <span class="attribute-value">资源量3: {{data.value3}}</span>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+</div>

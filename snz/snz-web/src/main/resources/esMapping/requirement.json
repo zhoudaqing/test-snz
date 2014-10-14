@@ -1,0 +1,62 @@
+{
+    "requirement": {
+        "all":{
+            "enabled":false
+        },
+        "index.query.default_field": "name",
+        "properties": {
+            "id": {
+                "type": "long"
+            },
+            "name": {
+                "type": "string",
+                "index_analyzer": "jieba_index",
+                "search_analyzer": "jieba_search"
+            },
+            "firstLevelIds": {
+                "type": "long"
+            },
+            "secondLevelIds": {
+                "type": "long"
+            },
+            "thirdLevelIds": {
+                "type": "long"
+            },
+            "firstLevelNames": {
+                "type": "string"
+            },
+            "purchaseId": {
+                "type": "long"
+            },
+            "purchaserName": {
+                "type": "string"
+            },
+            "purchaseNum" : {
+                "type": "integer"
+            },
+            "moduleNum" : {
+                "type": "integer"
+            },
+            "moduleType": {
+                "type": "integer"
+            },
+            "materielType": {
+                "type": "integer"
+            },
+            "deliveryAddress": {
+                "type": "string"
+            },
+            "status" : {
+                "type": "integer"
+            },
+            "predictEnd": {
+                "type": "date",
+                "format": "dateOptionalTime"
+            },
+            "checkTime": {
+                "type": "date",
+                "format": "dateOptionalTime"
+            }
+        }
+    }
+}

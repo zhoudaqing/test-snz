@@ -1,0 +1,133 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "group-site-list"}}
+<div class="ui info message">
+  <div class="header">
+    App info
+  </div>
+  <div class="ui list">
+    <div class="item">
+      <div class="inline field">
+        {{_DATA_.app.domain}} <div class="ui pointing left teal label">domain</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="inline field">
+        {{_DATA_.app.proxyRoot}} <div class="ui pointing left teal label">proxy root</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="inline field">
+        {{_DATA_.app.assetsHome}} <div class="ui pointing left teal label">assets home</div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="inline field">
+        {{_DATA_.app.configJsFile}} <div class="ui pointing left teal label">config js</div>
+      </div>
+    </div>
+  </div>
+</div>
+<p>
+  {{#assign "appAuth"}}group:{{group}}:app:{{app}}{{/assign}}
+  {{#hasPermission appAuth}}
+  <div class="ui blue small button js-btn-new-site"><i class="add icon"></i> NEW SITE</div>
+  {{else}}
+  你无权新建站点
+  {{/hasPermission}}
+</p>
+{{#if _DATA_.sites}}
+<table class="ui table segment">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>NAME</th>
+      <th>DOMAIN</th>
+      <th>TIME</th>
+      <th>ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.sites}}
+    <tr data-site="{{json this}}">
+      <td>{{id}}</td>
+      <td>{{name}}</td>
+      <td>
+        sub-domain: {{subdomain}}
+        <a target="_blank" href="http://{{#equals subdomain "/"}}{{_DATA_.app.domain}}{{else}}{{subdomain}}.{{_DATA_.app.domain}}{{/equals}}"><i class="external url icon"></i></a>
+      </td>
+      <td>
+        createdAt: {{formatDate createdAt}}
+      </td>
+      <td>
+        {{#assign "siteAuth"}}group:{{group}}:app:{{app}}:site:{{id}}{{/assign}}
+        {{#hasPermission siteAuth}}
+        <div class="ui buttons">
+          <div class="ui tiny button js-btn-edit-site"><i class="info icon"></i> EDIT</div>
+          <a target="_blank" href="/design/editor/group/{{group}}/app/{{app}}/{{id}}" class="ui tiny button"><i class="edit icon"></i> DESIGN</a>
+          <div class="ui tiny button js-btn-pub-site"><i class="unhide icon"></i> PUBLISH</div>
+          <div class="ui tiny red button js-btn-del-site"><i class="trash icon"></i> DELETE</div>
+        </div>
+        {{else}}
+        无权进行操作
+        {{/hasPermission}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{else}}
+<div class="ui icon info message">
+  <i class="meh icon"></i>
+  <div class="content">
+    还没有任何站点
+  </div>
+</div>
+{{/if}}
+<div class="ui small modal group-site-list-modal site-info">
+  <i class="close icon"></i>
+  <div class="header">
+    Site info
+  </div>
+  <div class="content"></div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui positive right labeled icon button">Submit<i class="checkmark icon"></i></div>
+  </div>
+</div>
+<div class="ui small basic modal group-site-list-modal del-site-confirm">
+  <div class="header">
+    Delete Site
+  </div>
+  <div class="content">
+    <div class="left"><i class="trash icon"></i></div>
+    <div class="right">
+      <h2>确定要删除这个站点么？</h2>
+      <p>删除后无法恢复，并且会影响到已发布页面的访问，请谨慎操作</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui buttons">
+      <div class="ui negative labeled icon button"><i class="remove icon"></i> NO</div>
+      <div class="ui positive right labeled icon button">YES <i class="checkmark icon"></i></div>
+    </div>
+  </div>
+</div>
+<div class="ui small basic modal group-site-list-modal pub-site-confirm">
+  <div class="header">
+    Publish Site
+  </div>
+  <div class="content">
+    <div class="left"><i class="unhide icon"></i></div>
+    <div class="right">
+      <h2>确定要发布这个站点么？</h2>
+      <p>发布后所有已保存的改动都将立即生效</p>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="two fluid ui buttons">
+      <div class="ui negative labeled icon button"><i class="remove icon"></i> NO</div>
+      <div class="ui positive right labeled icon button">YES <i class="checkmark icon"></i></div>
+    </div>
+  </div>
+</div>
+{{/component}}

@@ -1,0 +1,20 @@
+<div class="control-group team-list-group">
+  <label for="">成员列表：</label>
+  <div class="control-content">
+    <ul>
+      {{#isArray data}}
+          {{#each data}}
+            <li>
+	             <label class="small-label" style="width:300px;">
+	               <input type="radio" name="new-member" class="new-member-info" data-number="{{nick}}" data-id="{{id}}" data-name="{{name}}" data-userPhone="{{mobile}}">{{name}}({{nick}}) <br/> 部门:{{organ}}
+                </label>
+            </li>
+          {{/each}}
+        {{else}}
+          {{#with data}}
+            <li><label class="small-label"><input name="new-member" type="radio" class="new-member-info" data-number="{{nick}}" data-id="{{id}}" data-name="{{name}}" data-userPhone="{{mobile}}">{{name}}({{nick}})</label></li>
+          {{/with}}
+      {{/isArray}}
+    </ul>
+  </div>
+</div>

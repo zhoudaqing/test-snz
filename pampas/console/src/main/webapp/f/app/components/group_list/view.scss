@@ -1,0 +1,21 @@
+/*
+ * Copyright (c) 2014 杭州端点网络科技有限公司
+ */
+
+.group-list {
+  .ui.vertical.menu {
+    .item.list-wrap {
+      max-height: 400px;
+      overflow: auto;
+
+      > .menu {
+        margin-top: 0;
+
+        > .item {
+          padding-top: 1rem;
+          padding-bottom: 1rem;
+        }
+      }
+    }
+  }
+}

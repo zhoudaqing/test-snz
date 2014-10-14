@@ -1,0 +1,31 @@
+<div class="modal bind-category-pop">
+  <div class="modal-header">
+    <h2>信用评价</h2>
+  </div>
+  <form class="form form-aligned credit-form" id="reject-form">
+    <div class="modal-dialog">
+      <div class="control-group">
+        <label for="sites-name">评价等级:</label>
+        <input type="hidden" name="id" value="{{id}}">
+        <select name="status" id="credit-select">
+          <option value="4">AAA</option>
+          <option value="3">AA</option>
+          <option value="2">A</option>
+          <option value="1">BBB</option>
+          <option value="-1">B</option>
+          <option value="-2">C</option>
+          <option value="-3">其他</option>
+          <option value="-4">财务报表异常</option>
+        </select>
+      </div>
+      <div class="control-group" style="display: none;">
+        <label for="sites-name">其他意见:</label>
+        <input type="text" name="msg">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-medium btn-primary" type="submit">确定</button>
+      <button class="btn btn-medium close" type="button">取消</button>
+    </div>
+  </form>
+</div>

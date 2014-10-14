@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 采购商对于供应商的方案的排名操作 -->
+<mapper namespace="RequirementRank">
+    <resultMap id="requirementRankMap" type="RequirementRank">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="rank" column="rank"/>
+        <result property="type" column="type"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="quotaScale" column="quota_scale"/>
+        <result property="selectReason" column="select_reason"/>
+        <result property="selectFile" column="select_file"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id, rank, type, supplier_id, supplier_name, quota_scale, select_reason, select_file, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="requirementRank" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_requirement_ranks (<include refid="columns"/>) values (#{requirementId}, #{rank}, #{type}, #{supplierId},
+        #{supplierName}, #{quotaScale}, #{selectReason}, #{selectFile}, now(), now())
+    </insert>
+
+    <!-- 优化性能批量插入 -->
+    <insert id="createBatch" parameterType="requirementRank" useGeneratedKeys="true">
+        insert into snz_requirement_ranks (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="info" index="index" separator="," >
+            (#{info.requirementId}, #{info.rank}, #{info.type}, #{info.supplierId},
+            #{info.supplierName}, #{info.quotaScale}, #{info.selectReason}, #{info.selectFile}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="requirementRank">
+        update snz_requirement_ranks
+        <set>
+            <if test="rank!=null">rank=#{rank},</if>
+            <if test="type!=null">type=#{type},</if>
+            <if test="supplierId!=null">supplier_id=#{supplierId},</if>
+            <if test="supplierName!=null">supplier_name=#{supplierName},</if>
+            <if test="quotaScale!=null">quota_scale=#{quotaScale},</if>
+            <if test="selectReason!=null">select_reason=#{selectReason},</if>
+            <if test="selectFile!=null">select_file=#{selectFile},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="requirementRankMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_ranks where id=#{id}
+    </select>
+
+    <select id="findAllRanks" parameterType="map" resultMap="requirementRankMap">
+        select id, <include refid="columns"/>
+        from snz_requirement_ranks
+        <where>
+            requirement_id=#{requirementId}
+            <if test="type!=3"> and type=#{type}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,394 @@
+{{#component "js-comp  supplier-resume-company-info"}}
+  <p class="components-title"><strong class="tab-name">企业基础信息</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-list">
+    <div class="compare-title">
+      <div class="new-value">
+        <label>当前值&nbsp;&nbsp;&nbsp;</label>
+      </div>
+      <div class="old-value">
+        修改前
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>供应商代码：</label>
+        <div>
+          {{supplierInfo.company.supplierCode}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>法人公司名称：</label>
+        <div>
+          {{supplierInfo.company.corporation}}
+        </div>
+      </div>
+      {{#if oldValue.company-corporation}}
+      <div class="old-value">
+        {{oldValue.company-corporation}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>法人代表：</label>
+        <div>
+          {{supplierInfo.company.initAgent}}
+        </div>
+      </div>
+      {{#if oldValue.company-init-agent}}
+      <div class="old-value">
+        {{oldValue.company-init-agent}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>法人公司地址：</label>
+        <div>
+          {{supplierInfo.company.corpAddr}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>邮政编号：</label>
+        <div>
+          {{supplierInfo.company.zipcode}}
+        </div>
+      </div>
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>集团公司名称：</label>
+        <div>
+          {{supplierInfo.company.groupName}}
+        </div>
+      </div>
+      {{#if oldValues.company-group-name}}
+      <div class="old-value">
+        {{oldValues.company-group-name}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>集团公司地址：</label>
+        <div>
+          {{supplierInfo.company.groupAddr}}
+        </div>
+      </div>
+      {{#if oldValues.company-group-addr}}
+      <div class="old-value">
+        {{oldValues.company-group-addr}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>注册资金(万)：</label>
+        <div>
+          {{formatPrice supplierInfo.company.regCapital "w" 1}}
+          （
+          {{#equals supplierInfo.company.rcCoinType 1}}人民币{{/equals}}
+          {{#equals supplierInfo.company.rcCoinType 2}}英镑{{/equals}}
+          {{#equals supplierInfo.company.rcCoinType 3}}美元{{/equals}}
+          {{#equals supplierInfo.company.rcCoinType 4}}欧元{{/equals}}
+          {{#equals supplierInfo.company.rcCoinType 5}}日元{{/equals}}
+          ）
+        </div>
+      </div>
+      {{#if oldValues.company-reg-capital}}
+      <div class="old-value">
+        {{formatPrice oldValues.company-reg-capital "w" 1}}
+        （
+        {{#equals oldValues.company-rc-coin-type 1}}人民币{{/equals}}
+        {{#equals oldValues.company-rc-coin-type 2}}英镑{{/equals}}
+        {{#equals oldValues.company-rc-coin-type 3}}美元{{/equals}}
+        {{#equals oldValues.company-rc-coin-type 4}}欧元{{/equals}}
+        {{#equals oldValues.company-rc-coin-type 5}}日元{{/equals}}
+        ）
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>公司规模人数：</label>
+        <div>
+          {{#equals supplierInfo.company.personScale 1}}0-50人{{/equals}}
+          {{#equals supplierInfo.company.personScale 2}}50-200人{{/equals}}
+          {{#equals supplierInfo.company.personScale 3}}200-500人{{/equals}}
+          {{#equals supplierInfo.company.personScale 4}}500-1000人{{/equals}}
+          {{#equals supplierInfo.company.personScale 5}}1000人以上{{/equals}}
+        </div>
+      </div>
+      {{#if oldValues.company-person-scale}}
+      <div class="old-value">
+        {{#equals oldValues.company-person-scale 1}}0-50人{{/equals}}
+        {{#equals oldValues.company-person-scale 2}}50-200人{{/equals}}
+        {{#equals oldValues.company-person-scale 3}}200-500人{{/equals}}
+        {{#equals oldValues.company-person-scale 4}}500-1000人{{/equals}}
+        {{#equals oldValues.company-person-scale 5}}1000人以上{{/equals}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>公司成立时间：</label>
+        <div>
+          {{formatDate supplierInfo.company.foundAt "day"}}
+        </div>
+      </div>
+      {{#if oldValues.company-found-at}}
+      <div class="old-value">
+        {{formatDate oldValues.company-found-at "day"}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>公司注册国家：</label>
+        <div data-country="{{supplierInfo.company.regCountry}}">
+        </div>
+      </div>
+      {{#if oldValues.company-reg-country}}
+      <div class="old-value" data-country="{{oldValues.company-reg-country}}">
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>隶属地区：</label>
+        <div>
+          <span data-province="{{supplierInfo.company.regProvince}}"></span> > <span data-parent="{{supplierInfo.company.regProvince}}" data-city="{{supplierInfo.company.regCity}}"></span>
+        </div>
+      </div>
+      {{#if oldValues.company-reg-province}}
+      <div class="old-value">
+        <span data-province="{{oldValues.company-reg-province}}"></span> > <span data-parent="{{oldValues.company-reg-province}}" data-city="{{oldValues.company-reg-city}}"></span>
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>固定资产(万)：</label>
+        <div>
+          {{formatPrice supplierInfo.company.fixedAssets "w" 1}}
+          （
+          {{#equals supplierInfo.company.faCoinType 1}}人民币{{/equals}}
+          {{#equals supplierInfo.company.faCoinType 2}}英镑{{/equals}}
+          {{#equals supplierInfo.company.faCoinType 3}}美元{{/equals}}
+          {{#equals supplierInfo.company.faCoinType 4}}欧元{{/equals}}
+          {{#equals supplierInfo.company.faCoinType 5}}日元{{/equals}}
+          ）
+        </div>
+      </div>
+      {{#if oldValaues.company-fixed-assets}}
+      <div class="old-value">
+        {{formatPrice oldValaues.company-fixed-assets "w" 1}}
+        （
+        {{#equals oldValues.company-fa-coin-type 1}}人民币{{/equals}}
+        {{#equals oldValues.company-fa-coin-type 2}}英镑{{/equals}}
+        {{#equals oldValues.company-fa-coin-type 3}}美元{{/equals}}
+        {{#equals oldValues.company-fa-coin-type 4}}欧元{{/equals}}
+        {{#equals oldValues.company-fa-coin-type 5}}日元{{/equals}}
+        ）
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>公司简介：</label>
+        <div>
+          {{supplierInfo.company.desc}}
+        </div>
+      </div>
+      {{#if oldValues.company-desc}}
+      <div class="old-value">
+        {{oldValues.company-desc}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>主营业务陈述：</label>
+        <div>
+          {{#each supplierInfo.companyMainBusinesses}}
+            <span data-business="{{mainBusinessId}}"></span>
+            {{#unless @last}}<br><br>{{/unless}}
+          {{/each}}
+        </div>
+      </div>
+      {{#if oldValues.company-main-business}}
+      <div class="old-value">
+        {{#each oldValues.company-main-business}}
+          <span data-business="{{mainBusinessId}}"></span>
+          {{#unless @last}}<br><br>{{/unless}}
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>所属产品线：</label>
+        <div>
+          {{supplierInfo.company.productLine}}
+        </div>
+      </div>
+      {{#if oldValues.company-product-line}}
+      <div class="old-value">
+        {{oldValues.company-product-line}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">客户群描述：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>客户群</th>
+              <th>客户</th>
+              <th>占比<br><span>(占客户的比例)</span></th>
+              <th>占比<br><span>(该客户占贵司的比例)</span></th>
+              <th>附件</th>
+            </tr>
+          </thead>
+          <tbody data-customer="{{supplierInfo.company.customers}}" data-url="{{_HREF_.photohref}}">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="compare-list">
+    <div class="compare-row">
+      <div class="new-value">
+        <label>公司网站：</label>
+        <div>
+          {{supplierInfo.company.officialWebsite}}
+        </div>
+      </div>
+      {{#if oldValues.company-official-web-site}}
+      <div class="old-value">
+        {{oldValues.company-official-web-site}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>企业性质：</label>
+        <div>
+          {{#equals supplierInfo.company.nature 1}}国有{{/equals}}
+          {{#equals supplierInfo.company.nature 2}}集体{{/equals}}
+          {{#equals supplierInfo.company.nature 3}}民营{{/equals}}
+          {{#equals supplierInfo.company.nature 4}}私营{{/equals}}
+          {{#equals supplierInfo.company.nature 5}}合资{{/equals}}
+          {{#equals supplierInfo.company.nature 6}}外资{{/equals}}
+          {{#equals supplierInfo.company.nature 7}}其他{{/equals}}
+        </div>
+      </div>
+      {{#if oldValues.company-nature}}
+      <div class="old-value">
+        {{#equals oldValues.company-nature 1}}国有{{/equals}}
+        {{#equals oldValues.company-nature 2}}集体{{/equals}}
+        {{#equals oldValues.company-nature 3}}民营{{/equals}}
+        {{#equals oldValues.company-nature 4}}私营{{/equals}}
+        {{#equals oldValues.company-nature 5}}合资{{/equals}}
+        {{#equals oldValues.company-nature 6}}外资{{/equals}}
+        {{#equals oldValues.company-nature 7}}其他{{/equals}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>是否世界500强：</label>
+        <div>
+          {{#equals supplierInfo.company.worldTop 0}}否{{/equals}}
+          {{#equals supplierInfo.company.worldTop 1}}是{{/equals}}
+        </div>
+      </div>
+      {{#if oldValues.company-world-top}}
+      <div class="old-value">
+        {{#equals oldValues.company-world-top 0}}否{{/equals}}
+        {{#equals oldValues.company-world-top 1}}是{{/equals}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>是否上市：</label>
+        <div>
+          {{#equals supplierInfo.company.listedStatus 1}}是{{/equals}}
+          {{#equals supplierInfo.company.listedStatus 0}}否{{/equals}}
+          {{#equals supplierInfo.company.listedStatus 1}}
+          <br><br>
+          上市地区：{{supplierInfo.company.listedRegion}}
+          <br><br>
+          股票代码：{{supplierInfo.company.ticker}}
+          {{/equals}}
+        </div>
+      </div>
+      {{#if oldValues.company-listed-status}}
+      <div class="old-value">
+        {{#equals oldValues.company-listed-status 1}}是{{/equals}}
+        {{#equals oldValues.company-listed-status 0}}否{{/equals}}
+        {{#if oldValues.company-listed-region}}
+        <br><br>
+        上市地区：{{oldValues.company-listed-region}}
+        {{/if}}
+        {{#if oldValues.company-ticker}}
+        <br><br>
+        股票代码：{{oldValues.company-ticker}}
+        {{/if}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="compare-row">
+      <div class="new-value">
+        <label>可供货园区：</label>
+        <div>
+          {{#each supplierInfo.companySupplyParks}}
+          {{name}}
+          {{#unless @last}}, {{/unless}}
+          {{/each}}
+        </div>
+      </div>
+      {{#if oldValues.company-supply-park}}
+      <div class="old-value">
+        {{#each oldValues.company-supply-park}}
+        {{name}}
+        {{#unless @last}}, {{/unless}}
+        {{/each}}
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">工厂信息：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>工厂所属地区</th>
+              <th>工厂面积(平方米)</th>
+              <th>人数(人)</th>
+              <th>固定资产(万元)</th>
+            </tr>
+          </thead>
+          <tbody data-factory="{{supplierInfo.company.factories}}">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

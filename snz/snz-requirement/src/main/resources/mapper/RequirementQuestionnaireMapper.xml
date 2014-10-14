@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="RequirementQuestionnaire">
+    <resultMap id="RequirementQuestionnaireMap" type="RequirementQuestionnaire">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="company_id" property="companyId"/>
+        <result column="corporation" property="corporation"/>
+        <result column="requirement_id" property="requirementId"/>
+        <result column="requirement_name" property="requirementName"/>
+        <result column="no_interface_or_package" property="noInterfaceOrPackage"/>
+        <result column="no_clear_interface_or_package" property="noClearInterfaceOrPackage"/>
+        <result column="no_standard_interface_or_package" property="noStandardInterfaceOrPackage"/>
+        <result column="less_order_count" property="lessOrderCount"/>
+        <result column="parks_not_match" property="parksNotMatch"/>
+        <result column="short_period" property="shortPeriod"/>
+        <result column="other_reason" property="otherReason"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="columns">
+       user_id, company_id,corporation,requirement_id,requirement_name,no_interface_or_package,
+       no_clear_interface_or_package,no_standard_interface_or_package,
+       less_order_count,parks_not_match,short_period,other_reason, created_at, updated_at
+    </sql>
+
+    <select id="findByUserIdAndRequirementId" resultMap="RequirementQuestionnaireMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_requirement_questionnaire where user_id = #{userId} and requirement_id=#{requirementId}
+    </select>
+
+    <select id="findById" resultMap="RequirementQuestionnaireMap" parameterType="long">
+        select id,
+        <include refid="columns"/>
+        from snz_requirement_questionnaire where id = #{id}
+    </select>
+
+    <select id="count" resultType="long">
+        select count(id) from snz_requirement_questionnaire
+        <where>
+            <if test="corporation!=null">
+                corporation like CONCAT('%',CONCAT(#{corporation}, '%'))
+            </if>
+            <if test="requirementName!=null">
+                and requirement_name like CONCAT('%',CONCAT(#{requirementName}, '%'))
+            </if>
+        </where>
+    </select>
+
+    <select id="findByPaging" resultMap="RequirementQuestionnaireMap">
+        select id,
+        <include refid="columns"/>
+        from snz_requirement_questionnaire
+        <where>
+            <if test="corporation!=null">
+                corporation like CONCAT('%',CONCAT(#{corporation}, '%'))
+            </if>
+            <if test="requirementName!=null">
+                and requirement_name like CONCAT('%',CONCAT(#{requirementName}, '%'))
+            </if>
+        </where>
+        limit #{offset},#{limit}
+    </select>
+
+    <insert id="insert" parameterType="RequirementQuestionnaire" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_requirement_questionnaire (<include refid="columns"/>)
+        values (#{userId},#{companyId},#{corporation},#{requirementId},#{requirementName},
+        #{noInterfaceOrPackage},#{noClearInterfaceOrPackage},#{noStandardInterfaceOrPackage},
+        #{lessOrderCount},#{parksNotMatch},#{shortPeriod},#{otherReason},now(), now())
+    </insert>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 类目绑定 -->
+<mapper namespace="CategoryBinding">
+    <resultMap id="CategoryBindingMap" type="CategoryBinding">
+        <id property="id" column="id"/>
+        <result property="frontId" column="front_id"/>
+        <result property="bcs" column="bcs"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        front_id, bcs, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="CategoryBinding" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_category_bindings (<include refid="columns"/>) values (#{frontId}, #{bcs}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="CategoryBinding">
+        UPDATE snz_category_bindings
+        <set>
+            <if test="frontId!=null">front_id=#{frontId},</if>
+            <if test="bcs!=null">bcs=#{bcs},</if>
+            updated_at = now()
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM snz_category_bindings WHERE id=#{id}
+    </delete>
+
+    <select id="findByFcid" parameterType="long" resultMap="CategoryBindingMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_category_bindings WHERE front_id=#{frontId}
+    </select>
+
+    <select id="findById" parameterType="long" resultMap="CategoryBindingMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_category_bindings WHERE id=#{id}
+    </select>
+
+    <select id="findAll" resultMap="CategoryBindingMap">
+        SELECT id, <include refid="columns"/>
+        FROM snz_category_bindings
+    </select>
+</mapper>

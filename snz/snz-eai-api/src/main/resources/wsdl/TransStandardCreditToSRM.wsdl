@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions name="TransStandardCreditToSRM" targetNamespace="http://www.example.org/TransStandardCreditToSRM/" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/TransStandardCreditToSRM/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+      <xsd:schema targetNamespace="http://www.example.org/TransStandardCreditToSRM/"
+                  xmlns:tns="http://www.example.org/TransStandardCreditToSRM/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element name="TransStandardCreditToSRM">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="T_INPUT" type="tns:ZDSP12LOG20_INPUT"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="TransStandardCreditToSRMResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="MESSAGE" type="xsd:string"/>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="T_OUTPUT" type="tns:ZINT_ZDSP12LOG20_SENDING">
+          	</xsd:element>
+            <xsd:element name="EAIFlag" type="xsd:string"/>
+            <xsd:element name="EAIMessage" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="ZINT_ZDSP12LOG20_SENDING">
+        <xsd:sequence>
+          <xsd:element name="AUFNR" type="xsd:string"/>
+          <xsd:element name="WERKS" type="xsd:string"/>
+          <xsd:element name="EBELN" type="xsd:string"/>
+          <xsd:element name="EBELP" type="xsd:string"/>
+          <xsd:element name="LIFNR" type="xsd:string"/>
+          <xsd:element name="MATNR" type="xsd:string"/>
+          <xsd:element name="XQDATE" type="xsd:string"/>
+          <xsd:element name="SHOUHUO_TIME" type="xsd:string"/>
+          <xsd:element name="YYDATE" type="xsd:string"/>
+          <xsd:element name="NUM1" type="xsd:decimal"/>
+          <xsd:element name="ACTUAL_QTY" type="xsd:decimal"/>
+          <xsd:element name="NUMCHA" type="xsd:decimal"/>
+          <xsd:element name="REASONS" type="xsd:string"/>
+          <xsd:element name="ZDATE" type="xsd:string"/>
+          <xsd:element name="ZTIME" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ZDSP12LOG20_INPUT">
+        <xsd:sequence>
+          <xsd:element name="ZDATE" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="TransStandardCreditToSRMRequest">
+    <WL5G3N0:part element="WL5G3N1:TransStandardCreditToSRM" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="TransStandardCreditToSRMResponse">
+    <WL5G3N0:part element="WL5G3N1:TransStandardCreditToSRMResponse" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="TransStandardCreditToSRM">
+    <WL5G3N0:operation name="TransStandardCreditToSRM">
+      <WL5G3N0:input message="WL5G3N1:TransStandardCreditToSRMRequest"/>
+      <WL5G3N0:output message="WL5G3N1:TransStandardCreditToSRMResponse"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="TransStandardCreditToSRMSOAP" type="WL5G3N1:TransStandardCreditToSRM">
+    <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="TransStandardCreditToSRM">
+      <WL5G3N2:operation soapAction="http://www.example.org/TransStandardCreditToSRM/TransStandardCreditToSRM"/>
+      <WL5G3N0:input>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N2:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="TransStandardCreditToSRM">
+    <WL5G3N0:port binding="WL5G3N1:TransStandardCreditToSRMSOAP" name="TransStandardCreditToSRMSOAP">
+      <!--<WL5G3N2:address location="http://10.138.1.29:7001/EAI/service/SRM/TransStandardCreditToSRM/TransStandardCreditToSRM"/>-->
+      <WL5G3N2:address location="http://10.135.1.110:7001/EAI/service/SRM/TransStandardCreditToSRM/TransStandardCreditToSRM"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

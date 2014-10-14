@@ -1,0 +1,15 @@
+<div class="control-group rule-group">
+  条目内容: &nbsp;<input type="text" name="name" class="input-large">
+  &nbsp;&nbsp;&nbsp;
+  是否否决项: <label class="veto-label"><input id="isVeto" name="type{{data}}" type="radio" value="0" class="rule-type" checked> 是 </label>
+   <label class="veto-label"><input id="notVeto" name="type{{data}}" type="radio" value="1" class="rule-type"> 否 </label>
+  &nbsp;&nbsp;&nbsp;
+  设置权限:
+  <select name="role" id="">
+    <option value="resource">资源小微</option>
+    <option value="big_data">供应商大数据</option>
+    <option value="competitive">模块竞争力</option>
+  </select>
+  &nbsp;&nbsp;
+  <a href="javascript:void(0)" class="js-delete-rule">删除</a>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:annotation-config/>
+
+    <!-- Application name -->
+    <dubbo:application name="test-provider2"/>
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry address="zookeeper://localhost:2181"/>
+    <!-- expose this service through dubbo protocol, through port 20880 -->
+    <dubbo:protocol name="dubbo" port="20881" threads="10" heartbeat="100000"/>
+
+    <bean id="agentImpl" class="io.terminus.pampas.client.AgentImpl"/>
+    <dubbo:service interface="io.terminus.pampas.client.Agent" ref="agentImpl" version="test-provider2"/>
+
+    <!-- service deploy -->
+    <bean id="testProviderImpl" class="io.terminus.pampas.engine.mapping.TestProviderImpl"/>
+    <dubbo:service interface="io.terminus.pampas.engine.mapping.TestProvider2" ref="testProviderImpl"/>
+</beans>

@@ -1,0 +1,62 @@
+{{#component "js-comp supplier-resume-tab operation-platform"}}
+<h3>供应商履历</h3>
+{{inject "admins/supplier_status"}}
+<div class="tab tab-condensed tab-reversed" data-type="switchable">
+  <div class="supplier-resource-type">
+    {{#isEmpty _DATA_.resourceType}}
+    <button class="btn btn-small js-btn-resource-type">一流资源确认</button>
+    {{else}}
+    {{#equals _DATA_.resourceType "0"}}普通资源{{/equals}}
+    {{#equals _DATA_.resourceType "1"}}标杆企业{{/equals}}
+    {{#equals _DATA_.resourceType "2"}}500强公司{{/equals}}
+    {{/isEmpty}}
+  </div>
+
+  <ul class="tab-navs clearfix">
+    <li data-role="nav" class="active"><a href="javascript:void(0);">公司信息</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">证件信息</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">联系人信息</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">行业排名信息</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">财务信息</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">研发能力</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">质量能力</a></li>
+    <li data-role="nav"><a href="javascript:void(0);">交货</a></li>
+    <li data-role="nav"><a href="javascript:void(0);" class="js-nav-timeline">时间线</a></li>
+  </ul>
+
+  <div class="tab-contents clearfix">
+
+    <div data-role="content" class="tab-content">
+     {{inject "admins/company_info"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+     {{inject "admins/paperwork_info"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+     {{inject "admins/contact_info"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+     {{inject "admins/service_info"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+     {{inject "admins/qualification_info"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+     {{inject "admins/research_ability"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+      {{inject "admins/quality_ability"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+      {{inject "admins/delivery"}}
+    </div>
+    <div data-role="content" class="tab-content hide">
+      {{#inject "admins/timeline"}}
+      {
+        "size": 10
+      }
+      {{/inject}}
+    </div>
+  </div>
+</div>
+{{/component}}

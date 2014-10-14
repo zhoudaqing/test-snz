@@ -1,0 +1,14 @@
+<li class="attribute-li" data-attribute="{{pp this}}">
+  <span class="attribute" data-id="{{id}}">
+    <span class="attr" data-name="{{name}}"><span class="attribute-number">{{#if index}}{{index}}{{else}}{{add @index 1}}{{/if}}</span>.&nbsp;{{name}}</span>
+  </span>
+  <span class="operate on-hover">
+    <span class="js-attr-value-get" style="margin: 0 20px 0 10px;">
+      <a href="javascript:void(0);">查看属性</a>
+    </span>
+    <button class="btn btn-small js-attr-edit">编辑属性值</button>
+    <span>
+      <button id="{{id}}" class="btn btn-small" data-toggle="confirm" data-title="您确定删除吗?" data-content="删除之后若要恢复请重新添加" data-event="confirm:deleteAttribute">删除</button>
+    </span>
+  </span>
+</li>

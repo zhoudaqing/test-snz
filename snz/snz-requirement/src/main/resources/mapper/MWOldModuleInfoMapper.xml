@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MWOldModuleInfo">
+    <resultMap id="MWOldModuleInfoMap" type="MWOldModuleInfo">
+        <id property="id" column="id"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="seriesId" column="series_id"/>
+        <result property="unit" column="unit"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+      module_num, module_name, series_id, unit, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="MWOldModuleInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mw_old_module_infos`
+        (<include refid="columns"/>)
+        VALUES
+        (#{moduleNum}, #{moduleName}, #{seriesId}, #{unit}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="MWOldModuleInfo">
+        update `mw_old_module_infos`
+        <set>
+            <if test="moduleNum!=null"> module_num=#{moduleNum}, </if>
+            <if test="moduleName!=null"> module_name=#{moduleName}, </if>
+            <if test="seriesId!=null"> series_id=#{seriesId}, </if>
+            <if test="unit!=null"> unit=#{unit}, </if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="MWOldModuleInfoMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_old_module_infos` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="MWOldModuleInfoMap">
+        select id,
+        <include refid="columns"/>
+        from `mw_old_module_infos`
+        <where>
+            <if test="moduleNum!=null"> and module_num=#{moduleNum} </if>
+            <if test="moduleName!=null"> and module_name=#{moduleName} </if>
+            <if test="seriesId!=null"> and series_id=#{seriesId} </if>
+            <if test="unit!=null"> and unit=#{unit} </if>
+            <if test="id!=null"> and id=#{id}</if>
+        </where>
+        limit 1
+    </select>
+
+    <select id="maxId" resultType="long">
+        select max(id) from `mw_old_module_infos`
+    </select>
+
+    <select id="forDump" resultMap="MWOldModuleInfoMap">
+        select id, <include refid="columns"/>
+        from `mw_old_module_infos`
+        where id &lt; #{maxId}
+        order by id desc
+        limit #{limit}
+    </select>
+
+    <delete id="deleteInIds">
+        delete from mw_old_module_infos
+        where id in
+        <foreach collection="list" open="(" separator="," item="id" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findByModuleNumOrModuleName" parameterType="map" resultMap="MWOldModuleInfoMap">
+        SELECT id, <include refid="columns"/>
+          FROM mw_old_module_infos
+        WHERE module_num like concat('%', concat(#{moduleNum}, '%')) or module_name like concat('%', concat(#{moduleName}, '%'))
+          ORDER BY id DESC
+    </select>
+
+</mapper>

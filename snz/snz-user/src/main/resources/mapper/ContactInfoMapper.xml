@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ContactInfo" >
+  <resultMap id="ContactInfoMap" type="ContactInfo" >
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="department" property="department" />
+    <result column="duty" property="duty" />
+    <result column="mobile" property="mobile" />
+    <result column="office_phone" property="officePhone" />
+    <result column="email" property="email" />
+    <result column="company_id" property="companyId" />
+    <result column="user_id" property="userId" />
+    <result column="created_at" property="createdAt" />
+    <result column="updated_at" property="updatedAt" />
+  </resultMap>
+
+  <sql id="columns" >
+    name, department, duty, mobile, office_phone, email, company_id,user_id, created_at,
+    updated_at
+  </sql>
+
+  <select id="findById" resultMap="ContactInfoMap" parameterType="long" >
+    select id,<include refid="columns" />
+    from snz_contact_infos
+    where id = #{id}
+  </select>
+
+  <select id="findByUserId" resultMap="ContactInfoMap" parameterType="long" >
+     select id,<include refid="columns" />
+     from snz_contact_infos
+     where user_id = #{userId}
+   </select>
+
+    <select id="findByUserIds" resultMap="ContactInfoMap" parameterType="list" >
+        select id,<include refid="columns" />
+        from snz_contact_infos
+        where user_id in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <delete id="delete" parameterType="long" >
+    delete from snz_contact_infos where id = #{id}
+  </delete>
+
+  <insert id="insert" parameterType="ContactInfo" useGeneratedKeys="true" keyProperty="id" >
+    insert into snz_contact_infos (<include refid="columns" />)
+    values (#{name}, #{department},
+      #{duty}, #{mobile}, #{officePhone},
+      #{email}, #{companyId},#{userId}, now(), now())
+  </insert>
+
+  <update id="update" parameterType="ContactInfo" >
+    update snz_contact_infos
+    <set >
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="department != null" >
+        department = #{department},
+      </if>
+      <if test="duty != null" >
+        duty = #{duty},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile},
+      </if>
+      <if test="officePhone != null" >
+        office_phone = #{officePhone},
+      </if>
+      <if test="email != null" >
+        email = #{email},
+      </if>
+        updated_at = now(),
+    </set>
+    where id = #{id}
+  </update>
+
+</mapper>

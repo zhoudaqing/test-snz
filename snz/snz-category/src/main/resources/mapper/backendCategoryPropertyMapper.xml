@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BackendCategoryProperty">
+    <resultMap id="BackendCategoryPropertyMap" type="BackendCategoryProperty">
+        <id property="id" column="id"/>
+        <result column="bc_id" property="bcId"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="factory_num" property="factoryNum"/>
+        <result column="value1" property="value1"/>
+        <result column="value2" property="value2"/>
+        <result column="value3" property="value3"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <sql id="table_name">snz_backend_category_properties</sql>
+
+    <sql id="columns">bc_id, `name`, `type`, factory_num, value1, value2, value3, created_at, updated_at</sql>
+
+    <insert id="create" parameterType="BackendCategoryProperty" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="table_name"/> (<include refid="columns"/>)
+        VALUES (#{bcId}, #{name}, #{type}, #{factoryNum}, #{value1}, #{value2}, #{value3}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="BackendCategoryProperty">
+        UPDATE <include refid="table_name"/>
+        <set>
+            <if test="bcId!=null">bc_id=#{bcId},</if>
+            <if test="name!=null">`name`=#{name},</if>
+            <if test="type!=null">`type`=#{type},</if>
+            <if test="factoryNum!=null">factory_num=#{factoryNum},</if>
+            <if test="value1!=null">value1=#{value1},</if>
+            <if test="value2!=null">value2=#{value2},</if>
+            <if test="value3!=null">value3=#{value3},</if>
+            updated_at=now()
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="table_name"/>
+        WHERE id=#{id}
+    </delete>
+
+    <select id="findById" parameterType="long" resultMap="BackendCategoryPropertyMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        WHERE id=#{id}
+    </select>
+
+    <select id="findByBcId" parameterType="long" resultMap="BackendCategoryPropertyMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        WHERE bc_id=#{bcId}
+    </select>
+
+    <select id="findByBcIds" parameterType="list" resultMap="BackendCategoryPropertyMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        WHERE bc_id in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByBcIdWithFactoryNums" parameterType="map" resultMap="BackendCategoryPropertyMap">
+        SELECT id, <include refid="columns"/>
+        FROM <include refid="table_name"/>
+        WHERE bc_id = #{bcId} AND factory_num in
+        <foreach collection="factoryNums" separator="," open="(" close=")" item="factoryNum">
+            #{factoryNum}
+        </foreach>
+    </select>
+</mapper>

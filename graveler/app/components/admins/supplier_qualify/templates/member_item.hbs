@@ -1,0 +1,8 @@
+{{#each data}}
+<tr class="member-tr" data-name="{{name}}" data-id="{{id}}" data-mobile="{{mobile}}" data-number="{{number}}" data-type="{{type}}">
+  <td width="200">{{name}}</td>
+  <td width="210">{{number}}</td>
+  <td width="200">{{mobile}}</td>
+  <td width="200"><a href="javascript:void(0);" class="js-delete-member">删除</a></td>
+</tr>
+{{/each}}

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--
+     #
+     # NOTE:
+     # if your services aren't be used in snz-web, don't config here.
+     #
+     -->
+    <!-- Application name -->
+    <!--<dubbo:application name="#{app.appName}"/>-->
+
+    <dubbo:consumer timeout="#{app.dubboTimeout}"/>
+
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry id="zookeeper" address="#{app.dubboRegistry}" protocol="zookeeper"/>
+
+    <!-- user services -->
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.AccountService" id="accountService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.CompanyService" id="companyService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.AddressService" id="addressService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierIndexService" id="supplierIndexService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierSummaryService" id="supplierSummaryService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierTQRDCInfoService" id="supplierTQRDCInfoService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierInfoChangedService" id="supplierInfoChangedService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierReportService" id="supplierReportService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierResourceMaterialService" id="supplierResourceMaterialService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.TQRDCInfoSendService" id="tQRDCInfoSendService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.UserComplaintService" id="userComplaintService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.ComplaintChatService" id="complaintChatService"/>
+    <!--<dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.ProductOwnerService" id="productOwner"/>-->
+
+    <!-- category service -->
+    <!--<dubbo:reference interface="io.terminus.snz.category.service.BackendCategoryService" id="backendCategoryService"/>-->
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.category.service.FrontendCategoryService" id="frontendCategoryService"/>
+
+    <!-- requirement service -->
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.DepositService" id="depositService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.NewProductImportService" id="newProductImport"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementService" id="requirementService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementOutService" id="requirementOutService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementExcelService" id="requirementExcelService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementTimeService" id="requirementTimeService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.ModuleService" id="moduleService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementQuotaService" id="requirementQuotaService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementIndexService" id="requirementIndexService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.RequirementSearchService" id="requirementSearchService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.ImportGoodListService" id="importGoodListService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.ImportGoodService" id="importGoodService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.ReparationService" id="reparationService"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.requirement.service.MWOldModuleInfoService" id="mWOldModuleInfo"/>
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.user.service.SupplierModuleDetailService" id="supplierModuleDetailService"/>
+
+    <!-- related service -->
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.related.services.DeliveryService" id="deliveryService"/>
+    <!--<dubbo:reference registry="zookeeper" interface="io.terminus.snz.related.services.FactoryProductionDirectorService" id="factoryProductionDirectorService"/>-->
+
+    <!-- eai service -->
+    <dubbo:reference registry="zookeeper" interface="io.terminus.snz.eai.service.MdmOldModuleInfoService" id="mdmOldModuleInfoServiceImpl"/>
+</beans>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UserComplaint">
+
+    <resultMap id="userComplaintResultMap" type="UserComplaint">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="productLineId" column="product_line_id"/>
+        <result property="productLineName" column="product_line_name"/>
+        <result property="frontendCategoryId" column="frontend_category_id"/>
+        <result property="frontendCategoryName" column="frontend_category_name"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="productOwnerId" column="product_owner_id"/>
+        <result property="productOwnerName" column="product_owner_name"/>
+        <result property="complaintTypes" column="complaint_types"/>
+        <result property="supplierCode" column="supplier_code"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="complaintContent" column="complaint_content"/>
+        <result property="complaintReason" column="complaint_reason"/>
+        <result property="claimAmount" column="claim_amount"/>
+        <result property="claimDoc" column="claim_doc"/>
+        <result property="claimTotal" column="claim_total"/>
+        <result property="scoreTotal" column="score_total"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+
+    <sql id="columns">
+    user_id,user_name,product_line_id,product_line_name,frontend_category_id,
+    frontend_category_name,factory_num,factory_name,product_owner_id,product_owner_name,
+    complaint_types,supplier_code,supplier_name,module_num,module_name,complaint_content,
+    complaint_reason,claim_amount,claim_doc,claim_total,score_total,created_at,updated_at
+    </sql>
+
+
+    <sql id="query_conditions">
+      <if test="userId!=null">AND user_id = #{userId}</if>
+      <if test="userName!=null">AND user_name LIKE concat('%', concat(#{userName}, '%'))</if>
+      <if test="productLineId!=null">AND product_line_id = #{productLineId}</if>
+      <if test="productLineName!=null">AND product_line_name = #{productLineName}</if>
+      <if test="frontendCategoryId!=null">AND frontend_category_id = #{frontendCategoryId}</if>
+      <if test="frontendCategoryName!=null">AND frontend_category_name = #{frontendCategoryName}</if>
+      <if test="factoryNum!=null">AND factory_num = #{factoryNum}</if>
+      <if test="factoryName!=null">AND factory_name = #{factoryName}</if>
+      <if test="productOwnerId!=null">AND product_owner_id = #{productOwnerId}</if>
+      <if test="productOwnerName!=null">AND product_owner_name = #{productOwnerName}</if>
+      <if test="complaintTypes!=null">AND complaint_types = #{complaintTypes}</if>
+      <if test="supplierCode!=null">AND supplier_code = #{supplierCode}</if>
+      <if test="supplierName!=null">AND supplier_name LIKE concat('%', concat(#{supplierName}, '%'))</if>
+      <if test="moduleNum!=null">AND module_num = #{moduleNum}</if>
+      <if test="moduleName!=null">AND module_name = #{moduleName}</if>
+      <if test="complaintReason!=null">AND complaint_reason = #{complaintReason}</if>
+    </sql>
+
+
+    <insert id="create" parameterType="UserComplaint" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_user_complaints ( <include refid="columns"/>)
+      VALUES(
+       #{userId},#{userName},#{productLineId},#{productLineName},#{frontendCategoryId},
+        #{frontendCategoryName},#{factoryNum},#{factoryName},#{productOwnerId},#{productOwnerName},
+        #{complaintTypes},#{supplierCode},#{supplierName},#{moduleNum},#{moduleName},
+        #{complaintContent},#{complaintReason},#{claimAmount}, #{claimDoc},#{claimTotal},#{scoreTotal},now(),now()
+      )
+    </insert>
+
+
+    <select id="findById" parameterType="long" resultMap="userComplaintResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_user_complaints
+      WHERE
+       `id` = #{id}
+    </select>
+
+    <sql id="criteria">
+        <if test="userId!=null">AND user_id = #{userId}</if>
+        <if test="userName!=null">AND user_name LIKE concat('%', concat(#{userName}, '%'))</if>
+        <if test="supplierCode!=null">AND supplier_code = #{supplierCode}</if>
+        <if test="supplierName!=null">AND supplier_name LIKE concat('%', concat(#{supplierName}, '%'))</if>
+        <if test="currUserSupplierName!=null">AND supplier_name = #{currUserSupplierName}</if>
+        <if test="createdAtStart!=null"><![CDATA[ AND created_at >= #{createdAtStart} ]]></if>
+        <if test="createdAtEnd!=null"><![CDATA[ AND created_at <= #{createdAtEnd} ]]></if>
+    </sql>
+
+    <select id="countBy" parameterType="java.util.Map" resultType="int">
+      SELECT COUNT(1)
+        FROM snz_user_complaints
+      <where>
+          <include refid="criteria"/>
+      </where>
+    </select>
+    <select id="findBy" parameterType="java.util.Map" resultMap="userComplaintResultMap">
+      SELECT id, <include refid="columns"/>
+        FROM snz_user_complaints
+      <where>
+          <include refid="criteria"/>
+      </where>
+      ORDER BY id DESC
+       <if test="offset!=null and limit!=null">
+          LIMIT #{offset}, #{limit}
+       </if>
+    </select>
+
+
+    <select id="findByUserId" parameterType="long" resultMap="userComplaintResultMap">
+      SELECT id,<include refid="columns"/>
+        FROM  snz_user_complaints
+      WHERE user_id=#{userId}
+        ORDER BY id DESC
+    </select>
+
+
+    <update id="update" parameterType="UserComplaint">
+      UPDATE snz_user_complaints
+      <set>
+          <if test="userId!=null">user_id = #{userId},</if>
+          <if test="userName!=null">user_name = #{userName},</if>
+          <if test="productLineId!=null">product_line_id = #{productLineId},</if>
+          <if test="productLineName!=null">product_line_name = #{productLineName},</if>
+          <if test="frontendCategoryId!=null">frontend_category_id = #{frontendCategoryId},</if>
+          <if test="frontendCategoryName!=null">frontend_category_name = #{frontendCategoryName},</if>
+          <if test="factoryNum!=null">factory_num = #{factoryNum},</if>
+          <if test="factoryName!=null">factory_name = #{factoryName},</if>
+          <if test="productOwnerId!=null">product_owner_id = #{productOwnerId},</if>
+          <if test="productOwnerName!=null">product_owner_name = #{productOwnerName},</if>
+          <if test="complaintTypes!=null">complaint_types = #{complaintTypes},</if>
+          <if test="supplierCode!=null">supplier_code = #{supplierCode},</if>
+          <if test="supplierName!=null">supplier_name = #{supplierName},</if>
+          <if test="moduleNum!=null">module_num = #{moduleNum},</if>
+          <if test="moduleName!=null">module_name = #{moduleName},</if>
+          <if test="complaintContent!=null">complaint_content = #{complaintContent},</if>
+          <if test="complaintReason!=null">complaint_reason = #{complaintReason},</if>
+          <if test="claimAmount!=null">claim_amount = #{claimAmount},</if>
+          <if test="claimDoc!=null">claim_doc = #{claimDoc},</if>
+          <if test="claimTotal!=null">claim_total = #{claimTotal},</if>
+          <if test="scoreTotal!=null">score_total = #{scoreTotal},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_user_complaints
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

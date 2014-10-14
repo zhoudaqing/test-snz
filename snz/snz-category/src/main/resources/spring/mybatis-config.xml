@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias alias="BackendCategory" type="io.terminus.snz.category.model.BackendCategory"/>
+        <typeAlias alias="FrontendCategory" type="io.terminus.snz.category.model.FrontendCategory"/>
+        <typeAlias alias="BackendCategoryProperty" type="io.terminus.snz.category.model.BackendCategoryProperty"/>
+        <typeAlias alias="CategoryBinding" type="io.terminus.snz.category.model.CategoryBinding"/>
+    </typeAliases>
+</configuration>

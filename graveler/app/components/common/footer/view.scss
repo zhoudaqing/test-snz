@@ -1,0 +1,19 @@
+@import "pokeball/variables";
+
+.footer {
+  .front-footer{
+    border-top: 1px solid $default-border-color;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0 10px 0;
+
+    .copyright{
+      width: 100%;
+      padding-bottom: 20px;
+    }
+
+    .links{
+      padding-bottom:20px;
+    }
+  }
+}

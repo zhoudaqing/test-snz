@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 查询园区信息 -->
+<mapper namespace="AddressPark">
+    <resultMap id="addressParkMap" type="AddressPark">
+        <id property="id" column="id"/>
+        <result property="parkName" column="park_name"/>
+    </resultMap>
+
+    <sql id="columns">
+        park_name
+    </sql>
+
+    <select id="findAllPark" resultMap="addressParkMap">
+        select id, <include refid="columns"/> from snz_address_park;
+    </select>
+
+    <select id="findByIds" parameterType="list" resultMap="addressParkMap">
+        select id, <include refid="columns"/> from snz_address_park where id in
+        <foreach collection="list" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByProductId" parameterType="long" resultMap="addressParkMap">
+        select snz_address_park.id, park_name
+        from snz_address_park , snz_category_factory
+        where snz_address_park.id=snz_category_factory.park_id and product_id=#{productId} group by park_id;
+    </select>
+</mapper>

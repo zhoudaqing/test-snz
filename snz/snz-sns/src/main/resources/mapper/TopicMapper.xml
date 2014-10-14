@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2013 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Topic">
+
+    <!-- 结果集映射 -->
+    <resultMap id="topicMap" type="Topic">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="reqId" column="req_id"/>
+        <result property="reqStatus" column="req_status"/>
+        <result property="reqName" column="req_name"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="scope" column="scope"/>
+        <result property="joiners" column="joiners"/>
+        <result property="files" column="files"/>
+        <result property="companyName" column="company_name"/>
+        <result property="lastReplierId" column="last_replier_id"/>
+        <result property="lastReplierName" column="last_replier_name"/>
+        <result property="totalViews" column="total_views"/>
+        <result property="totalReplies" column="total_replies"/>
+        <result property="deleted" column="deleted"/>
+        <result property="closed" column="closed"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="tb_name">
+        snz_topics
+    </sql>
+
+    <sql id="cols_all">
+        id, <include refid="cols_execlue_id"/>
+    </sql>
+
+    <sql id="cols_for_list">
+        id, user_id, user_name, title, req_id, scope, joiners, req_status, total_views, total_replies, created_at
+    </sql>
+
+    <sql id="cols_execlue_id">
+        user_id, user_name, req_id, req_status,req_name, company_name, title, content,
+        scope, joiners, files, last_replier_id, last_replier_name, total_views,
+        total_replies, deleted, closed, created_at, updated_at
+    </sql>
+
+    <sql id="vals_all">
+        #{userId}, #{userName}, #{reqId}, #{reqStatus}, #{reqName}, #{companyName}, #{title}, #{content},
+        #{scope}, #{joiners}, #{files},  #{lastReplierId}, #{lastReplierName},
+        #{totalViews}, #{totalReplies}, #{deleted}, #{closed}, now(), now()
+    </sql>
+
+    <!-- 根据单个id查找 -->
+    <select id="findById" parameterType="long" resultMap="topicMap">
+        SELECT
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id = #{id}
+        AND deleted=0
+    </select>
+
+    <!-- 根据多个id查找 -->
+    <select id="findByIds" parameterType="list" resultMap="topicMap">
+        SELECT id,
+        <include refid="cols_all"/>
+        FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+        AND deleted=0
+    </select>
+
+    <!-- 创建 -->
+    <insert id="create" parameterType="Topic" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO <include refid="tb_name"/>
+        (<include refid="cols_execlue_id"/>)
+        VALUES
+        (<include refid="vals_all"/>)
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="Topic">
+        UPDATE <include refid="tb_name"/>
+        <set>
+            <if test="reqStatus!=null"> req_status = #{reqStatus},</if>
+            <if test="lastReplierId!=null"> last_replier_id = #{lastReplierId},</if>
+            <if test="lastReplierName!=null"> last_replier_name = #{lastReplierName},</if>
+            <if test="totalViews!=null"> total_views = #{totalViews},</if>
+            <if test="totalReplies!=null"> total_replies = #{totalReplies}, </if>
+            updated_at=now()
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <update id="setDelete" parameterType="long">
+        UPDATE <include refid="tb_name"/>
+        SET deleted=1
+        WHERE id = #{id}
+    </update>
+
+    <update id="setDeletes" parameterType="list">
+        UPDATE <include refid="tb_name"/>
+        SET deleted=1
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="setClose" parameterType="long">
+        UPDATE <include refid="tb_name"/>
+        SET closed=1
+        WHERE id = #{id}
+    </update>
+
+    <update id="setCloses" parameterType="list">
+        UPDATE <include refid="tb_name"/>
+        SET closed=1
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 增加浏览量+1 -->
+    <update id="viewed" parameterType="long">
+        UPDATE <include refid="tb_name"/>
+        SET total_views = total_views+1
+        WHERE id = #{id}
+    </update>
+
+    <!-- 增加回复量+1 -->
+    <update id="replied" parameterType="long">
+        UPDATE <include refid="tb_name"/>
+        SET total_replies = total_replies+1
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据id删除 -->
+    <delete id="delete" parameterType="long">
+        DELETE FROM <include refid="tb_name"/> WHERE id=#{id}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deletes" parameterType="list">
+        DELETE FROM
+        <include refid="tb_name"/>
+        WHERE id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 计数 -->
+    <select id="count" resultType="long" parameterType="map">
+        SELECT COUNT(1) FROM <include refid="tb_name"/>
+        WHERE 1=1
+        <if test="reqId!=null">
+            AND req_id = #{reqId}
+        </if>
+        <if test="reqStatus!=null">
+            AND req_status = #{reqStatus}
+        </if>
+        <if test="scope!=null">
+            AND scope = #{scope}
+        </if>
+        AND deleted=0
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="pagination" resultMap="topicMap" parameterType="map">
+        SELECT
+        <include refid="cols_for_list"/>
+        FROM <include refid="tb_name"/>
+        WHERE 1=1
+        <if test="reqId!=null">
+            AND req_id = #{reqId}
+        </if>
+        <if test="reqStatus!=null">
+            AND req_status = #{reqStatus}
+        </if>
+        <if test="scope!=null">
+            AND scope = #{scope}
+        </if>
+        AND deleted=0
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 计数某需求下话题数 -->
+    <select id="countOfReq" resultType="long" parameterType="map">
+        SELECT COUNT(1)
+        FROM snz_topics t LEFT JOIN snz_users_topics ut
+        ON t.id = ut.topic_id
+        WHERE req_id = #{reqId}
+        <if test="reqStatus != null">
+            AND t.req_status IN
+                <foreach collection="reqStatus" open="(" close=")" separator="," item="st">#{st}</foreach>
+        </if>
+        AND ((t.scope = 1) OR (t.scope != 1 and ut.user_id = #{userId}))
+    </select>
+
+    <!-- 获取某需求下话题列表 -->
+    <select id="paginationOfReq" resultMap="topicMap" parameterType="map">
+        SELECT t.*
+        FROM snz_topics t LEFT JOIN snz_users_topics ut
+        ON t.id = ut.topic_id
+        WHERE req_id = #{reqId}
+        <if test="reqStatus != null">
+            AND t.req_status IN
+            <foreach collection="reqStatus" open="(" close=")" separator="," item="st">#{st}</foreach>
+        </if>
+        AND ((t.scope = 1) OR (t.scope != 1 and ut.user_id = #{userId}))
+        ORDER BY t.id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 以参与者id, 查看其参与了多少个话题 -->
+    <select id="countByJoinerId" resultType="long" parameterType="map">
+        SELECT COUNT(1)
+        FROM snz_topics st, snz_users_topics sut
+        WHERE st.id = sut.topic_id
+        AND sut.user_id = #{userId}
+        AND st.deleted=0
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="paginationByJoinerId" resultMap="topicMap" parameterType="map">
+        SELECT
+        snz_topics.*
+        FROM snz_topics st, snz_users_topics sut
+        WHERE st.id = sut.topic_id
+        AND sut.user_id = #{userId}
+        AND st.deleted=0
+        ORDER BY id DESC
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 查询需求的话题数 -->
+    <select id="countRequirementTopics" parameterType="list" resultType="Long">
+        SELECT COUNT(1)
+        FROM <include refid="tb_name" />
+        WHERE req_id IN
+        <foreach collection="list" separator="," open="("
+                 close=")" item="id">
+            #{id}
+        </foreach>
+        GROUP BY req_id
+        ORDER BY req_id DESC
+    </select>
+
+</mapper>

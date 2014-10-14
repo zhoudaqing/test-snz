@@ -1,0 +1,38 @@
+{{#with content}}
+{{#each appliance}}
+  <tr>
+    {{#if @first}}<td rowspan="{{length ../../appliance}}">家电行业</td>{{/if}}
+    <td>{{remark}}</td>
+    <td>{{percentage}}</td>
+    <td>{{passivePercentage}}</td>
+    <td>
+      {{#if customerFile}}<a href="{{customerFile}}">附件</a>{{/if}}
+    </td>
+  </tr>
+{{/each}}
+
+{{#each car}}
+  <tr>
+    {{#if @first}}<td rowspan="{{length ../../car}}">汽车行业</td>{{/if}}
+    <td>{{remark}}</td>
+    <td>{{percentage}}</td>
+    <td>{{passivePercentage}}</td>
+    <td>
+      {{#if customerFile}}<a href="{{customerFile}}">附件</a>{{/if}}
+    </td>
+  </tr>
+{{/each}}
+
+{{#each other}}
+  <tr>
+    {{#if @first}}<td rowspan="{{length ../../other}}">其他行业</td>{{/if}}
+    <td>{{remark}}</td>
+    <td>{{percentage}}</td>
+    <td>{{passivePercentage}}</td>
+    <td>
+      {{#if customerFile}}<a href="{{customerFile}}">附件</a>{{/if}}
+    </td>
+  </tr>
+{{/each}}
+{{/with}}
+

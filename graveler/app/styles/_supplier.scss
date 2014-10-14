@@ -1,0 +1,103 @@
+@import "compass/css3/inline-block";
+@import "pokeball/variables";
+
+.supplier-profile {
+  .tab-name {
+    width: 100px;
+    @include inline-block(middle);
+  }
+  .line {
+    @include inline-block(middle);
+    border-bottom: 1px solid $default-border-color;
+    width: 960px;
+  }
+  label.inline-label {
+    width: 74px;
+    margin-right: 12px;
+  }
+  label.inline-label-small {
+    width: 50px !important;
+    text-align: left;
+    margin-right: 0;
+  }
+  .inline-input {
+    width: 84px !important;
+  }
+  .control-content {
+    @include inline-block(top);
+    .paperwork-image {
+      width: 100px;
+      height: 100px;
+      margin: 0 20px 10px 0
+    }
+    table {
+      td {
+        &.top-td {
+          vertical-align: top;
+        }
+      }
+      &.business-info-table, &.authenticate-material-table {
+        width: 720px;
+      }
+      .inner-span {
+        vertical-align: middle;
+        padding-left: 5px;
+      }
+      width: 460px;
+      .table-input {
+        width: 100%;
+      }
+      tr.last {
+        td {
+          padding: 0 10px;
+        }
+      }
+    }
+    .paperwork-info,.paperwork-valid {
+      @include inline-block(top);
+      p {
+        margin: 0 0 10px 0;
+      }
+    }
+  }
+  .hide {
+    display: none;
+  }
+  .file-name{
+    width: 120px;
+    @include inline-block(middle);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .company-button-group{
+    @include inline-block(bottom);
+  }
+
+  .div-medium{
+    display: inline-block;
+    width: 200px;
+    padding: 6px 5px;
+    line-height: 1.2em;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    -webkit-transition: 0.3s linear border;
+    -moz-transition: 0.3s linear border;
+    -o-transition: 0.3s linear border;
+    transition: 0.3s linear border;
+  }
+
+  .div-small{
+    display: inline-block;
+    width: 84px;
+    padding: 6px 5px;
+    line-height: 1.2em;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    -webkit-transition: 0.3s linear border;
+    -moz-transition: 0.3s linear border;
+    -o-transition: 0.3s linear border;
+    transition: 0.3s linear border;
+  }
+}
+

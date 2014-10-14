@@ -1,0 +1,26 @@
+<li class="spu-item-li" data-spu="{{pp this}}">
+  <span class="spu-id">{{id}}</span>
+  &nbsp;
+  <span class="spu-name" title="{{name}}">
+    {{name}}
+  </span>
+  <span class="operate on-hover">
+    <span style="margin-right:40px;">
+      <a href="javascript:void(0);" class="js-spu-attr-get" > 查看属性</a>
+    </span>
+    <button class="btn btn-small js-spu-update">编辑</button>
+    <div class="dropdown-group">
+      <div class="btn btn-small dropdown-title">
+        <div class="dropdown-btn">
+          更多操作
+          <span class="caret"></span>
+        </div>
+        <div class="dropdown-menu hide">
+          <div class="spu-operate-item"><a href="/operations/spu_detail?spuId={{id}}" target="_blank">编辑产品信息</a></div>
+          <div class="spu-operate-item"><a href="{{domain}}/design/item-templates/{{id}}" target="_blank">编辑产品详情</a></div>
+          <div class="spu-operate-item"><a id="{{id}}" href="javascript:void(0);" data-toggle="confirm" data-title="您确定删除吗?" data-content="删除之后若要恢复请重新添加" data-event="confirm:deleteSpu">删除</a></div>
+        </div>
+      </div>
+    </div>
+  </span>
+</li>

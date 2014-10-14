@@ -1,0 +1,40 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>问卷信息</h2>
+  </div>
+  <form class="form form-aligned questions-form" name="{{pp this}}">
+    <div class="modal-body">
+      <div class="control-group">
+        <label for="no-interface">1. 无模块接口/封包标准</label>&nbsp;
+        {{noInterfaceOrPackage}}
+      </div>
+      <div class="control-group">
+        <label for="no-clear">2. 接口/封包标准不清晰</label>&nbsp;
+        {{noClearInterfaceOrPackage}}
+      </div>
+      <div class="control-group">
+        <label for="no-standard" class="left-required"><span class="required">*</span>3. 接口/封包非行业标准</label>&nbsp;
+        {{noStandardInterfaceOrPackage}}
+      </div>
+      <div class="control-group">
+        <label for="less-order">4. 订单量较小</label>&nbsp;
+        {{lessOrderCount}}
+      </div>
+      <div class="control-group">
+        <label for="park-no-match">5. 园区无法配套</label>&nbsp;
+        {{parksNotMatch}}
+      </div>
+      <div class="control-group">
+        <label for="short-period">6. 项目周期太短</label>&nbsp;
+        {{shortPeriod}}
+      </div>
+      <div class="control-group">
+        <label for="other-reason" class="left-required"><span class="required">*</span>7. 其它原因</label>&nbsp;
+        {{otherReason}}
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-medium btn-primary close" type="button">确定</button>
+    </div>
+  </form>
+</div>

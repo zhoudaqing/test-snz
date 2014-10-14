@@ -1,0 +1,17 @@
+{{#component "js-comp admins-timeline"}}
+<div class="timeline clearfix" data-length="{{size _DATA_.data}}" data-total="{{_DATA_.total}}">
+  <div class="line"></div>
+  <div class="item blank"></div>
+  {{#each _DATA_.data}}
+  <div class="item">
+    <div class="time">{{formatDate createdAt}}</div>
+    <div class="content">
+      {{{description}}}
+    </div>
+  </div>
+  {{/each}}
+</div>
+<div class="more">
+  <a href="#" class="link-more">更多</a>
+</div>
+{{/component}}

@@ -1,0 +1,17 @@
+{{#component "admins-qualify-info"}}
+<p class="components-title"><strong>供应商资质交互详情</strong></p>
+{{inject "admins/qualify_state"}}
+{{#each _DATA_}}
+<div class="control-group style-quality-group block">
+  <label>{{add @index 1}}.{{subject.name}}</label>
+  <br/>
+  <br/>
+  <span class="style-qualify-span style-qualify-span2">意见:</span>
+  <span class="style-qualify-span style-qualify-span3">{{record.view}}</span>
+  <span class="style-qualify-span style-qualify-span4"><a href="{{record.attachUrl}}">附件</a></span>
+  <span class="style-qualify-span style-qualify-span5">
+    结论:{{#equals record.status 1}}同意{{else}}否决{{/equals}}
+  </span>
+</div>
+{{/each}}
+{{/component}}

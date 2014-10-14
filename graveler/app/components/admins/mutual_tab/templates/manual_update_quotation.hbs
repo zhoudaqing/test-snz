@@ -1,0 +1,46 @@
+<div class="modal">
+  <div class="modal-header">
+    <h2>修改供应商模块工厂配额</h2>
+  </div>
+  <form class="form form-aligned update-quota-form" data-id="{{module.id}}" data-req="{{module.requirementId}}">
+    <div class="modal-body">
+      <div class="control-group">
+        <label class="factory-label">模块名称:</label>{{module.moduleName}}
+      </div>
+      <div class="control-group">
+        <label class="factory-label">模块专用号:</label>{{module.moduleNum}}
+      </div>
+      <div class="control-group">
+        <label class="factory-label">工厂:</label>{{module.factoryNum}} {{module.factoryName}}
+      </div>
+      <table class="table table-striped" style="width: 800px;">
+        <thead>
+          <tr>
+            <th width="100">资源总量</th>
+            <th width="300">中选供应商名称</th>
+            <th width="100">原有配额比例</th>
+            <th width="100">原有配额数量</th>
+            <th width="100">修改配额比例</th>
+            <th width="100">修改配额数量</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each data}}
+          <tr class="quota-tr" data-id="{{id}}">
+            <td>{{multiple quantity 100 scale}}{{costUnit.cost.salesName}}</td>
+            <td>{{supplierName}}</td>
+            <td>{{scale}}%</td>
+            <td>{{quantity}}{{costUnit.cost.salesName}}</td>
+            <td><input type="text" pattern="^((?!0)\d{1,2}|100)$" name="scale" style="width:30px !important;" value="{{scale}}" data-original="{{scale}}" data-total="{{multiple quantity 100 scale}}" title="请输入1-100之间的正整数" required> %</td>
+            <td class="update-quotation-count"><span data-quantity={{quantity}}>{{quantity}}</span>{{costUnit.cost.salesName}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <input type="submit" class="btn btn-primary btn-medium" value="确定" />
+      <button class="btn btn-info btn-medium close">关闭</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,8 @@
+public/
+.sass-cache
+.DS_Store
+vendor/
+icons.scss
+Linnerfile
+.idea/
+app/files/assets/eevee/

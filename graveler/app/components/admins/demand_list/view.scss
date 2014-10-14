@@ -1,0 +1,64 @@
+@import "pokeball/variables";
+@import "compass/css3/inline-block";
+
+.demand-list {
+  .demand-code {
+    @include inline-block(middle);
+    width: 150px;
+  }
+  .demand-publish-time {
+    @include inline-block(middle);
+  }
+  .demand-creator {
+    @include inline-block(middle);
+    width: 180px;
+  }
+  .td-heading {
+    font-weight: normal !important;
+  }
+  .demand-pagination {
+    text-align: right;
+    &.inline-pagination {
+      @include inline-block(middle);
+      width: 860px;
+    }
+  }
+  .inline-left {
+    @include inline-block(middle);
+    width: 200px;
+  }
+  .table-striped {
+    margin-bottom: 0;
+    table-layout: auto;
+    .tr-small {
+    td {
+      height: 20px;
+    }
+    }
+  }
+  .ie {
+    text-align: center;
+    border: 1px solid #717171;
+    margin-top: 10px;
+  }
+  .tab-contents {
+    padding: 0;
+  }
+  .block {
+    margin-bottom: 0;
+    .span1 {
+      margin-left: 20px;
+      vertical-align: baseline;
+    }
+  }
+
+  .gray-td {
+    background-color: $default-background-color;
+  }
+  .tab {
+    margin-bottom: 30px;
+  }
+  .table-input {
+    width: 100%;
+  }
+}

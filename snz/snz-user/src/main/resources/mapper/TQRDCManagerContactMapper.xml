@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2014 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TQRDCManagerContact">
+
+	 <!--  行结果列映射到实例属性名称  -->
+    <resultMap id="tQRDCManagerContactResultMap" type="TQRDCManagerContact">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="template" column="template"/>
+        <result property="remark" column="remark"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+	 <!--  行结果列名  -->
+    <sql id="columns">
+    name,phone,template,remark,created_at,updated_at
+    </sql>
+
+	 <!--  新增 供应商绩效管理者联系方式  -->
+    <insert id="create" parameterType="TQRDCManagerContact" useGeneratedKeys="true" keyProperty="id">
+      INSERT INTO snz_tqrdc_manager_contacts ( <include refid="columns"/>)
+      VALUES(
+       #{name},#{phone},#{template},#{remark},now(),now()
+      )
+    </insert>
+
+
+    <update id="update" parameterType="TQRDCManagerContact">
+      UPDATE snz_tqrdc_manager_contacts
+      <set>
+          <if test="name!=null">name = #{name},</if>
+          <if test="phone!=null">phone = #{phone},</if>
+          <if test="template!=null">template = #{template},</if>
+          <if test="remark!=null">remark = #{remark},</if>
+        updated_at = now()
+      </set>
+      WHERE
+        id = #{id}
+    </update>
+
+
+    <delete id="deleteByIds" parameterType="list">
+      DELETE
+        FROM snz_tqrdc_manager_contacts
+      WHERE
+        id IN <foreach collection="list" open="(" separator="," close=")" item="id">
+          #{id}
+        </foreach>
+    </delete>
+
+    <select id="listAll" resultMap="tQRDCManagerContactResultMap">
+        SELECT * FROM snz_tqrdc_manager_contacts where phone is not null and remark is not null
+    </select>
+
+
+</mapper>

@@ -1,0 +1,90 @@
+@import "compass/css3/inline-block";
+@import "pokeball/variables";
+
+.sidebar{
+  float: left;
+  @include inline-block(middle);
+  overflow-x: visible;
+  width: 119px;
+  height: 100%;
+  margin-right: 20px;
+  background-color: $default-background-color;
+  border-right: 1px solid $default-border-color;
+  .sidebar-ul{
+    margin-top: 10px;
+    padding: 0px;
+    padding-bottom: 20px;
+    width: 119px;
+    height: 100%;
+  }
+  .sidebar-li{
+    padding: 0;
+    line-height: 30px;
+    &.last {
+      margin-bottom: 20px;
+    }
+    .sidebar-li-a{
+      margin-left: 15px;
+      color: #535353;
+      i{
+        @include inline-block(baseline);
+      }
+    }
+  }
+  .sidebar-inner-ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .inner-item{
+    line-height: 20px;
+    position: relative;
+
+    &.active{
+      background-color: $btn-primary-background-color;
+      .corner{
+        _overflow: hidden;
+        position: absolute;
+        right: -4px;
+        bottom: -3px;
+        width: 0;
+        height: 0;
+        border-width: 2px;
+        border-style: solid;
+        border-color: $btn-primary-background-color transparent transparent $btn-primary-background-color;
+        _border-bottom-color: $btn-primary-background-color;
+        _border-right-color: $btn-primary-background-color;
+        _filter: chroma(color=$btn-primary-background-color);
+        overflow: hidden;
+      }
+      .wide{
+        width: 100%;
+        background-color: $btn-primary-background-color;
+        background-color: #005fa7\9;
+        width: 4px;
+        height: 32px;
+        position: absolute;
+        left: 119px;
+        top: 1px;
+      }
+      .text-a{
+        border-top: 1px solid $default-border-color;
+        border-bottom: 1px solid $default-border-color;
+        a{
+          color: #fff;
+        }
+      }
+    }
+  }
+  .text-a{
+
+    .inner-item-a{
+      display: block;
+      //width: 100%;
+      height: 100%;
+      padding: .5em 0 .5em 2.5em;
+      text-decoration: none;
+      color: #535353;
+    }
+  }
+}

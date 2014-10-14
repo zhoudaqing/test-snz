@@ -1,0 +1,98 @@
+{{#component "js-comp supplier-appointed"}}
+    <p class="components-title"><strong>甲指供应商</strong></p>
+    <div class="block">
+        <form id="js-supplier-audit-form" class="form" novalidate="true">
+            <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+            <fieldset>
+                <span class="span3">
+                    <label for="status">状态:</label>
+                    <select name="status">
+                        <option value="">请选择</option>
+                        <option {{#equals status 1}}selected{{/equals}} value="1">待审核</option>
+                        <option {{#equals status 2}}selected{{/equals}} value="2">初审通过</option>
+                        <option {{#equals status 3}}selected{{/equals}} value="3">初审不通过</option>
+                        <option {{#equals status 4}}selected{{/equals}} value="4">终审通过</option>
+                        <option {{#equals status 5}}selected{{/equals}} value="5">终审不通过</option>
+                    </select>
+                </span>
+                <span class="span3">
+                    <label for="supplierName">供应商名称:</label>
+                    <input type="text" name="supplierName" value="{{supplierName}}">
+                </span>
+                <span class="span1">
+                    <label for="remember"></label>
+                    <button type="submit" class="btn btn-primary">筛选</button>
+                    &nbsp;
+                    <a href="javascript:void(0);" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a>
+                </span>
+            </fieldset>
+        </form>
+    </div>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <th width="130">需求名称</th>
+                <th width="170">供应商名称</th>
+                <th width="250">主营业务</th>
+                <th width="130">法人代表</th>
+                <th width="100">状态</th>
+                <th width="248">操作</th>
+            </thead>
+            <tbody>
+                {{#each _DATA_.data}}
+                    <tr>
+                        <td>{{supplierAppointed.requirementName}}</td>
+                        <td>{{supplierAppointed.corporation}}</td>
+                        <td>{{company.productLine}}</td>
+                        <td>{{company.initAgent}}</td>
+                        <td>{{#if supplierAppointed.status}}
+                                {{#equals supplierAppointed.status 1}}待审核{{/equals}}
+                                {{#equals supplierAppointed.status 2}}<a style="color: dodgerblue;">初审通过</a>{{/equals}}
+                                {{#equals supplierAppointed.status 3}}<a style="color: red;">初审退回</a>{{/equals}}
+                                {{#equals supplierAppointed.status 4}}<a style="color: blue;">终审通过</a>{{/equals}}
+                                {{#equals supplierAppointed.status 5}}<a style="color: red;">终审退回</a>{{/equals}}
+                            {{/if}}
+                        </td>
+                        <td>
+                            {{#if supplierAppointed.status}}
+                                {{#equals supplierAppointed.status 1}}
+                                    {{#contain _USER_.roles "resource"}}
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},1" data-toggle="confirm" data-title="您确定初审通过吗?" data-event="confirm:audit-supplier-apply-success-first" class="js-audit-success">初审通过</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}}" data-flag="0" class="js-audit-cancel-first">初审退回</a>&nbsp;&nbsp;
+                                    {{/contain}}
+                                    {{#contain _USER_.roles "micro_master"}}
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},1" data-toggle="confirm" data-title="您确定初审通过吗?" data-event="confirm:audit-supplier-apply-success-first" class="js-audit-success">初审通过</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}}" data-flag="0" class="js-audit-cancel-first">初审退回</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},{{#if supplierAppointed.companyId}}1{{else}}0{{/if}}" data-toggle="confirm" data-title="您确定终审通过吗?" data-event="confirm:audit-supplier-apply-success-last" class="js-audit-success">终审通过</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}}" data-flag="1" class="js-audit-cancel-last">终审退回</a>
+                                    {{/contain}}
+                                {{/equals}}
+                                {{#equals supplierAppointed.status 2}}
+                                    {{#contain _USER_.roles "micro_master"}}
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},{{#if supplierAppointed.companyId}}1{{else}}0{{/if}}" data-toggle="confirm" data-title="您确定终审通过吗?" data-event="confirm:audit-supplier-apply-success-last" class="js-audit-success">终审通过</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}}" data-flag="1" class="js-audit-cancel-last">终审退回</a>
+                                    {{/contain}}
+                                {{/equals}}
+                                {{#equals supplierAppointed.status 3}}
+                                    {{#contain _USER_.roles "resource"}}
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},1" data-toggle="confirm" data-title="您确定初审通过吗?" data-event="confirm:audit-supplier-apply-success-first" class="js-audit-success">初审通过</a>&nbsp;&nbsp;
+                                    {{/contain}}
+                                    {{#contain _USER_.roles "micro_master"}}
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},{{#if supplierAppointed.companyId}}1{{else}}0{{/if}}" data-toggle="confirm" data-title="您确定终审通过吗?" data-event="confirm:audit-supplier-apply-success-last" class="js-audit-success">终审通过</a>&nbsp;&nbsp;
+                                    {{/contain}}
+                                {{/equals}}
+                                {{#equals supplierAppointed.status 5}}
+                                    {{#contain _USER_.roles "micro_master"}}
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}},{{#if supplierAppointed.companyId}}1{{else}}0{{/if}}" data-toggle="confirm" data-title="您确定终审通过吗?" data-event="confirm:audit-supplier-apply-success-last" class="js-audit-success">终审通过</a>&nbsp;&nbsp;
+                                        <a href="javascript:void(0);" data-id="{{supplierAppointed.id}}" data-flag="1" class="js-audit-cancel-last">终审退回</a>
+                                    {{/contain}}
+                                {{/equals}}
+                            {{/if}}
+                        </td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="supplier-pagination" data-total="{{_DATA_.total}}" style="padding-bottom: 20px;text-align: center;"></div>
+{{/component}}

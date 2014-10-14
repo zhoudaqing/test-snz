@@ -1,0 +1,74 @@
+{{#component "js-comp supplier-audit operation-platform"}}
+<p class="components-title"><strong>供应商校验</strong></p>
+
+<div id="block" class="block">
+  <form id="js-supplier-audit-form" class="form" novalidate="true">
+    <input type="hidden" id="js-total" value="{{_DATA_.total}}">
+    <fieldset>
+      <span class="span3">
+        <label for="email">类型:</label>
+        <select name="type">
+          <option value="">请选择</option>
+          <option {{#equals type 1}}selected{{/equals}} value="1">入驻待公议</option>
+          <option {{#equals type 2}}selected{{/equals}} value="2">修改待公议</option>
+          {{#contain _USER_.roles "micro_master"}}
+            <option value="3" {{#equals type 3}}selected{{/equals}}>二级审核</option>
+          {{/contain}}
+        </select>
+      </span>
+      <span class="span3">
+        <label for="email">供应商名称:</label>
+        <input type="text" name="supplierName" value="{{supplierName}}">
+      </span>
+      <span class="span1">
+        <label for="remember"></label>
+        <button type="submit" class="btn btn-primary">筛选</button>
+        &nbsp;
+        <a href="javascript:void" onClick="document.getElementById('js-supplier-audit-form').reset()">取消</a>
+      </span>
+    </fieldset>
+  </form>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th width="170">供应商名称</th>
+      <th width="140">主营业务</th>
+      <th width="92">用户名</th>
+      <th width="180">法人代表</th>
+      <th width="120">手机号</th>
+      {{#equals _USER_.type 1}}<th width="180">资源小微</th>{{/equals}}
+      <th width="168">操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each _DATA_.data}}
+    <tr>
+      <td>{{#equals type 2}}<a href="/suppliers/resume-detail?userId={{userId}}">{{corporation}}</a>{{else}}{{corporation}}{{/equals}}</td>
+      <td>{{#each mainBusinessNames}}{{this}} {{/each}}</td>
+      <td>{{nick}}</td>
+      <td>{{initAgent}}</td>
+      <td>{{mobile}}</td>
+      {{#equals _USER_.type 1}}<td>{{#each approverNames}}{{this}} {{/each}}</td>{{/equals}}
+      <td>
+        {{!-- <a class="btn" href="/suppliers/detail?userId={{userId}}">查看详情</a>&nbsp;&nbsp;
+        <a href="javascript:void(0);" data-id="{{userId}}" data-toggle="confirm" data-title="您确定公议通过吗?" data-content="{{#if includeKeywords}}该供应商包含黑名单关键字{{includeKeywords}}，您确定公议通过吗？{{/if}}" data-event="confirm:audit-supplier-apply-success" class="js-audit-success">通过</a>&nbsp;&nbsp;
+        <a href="javascript:void(0);" data-id="{{userId}}" class="js-audit-cancel">退回</a>
+ --}}
+        {{#equals approvedType "1"}}入驻{{else}}修改{{/equals}}&nbsp;
+        {{#equals type "3"}}
+          <a class="btn" href="/suppliers/detail?userId={{userId}}">查看详情</a>&nbsp;&nbsp;
+          <a href="javascript:void(0);" data-id="{{userId}}" class="js-audit-cancel">驳回</a>
+        {{else}}
+          <a class="btn" href="/suppliers/detail?userId={{userId}}">查看详情</a>&nbsp;&nbsp;
+          <a href="javascript:void(0);" data-id="{{userId}}" data-toggle="confirm" data-title="您确定公议通过吗?" data-content="{{#if includeKeywords}}该供应商包含黑名单关键字 <{{includeKeywords}}> ，您确定公议通过吗？{{/if}}" data-event="{{#equals approvedType "1"}}confirm:audit-supplier-apply-success{{else}}confirm:audit-supplier-edit-success{{/equals}}" class="js-audit-success">通过</a>&nbsp;&nbsp;
+          <a href="javascript:void(0);" data-id="{{userId}}" class="js-audit-cancel">退回</a>
+        {{/equals}}
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div id="js-pagination" class="right-text"></div>
+{{/component}}

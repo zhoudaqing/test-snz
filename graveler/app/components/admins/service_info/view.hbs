@@ -1,0 +1,54 @@
+{{#component "js-comp supplier-resume-service-info"}}
+  <p class="components-title"><strong class="tab-name">公司行业排名</strong><span class="line"></span></p>
+  {{#with _DATA_}}
+  <div class="compare-tab" data-type="switchable">
+    <div class="compare-title">
+      <div class="compare-title-text">排名：</div>
+    </div>
+    <div class="compare-content">
+      <div data-role="content" class="new-value">
+        <table class="table table-striped business-info-table">
+          <thead>
+            <tr>
+              <th>范围</th>
+              <th>名次</th>
+              <th>排名机构</th>
+              <th>证明材料</th>
+              <th>备注</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>国内</td>
+              <td>{{#equals supplierInfo.inRank "0"}}{{else}}{{supplierInfo.inRank}}{{/equals}}
+              </td>
+              <td>{{supplierInfo.inRankOrg}}
+              </td>
+              <td>
+                <a href="{{supplierInfo.inRankFile}}">{{supplierInfo.inRankFileName}}</a>
+              </td>
+              <td>
+                {{supplierInfo.inRankRemark}}
+              </td>
+            </tr>
+             <tr>
+              <td>国际</td>
+              <td>
+                {{#equals supplierInfo.outRank "0"}}{{else}}{{supplierInfo.outRank}}{{/equals}}
+              </td>
+              <td>{{supplierInfo.outRankOrg}}
+              </td>
+              <td >
+                <a href="{{outRankFile}}">{{supplierInfo.outRankFileName}}</a>
+              </td>
+              <td>
+                {{supplierInfo.outRankRemark}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+{{/component}}

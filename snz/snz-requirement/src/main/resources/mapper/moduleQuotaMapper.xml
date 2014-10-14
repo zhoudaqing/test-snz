@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 具体到模块的配额分配情况 -->
+<mapper namespace="ModuleQuota">
+    <resultMap id="moduleQuotaMap" type="ModuleQuota">
+        <id property="id" column="id"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="solutionId" column="solution_id"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="moduleFactoryId" column="module_factoryId"/>
+        <result property="factoryNum" column="factory_num"/>
+        <result property="factoryName" column="factory_name"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="quantity" column="quantity"/>
+        <result property="scale" column="scale"/>
+        <result property="originalCost" column="original_cost"/>
+        <result property="actualCost" column="actual_cost"/>
+        <result property="costUnit" column="cost_unit"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        requirement_id, solution_id, module_id, module_num, module_name, module_factoryId, factory_num, factory_name, supplier_id, supplier_name, quantity, scale, original_cost, actual_cost, cost_unit, status, created_at, updated_at
+    </sql>
+
+    <insert id="create" parameterType="moduleQuota" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_module_quotas (<include refid="columns"/>) values (#{requirementId}, #{solutionId}, #{moduleId}, #{moduleNum}, #{moduleName}, #{moduleFactoryId}, #{factoryNum}, #{factoryName}, #{supplierId},
+        #{supplierName}, #{quantity}, #{scale}, #{originalCost}, #{actualCost}, #{costUnit}, #{status}, now(), now())
+    </insert>
+
+    <!-- 批量插入模块的配额信息 -->
+    <insert id="createBatch" parameterType="moduleQuota" useGeneratedKeys="true">
+        insert into snz_module_quotas (<include refid="columns"/>)
+        values
+        <foreach collection="list" item="quota" index="index" separator="," >
+            (#{quota.requirementId}, #{quota.solutionId}, #{quota.moduleId}, #{quota.moduleNum}, #{quota.moduleName}, #{quota.moduleFactoryId}, #{quota.factoryNum}, #{quota.factoryName}, #{quota.supplierId},
+            #{quota.supplierName}, #{quota.quantity}, #{quota.scale}, #{quota.originalCost}, #{quota.actualCost}, #{quota.costUnit}, #{quota.status}, now(), now())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="moduleQuota">
+        update snz_module_quotas
+        <set>
+            <if test="moduleId!=null">module_id=#{moduleId},</if>
+            <if test="moduleNum!=null">module_num=#{moduleNum},</if>
+            <if test="moduleName!=null">module_name=#{moduleName},</if>
+            <if test="moduleFactoryId!=null">module_factoryId=#{moduleFactoryId},</if>
+            <if test="factoryNum!=null">factory_num=#{factoryNum},</if>
+            <if test="factoryName!=null">factory_name=#{factoryName},</if>
+            <if test="supplierId!=null">supplier_id=#{supplierId},</if>
+            <if test="supplierName!=null">supplier_name=#{supplierName},</if>
+            <if test="quantity!=null">quantity=#{quantity},</if>
+            <if test="scale!=null">scale=#{scale},</if>
+            <if test="originalCost!=null">original_cost=#{originalCost},</if>
+            <if test="actualCost!=null">actual_cost=#{actualCost},</if>
+            <if test="costUnit!=null">cost_unit=#{costUnit},</if>
+            <if test="status!=null">status=#{status},</if>
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas where id=#{id}
+    </select>
+
+    <!-- 获取需求编号下所有的配额信息 -->
+    <select id="findByRequirementId" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas
+        <where>
+            requirement_id=#{requirementId}
+            <if test="status!=null"> and status=#{status}</if>
+            <if test="status==null"> and status is null</if>
+        </where>
+    </select>
+
+    <!-- 获取需求编号下所有的还未确认配额&已经确认配额的信息 -->
+    <select id="findAgreeQuotas" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas
+        <where>
+            requirement_id=#{requirementId} and (status = 1 or status is null)
+        </where>
+    </select>
+
+    <!-- 获取同一个模块编号的全部配额情况(并且) -->
+    <select id="findOtherQuota" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas
+        where requirement_id=#{requirementId} and module_id=#{moduleId} and id!=#{quotaId} and status!=0 order by scale desc
+    </select>
+
+    <!-- 获取同一个模块编号的工厂的全部配额情况 -->
+    <select id="findQuotaByFactoryId" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas
+        where module_id=#{moduleId} and module_factoryId=#{moduleFactoryId} order by scale desc
+    </select>
+
+    <!-- 获取同一个模块编号&方案编号下的不同的工厂的配额数据 -->
+    <select id="findQuotaBySolutionId" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas
+        where module_id=#{moduleId} and supplier_id=#{supplierId} order by scale desc
+    </select>
+
+    <!-- 分页显示模块的配额信息 -->
+    <select id="findQuotaCount" parameterType="map" resultType="long">
+        select count(id)
+        from snz_module_quotas
+        <where>
+            requirement_id=#{requirementId}
+            <if test="supplierId!=null"> and supplier_id=#{supplierId}</if>
+            <if test="min_num!=null"> and <![CDATA[ quantity >= #{min_num} ]]></if>
+            <if test="max_num!=null"> and <![CDATA[ quantity <= #{max_num} ]]></if>
+        </where>
+    </select>
+
+    <select id="findByParams" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas
+        <where>
+            requirement_id=#{requirementId}
+            <if test="supplierId!=null"> and supplier_id=#{supplierId}</if>
+            <if test="status!=null"> and status=#{status}</if>
+            <if test="min_num!=null"> and <![CDATA[ quantity >= #{min_num} ]]></if>
+            <if test="max_num!=null"> and <![CDATA[ quantity <= #{max_num} ]]></if>
+        </where>
+        limit #{offset}, #{limit};
+    </select>
+
+    <select id="findByIds" parameterType="map" resultMap="moduleQuotaMap">
+        select id, <include refid="columns"/>
+        from snz_module_quotas where <include refid="bindQuotaIds"/>
+    </select>
+
+    <sql id="bindQuotaIds">
+        id in
+        <foreach collection="quotaIds" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+
+    </sql>
+</mapper>

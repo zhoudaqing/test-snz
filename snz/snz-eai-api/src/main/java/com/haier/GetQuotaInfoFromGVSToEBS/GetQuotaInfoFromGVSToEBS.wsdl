@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WL5G3N0:definitions xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.example.org/GetQuotaInfoFromGVSToJHPT/" xmlns:WL5G3N2="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://www.example.org/GetQuotaInfoFromGVSToJHPT/" name="GetQuotaInfoFromGVSToJHPT">
+    <WL5G3N0:types>
+        <xsd:schema targetNamespace="http://www.example.org/GetQuotaInfoFromGVSToJHPT/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.example.org/GetQuotaInfoFromGVSToJHPT/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="GetQuotaInfoFromGVSToJHPT_OP">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="Inputs" type="tns:InputsType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="GetQuotaInfoFromGVSToJHPT_OPResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ZSTR_QUO_INFO" type="tns:ZSTR_QUO_INFOType"/>
+                        <xsd:element maxOccurs="unbounded" minOccurs="0" name="ZSTR_PRICE_INFO" type="tns:ZSTR_PRICE_INFOType"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="InputsType">
+                <xsd:sequence>
+                    <xsd:element name="WERKS" type="xsd:string"/>
+                    <xsd:element name="MATNR" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ZSTR_QUO_INFOType">
+                <xsd:sequence>
+                    <xsd:element name="MATNR" type="xsd:string"/>
+                    <xsd:element name="MAKTX" type="xsd:string"/>
+                    <xsd:element name="MATKL" type="xsd:string"/>
+                    <xsd:element name="WERKS" type="xsd:string"/>
+                    <xsd:element name="LIFNR" type="xsd:string"/>
+                    <xsd:element name="NAME1" type="xsd:string"/>
+                    <xsd:element name="QUOTE" type="xsd:decimal"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="ZSTR_PRICE_INFOType">
+                <xsd:sequence>
+                    <xsd:element name="MATNR" type="xsd:string"/>
+                    <xsd:element name="MAKTX" type="xsd:string"/>
+                    <xsd:element name="MATKL" type="xsd:string"/>
+                    <xsd:element name="LIFNR" type="xsd:string"/>
+                    <xsd:element name="NAME1" type="xsd:string"/>
+                    <xsd:element name="EKORG" type="xsd:string"/>
+                    <xsd:element name="ESOKZ" type="xsd:string"/>
+                    <xsd:element name="KBETR" type="xsd:decimal"/>
+                    <xsd:element name="KPEIN" type="xsd:decimal"/>
+                    <xsd:element name="KMEIN" type="xsd:string"/>
+                    <xsd:element name="KONWA" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </WL5G3N0:types>
+    <WL5G3N0:message name="GetQuotaInfoFromGVSToJHPT_OPRequest">
+        <WL5G3N0:part name="parameters" element="WL5G3N1:GetQuotaInfoFromGVSToJHPT_OP"/>
+    </WL5G3N0:message>
+    <WL5G3N0:message name="GetQuotaInfoFromGVSToJHPT_OPResponse">
+        <WL5G3N0:part name="parameters" element="WL5G3N1:GetQuotaInfoFromGVSToJHPT_OPResponse"/>
+    </WL5G3N0:message>
+    <WL5G3N0:portType name="GetQuotaInfoFromGVSToJHPT">
+        <WL5G3N0:operation name="GetQuotaInfoFromGVSToJHPT_OP">
+            <WL5G3N0:input message="WL5G3N1:GetQuotaInfoFromGVSToJHPT_OPRequest"/>
+            <WL5G3N0:output message="WL5G3N1:GetQuotaInfoFromGVSToJHPT_OPResponse"/>
+        </WL5G3N0:operation>
+    </WL5G3N0:portType>
+    <WL5G3N0:binding name="GetQuotaInfoFromGVSToJHPTSOAP" type="WL5G3N1:GetQuotaInfoFromGVSToJHPT">
+        <WL5G3N2:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <WL5G3N0:operation name="GetQuotaInfoFromGVSToJHPT_OP">
+            <WL5G3N2:operation soapAction="http://www.example.org/GetQuotaInfoFromGVSToJHPT/GetQuotaInfoFromGVSToJHPT_OP"/>
+            <WL5G3N0:input>
+                <WL5G3N2:body use="literal"/>
+            </WL5G3N0:input>
+            <WL5G3N0:output>
+                <WL5G3N2:body use="literal"/>
+            </WL5G3N0:output>
+        </WL5G3N0:operation>
+    </WL5G3N0:binding>
+    <WL5G3N0:service name="GetQuotaInfoFromGVSToJHPT">
+        <WL5G3N0:port name="GetQuotaInfoFromGVSToJHPTSOAP" binding="WL5G3N1:GetQuotaInfoFromGVSToJHPTSOAP">
+            <WL5G3N2:address location="http://10.135.1.110:7001/EAI/RoutingProxyService/EAI_SOAP_ServiceRoot?INT_CODE=EAI_INT_1815"/>
+        </WL5G3N0:port>
+    </WL5G3N0:service>
+</WL5G3N0:definitions>

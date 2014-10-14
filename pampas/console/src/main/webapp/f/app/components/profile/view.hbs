@@ -1,0 +1,98 @@
+{{! Copyright (c) 2014 杭州端点网络科技有限公司 }}
+{{#component "profile"}}
+<h2 class="ui header">
+  <i class="user icon"></i>
+  Profile settings
+</h2>
+<div class="ui two column relaxed divided grid basic segment">
+  <div class="column">
+    {{#with _USER_}}
+    <form class="ui form js-form-profile">
+      <div class="field">
+        <label>Username</label>
+        <div class="ui left icon input">
+          <input type="text" name="name" readonly disabled value="{{name}}">
+          <i class="user icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <label>Real name</label>
+        <div class="ui left icon input">
+          <input type="text" name="realName" value="{{realName}}">
+          <i class="male icon"></i>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <div class="ui left icon input">
+          <input type="text" name="email" value="{{email}}">
+          <i class="mail icon"></i>
+        </div>
+      </div>
+      <input type="submit" value="Save" class="ui blue submit button">
+    </form>
+    {{/with}}
+    <div class="ui divider"></div>
+    <h4 class="ui header">
+      <i class="key icon"></i>
+      Change password
+    </h4>
+    <form class="ui form js-form-password">
+      <div class="field">
+        <label>Origin password</label>
+        <input type="password" name="originPassword">
+      </div>
+      <div class="field">
+        <label>New password</label>
+        <input type="password" name="newPassword">
+      </div>
+      <div class="field">
+        <label>Repeat new password</label>
+        <input type="password" name="newPasswordRepeat">
+      </div>
+      <input class="ui blue submit button" type="submit" value="Change"/>
+    </form>
+  </div>
+  <div class="ui column">
+    {{#if _DATA_.isAdmin}}
+    <i class="checked checkbox icon"></i> Admin
+    {{else}}
+    <i class="empty checkbox icon"></i> Not Admin
+    {{/if}}
+    <h4 class="ui header">Permission</h4>
+    <div class="ui selection divided list">
+      {{#each _DATA_.permissions}}
+      <div class="item">
+        {{this}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+<div class="ui small modal settings-users-user-permission-modal new-permission">
+  <i class="close icon"></i>
+  <div class="header">
+    New Permission
+  </div>
+  <div class="content">
+    <div class="ui info message">
+      <div class="header">Permission Rule</div>
+      <ul class="list">
+        <li>权限结构为 group:{group name}:app:{app name}:site:{site name} ，例如 group:showcase:app:showcase1:site:main</li>
+        <li>app name 和 site name 这两级是可选的，也就是可以如下这么写：group:showcase 或者 group:showcase:app:showcase1 ，在省略下一级的时候则意味这拥有所有上一级所属下级的权限</li>
+        <li>＊ 代表 all ，即匹配这一级的所有实例，例如 group:* 或者 group:showcase:app:*</li>
+      </ul>
+    </div>
+    <form class="content ui form">
+      <div class="field">
+        <label>Permission</label>
+        <input name="permission" type="text" placeholder="group:{group name}:app:{app name}:site:{site name}">
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui positive right labeled icon button">Submit<i class="checkmark icon"></i></div>
+  </div>
+</div>
+{{/component}}

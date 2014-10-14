@@ -1,0 +1,26 @@
+{{#partial "realTitle"}}前台类目{{/partial}}
+{{#partial "realBody"}}
+<div class="category-title">
+  <p class="component-title">
+    <strong>前台类目管理</strong>
+    &nbsp;&nbsp;&nbsp;
+    <span class="category-id-desc">当前类目id：&nbsp;<span class="category-id-show"></span></span>
+    <a class="category-sync js-sync-front" href="javascript:void(0);">
+      <i class="icon-tongbu"></i>
+      同步前台类目
+    </a>
+  </p>
+</div>
+<div class="category-list">
+  {{#inject "admins/front_category"}}
+  {
+    "type": 1,
+    "id": 0
+  }
+  {{/inject}}
+</div>
+<div class="edit-area">
+  <div class="front-area" style="margin-left:699px;"></div>
+</div>
+{{/partial}}
+{{> categories/layout}}

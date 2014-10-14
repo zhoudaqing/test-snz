@@ -1,0 +1,42 @@
+<table id="range-supplier-table" class="table table-striped" style="width: 1200px;">
+  <thead>
+    <tr>
+      <th width="80">选定供应商</th>
+      <th width="200">供应商</th>
+      <th width="50">排名</th>
+      <th width="180">方案选定理由</th>
+      <th width="100">质量</th>
+      <th width="95">高峰月产能</th>
+      <th width="85">供货时间</th>
+      <th width="110"><a href="javascript:void(0);" class="js-range-supplier range-supplier">成本&nbsp;&nbsp;&nbsp;<i data-sort-type="5" class="icon-arrowdown-current"></i></a></th>
+      <th width="200">操作</th>
+    </tr>
+  </thead>
+  <tbody data-id="{{requirementId}}">
+    {{#each data}}
+      <tr class="select-supplier-tr" data-supplier-id="{{requirementSolution.supplierId}}" data-supplier-name="{{requirementSolution.supplierName}}">
+        <td><label class="select-label"><input type="checkbox" class="check-supplier" {{#if requirementRank.id}}checked disabled{{/if}}>&nbsp;选择</label></td>
+        <td>{{requirementSolution.supplierName}}</td>
+        <td><input type="text" name="rank" class="table-input" min="1" pattern="^\d*$" value="{{requirementRank.rank}}" {{#if requirementRank.id}}readOnly{{/if}}></td>
+        <td>
+          <input type="text" name="selectReason" class="input-small" style="width: 100px !important" max-length="30" value="{{requirementRank.selectReason}}" {{#if requirementRank.id}}readOnly{{/if}}>
+          <div class="attachment-file-group">
+            <input type="hidden" class="file-input" data-file="{{requirementRank.selectFile}}" name="selectFile">
+            <div class="btn btn-upload">
+              <span>上传附件</span>
+              <input type="file" name="file">
+            </div>
+          </div><br>
+          <span class="file-name" name="{{pp this}}">{{requirementRank.selectFile.name}}</span>
+        </td>
+        <td>{{requirementSolution.quality}}</td>
+        <td>达到产能要求</td>
+        <td>{{formatDate requirementSolution.reaction "day"}}</td>
+        <td>{{formatPrice requirementSolution.cost}} 元</td>
+        <td class="solution-download-td" data-file="{{requirementSolution.solutionFile}}">&nbsp;
+          <a href="/purchaser/check-quotation?solutionId={{requirementSolution.id}}" target="_blank">查看报价</a>&nbsp;
+          <a href="/purchaser/module-solution?solutionId={{requirementSolution.id}}" target="_blank">查看模块目标</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

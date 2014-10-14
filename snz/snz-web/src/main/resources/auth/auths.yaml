@@ -1,0 +1,19 @@
+# waiting to complete
+auths:
+  - url : /purchaser.*
+    types:
+      - ADMIN
+      - PURCHASER
+  - url: /demand.*
+    types:
+      - ADMIN
+      - SUPPLIER
+      - PURCHASER
+  - url: /supplier/supplier-detail
+    types:
+      - ADMIN
+      - PURCHASER
+  - url: /supplier_list
+    types:
+      - ADMIN
+      - PURCHASER

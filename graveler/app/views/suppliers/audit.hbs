@@ -1,0 +1,9 @@
+{{#partial "realTitle"}}供应商公议{{/partial}}
+{{#partial "realBody"}}
+  {{#inject "admins/supplier_audit"}}
+  {
+    "criteria": 1
+  }
+  {{/inject}}
+{{/partial}}
+{{> suppliers/layout}}

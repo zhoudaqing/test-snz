@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 采购商的需求信息 -->
+<mapper namespace="OldModule">
+    <resultMap id="oldModuleMap" type="OldModule">
+        <id property="id" column="id"/>
+        <result property="purchaserId" column="purchaser_id"/>
+        <result property="purchaserName" column="purchaser_name"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="requirementName" column="requirement_name"/>
+
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="total" column="total"/>
+        <result property="seriesId" column="series_id"/>
+        <result property="seriesName" column="series_name"/>
+        <result property="quotaIds" column="quota_ids"/>
+
+        <result property="overTime" column="over_time"/>
+        <result property="tacticsId" column="tactics_id"/>
+        <result property="headDrop" column="head_drop"/>
+        <result property="resourceNum" column="resource_num"/>
+
+        <result property="quality" column="quality"/>
+        <result property="cost" column="cost"/>
+        <result property="delivery" column="delivery"/>
+        <result property="attestation" column="attestation"/>
+        <result property="supplyAt" column="supply_at"/>
+        <result property="resourceCount" column="resource_count"/>
+
+        <result property="timeTotal" column="time_total"/>
+        <result property="interactionStarts" column="interaction_starts"/>
+        <result property="npiStatus" column="npi_status"/>
+        <result property="prioritySelect" column="priority_select"/>
+
+
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        purchaser_id,requirement_id,requirement_name,purchaser_name,module_id,module_name,module_num,
+        total,series_id,series_name,quota_ids,over_time,tactics_id,
+        head_drop,resource_num,quality,cost,delivery,attestation,supply_at,resource_count,
+        time_total,interaction_starts,npi_status,priority_select,created_at,updated_at
+    </sql>
+
+
+
+    <insert id="create" parameterType="oldModule" useGeneratedKeys="true" keyProperty="id">
+        insert into snz_old_modules (<include refid="columns"/>) values (#{purchaserId},#{requirementId},#{requirementName},
+        #{purchaserName},#{moduleId},#{moduleName},#{moduleNum},
+        #{total},#{seriesId},#{seriesName},#{quotaIds},#{overTime},#{tacticsId},
+        #{headDrop},#{resourceNum},#{quality},#{cost},#{delivery},#{attestation},#{supplyAt},#{resourceCount},
+        #{timeTotal},#{interactionStarts},#{npiStatus},#{prioritySelect},now(),now())
+    </insert>
+
+    <update id="update" parameterType="oldModule">
+        update snz_old_modules
+        <set>
+            <if test="moduleNum!=null">module_num=#{moduleNum},</if>
+            <if test="total!=null">total=#{total},</if>
+            <if test="quotaIds!=null">quota_ids=#{quotaIds},</if>
+            <if test="overTime!=null">over_time=#{overTime},</if>
+            <if test="tacticsId!=null">tactics_id=#{tacticsId},</if>
+            <if test="headDrop!=null">head_drop=#{headDrop},</if>
+            <if test="resourceNum!=null">resource_num=#{resourceNum},</if>
+            <if test="quality!=null">quality=#{quality},</if>
+            <if test="cost!=null">cost=#{cost},</if>
+            <if test="delivery!=null">delivery=#{delivery},</if>
+            <if test="attestation!=null">attestation=#{attestation},</if>
+            <if test="supplyAt!=null">supply_at=#{supplyAt},</if>
+
+            <if test="resourceCount!=null">resource_count=#{resourceCount},</if>
+            <if test="timeTotal!=null">time_total=#{timeTotal},</if>
+            <if test="npiStatus!=null">npi_status=#{npiStatus},</if>
+            <if test="prioritySelect!=null">priority_select=#{prioritySelect},</if>
+
+            updated_at = now()
+        </set>
+        where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="long" resultMap="oldModuleMap">
+        select id, <include refid="columns"/>
+        from snz_old_modules where requirement_id=#{requirementId}
+    </select>
+
+    <delete id="delete" parameterType="long">
+        delete from snz_old_modules where id=#{id}
+    </delete>
+
+    <select id="findByIds" parameterType="list" resultMap="oldModuleMap">
+        select id, <include refid="columns"/>
+        from snz_old_modules where <include refid="bindModuleIds"/>
+    </select>
+    <select id="findByModuleNum" parameterType="long" resultMap="oldModuleMap" >
+        select id,<include refid="columns"/> from snz_old_modules where
+        module_num=#{moduleNum}
+    </select>
+   <!-- <sql id="bindModuleIds">
+        id in
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </sql>-->
+    <sql id="bindModuleIds">
+        id in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </sql>
+
+    <select id="findCountByFilters" parameterType="map" resultType="long" >
+        select count(id) from snz_old_modules
+        where 1=1  <if test="moduleNum!=null">and module_num=#{moduleNum}</if>
+        <if test="timeTotalStart!=null">and <![CDATA[ time_total >= #{timeTotalStart} ]]></if>
+        <if test="timeTotalEnd!=null">and <![CDATA[ time_total <= #{timeTotalEnd} ]]></if>
+        <if test="seriesName!=null">and series_name=#{seriesName}</if>
+    </select>
+    <select id="findByFilters" parameterType="map" resultMap="oldModuleMap">
+        select id,<include refid="columns"/> from snz_old_modules
+        <where> 1=1
+            <if test="moduleNum!=null">and module_num=#{moduleNum}</if>
+            <if test="timeTotalStart!=null">and <![CDATA[ time_total >= #{timeTotalStart} ]]></if>
+            <if test="timeTotalEnd!=null">and <![CDATA[ time_total <= #{timeTotalEnd} ]]></if>
+            <if test="seriesName!=null">and series_name=#{seriesName}</if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+    <select id="findByRequirementId" parameterType="map" resultMap="oldModuleMap">
+        select id,<include refid="columns"/> from snz_old_modules
+        <where>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId} </if>
+            <if test="moduleIdNotNull!=null"> and module_id is not null </if>
+        </where>
+        limit #{offset}, #{limit}
+    </select>
+    <select id="findCountByRequirementId" parameterType="map" resultType="long" >
+        select count(id) from snz_old_modules
+        <where>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId} </if>
+            <if test="moduleIdNotNull!=null"> and module_id is not null </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  ~ Copyright (c) 2012 杭州端点网络科技有限公司
+  -->
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <!-- related entity-->
+        <typeAlias alias="Compensation" type="io.terminus.snz.related.models.Compensation"/>
+        <typeAlias alias="FactoryOrgan" type="io.terminus.snz.related.models.FactoryOrgan"/>
+        <typeAlias alias="AddressPark" type="io.terminus.snz.related.models.AddressPark"/>
+        <typeAlias alias="AddressFactory" type="io.terminus.snz.related.models.AddressFactory"/>
+        <typeAlias alias="CategoryFactory" type="io.terminus.snz.related.models.CategoryFactory"/>
+        <typeAlias alias="CompensationDetail" type="io.terminus.snz.related.models.CompensationDetail"/>
+        <typeAlias alias="CompensationReply" type="io.terminus.snz.related.models.CompensationReply"/>
+        <typeAlias alias="FactoryProductionDirector" type="io.terminus.snz.related.models.FactoryProductionDirector"/>
+    </typeAliases>
+</configuration>

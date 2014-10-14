@@ -1,0 +1,254 @@
+#!/bin/bash
+# this is snz's dubbo servie execute script
+
+BASEDIR=$(cd `dirname $0`; pwd)
+PROJECT=snz
+SERVICES_START=("message" "category" "user" "eai" "related" "statistic" "requirement" "sns")
+SERVICES_STOP=("sns" "requirement" "statistic" "related" "eai" "user" "category" "message")
+
+# FTP DEFAULT
+FTP_HOST=10.135.16.79
+FTP_USER=690
+FTP_PASS=690
+FTP_SERVICES=/690services
+
+start()
+{
+    local services=($@)
+    local s
+    for s in ${services[@]}
+    do
+        service="$s-service"
+        script_path=$BASEDIR/$service/bin/$service
+        log_path=$BASEDIR/$service/wrapper.log
+        if [ -f $script_path ]
+        then
+            $script_path start
+            if [ "$?" != "0" ]
+            then
+                echo "Start $service failed:"
+                echo `cat $log_path`
+                exit 1
+            else
+                sleep 10
+                echo "Start $service successfully."
+            fi
+        else
+            echo "$script_path doesn't exist, please check."
+            exit 1
+        fi
+    done
+}
+
+stop()
+{
+    local services=($@)
+    local s
+    for s in ${services[@]}
+    do
+        service="$s-service"
+        script_path=$BASEDIR/$service/bin/$service
+        if [ -f $script_path ]
+        then
+            $script_path stop
+        else
+            echo "$script_path doesn't exist, please check."
+            exit 1
+        fi
+    done
+}
+
+restart()
+{
+    local services=($@)
+    local s
+    for s in ${services[@]}
+    do
+        service="$s-service"
+        script_path=$BASEDIR/$service/bin/$service
+        if [ -f $script_path ]
+        then
+            $script_path restart
+        else
+            echo "$script_path doesn't exist, please check."
+            exit 1
+        fi
+    done
+}
+
+list()
+{
+    echo "started services:"
+    local s
+    local pidfile
+    for s in ${SERVICES_START[@]}
+    do
+        pidfile="$BASEDIR/$s-service/logs/$s-service.pid"
+        if [ -f $pidfile ]
+        then
+            echo "$s : `cat $pidfile`"
+        fi
+    done
+}
+
+pull()
+{
+    local h=$FTP_HOST
+    local u=$FTP_USER
+    local p=$FTP_PASS
+    local s=$BASEDIR
+    local d=$FTP_SERVICES
+
+ftp -n << !
+open $h
+user $u $p
+binary
+cd $d
+lcd $s
+prompt
+mget *
+close
+bye
+!
+
+}
+
+watch()
+{
+    local service="$1-service"
+    local log_path=$BASEDIR/$service/wrapper.log
+    if [ -f $log_path ]
+    then
+        tail -f -n 2000 $log_path
+    else
+        echo "$log_path doesn't exist, please check."
+        exit 1
+    fi
+}
+
+help()
+{
+    case "$1" in
+        'start')
+            echo "
+                start # start all services
+                start message # start message-service
+                start message category # start message-service and category-service
+                NOTE: in order: ${SERVICES_START[@]}"
+            ;;
+        'stop')
+            echo "
+                stop # stop all services
+                stop sns # stop sns-service
+                stop sns requirement # stop sns-service and requirement-service
+                NOTE: in order: ${SERVICES_STOP[@]}"
+            ;;
+        'restart')
+            echo "
+                restart # restart all services
+                restart sns # restart sns-service
+                restart sns requirement # restart sns-service and requirement-service
+                NOTE: in order: ${SERVICES_STOP[@]}"
+            ;;
+        'list')
+            echo "list all started services"
+            ;;
+        'watch')
+            echo "watch sns # watch sns-service log"
+            ;;
+        'pull')
+            echo "pull ${PROJECT}-services from ftp"
+            ;;
+        *)
+            echo "
+                start:
+                    start # start all services
+                    start message # start message-service
+                    start message category # start message-service and category-service
+                    NOTE: in order: ${SERVICES_START[@]}
+                stop:
+                    stop # stop all services
+                    stop sns # stop sns-service
+                    stop sns requirement # stop sns-service and requirement-service
+                    NOTE: in order: ${SERVICES_STOP[@]}
+                restart:
+                    restart # restart all services
+                    restart sns # restart sns-service
+                    restart sns requirement # restart sns-service and requirement-service
+                    \e[0;31mNOTE: in order: ${SERVICES_STOP[@]}
+                list:
+                    list all started services
+                pull:
+                    pull files from ftp/690services to current dir:
+                    pull a.txt b.txt
+                push:
+                    pull current dir's files to ftp/690services
+                watch:
+                    watch sns # see sns-service log"
+            ;;
+    esac
+}
+
+
+args=($@)
+
+case "$1" in
+
+    'start')
+        if [ "$2" == "" ]
+        then
+            ss=${SERVICES_START[@]}
+        else
+            ss=${args[@]:1:100}
+        fi
+        start ${ss[@]}
+        ;;
+
+    'stop')
+        if [ "$2" == "" ]
+        then
+            ss=${SERVICES_STOP[@]}
+        else
+            ss=${args[@]:1:100}
+        fi
+        stop ${ss[@]}
+        ;;
+
+    'restart')
+        if [ "$2" == "" ]
+        then
+            ss=${SERVICES_STOP[@]}
+        else
+            ss=${args[@]:1:100}
+        fi
+        restart ${ss[@]}
+        ;;
+
+    'watch')
+        if [ "$2" == "" ]
+        then
+            echo "service name can't be empty, for help: services help"
+            exit 1
+        else
+            watch $2
+        fi
+        ;;
+
+    'list')
+        list $*
+        ;;
+
+    'pull')
+        pull $*
+        ;;
+
+    'help')
+        help $2
+        ;;
+    *)
+        echo "Usage: $0 { start | stop | restart | list | watch | pull | help }"
+        exit 1
+        ;;
+esac
+
+exit 0

@@ -1,0 +1,54 @@
+{{#component "js-comp supplier-platform-performance operation-platform"}}
+<p class="components-title"><strong>平台绩效</strong></p>
+{{#with _DATA_ }}
+<div class="overall-plots">
+  <div class="overall-performance">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th colspan="2">{{lastMonth}}月供应商整体绩效</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>红区: <span id="compositeScore" class="currency">{{get locations 0}}</span>家</td>
+            <!--<td>趋势: <span class="currency">向好</span></td>-->
+            <td></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="plot" data-points="{{locations}}"></div>
+            </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <div class="month-track">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th colspan="2">{{lastMonth}}月供应商绩效到月跟踪</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--<tr>-->
+            <!--<td>环比: <span id="compositeScore" class="currency">向好</span></td>-->
+            <!--<td>同比: <span class="currency">恶化</span></td>-->
+        <!--</tr>-->
+        <tr>
+            <td colspan="2">
+                <div class="plot" data-points="{{yearLocations}}"></div>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+  </div>
+
+</div>
+
+<br>
+{{/with}}
+{{/component}}

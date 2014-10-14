@@ -1,0 +1,258 @@
+{{#component "js-comp supplier-detail"}}
+<h3>供应商详情（{{#equals _DATA_.approvedType "1"}}入驻{{else}}修改{{/equals}}）</h3>
+
+{{#with _DATA_}}
+<form class="form form-aligned" id="supplier-settle-form" name="{{json _DATA_}}">
+  <div class="section">
+    <h4 class="icon-line1">用户基础信息</h4>
+    <br>
+    <div class="control-group">
+      <label><span class="required">*</span>用户类型:</label>
+      {{#equals user.accountType 1}}制造商{{/equals}}
+      {{#equals user.accountType 2}}渠道商{{/equals}}
+      {{#equals user.accountType 3}}代理商{{/equals}}
+      {{#equals user.accountType 4}}代理的原厂{{/equals}}
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>昵称:</label>
+      {{user.nick}}
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>手机:</label>
+      {{user.mobile}}
+    </div>
+    <div class="control-group">
+      <label>固定电话:</label>
+      {{#if user.phone}}{{user.phone}}{{else}}无{{/if}}
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>电子邮箱:</label>
+      {{user.email}}
+    </div>
+  </div>
+
+  <div class="section">
+    <h4 class="icon-line1">企业基础信息</h4>
+    <br>
+    <div class="control-group">
+      <label><span class="required">*</span>法人公司名称:</label>
+      {{company.corporation}}
+    </div>
+    <div class="control-group ">
+      <label><span class="required">*</span>法人代表:</label>
+      {{company.initAgent}}
+    </div>
+
+    <div class="control-group">
+      <label><span class="required">*</span>公司注册国家:</label>
+      {{#equals company.regCountry "1"}}中国{{/equals}}
+      {{#equals company.regCountry "2"}}美国{{/equals}}
+      {{#equals company.regCountry "3"}}英国{{/equals}}
+      {{#equals company.regCountry "4"}}法国{{/equals}}
+      {{#equals company.regCountry "5"}}加拿大{{/equals}}
+      {{#equals company.regCountry "6"}}日本{{/equals}}
+      {{#equals company.regCountry "7"}}韩国{{/equals}}
+      {{#equals company.regCountry "8"}}澳大利亚{{/equals}}
+      {{#equals company.regCountry "9"}}俄罗斯{{/equals}}
+      {{#equals company.regCountry "10"}}意大利{{/equals}}
+      {{#equals company.regCountry "11"}}新西兰{{/equals}}
+      {{#equals company.regCountry "12"}}泰国{{/equals}}
+      {{#equals company.regCountry "13"}}越南{{/equals}}
+      {{#equals company.regCountry "14"}}印尼{{/equals}}
+      {{#equals company.regCountry "15"}}巴基斯坦{{/equals}}
+      {{#equals company.regCountry "16"}}印度{{/equals}}
+      {{#equals company.regCountry "17"}}其他{{/equals}}
+    </div>
+    <div class="control-group control-group-p">
+      <label><span class="required">*</span>园区:</label>
+      {{#each companySupplyParks}}{{name}} {{/each}}
+    </div>
+    <div class="control-group  control-group-cs" >
+      <label><span class="required">*</span>公司简介:</label>
+      {{company.desc}}
+    </div>
+    <div class="control-group">
+      <label><span class="required">*</span>主营业务陈述:</label>
+      {{#each companyMainBusinesses}}
+        {{name}}
+      {{/each}}
+    </div>
+    <br>
+    <div class="control-group control-group-p">
+      <label style="vertical-align: top;"><span class="required">*</span>证件上传:</label>
+      <div class="docs control-content  control-content-p">
+        {{#equals company.regCountry "10"}}
+          <div class="item  item-p">
+            <p>CCIAA</p>
+            <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+            {{formatDate company.blDate "day"}}
+            <br>
+            <span>证件号:</span>{{company.businessLicenseId}}
+          </div>
+        {{else}}
+          {{#equals company.regCountry "11"}}
+          <div class="item  item-p">
+            <p>Certificate of Incorporation</p>
+            <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+            {{formatDate company.blDate "day"}}
+            <br>
+            <span>证件号:</span>{{company.businessLicenseId}}
+          </div>
+          {{else}}
+            {{#equals company.regCountry "2"}}
+              <div class="item  item-p">
+                <p>Business license</p>
+                <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+                {{formatDate company.blDate "day"}}
+                <br>
+                <span>证件号:</span>{{company.businessLicenseId}}
+              </div>
+              <div class="item  item-p">
+                <p>Tax ID certificate</p>
+                <div class="img"><a href="{{company.orgCert}}" target="_blank"><img src="{{company.orgCert}}" width="106" height="106"/></a></div>
+                {{formatDate company.ocDate "day"}}
+                <br>
+                <span>证件号:</span>{{company.orgCertId}}
+              </div>
+            {{else}}
+              {{#equals company.regCountry "12"}}
+                <div class="item  item-p">
+                  <p>Business license</p>
+                  <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+                  {{formatDate company.blDate "day"}}
+                  <br>
+                  <span>证件号:</span>{{company.businessLicenseId}}
+                </div>
+                <div class="item  item-p">
+                  <p>Tax registration certificate</p>
+                  <div class="img"><a href="{{company.orgCert}}" target="_blank"><img src="{{company.orgCert}}" width="106" height="106"/></a></div>
+                  {{formatDate company.ocDate "day"}}
+                  <br>
+                  <span>证件号:</span>{{company.orgCertId}}
+                </div>
+              {{else}}
+                  {{#equals company.regCountry "13"}}
+                    <div class="item  item-p">
+                      <p>Businnes Registration Certificate</p>
+                      <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+                      {{formatDate company.blDate "day"}}
+                      <br>
+                      <span>证件号:</span>{{company.businessLicenseId}}
+                    </div>
+                    <div class="item   item-p">
+                      <p>Investment License</p>
+                      <div class="img"><a href="{{company.orgCert}}" target="_blank"><img src="{{company.orgCert}}" width="106" height="106"/></a></div>
+                      {{formatDate company.ocDate "day"}}
+                      <br>
+                      <span>证件号:</span>{{company.orgCertId}}
+                    </div>
+                    <div class="item  item-p">
+                      <p>Taxcode Certificate</p>
+                      <div class="img"><a href="{{company.taxNo}}" target="_blank"><img src="{{company.taxNo}}" width="106" height="106"/></a></div>
+                      {{formatDate company.tnDate "day"}}
+                      <br>
+                      <span>证件号:</span>{{company.taxNoId}}
+                    </div>
+
+                  {{else}}
+                      {{#equals company.regCountry "14"}}
+
+                        <div class="item  item-p">
+                          <p>Businnes Registration Certificate</p>
+                          <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+                          {{formatDate company.blDate "day"}}
+                          <br>
+                          <span>证件号:</span>{{company.businessLicenseId}}
+                        </div>
+
+                      {{else}}
+                        {{#equals company.regCountry "6"}}
+                          <div class="item  item-p">
+                            <p>會社登記簿誊本</p>
+                            <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+                            {{formatDate company.blDate "day"}}
+                            <br>
+                            <span>证件号:</span>{{company.businessLicenseId}}
+                          </div>
+
+                        {{else}}
+                          {{#equals company.regCountry "15"}}
+                          {{else}}
+                            {{#equals company.regCountry "16"}}
+                              <div class="item  item-p">
+                                <p>Certificate of Registration</p>
+                                <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" alt="" width="106" height="106"/></a></div>
+                                {{formatDate company.blDate "day"}}
+                                <br>
+                                <span>证件号:</span>{{company.businessLicenseId}}
+                              </div>
+                              <div class="item  item-p">
+                                <p>Duty registration</p>
+                                <div class="img"><a href="{{company.orgCert}}" target="_blank"><img src="{{company.orgCert}}" width="106" height="106"/></a></div>
+                                {{formatDate company.ocDate "day"}}
+                                <br>
+                                <span>证件号:</span>{{company.orgCertId}}
+                              </div>
+
+                            {{else}}
+                              <div class="item  item-p">
+                                <p>企业营业执照</p>
+                                <div class="img"><a href="{{company.businessLicense}}" target="_blank"><img src="{{company.businessLicense}}" width="106" height="106"/></a></div>
+                                {{formatDate company.blDate "day"}}
+                                <br>
+                                <span>证件号:</span>{{company.businessLicenseId}}
+                              </div>
+                              <div class="item  item-p" >
+                                <p>组织机构证</p>
+                                <div class="img"><a href="{{company.orgCert}}" target="_blank"><img src="{{company.orgCert}}"width="106" height="106"/></a></div>
+                                {{formatDate company.ocDate "day"}}
+                                <br>
+                                <span>证件号:</span>{{company.orgCertId}}
+                              </div>
+                              <div class="item  item-p">
+                                <p>税务登记证</p>
+                                <div class="img"><a href="{{company.taxNo}}" target="_blank"><img src="{{company.taxNo}}"width="106" height="106"/></a></div>
+                                {{formatDate company.tnDate "day"}}
+                                <br>
+                                <span>证件号:</span>{{company.taxNoId}}
+                              </div>
+
+                            {{/equals}}
+
+                          {{/equals}}
+
+                        {{/equals}}
+
+                      {{/equals}}
+                  {{/equals}}
+              {{/equals}}
+            {{/equals}}
+          {{/equals}}
+        {{/equals}}
+      </div>
+    </div>
+    <div class="control-group control-group-p" >
+      <label><span class="required">*</span>客户群:</label>
+      <table class="table table-striped customer-table  table-p" id="customer-group-table">
+        <thead>
+          <tr>
+            <th width="150">客户群</th>
+            <th width="120">占比<br><span>(占客户的比例 %)</span></th>
+            <th width="120">占比<br><span>(该客户占贵司的比例 %)</span></th>
+            <th width="150">客户</th>
+          </tr>
+        </thead>
+        <tbody data-content="{{company.customers}}">
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="control-group">
+      <label><span class="required">*</span>操作:</label>
+      <button data-id="{{user.id}}" data-toggle="confirm" data-title="您确定公议通过吗?" data-content="{{#if company.includeKeywords}}该供应商包含黑名单关键字 <{{company.includeKeywords}}> ，您确定公议通过吗？{{/if}}" data-event="{{#equals approvedType "1"}}confirm:audit-supplier-apply-success{{else}}confirm:audit-supplier-edit-success{{/equals}}" type="button" class="btn btn-primary js-audit-success">通过</button>&nbsp;&nbsp;
+      <a href="javascript:void(0);" data-id="{{user.id}}" class="btn js-audit-cancel">退回</a>
+    </div>
+  </div>
+</form>
+{{/with}}
+{{/component}}

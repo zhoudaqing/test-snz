@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ImportGoodList">
+    <resultMap id="ImportGoodListMap" type="ImportGoodList">
+        <id property="id" column="id"/>
+        <result property="requirementName" column="requirement_name"/>
+        <result property="requirementId" column="requirement_id"/>
+        <result property="seriesId" column="series_id"/>
+        <result property="seriesName" column="series_name"/>
+        <result property="productLine" column="product_line"/>
+        <result property="moduleNum" column="module_num"/>
+        <result property="moduleId" column="module_id"/>
+        <result property="moduleName" column="module_name"/>
+        <result property="describe" column="describe"/>
+        <result property="inCharge" column="in_charge"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <sql id="columns">
+        `requirement_name`,`requirement_id`,`series_id`,`series_name`,`product_line`,`module_num`,
+        `module_id`, `module_name`,`in_charge`,`created_at`, `updated_at`
+    </sql>
+
+    <insert id="create" parameterType="ImportGoodList" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `snz_income_good_lists`
+        (<include refid="columns"/>)
+        VALUES
+        (#{requirementName}, #{requirementId}, #{seriesId}, #{seriesName}, #{productLine}, #{moduleNum},
+        #{moduleId}, #{moduleName}, #{inCharge}, now(), now())
+    </insert>
+
+    <update id="update" parameterType="ImportGoodList">
+        update `snz_income_good_lists`
+        <set>
+            <if test="requirementName!=null"> requirement_name=#{requirementName}, </if>
+            <if test="requirementId!=null"> requirement_id=#{requirementId}, </if>
+            <if test="seriesId!=null"> series_id=#{seriesId}, </if>
+            <if test="seriesName!=null"> series_name=#{seriesName}, </if>
+            <if test="productLine!=null"> product_line=#{productLine}, </if>
+            <if test="moduleNum!=null"> module_num=#{moduleNum}, </if>
+            <if test="moduleId"> module_id=#{moduleId}, </if>
+            <if test="moduleName"> module_name=#{moduleName}, </if>
+            <if test="inCharge!=null">in_charge=#{inCharge},</if>
+            updated_at = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findById" resultMap="ImportGoodListMap">
+        select id,
+        <include refid="columns"/>
+        from `snz_income_good_lists` where id=#{id}
+        limit 1
+    </select>
+
+    <select id="findBy" resultMap="ImportGoodListMap">
+        select id,
+        <include refid="columns"/>
+        from `snz_income_good_lists`
+        <where>
+            <if test="id!=null">and id=#{id}</if>
+            <if test="requirementName!=null"> and requirement_name=#{requirementName} </if>
+            <if test="requirementId!=null"> and requirement_id=#{requirementId} </if>
+            <if test="seriesId!=null"> and series_id=#{seriesId} </if>
+            <if test="seriesName!=null"> and series_name=#{seriesName} </if>
+            <if test="productLine!=null"> and product_line=#{productLine} </if>
+            <if test="moduleNum!=null"> and module_num=#{moduleNum} </if>
+            <if test="inCharge!=null"> and in_charge=#{inCharge} </if>
+        </where>
+        limit 1
+    </select>
+
+</mapper>
